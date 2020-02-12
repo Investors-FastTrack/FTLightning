@@ -21,8 +21,7 @@ Index 1 is the 9/1/88, index 2 is 9/2/88, index 3 is 9/6/1988.
 
 The /data/dates endpoint returns an array of date objects that is necessary to convert dates to the right index.
 
-# Step 1
-## Request Dates
+### Request Dates
 
 
 ```javascript
@@ -45,8 +44,8 @@ function downloadDates() {
 }
 ```
 
-# Step 2
-## Request Adjusted Closing Prices
+
+### Request Adjusted Closing Prices
 ```javascript
 var token = 'XXXXX-XXXX-XXXXx';
 var appid = 'XXXXX-XXXX-XXXXX';
@@ -67,8 +66,8 @@ function downloadData() {
 }
 ```
 
-# Step 3
-## Get Price Value
+
+### Get Price Value
 
 ```javascript
 function getDate(dte) {
