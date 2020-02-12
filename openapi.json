@@ -768,7 +768,7 @@
         "tags": [
           "dates"
         ],
-        "summary": "returns complete FTDate object",
+        "summary": "Dates",
         "parameters": [
           {
             "name": "token",
@@ -809,72 +809,9 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
-      }
-    },
-    "/data/dates/{item}": {
-      "get": {
-        "tags": [
-          "dates"
-        ],
-        "summary": "returns only the requested item. all other FTData object are null",
-        "parameters": [
-          {
-            "name": "item",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "julian",
-                "market",
-                "string",
-                "maxnumdays"
-              ]
-            }
-          },
-          {
-            "name": "token",
-            "in": "header",
-            "description": "36 characher GUID received from the auth/login end point",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-          },
-          {
-            "name": "appid",
-            "in": "header",
-            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTDates"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        }
+        },
+        "operationId": "",
+        "description": "Returns array with every date in the FastTrack database. This object is used to interpret the data/{ticker}/divadjprices and data/{ticker}/unadjprices results"
       }
     },
     "/family/{strFamily}": {
