@@ -956,7 +956,7 @@
         "tags": [
           "stats"
         ],
-        "summary": "get stats for a single ticker",
+        "summary": "",
         "parameters": [
           {
             "name": "ticker",
@@ -1104,7 +1104,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns calulated statistics on a single ticker over the date range"
       }
     },
     "/stats/xmulti": {
@@ -1112,7 +1113,7 @@
         "tags": [
           "stats"
         ],
-        "summary": "Return statistics, calculated over the specified date range, for the requested tickers. Result is returned in the same order of \"tickers\" parameter",
+        "summary": "Calculate Multiple Static Models",
         "parameters": [
           {
             "name": "start",
@@ -1252,7 +1253,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns calulated statistics on multiple  ticker over the date range"
       }
     },
     "/portfolios/staticmodel": {
@@ -1260,7 +1262,7 @@
         "tags": [
           "portfolios"
         ],
-        "summary": "Calculate specified portfolio rebalanced at specifed intervals",
+        "summary": "Calculate Static Model",
         "parameters": [
           {
             "name": "start",
@@ -1416,7 +1418,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Calculates the specified portfolio over the specifed rebalance period"
       }
     },
     "/export/{ticker}": {
