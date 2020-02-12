@@ -819,7 +819,7 @@
         "tags": [
           "family"
         ],
-        "summary": "A \"family\" is a group of securities (ticker symbols) created by FastTrack. This function returns the requested family. Requested name must match FastTrack's family name exactly, CASE INSENSITIVE",
+        "summary": "Family",
         "parameters": [
           {
             "name": "strFamily",
@@ -870,7 +870,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "A \"family\" is a group of ticker symbols created by FastTrack. This function returns the requested family. Requested name must match FastTrack's family name exactly, CASE INSENSITIVE"
       }
     },
     "/family/": {
@@ -878,7 +879,7 @@
         "tags": [
           "family"
         ],
-        "summary": "A \"family\" is a group of securities (ticker symbols) created by FastTrack. This function searches all FastTrack families by family name, family partial name, and family members (tickers)",
+        "summary": "Family Search",
         "parameters": [
           {
             "name": "s",
@@ -946,7 +947,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "A \"family\" is a group of ticker symbols created by FastTrack. This function searches all FastTrack families by family name, family partial name, and family members (tickers)."
       }
     },
     "/stats/{ticker}": {
@@ -1422,7 +1424,7 @@
         "tags": [
           "export"
         ],
-        "summary": "returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
+        "summary": "Export CSV",
         "parameters": [
           {
             "name": "ticker",
@@ -1526,7 +1528,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns a CSV file of a single ticker's adjusted/unadjusted closing prices."
       }
     }
   },
