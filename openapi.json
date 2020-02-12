@@ -186,7 +186,7 @@
         "tags": [
           "market data"
         ],
-        "summary": "Date Range Multiple Tickers",
+        "summary": "Data Range - Multiple Tickers",
         "parameters": [
           {
             "name": "ticker",
@@ -302,7 +302,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "",
+        "summary": "Bulk Data",
         "parameters": [
           {
             "name": "ticker",
@@ -379,7 +379,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns multiple ticker's adjusted/unadjusted closing prices, ticker name, start day, and/or yield",
+        "summary": "Bulk Data - Multiple Tickers",
         "parameters": [
           {
             "name": "yield",
@@ -463,7 +463,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns closing prices array only. all other objects are null",
+        "summary": "Dividend Adjusted Closing Prices",
         "parameters": [
           {
             "name": "ticker",
@@ -515,7 +515,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null"
       }
     },
     "/data/{ticker}/unadjprices": {
@@ -523,7 +524,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns unadjusted closing prices array only. all other objects are null. data is limited to 3 year history, call for additional license.",
+        "summary": "Unadjusted Closing Prices",
         "parameters": [
           {
             "name": "ticker",
@@ -575,7 +576,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns ticker's unadjusted closing prices for all days in FastTrack database. All other objects are null"
       }
     },
     "/data/{ticker}/startday": {
@@ -583,7 +585,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns date and marketday of first day of market data. all other objects are null",
+        "summary": "Inception Date",
         "parameters": [
           {
             "name": "ticker",
@@ -635,7 +637,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns ticker's start date. All other objects are null"
       }
     },
     "/data/{ticker}/symname": {
@@ -643,7 +646,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns name of ticker. all other objects are null",
+        "summary": "Name",
         "parameters": [
           {
             "name": "ticker",
@@ -695,7 +698,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns ticker's name. All other objects are null"
       }
     },
     "/data/{ticker}/yield": {
@@ -703,7 +707,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns 1 year yield of ticker from last date in the database. all other objects are null",
+        "summary": "Yield",
         "parameters": [
           {
             "name": "ticker",
@@ -755,7 +759,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns ticker's trailing 12 month yield. All other objects are null"
       }
     },
     "/data/dates": {
