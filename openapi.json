@@ -302,7 +302,7 @@
         "tags": [
           "bulk market data"
         ],
-        "summary": "returns single ticker's adjusted/unadjusted closing prices, ticker name, start day, and/or yield",
+        "summary": "",
         "parameters": [
           {
             "name": "ticker",
@@ -358,7 +358,7 @@
         ],
         "responses": {
           "200": {
-            "description": "data points associated with ticker",
+            "description": "Data points associated with ticker",
             "content": {
               "application/json": {
                 "schema": {
@@ -370,7 +370,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns all data for the entire data range of a single ticker. Entire date range is 9/1/1988 to the most recent market day.\n"
       }
     },
     "/data/xmulti": {
@@ -453,7 +454,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Returns all data for the entire data range of multiple tickers. Entire date range is 9/1/1988 to the most recent market day.\n"
       }
     },
     "/data/{ticker}/divadjprices": {
