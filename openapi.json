@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "FT Lightning Data API",
-    "description": "FTLightning API provides REST access to FastTrack investment data for our 30k+ funds, ETFs, stocks, and indexes. The data includes dividend adjusted closing prices back to 1988, derived statistics and portfolio models. Visit <a target='_blank' href='https://subscribe.fasttrack.net/landing/api/apilanding.html'>https://apitrial.fasttrack.net</a> for a trial account. <br/> <br/> Search the FastTrack database here: <a target='_blank' href='https://ftcloud.fasttrack.net/web/search'>https://ftcloud.fasttrack.net/web/search</a> <br/> <br/>\n",
+    "description": "FTLightning API provides REST access to FastTrack investment data for our 30k+ funds, ETFs, stocks, and indexes. The data includes dividend adjusted closing prices back to 1988, derived statistics and portfolio models.\n\nVisit https://apitrial.fasttrack.net for a trial account. \n\nSearch the FastTrack database here: https://ftcloud.fasttrack.net/web/search\n",
     "contact": {
       "email": "daniel@fasttrack.net"
     },
