@@ -20,7 +20,7 @@
         "tags": [
           "authentication"
         ],
-        "summary": "server authentication. The returned token must be passed with all other API calls",
+        "summary": "Login",
         "parameters": [
           {
             "name": "account",
@@ -64,7 +64,8 @@
               }
             }
           }
-        }
+        },
+        "description": "server authentication. The returned token must be passed with all other API calls"
       }
     },
     "/data/{ticker}/range": {
@@ -72,7 +73,7 @@
         "tags": [
           "market data"
         ],
-        "summary": "returns adjusted/unadjusted closing prices, OLHC, and ticker name for single ticker over date range",
+        "summary": "Data Range",
         "parameters": [
           {
             "name": "ticker",
@@ -176,7 +177,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Retrieve a single ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range"
       }
     },
     "/data/xmulti/range": {
@@ -184,7 +186,7 @@
         "tags": [
           "market data"
         ],
-        "summary": "returns multiple ticker's adjusted/unadjusted closing prices, OLHC, and ticker name for single ticker over date range",
+        "summary": "Date Range Multiple Tickers",
         "parameters": [
           {
             "name": "ticker",
@@ -291,7 +293,8 @@
           "400": {
             "description": "bad input parameter"
           }
-        }
+        },
+        "description": "Retrieve multiple ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range"
       }
     },
     "/data/{ticker}": {
