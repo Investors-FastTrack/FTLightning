@@ -956,7 +956,7 @@
         "tags": [
           "stats"
         ],
-        "summary": "",
+        "summary": "Calculate Static Model",
         "parameters": [
           {
             "name": "ticker",
