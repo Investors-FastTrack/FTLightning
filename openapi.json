@@ -1,0 +1,2167 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "FT Lightning Data API",
+    "description" : "FTLightning API provides REST access to FastTrack investment data for our 30k+ funds, ETFs, stocks, and indexes. The data includes dividend adjusted closing prices back to 1988, derived statistics and portfolio models.  <br/> <br/> Visit <a target='_blank' href='https://subscribe.fasttrack.net/landing/api/apilanding.html'>https://apitrial.fasttrack.net</a> for a trial account. <br/> <br/> Search the FastTrack database here: <a target='_blank' href='https://ftcloud.fasttrack.net/web/search'>https://ftcloud.fasttrack.net/web/search</a> <br/> <br/>\n",
+    "contact" : {
+      "email" : "daniel@fasttrack.net"
+    },
+    "version" : "v1"
+  },
+  "servers" : [ {
+    "url" : "https://ftlightning.fasttrack.net/v1"
+  } ],
+  "paths" : {
+    "/auth/login" : {
+      "get" : {
+        "tags" : [ "authentication" ],
+        "summary" : "server authentication. The returned token must be passed with all other API calls",
+        "parameters" : [ {
+          "name" : "account",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "pass",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "appid",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Basic user information",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/UserInfo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/data/{ticker}/range" : {
+      "get" : {
+        "tags" : [ "market data" ],
+        "summary" : "returns adjusted/unadjusted closing prices, OLHC, and ticker name for single ticker over date range",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "First day in the date range of all calculations/requests",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "d",
+          "in" : "query",
+          "description" : "Use this to return a single date in the \"data/{ticker}/range\" function. This over rides any value set for start and end.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "unadj",
+          "in" : "query",
+          "description" : "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTDataRange"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/xmulti/range" : {
+      "post" : {
+        "tags" : [ "market data" ],
+        "summary" : "returns multiple ticker's adjusted/unadjusted closing prices, OLHC, and ticker name for single ticker over date range",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "First day in the date range of all calculations/requests",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "d",
+          "in" : "query",
+          "description" : "Use this to return a single date in the \"data/{ticker}/range\" function. This over rides any value set for start and end.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "unadj",
+          "in" : "query",
+          "description" : "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/TickerList"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker and parameters",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTDataRangeList"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/{ticker}" : {
+      "get" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns single ticker's adjusted/unadjusted closing prices, ticker name, start day, and/or yield",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "unadj",
+          "in" : "query",
+          "description" : "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/xmulti" : {
+      "post" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns multiple ticker's adjusted/unadjusted closing prices, ticker name, start day, and/or yield",
+        "parameters" : [ {
+          "name" : "yield",
+          "in" : "query",
+          "description" : "flag to exclude yield",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "0", "1" ]
+          }
+        }, {
+          "name" : "unadj",
+          "in" : "query",
+          "description" : "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/TickerList"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with tickers",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/{ticker}/divadjprices" : {
+      "get" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns closing prices array only. all other objects are null",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/{ticker}/unadjprices" : {
+      "get" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns unadjusted closing prices array only. all other objects are null. data is limited to 3 year history, call for additional license.",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/{ticker}/startday" : {
+      "get" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns date and marketday of first day of market data. all other objects are null",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/{ticker}/symname" : {
+      "get" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns name of ticker. all other objects are null",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/{ticker}/yield" : {
+      "get" : {
+        "tags" : [ "bulk market data" ],
+        "summary" : "returns 1 year yield of ticker from last date in the database. all other objects are null",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/dates" : {
+      "get" : {
+        "tags" : [ "dates" ],
+        "summary" : "returns complete FTDate object",
+        "parameters" : [ {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTDates"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/data/dates/{item}" : {
+      "get" : {
+        "tags" : [ "dates" ],
+        "summary" : "returns only the requested item. all other FTData object are null",
+        "parameters" : [ {
+          "name" : "item",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "julian", "market", "string", "maxnumdays" ]
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTDates"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/family/{strFamily}" : {
+      "get" : {
+        "tags" : [ "family" ],
+        "summary" : "A \"family\" is a group of securities (ticker symbols) created by FastTrack. This function returns the requested family. Requested name must match FastTrack's family name exactly, CASE INSENSITIVE",
+        "parameters" : [ {
+          "name" : "strFamily",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTFamily"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/family/" : {
+      "get" : {
+        "tags" : [ "family" ],
+        "summary" : "A \"family\" is a group of securities (ticker symbols) created by FastTrack. This function searches all FastTrack families by family name, family partial name, and family members (tickers)",
+        "parameters" : [ {
+          "name" : "s",
+          "in" : "query",
+          "description" : "Text to search all families",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "options",
+          "in" : "query",
+          "description" : "if set to 'onlyticker', search will only return families that contain the exact ticker specified by 's'",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "all",
+            "enum" : [ "onlyticker", "all" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTFamily"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/stats/{ticker}" : {
+      "get" : {
+        "tags" : [ "stats" ],
+        "summary" : "get stats for a single ticker",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "First day in the date range of all calculations/requests",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "basis",
+          "in" : "query",
+          "description" : "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "SP-DA"
+          },
+          "example" : "FBIOX"
+        }, {
+          "name" : "len",
+          "in" : "query",
+          "description" : "Correlation length, described in market days",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 21
+          },
+          "example" : 10
+        }, {
+          "name" : "maxdraw",
+          "in" : "query",
+          "description" : "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "chart",
+          "in" : "query",
+          "description" : "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "minimum" : -1,
+            "type" : "integer",
+            "description" : "-1 returns all data points.",
+            "default" : 1000
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTStats"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/stats/xmulti" : {
+      "post" : {
+        "tags" : [ "stats" ],
+        "summary" : "Return statistics, calculated over the specified date range, for the requested tickers. Result is returned in the same order of \"tickers\" parameter",
+        "parameters" : [ {
+          "name" : "start",
+          "in" : "query",
+          "description" : "First day in the date range of all calculations/requests",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "basis",
+          "in" : "query",
+          "description" : "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "SP-DA"
+          },
+          "example" : "FBIOX"
+        }, {
+          "name" : "len",
+          "in" : "query",
+          "description" : "Correlation length, described in market days",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 21
+          },
+          "example" : 10
+        }, {
+          "name" : "maxdraw",
+          "in" : "query",
+          "description" : "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "chart",
+          "in" : "query",
+          "description" : "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "minimum" : -1,
+            "type" : "integer",
+            "description" : "-1 returns all data points.",
+            "default" : 1000
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/TickerList"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTStatsList"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/portfolios/staticmodel" : {
+      "post" : {
+        "tags" : [ "portfolios" ],
+        "summary" : "Calculate specified portfolio rebalanced at specifed intervals",
+        "parameters" : [ {
+          "name" : "start",
+          "in" : "query",
+          "description" : "First day in the date range of all calculations/requests",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "basis",
+          "in" : "query",
+          "description" : "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "default" : "SP-DA"
+          },
+          "example" : "FBIOX"
+        }, {
+          "name" : "len",
+          "in" : "query",
+          "description" : "Correlation length, described in market days",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 21
+          },
+          "example" : 10
+        }, {
+          "name" : "details",
+          "in" : "query",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "description" : "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size.",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "maxdraw",
+          "in" : "query",
+          "description" : "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "chart",
+          "in" : "query",
+          "description" : "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "count",
+          "in" : "query",
+          "description" : "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "minimum" : -1,
+            "type" : "integer",
+            "description" : "-1 returns all data points.",
+            "default" : 1000
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/FTStaticModelParameters"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "data points associated with ticker",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/FTModelResults"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    },
+    "/export/{ticker}" : {
+      "get" : {
+        "tags" : [ "export" ],
+        "summary" : "returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
+        "parameters" : [ {
+          "name" : "ticker",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "JPM"
+        }, {
+          "name" : "start",
+          "in" : "query",
+          "description" : "First day in the date range of all calculations/requests",
+          "required" : true,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "end",
+          "in" : "query",
+          "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "yyyy-MM-dd"
+          }
+        }, {
+          "name" : "unadj",
+          "in" : "query",
+          "description" : "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "default" : 0,
+            "enum" : [ 0, 1 ]
+          }
+        }, {
+          "name" : "token",
+          "in" : "header",
+          "description" : "36 characher GUID received from the auth/login end point",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        }, {
+          "name" : "appid",
+          "in" : "header",
+          "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "CSV file with dates and closing prices",
+            "headers" : {
+              "Content-Disposition" : {
+                "style" : "simple",
+                "explode" : false,
+                "schema" : {
+                  "type" : "string",
+                  "example" : "attachment,filename={ticker}.csv"
+                }
+              }
+            },
+            "content" : {
+              "text/html" : {
+                "schema" : {
+                  "type" : "string",
+                  "description" : "CSV format {date},{closing price}",
+                  "example" : "SP-DA\nS&P 500 Dividend Adjusted Idx\n02/10/2017,4435.4200\n02/13/2017,4459.8300\n02/14/2017,4478.9800\n02/15/2017,4501.9900\n..."
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "UserInfo" : {
+        "type" : "object",
+        "properties" : {
+          "AcountNumber" : {
+            "type" : "string",
+            "description" : "User's account number"
+          },
+          "Pass" : {
+            "type" : "string",
+            "description" : "User password"
+          },
+          "Token" : {
+            "type" : "string",
+            "description" : "authentication token to include in all other API request."
+          },
+          "AppID" : {
+            "type" : "string",
+            "description" : "string representing developers app id"
+          },
+          "Expiration" : {
+            "type" : "string",
+            "description" : "account's expiration date"
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        },
+        "description" : "Basic information about user subscription"
+      },
+      "FTData" : {
+        "type" : "object",
+        "properties" : {
+          "ticker" : {
+            "type" : "string",
+            "example" : "SPY"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "S&P 500"
+          },
+          "prices" : {
+            "type" : "array",
+            "description" : "Array of closing prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+            "example" : [ 10.01, 11.04, 11.09 ],
+            "items" : {
+              "type" : "number"
+            }
+          },
+          "unadjprices" : {
+            "type" : "array",
+            "description" : "Array of unadjusted closing prices in same format as 'prices' object. Requests must use 'unadj' paramter to specifically request this data and it is limited to the trailing 3 years of data. Subscriptions for complete date range are available.",
+            "example" : [ 10.01, 11.04, 11.09 ],
+            "items" : {
+              "type" : "number"
+            }
+          },
+          "startdate" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "strstartmarketday" : {
+            "type" : "string",
+            "example" : "9/1/88"
+          },
+          "intstartmarketday" : {
+            "type" : "integer",
+            "example" : 1000
+          },
+          "yield" : {
+            "type" : "number",
+            "example" : 3.02
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTDataList" : {
+        "type" : "object",
+        "properties" : {
+          "datalist" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FTData"
+            }
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTDataRange" : {
+        "type" : "object",
+        "properties" : {
+          "ticker" : {
+            "type" : "string",
+            "example" : "SPY"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "S&P 500"
+          },
+          "datarange" : {
+            "type" : "array",
+            "description" : "Array of FTPrice objects containing adjusted and unadjusted prices for date range.",
+            "items" : {
+              "$ref" : "#/components/schemas/FTPrice"
+            }
+          },
+          "dtestart" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "dteend" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTDataRangeList" : {
+        "type" : "object",
+        "properties" : {
+          "datalist" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FTDataRange"
+            }
+          },
+          "dtestart" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "dteend" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTPrice" : {
+        "type" : "object",
+        "properties" : {
+          "date" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "price" : {
+            "type" : "number"
+          },
+          "unadjprice" : {
+            "type" : "number"
+          }
+        }
+      },
+      "FTDates" : {
+        "type" : "object",
+        "properties" : {
+          "maxnumdays" : {
+            "type" : "integer",
+            "description" : "maximum number of market days in the FastTrack database",
+            "example" : 3000
+          },
+          "strmaxnumdays" : {
+            "type" : "string",
+            "description" : "The last day in the FastTrack database",
+            "example" : "09/01/88"
+          },
+          "dtes" : {
+            "type" : "array",
+            "description" : "Array of FTDate objects for every day in the database. Every market day in the database is included in the array. Index 0 is a repeate of index 1.",
+            "items" : {
+              "$ref" : "#/components/schemas/FTDate"
+            }
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        },
+        "description" : "This object contains all date information for FastTrack. There are \"MaxNumDays\" in the database. All prices and date arrays are sized \"MaxNumdays\". The index of the array is also the market day of that value. A date's market day is number of market days elapsed since 9/1/88, the first day in the FastTrack database."
+      },
+      "FTDate" : {
+        "type" : "object",
+        "properties" : {
+          "marketdate" : {
+            "type" : "integer",
+            "description" : "market days ellapsed since the first day in the database (9/1/88)"
+          },
+          "juliandate" : {
+            "type" : "string",
+            "description" : "julian representation of the date"
+          },
+          "strdate" : {
+            "type" : "string",
+            "description" : "MM-dd-yy formatted date"
+          }
+        }
+      },
+      "FTFamily" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "Name of family"
+          },
+          "tickers" : {
+            "type" : "string",
+            "description" : "String of comma \",\" separated ticker that make up family."
+          },
+          "count" : {
+            "type" : "integer",
+            "description" : "Number of tickers in family"
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTReturns" : {
+        "type" : "object",
+        "properties" : {
+          "annualized" : {
+            "$ref" : "#/components/schemas/FTReturns_annualized"
+          },
+          "total" : {
+            "$ref" : "#/components/schemas/FTReturns_annualized"
+          },
+          "years" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FTYearReturns"
+            }
+          }
+        }
+      },
+      "FTYearReturns" : {
+        "type" : "object",
+        "properties" : {
+          "year" : {
+            "type" : "string"
+          },
+          "returns" : {
+            "type" : "string"
+          }
+        }
+      },
+      "FTRisk" : {
+        "type" : "object",
+        "properties" : {
+          "sd" : {
+            "type" : "string",
+            "description" : "standard deviation over the time period"
+          },
+          "ui" : {
+            "type" : "string",
+            "description" : "ulcer index over the time period"
+          },
+          "upi" : {
+            "type" : "string",
+            "description" : "ulcer performance index against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
+          },
+          "sharpe" : {
+            "type" : "string",
+            "description" : "sharpe ration against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
+          },
+          "corr" : {
+            "type" : "string",
+            "description" : "correlation against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
+          },
+          "alpha" : {
+            "type" : "string"
+          },
+          "beta" : {
+            "type" : "string",
+            "description" : "beta against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
+          },
+          "ftalpha" : {
+            "type" : "string",
+            "description" : "FastTrack proprietary calculation measuring risk, return, and correlation"
+          },
+          "rsi" : {
+            "type" : "string",
+            "description" : "Relative strength index"
+          }
+        }
+      },
+      "FTDescribe" : {
+        "type" : "object",
+        "properties" : {
+          "sharesout" : {
+            "type" : "string",
+            "description" : "number of shares outstanding at the most recent quarter end"
+          },
+          "marketcap" : {
+            "type" : "string",
+            "description" : "number of shares outstanding multiplied by the most recent closing price"
+          },
+          "high_52" : {
+            "type" : "string",
+            "description" : "adjusted closing price of the 52 week high from the \"end\" parameter"
+          },
+          "low_52" : {
+            "type" : "string",
+            "description" : "adjusted closing price of the 52 week low from the \"end\" parameter"
+          },
+          "yield" : {
+            "type" : "string",
+            "description" : "SEC yield for the priod 52 weeks from the \"end\" parameter"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "Security name"
+          }
+        }
+      },
+      "FTStats" : {
+        "type" : "object",
+        "properties" : {
+          "ticker" : {
+            "type" : "string"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "dtestart" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "dteend" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "aux" : {
+            "type" : "integer",
+            "description" : "describes the order which tickers were received."
+          },
+          "max" : {
+            "$ref" : "#/components/schemas/FTMaxDraw"
+          },
+          "risk" : {
+            "$ref" : "#/components/schemas/FTRisk"
+          },
+          "returns" : {
+            "$ref" : "#/components/schemas/FTReturns"
+          },
+          "describe" : {
+            "$ref" : "#/components/schemas/FTDescribe"
+          },
+          "chartprices" : {
+            "$ref" : "#/components/schemas/FTChartData"
+          }
+        },
+        "description" : "various data stats and points for requested tickers"
+      },
+      "FTStatsList" : {
+        "type" : "object",
+        "properties" : {
+          "statslist" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FTStats"
+            }
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTChartData" : {
+        "type" : "object",
+        "properties" : {
+          "p_percents" : {
+            "type" : "array",
+            "description" : "daily percent return data",
+            "items" : {
+              "type" : "number"
+            }
+          },
+          "p_percents2" : {
+            "type" : "array",
+            "description" : "percent return from start date data",
+            "items" : {
+              "type" : "number"
+            }
+          },
+          "p_log" : {
+            "type" : "array",
+            "description" : "log adjusted percent return from start date  data (p_percents2)",
+            "items" : {
+              "type" : "number"
+            }
+          },
+          "p_divadj" : {
+            "type" : "array",
+            "description" : "daily dividend adjusted closing prices",
+            "items" : {
+              "type" : "number"
+            }
+          },
+          "dates" : {
+            "$ref" : "#/components/schemas/FTDates"
+          }
+        }
+      },
+      "FTMaxDraw" : {
+        "type" : "object",
+        "properties" : {
+          "maxdrawdown" : {
+            "type" : "string"
+          },
+          "maxdrawlength" : {
+            "type" : "string"
+          },
+          "recoverylength" : {
+            "type" : "string"
+          },
+          "peakdate" : {
+            "type" : "string"
+          },
+          "valleydate" : {
+            "type" : "string"
+          }
+        }
+      },
+      "err" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string",
+            "example" : "-5000000"
+          },
+          "message" : {
+            "type" : "string",
+            "example" : "invalid ticker"
+          },
+          "link" : {
+            "type" : "string",
+            "format" : "url"
+          }
+        }
+      },
+      "FTStaticModelParameters" : {
+        "type" : "object",
+        "properties" : {
+          "model" : {
+            "type" : "array",
+            "description" : "Array of FTPosition objects that contain the model portfolio to calculate",
+            "example" : [ {
+              "ticker" : "SPY",
+              "weight" : "60"
+            }, {
+              "ticker" : "TLT",
+              "weight" : "40"
+            } ],
+            "items" : {
+              "$ref" : "#/components/schemas/FTPosition"
+            }
+          },
+          "start" : {
+            "type" : "string",
+            "description" : "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted",
+            "example" : "2000-12-31"
+          },
+          "rebalanceperiod" : {
+            "type" : "string",
+            "description" : "Specify the rebalance frequency. This is how often the portfolio trades.",
+            "example" : "month",
+            "enum" : [ "week", "month", "quarter", "annual", "[number of market days]" ]
+          },
+          "marginrate" : {
+            "type" : "number",
+            "description" : "annual percent interest on borrowed money. All interest is accrued quarterly.",
+            "default" : 0
+          }
+        }
+      },
+      "FTModelResults" : {
+        "type" : "object",
+        "properties" : {
+          "stats" : {
+            "$ref" : "#/components/schemas/FTStats"
+          },
+          "modeldetails" : {
+            "type" : "array",
+            "description" : "array containing the break down of all positions for each day of the model",
+            "items" : {
+              "$ref" : "#/components/schemas/FTPortfolio"
+            }
+          },
+          "err" : {
+            "$ref" : "#/components/schemas/err"
+          }
+        }
+      },
+      "FTPortfolio" : {
+        "type" : "object",
+        "properties" : {
+          "dte" : {
+            "$ref" : "#/components/schemas/FTDate"
+          },
+          "totalvalue" : {
+            "type" : "string"
+          },
+          "positionlist" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FTPosition"
+            }
+          }
+        }
+      },
+      "FTPosition" : {
+        "type" : "object",
+        "properties" : {
+          "ticker" : {
+            "type" : "string",
+            "description" : "ticker in portfolio"
+          },
+          "value" : {
+            "type" : "number",
+            "description" : "dollar value of position. Only used in return result"
+          },
+          "weight" : {
+            "type" : "string",
+            "description" : "percentage weighting of ticker.",
+            "example" : "50"
+          }
+        },
+        "example" : {
+          "ticker" : "SPY",
+          "weight" : "50"
+        }
+      },
+      "FTReturns_annualized" : {
+        "type" : "object",
+        "properties" : {
+          "period" : {
+            "type" : "string",
+            "description" : "total dividend adjusted return from start to end"
+          },
+          "oneday" : {
+            "type" : "string"
+          },
+          "fiveday" : {
+            "type" : "string"
+          },
+          "onemonth" : {
+            "type" : "string"
+          },
+          "threemonths" : {
+            "type" : "string"
+          },
+          "sixmonths" : {
+            "type" : "string"
+          },
+          "ninemonths" : {
+            "type" : "string"
+          },
+          "one" : {
+            "type" : "string",
+            "description" : "one year total return from the \"end\" parameter"
+          },
+          "three" : {
+            "type" : "string",
+            "description" : "three year total return from the \"end\" parameter"
+          },
+          "five" : {
+            "type" : "string",
+            "description" : "five year total return from the \"end\" parameter"
+          },
+          "ten" : {
+            "type" : "string",
+            "description" : "ten year total return from the \"end\" parameter"
+          },
+          "ytd" : {
+            "type" : "string",
+            "description" : "year to date total return from the \"end\" parameter"
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "appid" : {
+        "name" : "appid",
+        "in" : "header",
+        "description" : "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+      },
+      "token" : {
+        "name" : "token",
+        "in" : "header",
+        "description" : "36 characher GUID received from the auth/login end point",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+      },
+      "ticker" : {
+        "name" : "ticker",
+        "in" : "path",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "string"
+        },
+        "example" : "JPM"
+      },
+      "start" : {
+        "name" : "start",
+        "in" : "query",
+        "description" : "First day in the date range of all calculations/requests",
+        "required" : true,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "yyyy-MM-dd"
+        }
+      },
+      "end" : {
+        "name" : "end",
+        "in" : "query",
+        "description" : "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "yyyy-MM-dd"
+        }
+      },
+      "d" : {
+        "name" : "d",
+        "in" : "query",
+        "description" : "Use this to return a single date in the \"data/{ticker}/range\" function. This over rides any value set for start and end.",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "format" : "yyyy-MM-dd"
+        }
+      },
+      "unadj" : {
+        "name" : "unadj",
+        "in" : "query",
+        "description" : "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "default" : 0,
+          "enum" : [ 0, 1 ]
+        }
+      },
+      "olhv" : {
+        "name" : "olhv",
+        "in" : "query",
+        "description" : "Flag to include or exclude open, low, high, and volume data in on the /data/{ticker}/range and /data/{ticker} endpoints. -1 is returned on any prior date request",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "default" : 0,
+          "enum" : [ 0, 1 ]
+        }
+      },
+      "basis" : {
+        "name" : "basis",
+        "in" : "query",
+        "description" : "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "string",
+          "default" : "SP-DA"
+        },
+        "example" : "FBIOX"
+      },
+      "len" : {
+        "name" : "len",
+        "in" : "query",
+        "description" : "Correlation length, described in market days",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "default" : 21
+        },
+        "example" : 10
+      },
+      "maxdraw" : {
+        "name" : "maxdraw",
+        "in" : "query",
+        "description" : "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "default" : 0,
+          "enum" : [ 0, 1 ]
+        }
+      },
+      "chart" : {
+        "name" : "chart",
+        "in" : "query",
+        "description" : "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "default" : 0,
+          "enum" : [ 0, 1 ]
+        }
+      },
+      "count" : {
+        "name" : "count",
+        "in" : "query",
+        "description" : "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "minimum" : -1,
+          "type" : "integer",
+          "description" : "-1 returns all data points.",
+          "default" : 1000
+        }
+      }
+    },
+    "requestBodies" : {
+      "TickerList" : {
+        "description" : "A JSON Array containing requested tickers",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "array",
+              "example" : [ "SPY", "TLT", "JPM", "GE" ],
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        },
+        "required" : true
+      },
+      "FTStaticModelParameters" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/FTStaticModelParameters"
+            }
+          }
+        },
+        "required" : true
+      }
+    }
+  }
+}
