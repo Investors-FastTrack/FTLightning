@@ -4,14 +4,15 @@ The example below is broken into two parts.
 
 First, you must request a token from the login end point. That token should be saved locally and used in the header of every subsequent request.
 
-> ### Authentication Token
-> 
+Second, request dividend adjusted data from the data end point. The token recieved in the login request will be used in the second request header
 
-Second,  
+> ### Authentication
+> All requests to the API (except /auth/login) must contain the header **appid** and **token**
 
 
+### Request Token
 
-### Get User Info and Token
+Pass your account number, password, and app id as query strings to the "auth/login" end point.
 
 ```javascript
 var account = '123456';
@@ -45,11 +46,14 @@ function login(){
       }
     )
 ```
-#### Use token to Access Data
+#### Request Data
+Request all dividend adjusted closing prices for the ticker JPM. Include your app id and token recieved in the request above.
+
 ``` javascript
 
 function getData(){
-  var url = 'https://ftlightning.fasttrack.net/v1/data/jpm'
+  var ticker = 'JPM' 
+  var url = 'https://ftlightning.fasttrack.net/v1/data/' + ticker + '/divadjprices'
   fetch(url,
       {headers: {
         "appid" : appid ,
