@@ -19,4 +19,4 @@ Authentication is done via the **/auth/login** endpoint.
 Call this endpoint with valid credentials in the query string. A user info object is returned. This contains the "token" required to make all other requests 
 
 
-[Jump to Login Code Example](/example-code/01b-login-example.md)
+[Jump to Login Code Example](./ExampleCode/01b-Login-Example.md)
