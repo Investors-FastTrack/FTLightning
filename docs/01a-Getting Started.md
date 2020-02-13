@@ -1,0 +1,3 @@
+# Get Trial Credentials
+
+The beginning of an awesome article...
