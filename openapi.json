@@ -263,7 +263,8 @@
           {
             "token": []
           }
-        ]
+        ],
+        "operationId": ""
       }
     },
     "/data/{ticker}": {
@@ -1791,6 +1792,7 @@
       },
       "FTPortfolio": {
         "type": "object",
+        "x-examples": {},
         "properties": {
           "dte": {
             "$ref": "#/components/schemas/FTDate"
@@ -1808,6 +1810,10 @@
       },
       "FTPosition": {
         "type": "object",
+        "example": {
+          "ticker": "SPY",
+          "weight": "50"
+        },
         "properties": {
           "ticker": {
             "type": "string",
@@ -1823,9 +1829,11 @@
             "example": "50"
           }
         },
-        "example": {
-          "ticker": "SPY",
-          "weight": "50"
+        "x-examples": {
+          "Position Example": {
+            "ticker": "JPM",
+            "weight": 50
+          }
         }
       },
       "FTReturns_annualized": {
@@ -2089,14 +2097,14 @@
       "appid": {
         "type": "apiKey",
         "in": "header",
-        "name": "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
-        "description": ""
+        "name": "appid",
+        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net"
       },
       "token": {
-        "name": "Temporary token received from auth/login end point ",
+        "name": "token",
         "type": "apiKey",
         "in": "header",
-        "description": ""
+        "description": "Temporary token received from auth/login end point "
       }
     }
   }
