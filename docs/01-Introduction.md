@@ -10,11 +10,7 @@ The trial allows full access to our index database, covering over 1,200 stock, b
 
 [Sign for a trial here](https://subscribe.fasttrack.net/landing/api/apilanding.html)
 
-### API Reference
 
-> ### Base URL
->
-> https://ftlightning.fasttrack.net/v1/
 
 ### FastTrack Database
 FastTrack's database includes all US listed Mutual Fund, ETF, and Stocks (approx 30k securities). We additionally provide over 1200+ global indexes. 

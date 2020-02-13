@@ -1,7 +1,17 @@
-# Login and Data Access Example
+# Login & Get Data
 
-### Javascript example
-#### Get User Info and Token
+The example below is broken into two parts.
+
+First, you must request a token from the login end point. That token should be saved locally and used in the header of every subsequent request.
+
+> ### Authentication Token
+> 
+
+Second,  
+
+
+
+### Get User Info and Token
 
 ```javascript
 var account = '123456';
