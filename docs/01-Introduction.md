@@ -1,7 +1,7 @@
 # Introduction
 
 ### FT Lightning Data API
-FT Lightning is Investors FastTrack's data API organized around REST. It has predictable resource-oriented URLs, accepts JSON-encoded request bodies, returns JSON-encoded responses, and uses standard HTTP response codes, authentication, and verbs.
+FT Lightning is Investors FastTrack's data API organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
 
 ### Free Trial
 FastTrack offers a free API trial. No credit card is necesarry. 

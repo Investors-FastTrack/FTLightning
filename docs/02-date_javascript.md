@@ -1,4 +1,4 @@
-# Geting Started - Bulk Data
+# Using Bulk Data
 
 <!--
 title: "My code snippet"
