@@ -12,16 +12,11 @@
   },
   "servers": [
     {
-      "url": "https://ftlightning.fasttrack.net/{basePath}",
-      "variables": {
-        "basePath": {
-          "default": "v2"
-        }
-      }
+      "url": "https://ftlightning.fasttrack.net/"
     }
   ],
   "paths": {
-    "auth/login": {
+    "v1/auth/login": {
       "get": {
         "tags": [
           "authentication"
@@ -74,7 +69,7 @@
         "description": "server authentication. The returned token must be passed with all other API calls"
       }
     },
-    "/data/{ticker}/range": {
+    "v1/data/{ticker}/range": {
       "get": {
         "tags": [
           "market data"
@@ -171,7 +166,7 @@
         ]
       }
     },
-    "/data/xmulti/range": {
+    "v1/data/xmulti/range": {
       "post": {
         "tags": [
           "market data"
@@ -272,7 +267,7 @@
         "operationId": ""
       }
     },
-    "/data/{ticker}": {
+    "v1/data/{ticker}": {
       "get": {
         "tags": [
           "bulk market data"
@@ -333,7 +328,7 @@
         ]
       }
     },
-    "/data/xmulti": {
+    "v1/data/xmulti": {
       "post": {
         "tags": [
           "bulk market data"
@@ -401,7 +396,7 @@
         ]
       }
     },
-    "/data/{ticker}/divadjprices": {
+    "v1/data/{ticker}/divadjprices": {
       "get": {
         "tags": [
           "bulk market data"
@@ -446,7 +441,7 @@
         ]
       }
     },
-    "/data/{ticker}/unadjprices": {
+    "v1/data/{ticker}/unadjprices": {
       "get": {
         "tags": [
           "bulk market data"
@@ -491,7 +486,7 @@
         ]
       }
     },
-    "/data/{ticker}/startday": {
+    "v1/data/{ticker}/startday": {
       "get": {
         "tags": [
           "bulk market data"
@@ -536,7 +531,7 @@
         ]
       }
     },
-    "/data/{ticker}/symname": {
+    "v1/data/{ticker}/symname": {
       "get": {
         "tags": [
           "bulk market data"
@@ -581,7 +576,7 @@
         ]
       }
     },
-    "/data/{ticker}/yield": {
+    "v1/data/{ticker}/yield": {
       "get": {
         "tags": [
           "bulk market data"
@@ -626,7 +621,7 @@
         ]
       }
     },
-    "/data/dates": {
+    "v1/data/dates": {
       "get": {
         "tags": [
           "dates"
@@ -660,7 +655,7 @@
         ]
       }
     },
-    "/family/{strFamily}": {
+    "v1/family/{strFamily}": {
       "get": {
         "tags": [
           "family"
@@ -704,7 +699,7 @@
         ]
       }
     },
-    "/family/": {
+    "v1/family/": {
       "get": {
         "tags": [
           "family"
@@ -765,7 +760,7 @@
         ]
       }
     },
-    "/stats/{ticker}": {
+    "v1/stats/{ticker}": {
       "get": {
         "tags": [
           "stats"
@@ -906,7 +901,7 @@
         ]
       }
     },
-    "/stats/xmulti": {
+    "v1/stats/xmulti": {
       "post": {
         "tags": [
           "stats"
@@ -1039,7 +1034,7 @@
         ]
       }
     },
-    "/portfolios/staticmodel": {
+    "v1/portfolios/staticmodel": {
       "post": {
         "tags": [
           "portfolios"
@@ -1188,7 +1183,7 @@
         ]
       }
     },
-    "/export/{ticker}": {
+    "v1/export/{ticker}": {
       "get": {
         "tags": [
           "export"
