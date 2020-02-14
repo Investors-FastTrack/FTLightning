@@ -10,7 +10,8 @@ This is a unique 36 charager string that identifies your application. This is se
 This is a temporary 36 character string that is retrieved from the **/auth/login** endpoint.
 
 <!-- theme: warning -->
->The token is reset daily at approximately 7:20am, 6:35PM, and 8:20pm EST.
+> ##### Token Expiration
+>The token is reset daily at approximately 7:20am, 6:35PM, and 8:20pm EST. Request new tokens periodically by calling the **/auth/login** endpoint again.
 
 ### Example HTTP GET 
 ##### with Authentication Headers
