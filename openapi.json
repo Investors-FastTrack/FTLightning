@@ -5,7 +5,7 @@
     "description": "FTLightning API provides REST access to FastTrack investment data for our 30k+ funds, ETFs, stocks, and indexes. The data includes dividend adjusted closing prices back to 1988, derived statistics and portfolio models. \n\nVisit https://apitrial.fasttrack.net for a trial account. \n\nSearch the FastTrack database here: https://ftcloud.fasttrack.net/web/search\n",
     "contact": {
       "email": "ftlightning@fasttrack.net",
-      "name": "Daniel Charbonnet - FT Lightning Lead Developer",
+      "name": "FT Lightning Support",
       "url": "http://www.fasttrack.net"
     },
     "version": "v1"
@@ -71,9 +71,6 @@
     },
     "v1/data/{ticker}/range": {
       "get": {
-        "tags": [
-          "market data"
-        ],
         "summary": "Data Range",
         "parameters": [
           {
@@ -163,14 +160,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Date Range"
         ]
       }
     },
     "v1/data/xmulti/range": {
       "post": {
-        "tags": [
-          "market data"
-        ],
         "summary": "Data Range - Multiple Tickers",
         "parameters": [
           {
@@ -264,14 +261,14 @@
             "token": []
           }
         ],
-        "operationId": ""
+        "operationId": "",
+        "tags": [
+          "Data - Date Range"
+        ]
       }
     },
     "v1/data/{ticker}": {
       "get": {
-        "tags": [
-          "bulk market data"
-        ],
         "summary": "Bulk Data",
         "parameters": [
           {
@@ -325,14 +322,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Bulk"
         ]
       }
     },
     "v1/data/xmulti": {
       "post": {
-        "tags": [
-          "bulk market data"
-        ],
         "summary": "Bulk Data - Multiple Tickers",
         "parameters": [
           {
@@ -393,15 +390,15 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Bulk"
         ]
       }
     },
     "v1/data/{ticker}/divadjprices": {
       "get": {
-        "tags": [
-          "bulk market data"
-        ],
-        "summary": "Dividend Adjusted Closing Prices",
+        "summary": "Closing Prices - Dividend Adjusted",
         "parameters": [
           {
             "name": "ticker",
@@ -438,15 +435,15 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Bulk"
         ]
       }
     },
     "v1/data/{ticker}/unadjprices": {
       "get": {
-        "tags": [
-          "bulk market data"
-        ],
-        "summary": "Unadjusted Closing Prices",
+        "summary": "Closing Prices - Unadjusted",
         "parameters": [
           {
             "name": "ticker",
@@ -483,14 +480,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Bulk"
         ]
       }
     },
     "v1/data/{ticker}/startday": {
       "get": {
-        "tags": [
-          "bulk market data"
-        ],
         "summary": "Inception Date",
         "parameters": [
           {
@@ -528,13 +525,16 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Bulk"
         ]
       }
     },
     "v1/data/{ticker}/symname": {
       "get": {
         "tags": [
-          "bulk market data"
+          "Data - Bulk"
         ],
         "summary": "Name",
         "parameters": [
@@ -578,9 +578,6 @@
     },
     "v1/data/{ticker}/yield": {
       "get": {
-        "tags": [
-          "bulk market data"
-        ],
         "summary": "Yield",
         "parameters": [
           {
@@ -618,6 +615,9 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Data - Bulk"
         ]
       }
     },
@@ -762,9 +762,6 @@
     },
     "v1/stats/{ticker}": {
       "get": {
-        "tags": [
-          "stats"
-        ],
         "summary": "Calculate Static Model",
         "parameters": [
           {
@@ -898,14 +895,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Statistics"
         ]
       }
     },
     "v1/stats/xmulti": {
       "post": {
-        "tags": [
-          "stats"
-        ],
         "summary": "Calculate Multiple Static Models",
         "parameters": [
           {
@@ -1031,14 +1028,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Statistics"
         ]
       }
     },
     "v1/portfolios/staticmodel": {
       "post": {
-        "tags": [
-          "portfolios"
-        ],
         "summary": "Calculate Static Model",
         "parameters": [
           {
@@ -1180,14 +1177,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Portfolio Modeling"
         ]
       }
     },
     "v1/export/{ticker}": {
       "get": {
-        "tags": [
-          "export"
-        ],
         "summary": "Export CSV",
         "parameters": [
           {
@@ -1202,44 +1199,16 @@
             "example": "JPM"
           },
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/start"
           },
           {
-            "name": "end",
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/end"
           },
           {
-            "name": "unadj",
-            "in": "query",
-            "description": "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/unadj"
+          },
+          {
+            "$ref": "#/components/parameters/olhv"
           }
         ],
         "responses": {
@@ -1277,6 +1246,9 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "export"
         ]
       }
     }
