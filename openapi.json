@@ -12,11 +12,16 @@
   },
   "servers": [
     {
-      "url": "https://ftlightning.fasttrack.net/v1"
+      "url": "https://ftlightning.fasttrack.net/{basePath}",
+      "variables": {
+        "basePath": {
+          "default": "v2"
+        }
+      }
     }
   ],
   "paths": {
-    "/auth/login": {
+    "auth/login": {
       "get": {
         "tags": [
           "authentication"
