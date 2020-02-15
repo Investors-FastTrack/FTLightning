@@ -43,3 +43,18 @@ function login(){
     )
 ```
 
+### Save Token Locally
+Save the retrieved token locally and reuse until expires. 
+
+### Token Expiration
+The token is reset daily at approximately 
+- 7:20am EST
+- 6:35PM EST
+- 8:20pm EST
+
+Request new tokens periodically by calling the /auth/login endpoint again.
+
+Any time an expired or invalid token is used, FT Lightning returns a -5500000 Invalid Token error. 
+
+See all errors here: [Error Codes](../01b-Errors.md)
+

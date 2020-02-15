@@ -15,7 +15,7 @@ The appid and token recieved in the [/auth/login](./01b-Login-Example.md) reques
 
 Once the data is downloaded, the code pops and alert to indicate JPM's most recent closing price.
 
-Read more about the Bulk Data format in the [/data/dates example](./02-date_javascript.md)
+
 
 
 ``` javascript
@@ -52,3 +52,6 @@ function getData(){
     )
 }
 ```
+
+### Bulk Data Format
+Read more about the Bulk Data format and how to translate array to date/price values: [/data/dates example](./02-date_javascript.md)
