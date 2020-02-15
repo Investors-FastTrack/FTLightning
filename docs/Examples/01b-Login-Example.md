@@ -1,14 +1,10 @@
-# Login & Get Data
+# Login
 
-The example below is broken into two parts.
+The code below shows how exchange your account number, password, and appid for a temporary token.
 
-First, you must request a token from the login end point. That token should be saved locally and used in the header of every subsequent request.
+The temporary token and appid must be passed as a header to all other FT Cloud API requests.
 
-Second, request dividend adjusted data from the data end point. The token recieved in the login request will be used in the second request header
-
-> ### Authentication
-> All requests to the API (except /auth/login) must contain the header **appid** and **token**
-
+>Save the token as a local variable. The request to the /auth/login end point only needs to be called once.
 
 ### Request Token
 
@@ -46,40 +42,4 @@ function login(){
       }
     )
 ```
-#### Request Data
-Request all dividend adjusted closing prices for the ticker JPM. Include your app id and token recieved in the request above.
 
-``` javascript
-
-function getData(){
-  var ticker = 'JPM' 
-  var url = 'https://ftlightning.fasttrack.net/v1/data/' + ticker + '/divadjprices'
-  fetch(url,
-      {headers: {
-        "appid" : appid ,
-        "token" : token
-        }}
-    )
-  .then(
-      function (response) {
-        return response.json();
-      }
-    )
-  .then(
-    function (ftdata) {
-        if (ftdata.err == null) {
-          var lastprice = ftdata.prices[ftdata.prices.length-1]
-          alert("The last price of JPM is: $" + lastprice)
-        }
-        else {
-          alert(ftdata.err.message);
-        }
-      }
-    )
-  .catch(
-    function (err) {
-      alert(err.message);
-      }
-    )
-}
-```

@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://ftlightning.fasttrack.net/"
+      "url": "https://ftlightning.fasttrack.net"
     }
   ],
   "paths": {
