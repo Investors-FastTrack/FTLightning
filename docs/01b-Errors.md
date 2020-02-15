@@ -16,7 +16,7 @@ Best practice is to test if the "err" object is null. If it is not null, then th
 Error Code | Definition 
 ---------|----------
 -1500000 | Invalid ticker  
--1510000 | Subscription required to access this data. Only indexes will return data. Search view https://ftlightning.fasttrack.net/v1/family/All%20Index for list of available indexes
+-1510000 | Subscription required to access this data. Only indexes will return data. Search view [https://ftlightning.fasttrack.net/v1/family/All%20Index] for list of available indexes
 -1600000 | Invalid start and/or end date
 -1700000 | Invalid/Unable to read post body 
 -2000000 | Family does not exist. Must be exact match. Use search to get exact name

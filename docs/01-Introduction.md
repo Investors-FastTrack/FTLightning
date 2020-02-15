@@ -4,19 +4,21 @@
 FT Lightning is Investors FastTrack's data API organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
 
 >### Base URL
->https://ftlightning.fasttrack.net/v1/
+>[https://ftlightning.fasttrack.net/v1/]
 
 ### Free Trial
-FastTrack offers a free API trial. No credit card is necesarry. 
+FastTrack offers a free API trial. No credit card is necessary. 
 
 The trial allows full access to our index database, covering over 1,200 stock, bond, commodities, and other global indexes. 
 
-[Sign for a trial here](https://subscribe.fasttrack.net/landing/api/apilanding.html)
+#### [Click here to Sign for a Trial](https://subscribe.fasttrack.net/landing/api/apilanding.html)
 
 
 
 ### FastTrack Database
-FastTrack's database includes all US listed Mutual Fund, ETF, and Stocks (approx 30k securities). We additionally provide over 1200+ global indexes. 
+FastTrack's database includes all US listed Mutual Fund, ETF, and Stocks (approx 30k securities). We additionally provide over 1200+ global indexes.
+
+Search and chart our database here: https://ftcloud.fasttrack.net/web/search
 
 
 ### Available Data
