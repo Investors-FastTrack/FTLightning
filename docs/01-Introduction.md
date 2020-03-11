@@ -34,7 +34,7 @@ The following items are available for all tickers in the FastTrack database
 - Name
 - Shares Outstanding
 - Market Capitalization
-- 52 Week Hhigh
+- 52 Week High
 - 52 Week Low
 - Inception Date
 - Yield (Income only)
@@ -42,7 +42,7 @@ The following items are available for all tickers in the FastTrack database
 
 #### Risk
 - Alpha
-- Annulized Return
+- Annualized Return
 - Beta
 - Correlation
 - FastTrack Alpha
@@ -67,7 +67,7 @@ The following items are available for all tickers in the FastTrack database
 - 1, 3, 6, 9 months
 - 1, 3, 5, 10 year
 - Year to date
-- Yearly total retun 1988 to current year
+- Yearly total return 1988 to the current year
 
 #### Dividends
 - Short Term
