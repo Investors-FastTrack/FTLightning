@@ -30,6 +30,15 @@ The following items are available for all tickers in the FastTrack database
 - Daily Open, High, Low Prices
 - Daily volume
 
+#### Descriptive
+- Name
+- Shares Outstanding
+- Market Capitalization
+- 52 Week Hhigh
+- 52 Week Low
+- Inception Date
+- Yield (Income only)
+- Yield Total (Income, Short, Long Term)
 
 #### Risk
 - Alpha
@@ -40,9 +49,10 @@ The following items are available for all tickers in the FastTrack database
 - RSI
 - Sharpe Ratio
 - Standard Deviation
+- Total Return
+- Treynor
 - Ulcer Index
 - Ulcer Performance Index
-- Total Return
 
 #### Drawdowns
 - Max Drawdown
@@ -50,6 +60,7 @@ The following items are available for all tickers in the FastTrack database
 - Max Draw Recovery Length
 - Max Draw Peak Date
 - Max Draw Valley Date
+
 #### Returns
 - ANY Time Period
 - 1 and 5 days
@@ -57,6 +68,11 @@ The following items are available for all tickers in the FastTrack database
 - 1, 3, 5, 10 year
 - Year to date
 - Yearly total retun 1988 to current year
+
+#### Dividends
+- Short Term
+- Long Term
+- Income
 
 #### Portfolio Modeling
 - Static models
