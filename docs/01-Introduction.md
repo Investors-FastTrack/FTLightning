@@ -74,6 +74,10 @@ The following items are available for all tickers in the FastTrack database
 - Long Term
 - Income
 
+
+#### Moving Average
+- Any length moving average for any day back to 1988
+
 #### Portfolio Modeling
 - Static models
 - Momentum models
