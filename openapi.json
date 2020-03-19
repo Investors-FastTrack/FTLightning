@@ -555,9 +555,8 @@
         ]
       }
     },
-
     "v1/data/dates": {
-      "get":{
+      "get": {
         "tags": [
           "dates"
         ],
@@ -1445,7 +1444,7 @@
             "description": "market days ellapsed since the first day in the database (9/1/88)"
           },
           "juliandate": {
-            "type": "string",
+            "type": "integer",
             "description": "julian representation of the date"
           },
           "strdate": {
@@ -2073,12 +2072,12 @@
         "style": "form",
         "explode": true,
         "schema": {
-          "type":"integer" ,
-          "default": 0,
+          "type": "integer",
           "enum": [
             0,
             1
-          ]
+          ],
+          "default": 0
         }
       }
     },
