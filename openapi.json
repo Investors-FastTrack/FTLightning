@@ -696,7 +696,7 @@
     },
     "v1/stats/{ticker}": {
       "get": {
-        "summary": "Single Ticker Stats",
+        "summary": "One Ticker",
         "parameters": [
           {
             "name": "ticker",
@@ -837,7 +837,7 @@
     },
     "v1/stats/xmulti": {
       "post": {
-        "summary": "Multiple Ticker Stats",
+        "summary": "Multiple Tickers",
         "parameters": [
           {
             "name": "start",
