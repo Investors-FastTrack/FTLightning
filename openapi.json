@@ -1253,7 +1253,7 @@
         }
       ],
       "get": {
-        "summary": "Ticker's Dividends",
+        "summary": "Dividends",
         "tags": [
           "Data - Bulk"
         ],
