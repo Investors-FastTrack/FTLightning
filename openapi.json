@@ -135,6 +135,9 @@
                 1
               ]
             }
+          },
+          {
+            "$ref": "#/components/parameters/olhv"
           }
         ],
         "responses": {
@@ -221,6 +224,9 @@
                 1
               ]
             }
+          },
+          {
+            "$ref": "#/components/parameters/olhv"
           }
         ],
         "requestBody": {
@@ -1449,6 +1455,18 @@
             "type": "number"
           },
           "unadjprice": {
+            "type": "number"
+          },
+          "open": {
+            "type": "number"
+          },
+          "high": {
+            "type": "number"
+          },
+          "low": {
+            "type": "number"
+          },
+          "volume": {
             "type": "number"
           }
         }
