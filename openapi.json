@@ -171,17 +171,6 @@
         "summary": "Data Range - Multiple Tickers",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
-          },
-          {
             "name": "start",
             "in": "query",
             "description": "First day in the date range of all calculations/requests",
@@ -1020,7 +1009,7 @@
             "description": "bad input parameter"
           }
         },
-        "description": "Returns calulated statistics on multiple  ticker over the date range",
+        "description": "Returns calulated statistics on multiple ticker over the date range",
         "security": [
           {
             "appid": []
@@ -1249,6 +1238,46 @@
         ],
         "tags": [
           "export"
+        ]
+      }
+    },
+    "/v1/data/{ticker}/dividends": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Ticker's Dividends",
+        "tags": [
+          "Data - Bulk"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDividends"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-data-ticker-dividends",
+        "description": "Retrieve all dividends for a specific ticker",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
         ]
       }
     }
@@ -1852,6 +1881,44 @@
           "ytd": {
             "type": "string",
             "description": "year to date total return from the \"end\" parameter"
+          }
+        }
+      },
+      "FTDividends": {
+        "title": "FTDividends",
+        "type": "object",
+        "properties": {
+          "numdivs": {
+            "type": "string",
+            "description": "number of dividends returned in the response"
+          },
+          "datarange": {
+            "type": "array",
+            "description": "",
+            "items": {
+              "$ref": "#/components/schemas/FTDividend"
+            }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
+          }
+        }
+      },
+      "FTDividend": {
+        "title": "FTDividend",
+        "type": "object",
+        "properties": {
+          "date": {
+            "$ref": "#/components/schemas/FTDate"
+          },
+          "type": {
+            "type": "string"
+          },
+          "type_code": {
+            "type": "string"
+          },
+          "value": {
+            "type": "number"
           }
         }
       }
