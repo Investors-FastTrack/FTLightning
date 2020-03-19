@@ -292,6 +292,12 @@
                 1
               ]
             }
+          },
+          {
+            "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "$ref": "#/components/parameters/yield"
           }
         ],
         "responses": {
@@ -328,35 +334,13 @@
         "summary": "Bulk Data - Multiple Tickers",
         "parameters": [
           {
-            "name": "yield",
-            "in": "query",
-            "description": "flag to exclude yield",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "enum": [
-                "0",
-                "1"
-              ]
-            }
+            "$ref": "#/components/parameters/unadj"
           },
           {
-            "name": "unadj",
-            "in": "query",
-            "description": "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "$ref": "#/components/parameters/yield"
           }
         ],
         "requestBody": {
@@ -571,53 +555,9 @@
         ]
       }
     },
-    "v1/data/{ticker}/yield": {
-      "get": {
-        "summary": "Yield",
-        "parameters": [
-          {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns ticker's trailing 12 month yield. All other objects are null",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
-        "tags": [
-          "Data - Bulk"
-        ]
-      }
-    },
+
     "v1/data/dates": {
-      "get": {
+      "get":{
         "tags": [
           "dates"
         ],
@@ -2123,6 +2063,22 @@
           "type": "integer",
           "description": "-1 returns all data points.",
           "default": 1000
+        }
+      },
+      "yield": {
+        "name": "yield",
+        "in": "query",
+        "description": "flag to include or exclude yield",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type":"integer" ,
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ]
         }
       }
     },
