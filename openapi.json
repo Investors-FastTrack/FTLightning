@@ -377,7 +377,7 @@
     },
     "v1/data/{ticker}/divadjprices": {
       "get": {
-        "summary": "Closing Prices - Dividend Adjusted",
+        "summary": "Closing Prices - Adjusted",
         "parameters": [
           {
             "name": "ticker",
