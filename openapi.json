@@ -1143,6 +1143,14 @@
           },
           {
             "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "describe",
+            "description": "Include or not include ticker and name in the first two lines of response."
           }
         ],
         "responses": {
