@@ -18,9 +18,6 @@
   "paths": {
     "v1/auth/login": {
       "get": {
-        "tags": [
-          "authentication"
-        ],
         "summary": "Login",
         "parameters": [
           {
@@ -31,7 +28,8 @@
             "explode": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "account number"
           },
           {
             "name": "pass",
@@ -41,7 +39,8 @@
             "explode": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "password"
           },
           {
             "name": "appid",
@@ -51,7 +50,8 @@
             "explode": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "application id received with sign up email"
           }
         ],
         "responses": {
@@ -66,7 +66,10 @@
             }
           }
         },
-        "description": "server authentication. The returned token must be passed with all other API calls"
+        "description": "server authentication. The returned token must be passed with all other API calls",
+        "tags": [
+          "1 Auth"
+        ]
       }
     },
     "v1/data/{ticker}/range": {
@@ -74,67 +77,19 @@
         "summary": "Data Range",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           },
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/start"
           },
           {
-            "name": "end",
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/end"
           },
           {
-            "name": "d",
-            "in": "query",
-            "description": "Use this to return a single date in the \"data/{ticker}/range\" function. This over rides any value set for start and end.",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/d"
           },
           {
-            "name": "unadj",
-            "in": "query",
-            "description": "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/unadj"
           },
           {
             "$ref": "#/components/parameters/olhv"
@@ -165,73 +120,35 @@
           }
         ],
         "tags": [
-          "Data - Date Range"
+          "2 Market Data"
         ]
-      }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ]
     },
     "v1/data/xmulti/range": {
       "post": {
         "summary": "Data Range - Multiple Tickers",
         "parameters": [
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/start"
           },
           {
-            "name": "end",
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/end"
           },
           {
-            "name": "d",
-            "in": "query",
-            "description": "Use this to return a single date in the \"data/{ticker}/range\" function. This over rides any value set for start and end.",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/d"
           },
           {
-            "name": "unadj",
-            "in": "query",
-            "description": "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/unadj"
           },
           {
             "$ref": "#/components/parameters/olhv"
           }
         ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/TickerList"
-        },
         "responses": {
           "200": {
             "description": "data points associated with ticker and parameters",
@@ -258,8 +175,17 @@
         ],
         "operationId": "",
         "tags": [
-          "Data - Date Range"
-        ]
+          "2 Market Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        }
       }
     },
     "v1/data/{ticker}": {
@@ -267,31 +193,10 @@
         "summary": "Bulk Data",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           },
           {
-            "name": "unadj",
-            "in": "query",
-            "description": "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/unadj"
           },
           {
             "$ref": "#/components/parameters/olhv"
@@ -325,7 +230,7 @@
           }
         ],
         "tags": [
-          "Data"
+          "Other Data"
         ]
       }
     },
@@ -344,7 +249,16 @@
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/TickerList"
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              },
+              "examples": {
+                "example-1": {}
+              }
+            }
+          }
         },
         "responses": {
           "200": {
@@ -371,7 +285,7 @@
           }
         ],
         "tags": [
-          "Data"
+          "Other Data"
         ]
       }
     },
@@ -380,15 +294,7 @@
         "summary": "Closing Prices - Adjusted",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           }
         ],
         "responses": {
@@ -416,7 +322,7 @@
           }
         ],
         "tags": [
-          "Data"
+          "Other Data"
         ]
       }
     },
@@ -425,15 +331,7 @@
         "summary": "Closing Prices - Unadjusted",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           }
         ],
         "responses": {
@@ -461,7 +359,7 @@
           }
         ],
         "tags": [
-          "Data"
+          "Other Data"
         ]
       }
     },
@@ -470,15 +368,7 @@
         "summary": "Inception Date",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           }
         ],
         "responses": {
@@ -506,7 +396,7 @@
           }
         ],
         "tags": [
-          "Data"
+          "Other Data"
         ]
       }
     },
@@ -515,15 +405,7 @@
         "summary": "Name",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           }
         ],
         "responses": {
@@ -551,15 +433,12 @@
           }
         ],
         "tags": [
-          "Data"
+          "Other Data"
         ]
       }
     },
     "v1/data/dates": {
       "get": {
-        "tags": [
-          "dates"
-        ],
         "summary": "Dates",
         "parameters": [],
         "responses": {
@@ -586,14 +465,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Other Data"
         ]
       }
     },
     "v1/family/{strFamily}": {
       "get": {
-        "tags": [
-          "family"
-        ],
         "summary": "Family",
         "parameters": [
           {
@@ -630,14 +509,14 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Other Data"
         ]
       }
     },
     "v1/family/": {
       "get": {
-        "tags": [
-          "family"
-        ],
         "summary": "Family Search",
         "parameters": [
           {
@@ -691,6 +570,9 @@
           {
             "token": []
           }
+        ],
+        "tags": [
+          "Other Data"
         ]
       }
     },
@@ -699,111 +581,37 @@
         "summary": "One Ticker",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           },
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
             "schema": {
               "type": "string",
-              "format": "yyyy-MM-dd"
-            }
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
-          },
-          {
-            "name": "basis",
-            "in": "query",
-            "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "default": "SP-DA"
+              "example": "VMMXX"
             },
-            "example": "FBIOX"
-          },
-          {
-            "name": "len",
             "in": "query",
-            "description": "Correlation length, described in market days",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 21
-            },
-            "example": 10
-          },
-          {
-            "name": "maxdraw",
-            "in": "query",
-            "description": "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
-          },
-          {
-            "name": "chart",
-            "in": "query",
-            "description": "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
-          },
-          {
-            "name": "count",
-            "in": "query",
-            "description": "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "minimum": -1,
-              "type": "integer",
-              "description": "-1 returns all data points.",
-              "default": 1000
-            }
+            "name": "riskfree",
+            "description": "ticker or % rate of return used as the \"risk free rate\" in alpha calculation. Default is VMMXX, Vanguard Money Market Fund"
           }
         ],
         "responses": {
@@ -831,7 +639,7 @@
           }
         ],
         "tags": [
-          "Charting and Stats"
+          "3 Stats"
         ]
       }
     },
@@ -840,104 +648,35 @@
         "summary": "Multiple Tickers",
         "parameters": [
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/start"
           },
           {
-            "name": "end",
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/end"
           },
           {
-            "name": "basis",
-            "in": "query",
-            "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "default": "SP-DA"
-            },
-            "example": "FBIOX"
+            "$ref": "#/components/parameters/basis"
           },
           {
-            "name": "len",
-            "in": "query",
-            "description": "Correlation length, described in market days",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 21
-            },
-            "example": 10
+            "$ref": "#/components/parameters/len"
           },
           {
-            "name": "maxdraw",
-            "in": "query",
-            "description": "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/maxdraw"
           },
           {
-            "name": "chart",
-            "in": "query",
-            "description": "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/chart"
           },
           {
-            "name": "count",
-            "in": "query",
-            "description": "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "minimum": -1,
-              "type": "integer",
-              "description": "-1 returns all data points.",
-              "default": 1000
-            }
+            "$ref": "#/components/parameters/count"
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/TickerList"
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
         },
         "responses": {
           "200": {
@@ -964,7 +703,7 @@
           }
         ],
         "tags": [
-          "Charting and Stats"
+          "3 Stats"
         ]
       }
     },
@@ -1085,9 +824,6 @@
             }
           }
         ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/FTStaticModelParameters"
-        },
         "responses": {
           "200": {
             "description": "data points associated with ticker",
@@ -1113,8 +849,17 @@
           }
         ],
         "tags": [
-          "Portfolio Modeling"
-        ]
+          "4 Portfolio Modeling"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTStaticModelParameters"
+              }
+            }
+          }
+        }
       }
     },
     "v1/export/{ticker}": {
@@ -1122,15 +867,7 @@
         "summary": "Export CSV",
         "parameters": [
           {
-            "name": "ticker",
-            "in": "path",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "string"
-            },
-            "example": "JPM"
+            "$ref": "#/components/parameters/ticker"
           },
           {
             "$ref": "#/components/parameters/start"
@@ -1143,14 +880,6 @@
           },
           {
             "$ref": "#/components/parameters/olhv"
-          },
-          {
-            "schema": {
-              "type": "boolean"
-            },
-            "in": "query",
-            "name": "describe",
-            "description": "Include or not include ticker and name in the first two lines of response."
           }
         ],
         "responses": {
@@ -1190,19 +919,14 @@
           }
         ],
         "tags": [
-          "export"
+          "6 Export"
         ]
       }
     },
     "/v1/data/{ticker}/dividends": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "ticker",
-          "in": "path",
-          "required": true
+          "$ref": "#/components/parameters/ticker"
         }
       ],
       "get": {
@@ -1238,9 +962,164 @@
           }
         ],
         "tags": [
-          "Data - Dividends"
+          "5 Dividends"
         ]
       }
+    },
+    "v1/report/embed.html": {
+      "get": {
+        "summary": "Embed Chart (iframe)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "object",
+                  "description": "simple HTML webpage that renders in any browser"
+                },
+                "examples": {}
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-chart-report.html",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "90a4ae,c1d5e0,62757f",
+              "pattern": "[hex],[hex],[hex]"
+            },
+            "in": "query",
+            "name": "colors",
+            "description": "comma separated values for chart line colors. color order is applied the same as \"tickers\". Specify hex code and do not include \"#\""
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "000000",
+              "pattern": ""
+            },
+            "in": "query",
+            "name": "fore",
+            "description": "foreground (text) color of chart and report in hex code (do not include \"#\")"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "ffccbc",
+              "default": "FFFFFF"
+            },
+            "in": "query",
+            "name": "bg",
+            "description": "background color of chart and report in hex code (do not include \"#\")"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "1",
+              "default": "1",
+              "enum": [
+                "1",
+                "0"
+              ]
+            },
+            "in": "query",
+            "name": "showdates",
+            "description": "toggle to show or hide date selectors on chart"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "1",
+              "default": "1",
+              "enum": [
+                "1",
+                "0"
+              ]
+            },
+            "in": "query",
+            "name": "showheader",
+            "description": "toggle to show or hide header on report"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "1",
+              "example": "1",
+              "enum": [
+                "1",
+                "0"
+              ]
+            },
+            "in": "query",
+            "name": "showreport",
+            "description": "toggle to show or hide header of report"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "JPM,SPY,XLF",
+              "pattern": "[ticker],[ticker],[ticker]"
+            },
+            "in": "query",
+            "name": "tickers",
+            "required": true,
+            "description": "comma separated list of tickers to display in chart, and report"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "y",
+                "1",
+                "2",
+                "3",
+                "6",
+                "9",
+                "12",
+                "24",
+                "36",
+                "60",
+                "84",
+                "120",
+                "180",
+                "240",
+                "m"
+              ]
+            },
+            "in": "query",
+            "name": "datebuttons",
+            "description": "comma separated list of date shortcut buttons to show. defined as number of months ie 24 = two years, 60 = 5 years"
+          }
+        ],
+        "security": [
+          {
+            "query-appid": []
+          },
+          {
+            "query-token": []
+          }
+        ],
+        "description": "Embed custom FastTrack charts on your webpage with an iframe.",
+        "tags": [
+          "7 iFrame Chart"
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -1276,14 +1155,17 @@
       },
       "FTData": {
         "type": "object",
+        "description": "Contains various pricing data points for a single ticker. View [docs] (https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md?srn=gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md#data-date-translation]) for information on pricing array translation to dates",
         "properties": {
           "ticker": {
             "type": "string",
-            "example": "SPY"
+            "example": "SPY",
+            "description": "Ticker symbol"
           },
           "name": {
             "type": "string",
-            "example": "S&P 500"
+            "example": "S&P 500",
+            "description": "Ticker name"
           },
           "prices": {
             "type": "array",
@@ -1314,18 +1196,49 @@
           },
           "strstartmarketday": {
             "type": "string",
-            "example": "9/1/88"
+            "example": "9/1/88",
+            "description": "First day of data for ticker symbol. YYYY-MM-DD format."
           },
           "intstartmarketday": {
             "type": "integer",
-            "example": 1000
+            "example": 1000,
+            "description": "First day of data for symbol. [Market day format](https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md?srn=gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md#market-days)"
           },
           "yield": {
             "type": "number",
-            "example": 3.02
+            "example": 3.02,
+            "description": "52 week SEC yield"
           },
           "err": {
             "$ref": "#/components/schemas/err"
+          },
+          "volumes": {
+            "type": "array",
+            "description": "Array of daily volumes. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+            "items": {
+              "type": "number"
+            }
+          },
+          "opens": {
+            "type": "array",
+            "description": "Array of open prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+            "items": {
+              "type": "number"
+            }
+          },
+          "lows": {
+            "type": "array",
+            "description": "Array of dialy low prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+            "items": {
+              "type": "number"
+            }
+          },
+          "highs": {
+            "type": "array",
+            "description": "Array of daily high prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+            "items": {
+              "type": "number"
+            }
           }
         }
       },
@@ -1341,18 +1254,22 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        }
+        },
+        "description": "List of FTDataList objects containing bulk pricing data for multiple tickers "
       },
       "FTDataRange": {
         "type": "object",
+        "description": "Describes data for a specific date range",
         "properties": {
           "ticker": {
             "type": "string",
-            "example": "SPY"
+            "example": "SPY",
+            "description": "Ticker symbol"
           },
           "name": {
             "type": "string",
-            "example": "S&P 500"
+            "example": "S&P 500",
+            "description": "Name of security"
           },
           "datarange": {
             "type": "array",
@@ -1390,7 +1307,8 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        }
+        },
+        "description": "List of FTDataRAnge objects containing pricing data for multiple tickers over a date range"
       },
       "FTPrice": {
         "type": "object",
@@ -1399,24 +1317,31 @@
             "$ref": "#/components/schemas/FTDate"
           },
           "price": {
-            "type": "number"
+            "type": "number",
+            "description": "Adjusted closing priceicker"
           },
           "unadjprice": {
-            "type": "number"
+            "type": "number",
+            "description": "unadjusted closing price of ticker"
           },
           "open": {
-            "type": "number"
+            "type": "number",
+            "description": "adjusted daily open price of ticker"
           },
           "high": {
-            "type": "number"
+            "type": "number",
+            "description": "adjusted daily high price of ticker"
           },
           "low": {
-            "type": "number"
+            "type": "number",
+            "description": "adjusted daily low price of ticker"
           },
           "volume": {
-            "type": "number"
+            "type": "number",
+            "description": "adjusted daily volume of ticker"
           }
-        }
+        },
+        "description": "Various pricing pricing data points for a single day"
       },
       "FTDates": {
         "type": "object",
@@ -1459,7 +1384,8 @@
             "type": "string",
             "description": "MM-dd-yy formatted date"
           }
-        }
+        },
+        "description": "Contains date information of a single date"
       },
       "FTFamily": {
         "type": "object",
@@ -1483,15 +1409,18 @@
       },
       "FTReturns": {
         "type": "object",
+        "title": "",
+        "description": "Object containing various annualized/total return values and history of yearly total returns",
         "properties": {
           "annualized": {
-            "$ref": "#/components/schemas/FTReturns_annualized"
+            "$ref": "#/components/schemas/FTReturn"
           },
           "total": {
-            "$ref": "#/components/schemas/FTReturns_annualized"
+            "$ref": "#/components/schemas/FTReturn"
           },
           "years": {
             "type": "array",
+            "description": "array containing total return, by year, of the ticker",
             "items": {
               "$ref": "#/components/schemas/FTYearReturns"
             }
@@ -1502,19 +1431,47 @@
         "type": "object",
         "properties": {
           "year": {
-            "type": "string"
+            "type": "string",
+            "description": "Year total return is calculated (Jan 1 to Dec 31)"
           },
           "returns": {
-            "type": "string"
+            "type": "string",
+            "description": "Total return for the year"
           }
-        }
+        },
+        "x-examples": {
+          "example-1": {}
+        },
+        "description": "Year and total return value for that year"
       },
       "FTRisk": {
         "type": "object",
+        "description": "Various risk and statistical measure of a security. ",
+        "title": "",
         "properties": {
+          "alpha": {
+            "type": "string",
+            "description": "alpha -  a measure of outperformance versus a the benchmark"
+          },
+          "beta": {
+            "type": "string",
+            "description": "beta against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
+          },
+          "corr": {
+            "type": "string",
+            "description": "correlation against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
+          },
+          "ftalpha": {
+            "type": "string",
+            "description": "FastTrack proprietary calculation measuring risk, return, and correlation"
+          },
           "sd": {
             "type": "string",
             "description": "standard deviation over the time period"
+          },
+          "sharpe": {
+            "type": "string",
+            "description": "sharpe ration against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
           },
           "ui": {
             "type": "string",
@@ -1524,29 +1481,21 @@
             "type": "string",
             "description": "ulcer performance index against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
           },
-          "sharpe": {
-            "type": "string",
-            "description": "sharpe ration against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
-          },
-          "corr": {
-            "type": "string",
-            "description": "correlation against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
-          },
-          "alpha": {
-            "type": "string"
-          },
-          "beta": {
-            "type": "string",
-            "description": "beta against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
-          },
-          "ftalpha": {
-            "type": "string",
-            "description": "FastTrack proprietary calculation measuring risk, return, and correlation"
-          },
           "rsi": {
             "type": "string",
             "description": "Relative strength index"
+          },
+          "r_squared": {
+            "type": "string",
+            "description": "Coefficient of determination - the percentage of a fund or security's movements that can be explained by movements in a basis"
+          },
+          "treynor": {
+            "type": "string",
+            "description": "Treynor ratio - measure risk/ reward"
           }
+        },
+        "x-examples": {
+          "example-1": {}
         }
       },
       "FTDescribe": {
@@ -1575,17 +1524,40 @@
           "name": {
             "type": "string",
             "description": "Security name"
+          },
+          "price": {
+            "type": "string",
+            "description": "Closing price on \"end date\""
+          },
+          "price_previous": {
+            "type": "string",
+            "description": "Closing price for the day before \"end date\""
+          },
+          "security_type": {
+            "type": "string",
+            "description": "ETF, Mutual Fund, Stock, or Index"
+          },
+          "startdate": {
+            "$ref": "#/components/schemas/FTDate"
+          },
+          "yield_all": {
+            "type": "string",
+            "description": "52 week yield of all dividend types (income, short and long)"
           }
-        }
+        },
+        "description": "Various descriptive data points of security"
       },
       "FTStats": {
         "type": "object",
+        "description": "various stats and data points for a ticker or model",
         "properties": {
           "ticker": {
-            "type": "string"
+            "type": "string",
+            "description": "Ticker symbol"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of securioty"
           },
           "dtestart": {
             "$ref": "#/components/schemas/FTDate"
@@ -1612,8 +1584,7 @@
           "chartprices": {
             "$ref": "#/components/schemas/FTChartData"
           }
-        },
-        "description": "various data stats and points for requested tickers"
+        }
       },
       "FTStatsList": {
         "type": "object",
@@ -1627,7 +1598,8 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        }
+        },
+        "description": "Array of FTStats objects"
       },
       "FTChartData": {
         "type": "object",
@@ -1663,86 +1635,95 @@
           "dates": {
             "$ref": "#/components/schemas/FTDates"
           }
-        }
+        },
+        "description": "Pre calculated data used to draw charts"
       },
       "FTMaxDraw": {
         "type": "object",
+        "description": "Details of maximum drawdown",
         "properties": {
           "maxdrawdown": {
-            "type": "string"
+            "type": "string",
+            "description": "maximum observed loss of a time period."
           },
           "maxdrawlength": {
-            "type": "string"
+            "type": "string",
+            "description": "length of time, in months, of the maximum draw down"
           },
           "recoverylength": {
-            "type": "string"
+            "type": "string",
+            "description": "lenth of time, in months, of time to reach a new peak after reaching draw down bottom"
           },
           "peakdate": {
-            "type": "string"
+            "type": "string",
+            "description": "day the draw down started"
           },
           "valleydate": {
-            "type": "string"
+            "type": "string",
+            "description": "day the drawdown reached it bottom"
           }
         }
       },
       "err": {
         "type": "object",
+        "description": "error responses. see full list of error codes [here](https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/01b-Errors.md?srn=gh/investors-fasttrack/ftlightning/docs/01b-Errors.md)",
+        "title": "",
         "properties": {
           "code": {
             "type": "string",
-            "example": "-5000000"
+            "example": "-5000000",
+            "description": "numeric code of error. see full list of error codes [here](https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/01b-Errors.md?srn=gh/investors-fasttrack/ftlightning/docs/01b-Errors.md)"
           },
           "message": {
             "type": "string",
-            "example": "invalid ticker"
+            "example": "invalid ticker",
+            "description": "text based error message"
           },
           "link": {
             "type": "string",
-            "format": "url"
+            "format": "url",
+            "description": "link describing error"
           }
         }
       },
       "FTStaticModelParameters": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FTStaticModelParameters"
+            }
+          }
+        },
         "type": "object",
         "properties": {
           "model": {
             "type": "array",
-            "description": "Array of FTPosition objects that contain the model portfolio to calculate",
-            "example": [
-              {
-                "ticker": "SPY",
-                "weight": "60"
-              },
-              {
-                "ticker": "TLT",
-                "weight": "40"
-              }
-            ],
             "items": {
               "$ref": "#/components/schemas/FTPosition"
             }
           },
           "start": {
             "type": "string",
-            "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted",
-            "example": "2000-12-31"
+            "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted"
           },
           "rebalanceperiod": {
             "type": "string",
             "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
-            "example": "month",
             "enum": [
-              "week",
-              "month",
-              "quarter",
-              "annual",
-              "[number of market days]"
+              "'week'",
+              "'month'",
+              "'quarter'",
+              "'annual'",
+              "'[number of market days]'"
             ]
           },
           "marginrate": {
             "type": "number",
-            "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
-            "default": 0
+            "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+          },
+          "seed": {
+            "type": "number",
+            "description": "value of portfolio on the first day of trading"
           }
         }
       },
@@ -1772,7 +1753,8 @@
             "$ref": "#/components/schemas/FTDate"
           },
           "totalvalue": {
-            "type": "string"
+            "type": "string",
+            "description": "Total dollar value of portfolio (change from $100,000 on model's start date)"
           },
           "positionlist": {
             "type": "array",
@@ -1810,50 +1792,58 @@
           }
         }
       },
-      "FTReturns_annualized": {
+      "FTReturn": {
         "type": "object",
+        "description": "Annualized (CAGR) / Total returns for the described time periods",
+        "title": "",
         "properties": {
           "period": {
             "type": "string",
-            "description": "total dividend adjusted return from start to end"
+            "description": "annualized/total dividend adjusted return from start to end"
           },
           "oneday": {
-            "type": "string"
+            "type": "string",
+            "description": "one day annualized/total return"
           },
           "fiveday": {
-            "type": "string"
+            "type": "string",
+            "description": "five day annualized/total return"
           },
           "onemonth": {
-            "type": "string"
+            "type": "string",
+            "description": "one month annualized/total return"
           },
           "threemonths": {
-            "type": "string"
+            "type": "string",
+            "description": "three month annualized/total return"
           },
           "sixmonths": {
-            "type": "string"
+            "type": "string",
+            "description": "six month annualized/total return"
           },
           "ninemonths": {
-            "type": "string"
+            "type": "string",
+            "description": "nine month annualized/total return"
           },
           "one": {
             "type": "string",
-            "description": "one year total return from the \"end\" parameter"
+            "description": "one year annualized/total return from the \"end\" parameter"
           },
           "three": {
             "type": "string",
-            "description": "three year total return from the \"end\" parameter"
+            "description": "three year annualized/total return from the \"end\" parameter"
           },
           "five": {
             "type": "string",
-            "description": "five year total return from the \"end\" parameter"
+            "description": "five year annualized/total return from the \"end\" parameter"
           },
           "ten": {
             "type": "string",
-            "description": "ten year total return from the \"end\" parameter"
+            "description": "ten year annualized/total return from the \"end\" parameter"
           },
           "ytd": {
             "type": "string",
-            "description": "year to date total return from the \"end\" parameter"
+            "description": "year to date annualized/total return from the \"end\" parameter"
           }
         }
       },
@@ -1867,7 +1857,7 @@
           },
           "datarange": {
             "type": "array",
-            "description": "",
+            "description": "Array containing dividend objects",
             "items": {
               "$ref": "#/components/schemas/FTDividend"
             }
@@ -1885,14 +1875,33 @@
             "$ref": "#/components/schemas/FTDate"
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "Income, Short Term, or Long Term"
           },
           "type_code": {
-            "type": "string"
+            "type": "string",
+            "description": "Code describing type"
           },
           "value": {
-            "type": "number"
+            "type": "number",
+            "description": "Dollar value of dividend"
           }
+        }
+      },
+      "TickerArray": {
+        "title": "TickerArray",
+        "type": "array",
+        "description": "list of requested tickers ",
+        "items": {
+          "type": "string"
+        },
+        "x-examples": {
+          "Ticker Array": [
+            "JPM",
+            "TLT",
+            "SPY",
+            "SP-DA"
+          ]
         }
       }
     },
@@ -1924,6 +1933,7 @@
       "ticker": {
         "name": "ticker",
         "in": "path",
+        "description":"ticker symbol",
         "required": true,
         "style": "simple",
         "explode": false,
@@ -2089,49 +2099,30 @@
         }
       }
     },
-    "requestBodies": {
-      "TickerList": {
-        "description": "A JSON Array containing requested tickers",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "array",
-              "example": [
-                "SPY",
-                "TLT",
-                "JPM",
-                "GE"
-              ],
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        },
-        "required": true
-      },
-      "FTStaticModelParameters": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/FTStaticModelParameters"
-            }
-          }
-        },
-        "required": true
-      }
-    },
+    "requestBodies": {},
     "securitySchemes": {
       "appid": {
+        "name": "appid",
         "type": "apiKey",
         "in": "header",
-        "name": "appid",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net"
+        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrail.fasttrack.net](http://apitrail.fasttrack.net)"
       },
       "token": {
         "name": "token",
         "type": "apiKey",
         "in": "header",
+        "description": "Temporary token received from auth/login end point "
+      },
+      "query-appid": {
+        "name": "appid",
+        "type": "apiKey",
+        "in": "query",
+        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrail.fasttrack.net](http://apitrail.fasttrack.net)"
+      },
+      "query-token": {
+        "name": "token",
+        "type": "apiKey",
+        "in": "query",
         "description": "Temporary token received from auth/login end point "
       }
     }
