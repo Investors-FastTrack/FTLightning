@@ -638,7 +638,12 @@
         "tags": [
           "3 Stats"
         ]
-      }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ]
     },
     "v1/stats/xmulti": {
       "post": {
@@ -865,7 +870,12 @@
         "tags": [
           "6 Export"
         ]
-      }
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ]
     },
     "/v1/data/{ticker}/dividends": {
       "parameters": [
@@ -938,7 +948,6 @@
           {
             "schema": {
               "type": "string",
-              "example": "90a4ae,c1d5e0,62757f",
               "pattern": "[hex],[hex],[hex]"
             },
             "in": "query",
@@ -1016,8 +1025,7 @@
           {
             "schema": {
               "type": "string",
-              "example": "JPM,SPY,XLF",
-              "pattern": "[ticker],[ticker],[ticker]"
+              "pattern": "ticker,ticker,ticker"
             },
             "in": "query",
             "name": "tickers",
@@ -1102,9 +1110,9 @@
         "description": "Contains various pricing data points for a single ticker. View [docs] (https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md?srn=gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md#data-date-translation]) for information on pricing array translation to dates",
         "properties": {
           "ticker": {
-            "type": "string",
             "example": "SPY",
-            "description": "Ticker symbol"
+            "description": "Ticker symbol",
+            "type": "string"
           },
           "name": {
             "type": "string",
@@ -1184,7 +1192,8 @@
               "type": "number"
             }
           }
-        }
+        },
+        "title": ""
       },
       "FTDataList": {
         "type": "object",
