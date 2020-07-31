@@ -612,6 +612,14 @@
             "in": "query",
             "name": "riskfree",
             "description": "ticker or % rate of return used as the \"risk free rate\" in alpha calculation. Default is VMMXX, Vanguard Money Market Fund"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "monthend",
+            "description": "convert all calculated date ranges to month end. ie 1 year return from 6/28/2019 will calculate back to 6/29/2018 (the last market day of the month) instead of 6/28/2018."
           }
         ],
         "responses": {
@@ -1933,7 +1941,7 @@
       "ticker": {
         "name": "ticker",
         "in": "path",
-        "description":"ticker symbol",
+        "description": "ticker symbol",
         "required": true,
         "style": "simple",
         "explode": false,
