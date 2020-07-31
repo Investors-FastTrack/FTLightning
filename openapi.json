@@ -1650,6 +1650,24 @@
           }
         },
         "type": "object",
+        "x-examples": {
+          "Static Model Parameter Example": {
+            "model": [
+              {
+                "ticker": "SPY",
+                "weight": "50"
+              },
+              {
+                "ticker": "TLT",
+                "weight": "50"
+              }
+            ],
+            "start": "2020-01-01",
+            "rebalanceperiod": "monthly",
+            "marginrate": 0,
+            "seed": 1000
+          }
+        },
         "properties": {
           "model": {
             "type": "array",
@@ -1678,25 +1696,8 @@
           },
           "seed": {
             "type": "number",
-            "description": "value of portfolio on the first day of trading"
-          }
-        },
-        "x-examples": {
-          "Static Model Parameter Example": {
-            "model": [
-              {
-                "ticker": "SPY",
-                "weight": "50"
-              },
-              {
-                "ticker": "TLT",
-                "weight": "50"
-              }
-            ],
-            "start": "2020-01-01",
-            "rebalanceperiod": "monthly",
-            "marginrate": 0,
-            "seed": 1000
+            "description": "value of portfolio on the first day of trading",
+            "default": 100000
           }
         }
       },
