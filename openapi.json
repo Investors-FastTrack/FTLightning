@@ -605,21 +605,10 @@
             "$ref": "#/components/parameters/count"
           },
           {
-            "schema": {
-              "type": "string",
-              "example": "VMMXX"
-            },
-            "in": "query",
-            "name": "riskfree",
-            "description": "ticker or % rate of return used as the \"risk free rate\" in alpha calculation. Default is VMMXX, Vanguard Money Market Fund"
+            "$ref": "#/components/parameters/monthend"
           },
           {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "monthend",
-            "description": "convert all calculated date ranges to month end. ie 1 year return from 6/28/2019 will calculate back to 6/29/2018 (the last market day of the month) instead of 6/28/2018."
+            "$ref": "#/components/parameters/riskfree"
           }
         ],
         "responses": {
@@ -675,6 +664,12 @@
           },
           {
             "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
           }
         ],
         "requestBody": {
@@ -732,42 +727,13 @@
             }
           },
           {
-            "name": "end",
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/end"
           },
           {
-            "name": "basis",
-            "in": "query",
-            "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "default": "SP-DA"
-            },
-            "example": "FBIOX"
+            "$ref": "#/components/parameters/basis"
           },
           {
-            "name": "len",
-            "in": "query",
-            "description": "Correlation length, described in market days",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 21
-            },
-            "example": 10
+            "$ref": "#/components/parameters/len"
           },
           {
             "name": "details",
@@ -783,53 +749,23 @@
                 0,
                 1
               ]
-            }
+            },
+            "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size."
           },
           {
-            "name": "maxdraw",
-            "in": "query",
-            "description": "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/maxdraw"
           },
           {
-            "name": "chart",
-            "in": "query",
-            "description": "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            }
+            "$ref": "#/components/parameters/chart"
           },
           {
-            "name": "count",
-            "in": "query",
-            "description": "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "minimum": -1,
-              "type": "integer",
-              "description": "-1 returns all data points.",
-              "default": 1000
-            }
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
           }
         ],
         "responses": {
@@ -1950,6 +1886,15 @@
         },
         "example": "JPM"
       },
+      "riskfree": {
+        "schema": {
+          "type": "string",
+          "example": "VMMXX"
+        },
+        "in": "query",
+        "name": "riskfree",
+        "description": "ticker or % rate of return used as the \"risk free rate\" in alpha calculation. Default is VMMXX, Vanguard Money Market Fund"
+      },
       "start": {
         "name": "start",
         "in": "query",
@@ -2089,6 +2034,19 @@
           "description": "-1 returns all data points.",
           "default": 1000
         }
+      },
+      "monthend": {
+        "name": "monthend",
+        "in": "query",
+        "schema": {
+          "type": "integer",
+          "enum": [
+            0,
+            1
+          ],
+          "default": 0
+        },
+        "description": "convert all calculated date ranges to month end. ie 1 year return from 6/28/2019 will calculate back to 6/29/2018 (the last market day of the month) instead of 6/28/2018."
       },
       "yield": {
         "name": "yield",
