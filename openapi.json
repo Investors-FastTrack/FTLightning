@@ -725,10 +725,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/TickerArray"
-                }
+                "$ref": "#/components/schemas/TickerArray"
               }
             }
           }
