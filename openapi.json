@@ -13,6 +13,10 @@
   "servers": [
     {
       "url": "https://ftlightning.fasttrack.net"
+    },
+    {
+      "url": "https://ftl.fasttrack.net",
+      "description": ""
     }
   ],
   "paths": {
@@ -435,7 +439,8 @@
         "tags": [
           "Other Data"
         ]
-      }
+      },
+      "parameters": []
     },
     "v1/data/dates": {
       "get": {
@@ -623,7 +628,19 @@
             }
           },
           "400": {
-            "description": "bad input parameter"
+            "description": "bad input parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "description": "Returns calulated statistics on a single ticker over the date range",
@@ -677,15 +694,6 @@
             "$ref": "#/components/parameters/riskfree"
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TickerArray"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
             "description": "data points associated with ticker",
@@ -712,7 +720,19 @@
         ],
         "tags": [
           "3 Stats"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TickerArray"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "v1/portfolios/staticmodel": {
@@ -1074,6 +1094,84 @@
         ]
       },
       "parameters": []
+    },
+    "v1/info/{ticker}/details": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ],
+      "get": {
+        "summary": "Ticker Details",
+        "tags": [
+          "8 Info"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTInfoTicker"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-info-tickeR-details",
+        "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "parameters": [],
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ]
+      }
+    },
+    "v1/info/{ticker}/portfolio": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Portfolio Details",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTInfoPortfolio"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "operationId": "get-info-ticker-portfolio",
+        "description": "Get mutual fund or ETF's top ten positions, sector weighting, and net 1 year flows \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "security": [
+          {
+            "token": []
+          },
+          {
+            "appid": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1766,6 +1864,78 @@
           }
         }
       },
+      "FTInfoPortfolio": {
+        "type": "object",
+        "example": {
+          "ticker": "SPY",
+          "weight": "50"
+        },
+        "x-examples": {},
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "description": "ticker in portfolio"
+          },
+          "flows": {
+            "type": "string",
+            "description": "dollar value of position. Only used in return result"
+          },
+          "turnover": {
+            "type": "string",
+            "description": "percentage weighting of ticker.",
+            "example": "50"
+          },
+          "sector": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "sector": {
+                      "type": "string"
+                    },
+                    "weight": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "topten": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "ticker": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "weight": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "date": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "description": "",
+        "title": ""
+      },
       "FTReturn": {
         "type": "object",
         "description": "Annualized (CAGR) / Total returns for the described time periods",
@@ -1877,13 +2047,28 @@
             "SP-DA"
           ]
         }
+      },
+      "FTInfoTicker": {
+        "title": "FTInfoTicker",
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "expenseratio": {
+            "type": "string"
+          }
+        }
       }
     },
     "parameters": {
       "appid": {
         "name": "appid",
         "in": "header",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrail.fasttrack.net",
+        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
         "required": true,
         "style": "simple",
         "explode": false,
@@ -2101,7 +2286,7 @@
         "name": "appid",
         "type": "apiKey",
         "in": "header",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrail.fasttrack.net](http://apitrail.fasttrack.net)"
+        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrial.fasttrack.net](http://apitrial.fasttrack.net)"
       },
       "token": {
         "name": "token",
@@ -2113,7 +2298,7 @@
         "name": "appid",
         "type": "apiKey",
         "in": "query",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrail.fasttrack.net](http://apitrail.fasttrack.net)"
+        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrial.fasttrack.net](http://apitrial.fasttrack.net)"
       },
       "query-token": {
         "name": "token",
@@ -2122,5 +2307,10 @@
         "description": "Temporary token received from auth/login end point "
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "8 Info"
+    }
+  ]
 }
