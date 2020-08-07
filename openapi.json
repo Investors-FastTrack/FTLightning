@@ -1144,7 +1144,9 @@
       ],
       "get": {
         "summary": "Portfolio Details",
-        "tags": [],
+        "tags": [
+          "8 Info"
+        ],
         "responses": {
           "200": {
             "description": "OK",
