@@ -1109,7 +1109,7 @@
       "get": {
         "summary": "Ticker Details",
         "tags": [
-          "8 Info"
+          "8 Reference"
         ],
         "responses": {
           "200": {
@@ -1150,7 +1150,7 @@
       "get": {
         "summary": "Portfolio Details",
         "tags": [
-          "8 Info"
+          "8 Reference"
         ],
         "responses": {
           "200": {
@@ -2317,7 +2317,7 @@
   },
   "tags": [
     {
-      "name": "8 Info"
+      "name": "8 Reference"
     }
   ]
 }
