@@ -848,6 +848,24 @@
           },
           {
             "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "appid",
+            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "description": "Temporary token received from auth/login end point",
+            "required": true
           }
         ],
         "responses": {
@@ -878,14 +896,6 @@
           }
         },
         "description": "Returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "6 Export"
         ]
