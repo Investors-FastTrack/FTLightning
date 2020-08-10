@@ -1092,8 +1092,16 @@
       },
       "parameters": []
     },
-    "v1/info/{ticker}/details": {
+    "v1/ref/{ticker}/details": {
       "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true
+        },
         {
           "$ref": "#/components/parameters/ticker"
         }
@@ -1128,7 +1136,7 @@
         ]
       }
     },
-    "v1/info/{ticker}/portfolio": {
+    "v1/ref/{ticker}/portfolio": {
       "parameters": [
         {
           "schema": {
