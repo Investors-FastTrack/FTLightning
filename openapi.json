@@ -1197,10 +1197,10 @@
             "schema": {
               "type": "string",
               "enum": [
-                "intdb:1",
-                "intdb:2",
-                "intdb:3",
-                "intdb:15"
+                "db:1",
+                "db:2",
+                "db:3",
+                "db:15"
               ]
             },
             "description": "filter options. Use 1 for Funds, 2 for ETFs, 3 for Stocks, and 15 for indexes."
@@ -1233,7 +1233,48 @@
                 }
               }
             },
-            "content": {}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "string",
+                      "description": "total results for search request"
+                    },
+                    "start": {
+                      "type": "string",
+                      "description": "start index of search results (used in paging through results)"
+                    },
+                    "hit": {
+                      "type": "array",
+                      "description": "list of all search results",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "security name"
+                          },
+                          "ticker": {
+                            "type": "string",
+                            "description": "security ticker"
+                          },
+                          "score": {
+                            "type": "string",
+                            "description": "items relevance score relative to search term"
+                          },
+                          "db": {
+                            "type": "string",
+                            "description": "security type: 1 = Funds, 2 = ETF, 3 = Stock, 15 = Index"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "operationId": "get-v1-search",
