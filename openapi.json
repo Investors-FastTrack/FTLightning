@@ -12,9 +12,6 @@
   },
   "servers": [
     {
-      "url": "https://ftlightning.fasttrack.net"
-    },
-    {
       "url": "https://ftl.fasttrack.net",
       "description": ""
     }
@@ -1087,14 +1084,7 @@
             "description": "comma separated list of date shortcut buttons to show. defined as number of months ie 24 = two years, 60 = 5 years"
           }
         ],
-        "security": [
-          {
-            "query-appid": []
-          },
-          {
-            "query-token": []
-          }
-        ],
+        "security": [],
         "description": "Embed custom FastTrack charts on your webpage with an iframe.",
         "tags": [
           "7 iFrame Chart"
@@ -1186,6 +1176,78 @@
           },
           {
             "appid": []
+          }
+        ]
+      }
+    },
+    "v1/search": {
+      "get": {
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "curor position of search results. ie index of first result to return. Use this to page through results"
+          },
+          {
+            "name": "fq",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "intdb:1",
+                "intdb:2",
+                "intdb:3",
+                "intdb:15"
+              ]
+            },
+            "description": "filter options. Use 1 for Funds, 2 for ETFs, 3 for Stocks, and 15 for indexes."
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "text or phrase to search for"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "number of results to return"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {}
+          }
+        },
+        "operationId": "get-v1-search",
+        "description": "Search the fasttrack database accross ticker, name, and cusip",
+        "tags": [
+          "9 Search"
+        ],
+        "summary": "Search Database",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
           }
         ]
       }
@@ -2310,24 +2372,15 @@
         "type": "apiKey",
         "in": "header",
         "description": "Temporary token received from auth/login end point "
-      },
-      "query-appid": {
-        "name": "appid",
-        "type": "apiKey",
-        "in": "query",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrial.fasttrack.net](http://apitrial.fasttrack.net)"
-      },
-      "query-token": {
-        "name": "token",
-        "type": "apiKey",
-        "in": "query",
-        "description": "Temporary token received from auth/login end point "
       }
     }
   },
   "tags": [
     {
       "name": "8 Reference"
+    },
+    {
+      "name": "9 Search"
     }
   ]
 }
