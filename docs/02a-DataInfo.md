@@ -41,5 +41,18 @@ All statistics and total return is calculated on the dividend adjusted data.
 
 Unadjusted prices are noted as such."
 
+---
+
+## Default Parameter Values
+API end points have various parameters and when not specified, default values are used:
+
+* `end` - Any time "end" is not specified, the last day in the FastTrack database is used
+* `start` - 1 year minus the last day in the database
+* `basis` - SP-DA, the total return S&P 500 index 
+* `len` - 21 market days
+* `count` - 1000
+* `riskfree` = VMMXX, Vanguard money market funds
+
+
 
 
