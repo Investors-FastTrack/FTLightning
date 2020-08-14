@@ -13,7 +13,7 @@ Visit http://www.fasttrack.net for information on our non technical software and
 
 
 ### Base URL
->[https://ftlightning.fasttrack.net/v1/]
+>[https://ftl.fasttrack.net/v1/]
 
 
 ### FastTrack Database
@@ -21,6 +21,7 @@ FastTrack's database includes all US listed Mutual Fund, ETF, and Stocks (approx
 
 Search and chart our database here: https://ftcloud.fasttrack.net/web/search
 
+[Click to Read More about our Data here](./02a-DataInfo.md)
 
 ### Available Data
 The following items are available for all tickers in the FastTrack database

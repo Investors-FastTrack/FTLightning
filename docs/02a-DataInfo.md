@@ -1,7 +1,7 @@
 # Data Information
 This section describes FastTrack's data collection process, update schedule and data formatting.
 
-### Data Update Schedule
+## Data Update Schedule
 
 FastTrack updates our database 3 times daily:
 
@@ -19,6 +19,27 @@ Publish 3 is released the following morning and includes any updates and dividen
 
 ---
 
-<!-- theme: warning -->
-> ##### Token Expiration
->The token is reset daily at approximately 7:20am, 6:35PM, and 8:20pm EST. Request new tokens periodically by calling the **/auth/login** endpoint again.
+## Missing Prices
+
+**Closing prices** - any missing closing price in the FastTrack dataset will report value of the priod market day
+
+
+*Example:*
+
+ETF "XYZ" priced at $10.00 on 8/3/2020, `no price on 8/4/2020`, and $11.00 on 8/5/2020.
+ 
+The closing price data will report 10 for 8/3/2020, `10 for 8/4/2020`, and 11 for 8/5/2020. (The 8/3/2020 price of 10 is repeated for 8/4/2020)
+
+**OLHV data** - any missing open, high, low, or volume data will return "-1"
+
+---
+## Dividend Adjusted Prices
+
+"price" in this documentation and in FastTrack universally reffers to the "adjusted price" of a security. 
+
+All statistics and total return is calculated on the dividend adjusted data. 
+
+Unadjusted prices are noted as such."
+
+
+
