@@ -650,7 +650,7 @@
           }
         ],
         "tags": [
-          "3 Stats"
+          "3. Stats"
         ]
       },
       "parameters": [
@@ -716,7 +716,7 @@
           }
         ],
         "tags": [
-          "3 Stats"
+          "3. Stats"
         ],
         "requestBody": {
           "content": {
@@ -812,7 +812,7 @@
           }
         ],
         "tags": [
-          "4 Portfolio Modeling"
+          "4. Portfolio Modeling"
         ],
         "requestBody": {
           "content": {
@@ -894,7 +894,7 @@
         },
         "description": "Returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
         "tags": [
-          "6 Export"
+          "6. Export"
         ]
       },
       "parameters": [
@@ -942,7 +942,7 @@
           }
         ],
         "tags": [
-          "5 Dividends"
+          "5. Dividends"
         ]
       }
     },
@@ -2428,6 +2428,18 @@
     },
     {
       "name": "2. Market Data"
+    },
+    {
+      "name": "3. Stats"
+    },
+    {
+      "name": "4. Portfolio Modeling"
+    },
+    {
+      "name": "5. Dividends"
+    },
+    {
+      "name": "6. Export"
     }
   ]
 }
