@@ -1413,7 +1413,10 @@
             }
           }
         },
-        "title": ""
+        "title": "",
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTDataList": {
         "type": "object",
@@ -1809,7 +1812,10 @@
             "$ref": "#/components/schemas/FTDates"
           }
         },
-        "description": "Pre calculated data used to draw charts"
+        "description": "Pre calculated data used to draw charts",
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTMaxDraw": {
         "type": "object",
@@ -1857,7 +1863,10 @@
             "format": "url",
             "description": "link describing error"
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTStaticModelParameters": {
         "content": {
