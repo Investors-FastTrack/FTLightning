@@ -69,7 +69,7 @@
         },
         "description": "server authentication. The returned token must be passed with all other API calls",
         "tags": [
-          "1 Auth"
+          "1. Auth"
         ]
       }
     },
@@ -2422,6 +2422,9 @@
     },
     {
       "name": "9 Search"
+    },
+    {
+      "name": "1. Auth"
     }
   ]
 }
