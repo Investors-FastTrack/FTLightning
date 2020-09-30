@@ -1087,7 +1087,7 @@
         "security": [],
         "description": "Embed custom FastTrack charts on your webpage with an iframe.",
         "tags": [
-          "7 iFrame Chart"
+          "7. iFrame Chart"
         ]
       },
       "parameters": []
@@ -1109,7 +1109,7 @@
       "get": {
         "summary": "Ticker Details",
         "tags": [
-          "8 Reference"
+          "8. Reference Data"
         ],
         "responses": {
           "200": {
@@ -1150,7 +1150,7 @@
       "get": {
         "summary": "Portfolio Details",
         "tags": [
-          "8 Reference"
+          "8. Reference Data"
         ],
         "responses": {
           "200": {
@@ -1280,7 +1280,7 @@
         "operationId": "get-v1-search",
         "description": "Search the fasttrack database accross ticker, name, and cusip",
         "tags": [
-          "9 Search"
+          "9. Search"
         ],
         "summary": "Search Database",
         "security": [
@@ -2418,12 +2418,6 @@
   },
   "tags": [
     {
-      "name": "8 Reference"
-    },
-    {
-      "name": "9 Search"
-    },
-    {
       "name": "1. Auth"
     },
     {
@@ -2440,6 +2434,15 @@
     },
     {
       "name": "6. Export"
+    },
+    {
+      "name": "7. iFrame Chart"
+    },
+    {
+      "name": "8. Reference Data"
+    },
+    {
+      "name": "9. Search"
     }
   ]
 }
