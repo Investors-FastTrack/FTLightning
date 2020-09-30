@@ -121,7 +121,7 @@
           }
         ],
         "tags": [
-          "2 Market Data"
+          "2. Market Data"
         ]
       },
       "parameters": [
@@ -176,7 +176,7 @@
         ],
         "operationId": "",
         "tags": [
-          "2 Market Data"
+          "2. Market Data"
         ],
         "requestBody": {
           "content": {
@@ -2425,6 +2425,9 @@
     },
     {
       "name": "1. Auth"
+    },
+    {
+      "name": "2. Market Data"
     }
   ]
 }
