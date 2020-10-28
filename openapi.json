@@ -2051,79 +2051,181 @@
         ]
       },
       "FTInfoPortfolio": {
+        "description": "Describes a funds or ETFs holdings",
         "type": "object",
-        "example": {
-          "ticker": "SPY",
-          "weight": "50"
-        },
-        "x-examples": {},
+        "title": "FTInfoPortfolio",
         "properties": {
           "ticker": {
             "type": "string",
-            "description": "ticker in portfolio"
+            "minLength": 1,
+            "description": "Ticker symbol of security requested"
           },
-          "flows": {
-            "type": "string",
-            "description": "dollar value of position. Only used in return result"
-          },
-          "turnover": {
-            "type": "string",
-            "description": "percentage weighting of ticker.",
-            "example": "50"
-          },
-          "sector": {
-            "type": "object",
-            "properties": {
-              "date": {
-                "type": "string"
-              },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "sector": {
-                      "type": "string"
-                    },
-                    "weight": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
+          "bondexposure": {
+            "type": "null",
+            "description": "Subscription required"
           },
           "topten": {
             "type": "object",
+            "description": "Top ten holdings by weight",
             "properties": {
-              "items": {
+              "date": {
+                "type": "string",
+                "minLength": 1,
+                "description": "as of Date of data"
+              },
+              "datalist": {
                 "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
                 "items": {
                   "type": "object",
                   "properties": {
-                    "ticker": {
-                      "type": "string"
-                    },
                     "name": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1
                     },
-                    "weight": {
-                      "type": "string"
+                    "ticker": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "netweight": {
+                      "type": "string",
+                      "minLength": 1
                     }
                   }
                 }
-              },
+              }
+            }
+          },
+          "benchmark": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "description": "Benchmark listed in security's prospectus",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "netweight": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "flows": {
+            "type": "null",
+            "description": "Subscription required"
+          },
+          "assetclass": {
+            "type": "object",
+            "description": "Percentage weighting of holdings by asset class",
+            "properties": {
               "date": {
-                "type": "string"
+                "type": "string",
+                "minLength": 1,
+                "description": "as of date of data"
+              },
+              "datalist": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "longweight": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "shortweight": {
+                      "type": "string"
+                    },
+                    "netweight": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "region": {
+            "type": "object",
+            "description": "Percentage weighting of holdings by region",
+            "properties": {
+              "date": {
+                "type": "string",
+                "minLength": 1,
+                "description": "as of date of data"
+              },
+              "datalist": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "netweight": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "markettype": {
+            "type": "null",
+            "description": "Subscription required"
+          },
+          "bondquality": {
+            "type": "null",
+            "description": "Subscription required"
+          },
+          "marketcap": {
+            "type": "null",
+            "description": "Subscription required"
+          },
+          "sector": {
+            "type": "object",
+            "description": "Percentage weighting of holding by sector",
+            "properties": {
+              "date": {
+                "type": "string",
+                "minLength": 1,
+                "description": "as of date of data"
+              },
+              "datalist": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "netweight": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
               }
             }
           }
-        },
-        "description": "",
-        "title": "",
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTReturn": {
         "type": "object",
