@@ -2062,7 +2062,7 @@
           },
           "bondexposure": {
             "type": "null",
-            "description": "Subscription required"
+            "description": "Subscription required - bond grading exposure"
           },
           "topten": {
             "type": "object",
@@ -2097,27 +2097,46 @@
               }
             }
           },
-          "benchmark": {
-            "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
-            "description": "Benchmark listed in security's prospectus",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "netweight": {
-                  "type": "string"
+          "index": {
+            "type": "object",
+            "description": "Various indexes related to security",
+            "properties": {
+              "ft": {
+                "type": "object",
+                "description": "FastTrack's mapped index, based on security's category, style, and correlations",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "ticker": {
+                    "type": "string"
+                  }
+                }
+              },
+              "prospectus": {
+                "type": "object",
+                "description": "Index/Benchmark listed in security's prospectus",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "category": {
+                "type": "object",
+                "description": "Index of the security's category",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
                 }
               }
             }
           },
           "flows": {
             "type": "null",
-            "description": "Subscription required"
+            "description": "Subscription required - Flows in and out of fund"
           },
           "assetclass": {
             "type": "object",
@@ -2183,10 +2202,6 @@
                 }
               }
             }
-          },
-          "markettype": {
-            "type": "null",
-            "description": "Subscription required"
           },
           "bondquality": {
             "type": "null",
