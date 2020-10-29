@@ -2369,20 +2369,23 @@
       "FTInfoTicker": {
         "title": "FTInfoTicker",
         "type": "object",
-        "properties": {
-          "ticker": {
-            "type": "string"
-          },
-          "category": {
-            "type": "string"
-          },
-          "expenseratio": {
-            "type": "string"
-          }
-        },
         "x-tags": [
           "Models"
-        ]
+        ],
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "description": "Requested ticker symbol"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of security"
+          },
+          "expenseratio": {
+            "type": "string",
+            "description": "Expense ratio (multiply by 100 to get percentage value)"
+          }
+        }
       }
     },
     "parameters": {
