@@ -806,7 +806,8 @@
                   "start": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted"
+                    "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted",
+                    "default": "1988-09-01"
                   },
                   "rebalanceperiod": {
                     "type": "string",
@@ -818,18 +819,24 @@
                       "quarter",
                       "annual",
                       "[number of market days]"
-                    ]
+                    ],
+                    "default": "quarter"
                   },
                   "marginrate": {
                     "type": "number",
-                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
+                    "default": 0
                   },
                   "seed": {
                     "type": "number",
-                    "description": "value of portfolio on the first day of trading"
+                    "description": "value of portfolio on the first day of trading",
+                    "default": 100000
                   },
                   "name": {
-                    "type": "string",
+                    "type": [
+                      "string",
+                      "null"
+                    ],
                     "description": "Name of model"
                   }
                 },
@@ -950,7 +957,8 @@
                     },
                     "start": {
                       "type": "string",
-                      "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted"
+                      "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted",
+                      "default": "1988-09-01"
                     },
                     "rebalanceperiod": {
                       "type": "string",
@@ -961,20 +969,26 @@
                         "quarter",
                         "annual",
                         "[number of market days]"
-                      ]
+                      ],
+                      "default": "quarter"
                     },
                     "name": {
-                      "type": "string",
+                      "type": [
+                        "string",
+                        "null"
+                      ],
                       "minLength": 1,
                       "description": "Name of model"
                     },
                     "marginrate": {
+                      "type": "number",
                       "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
-                      "type": "number"
+                      "default": 0
                     },
                     "seed": {
                       "type": "number",
-                      "description": "value of portfolio on the first day of trading"
+                      "description": "value of portfolio on the first day of trading",
+                      "default": 100000
                     }
                   },
                   "required": [
