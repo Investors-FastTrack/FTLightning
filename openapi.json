@@ -763,7 +763,7 @@
         ],
         "responses": {
           "200": {
-            "description": "data points associated with ticker",
+            "description": "data points associated with static model",
             "content": {
               "application/json": {
                 "schema": {
@@ -840,6 +840,27 @@
                   "marginrate",
                   "seed"
                 ]
+              },
+              "examples": {
+                "Single Static Model Example": {
+                  "value": {
+                    "model": [
+                      {
+                        "ticker": "SPY",
+                        "weight": "50"
+                      },
+                      {
+                        "ticker": "TLT",
+                        "weight": "50"
+                      }
+                    ],
+                    "start": "12/31/2016",
+                    "rebalanceperiod": "week",
+                    "marginrate": 0,
+                    "seed": 1000,
+                    "name": "John's Portfolio"
+                  }
+                }
               }
             }
           },
@@ -884,7 +905,7 @@
         ],
         "responses": {
           "200": {
-            "description": "data points associated with ticker",
+            "description": "data points associated with static models",
             "content": {
               "application/json": {
                 "schema": {
@@ -964,7 +985,7 @@
                 }
               },
               "examples": {
-                "example-1": {
+                "Multi Static Model Example": {
                   "value": [
                     {
                       "model": [
@@ -977,9 +998,9 @@
                           "weight": "50"
                         }
                       ],
-                      "start": 0,
-                      "rebalanceperiod": "string",
-                      "name": "string"
+                      "start": "12/31/2000",
+                      "rebalanceperiod": "quarter",
+                      "name": "50 50 Static Model"
                     },
                     {
                       "model": [
@@ -992,9 +1013,9 @@
                           "weight": "40"
                         }
                       ],
-                      "start": 0,
-                      "rebalanceperiod": "string",
-                      "name": "string"
+                      "start": "12/31/2000",
+                      "rebalanceperiod": "quarter",
+                      "name": "60 40 Static Model"
                     }
                   ]
                 }
