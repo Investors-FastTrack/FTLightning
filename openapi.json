@@ -827,6 +827,107 @@
         }
       }
     },
+    "v1/portfolios/staticmodel/xmulti": {
+      "post": {
+        "summary": "Calculate Static Model",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "description": "First day in the date range of all calculations/requests",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "format": "yyyy-MM-dd"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "name": "details",
+            "in": "query",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "integer",
+              "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size.",
+              "default": 0,
+              "enum": [
+                0,
+                1
+              ]
+            },
+            "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size."
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Calculates the specified portfolios over the specifed rebalance period",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ],
+        "tags": [
+          "4. Portfolio Modeling"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FTStaticModelParameters"
+                }
+              },
+              "examples": {}
+            }
+          },
+          "description": ""
+        }
+      }
+    },
     "v1/export/{ticker}": {
       "get": {
         "summary": "Export CSV",
@@ -1995,7 +2096,9 @@
         },
         "x-tags": [
           "Models"
-        ]
+        ],
+        "description": "Details and stats of portfolio model results",
+        "title": ""
       },
       "FTPortfolio": {
         "type": "object",
@@ -2386,6 +2489,22 @@
             "description": "Expense ratio (multiply by 100 to get percentage value)"
           }
         }
+      },
+      "FTModelResultsList": {
+        "title": "FTModelResultsList",
+        "type": "object",
+        "properties": {
+          "err": {
+            "$ref": "#/components/schemas/err"
+          },
+          "resultlist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FTModelResults"
+            }
+          }
+        },
+        "description": "Array of FTModel results"
       }
     },
     "parameters": {
