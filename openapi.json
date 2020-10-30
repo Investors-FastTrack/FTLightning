@@ -254,9 +254,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TickerArray"
-              },
-              "examples": {
-                "example-1": {}
               }
             }
           }
@@ -829,7 +826,7 @@
     },
     "v1/portfolios/staticmodel/xmulti": {
       "post": {
-        "summary": "Calculate Static Model",
+        "summary": "Calculate Multiple Static Models",
         "parameters": [
           {
             "name": "start",
@@ -891,7 +888,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FTModelResults"
+                  "$ref": "#/components/schemas/FTModelResultsList"
                 }
               }
             }
@@ -924,7 +921,7 @@
               "examples": {}
             }
           },
-          "description": ""
+          "description": "Array of FTStaticModel Parameters"
         }
       }
     },
