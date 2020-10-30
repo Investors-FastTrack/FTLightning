@@ -823,12 +823,18 @@
                     "default": "quarter"
                   },
                   "marginrate": {
-                    "type": "number",
+                    "type": [
+                      "number",
+                      "null"
+                    ],
                     "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
                     "default": 0
                   },
                   "seed": {
-                    "type": "number",
+                    "type": [
+                      "number",
+                      "null"
+                    ],
                     "description": "value of portfolio on the first day of trading",
                     "default": 100000
                   },
@@ -843,9 +849,7 @@
                 "required": [
                   "model",
                   "start",
-                  "rebalanceperiod",
-                  "marginrate",
-                  "seed"
+                  "rebalanceperiod"
                 ]
               },
               "examples": {
@@ -981,20 +985,26 @@
                       "description": "Name of model"
                     },
                     "marginrate": {
-                      "type": "number",
+                      "type": [
+                        "number",
+                        "null"
+                      ],
                       "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
                       "default": 0
                     },
                     "seed": {
-                      "type": "number",
+                      "type": [
+                        "number",
+                        "null"
+                      ],
                       "description": "value of portfolio on the first day of trading",
                       "default": 100000
                     }
                   },
                   "required": [
+                    "model",
                     "start",
-                    "rebalanceperiod",
-                    "name"
+                    "rebalanceperiod"
                   ]
                 }
               },
@@ -2181,6 +2191,15 @@
           "ticker": "SPY",
           "weight": "50"
         },
+        "x-examples": {
+          "Position Example": {
+            "ticker": "JPM",
+            "weight": 50
+          }
+        },
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "ticker": {
             "type": "string",
@@ -2196,14 +2215,9 @@
             "example": "50"
           }
         },
-        "x-examples": {
-          "Position Example": {
-            "ticker": "JPM",
-            "weight": 50
-          }
-        },
-        "x-tags": [
-          "Models"
+        "required": [
+          "ticker",
+          "weight"
         ]
       },
       "FTInfoPortfolio": {
