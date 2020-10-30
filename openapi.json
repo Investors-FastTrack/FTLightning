@@ -2410,7 +2410,10 @@
               }
             }
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTReturn": {
         "type": "object",
@@ -2571,7 +2574,10 @@
             }
           }
         },
-        "description": "Array of FTModel results"
+        "description": "Array of FTModel results",
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTStaticModelParam": {
         "content": {
