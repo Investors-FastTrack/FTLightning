@@ -1322,14 +1322,6 @@
     "v1/ref/{ticker}/details": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "ticker",
-          "in": "path",
-          "required": true
-        },
-        {
           "$ref": "#/components/parameters/ticker"
         }
       ],
@@ -1366,12 +1358,7 @@
     "v1/ref/{ticker}/portfolio": {
       "parameters": [
         {
-          "schema": {
-            "type": "string"
-          },
-          "name": "ticker",
-          "in": "path",
-          "required": true
+          "$ref": "#/components/parameters/ticker"
         }
       ],
       "get": {
@@ -2696,7 +2683,6 @@
         "description": "First day in the date range of all calculations/requests",
         "required": true,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "string",
           "format": "yyyy-MM-dd"
@@ -2708,7 +2694,6 @@
         "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "string",
           "format": "yyyy-MM-dd"
@@ -2720,7 +2705,6 @@
         "description": "Use this to return a single date in the \"data/{ticker}/range\" function. This over rides any value set for start and end.",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "string",
           "format": "yyyy-MM-dd"
@@ -2732,7 +2716,6 @@
         "description": "Flag to include or exclude unadjusted prices. Only trailing 3 years of unadjusted data is available. -1 is returned on any prior date request",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "default": 0,
@@ -2748,7 +2731,6 @@
         "description": "Flag to include or exclude open, low, high, and volume data in on the /data/{ticker}/range and /data/{ticker} endpoints. -1 is returned on any prior date request",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "default": 0,
@@ -2764,7 +2746,6 @@
         "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "string",
           "default": "SP-DA"
@@ -2777,7 +2758,6 @@
         "description": "Correlation length, described in market days",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "default": 21
@@ -2790,7 +2770,6 @@
         "description": "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "default": 0,
@@ -2806,7 +2785,6 @@
         "description": "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "default": 0,
@@ -2819,14 +2797,11 @@
       "count": {
         "name": "count",
         "in": "query",
-        "description": "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts",
+        "description": "Total number of datapoints returned in the FTChartData object. This helps improve API response time and minimizes the data loaded into charts. Value must be A to return ALL data points or a number greater than 0",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
-          "minimum": -1,
-          "type": "integer",
-          "description": "-1 returns all data points.",
+          "type": "string",
           "default": 1000
         }
       },
@@ -2849,7 +2824,6 @@
         "description": "flag to include or exclude yield",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "enum": [
@@ -2864,7 +2838,6 @@
         "in": "query",
         "required": false,
         "style": "form",
-        "explode": true,
         "schema": {
           "type": "integer",
           "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size.",
