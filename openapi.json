@@ -731,16 +731,7 @@
         "summary": "Calculate Static Model",
         "parameters": [
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/start"
           },
           {
             "$ref": "#/components/parameters/end"
@@ -750,23 +741,6 @@
           },
           {
             "$ref": "#/components/parameters/len"
-          },
-          {
-            "name": "details",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size.",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            },
-            "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size."
           },
           {
             "$ref": "#/components/parameters/maxdraw"
@@ -782,6 +756,9 @@
           },
           {
             "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/details"
           }
         ],
         "responses": {
@@ -841,21 +818,7 @@
             "$ref": "#/components/parameters/len"
           },
           {
-            "name": "details",
-            "in": "query",
-            "required": false,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "integer",
-              "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size.",
-              "default": 0,
-              "enum": [
-                0,
-                1
-              ]
-            },
-            "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size."
+            "$ref": "#/components/parameters/details"
           },
           {
             "$ref": "#/components/parameters/maxdraw"
@@ -902,11 +865,77 @@
             "application/json": {
               "schema": {
                 "type": "array",
+                "description": "",
+                "minItems": 1,
+                "uniqueItems": true,
                 "items": {
-                  "$ref": "#/components/schemas/FTStaticModelParameters"
+                  "type": "object",
+                  "description": "Array of FTStaticModelParameters",
+                  "properties": {
+                    "model": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "description": "FTStaticModelParameter",
+                      "items": {
+                        "$ref": "#/components/schemas/FTPosition"
+                      }
+                    },
+                    "start": {
+                      "type": "number"
+                    },
+                    "rebalanceperiod": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "start",
+                    "rebalanceperiod",
+                    "name"
+                  ]
                 }
               },
-              "examples": {}
+              "examples": {
+                "example-1": {
+                  "value": [
+                    {
+                      "model": [
+                        {
+                          "ticker": "SPY",
+                          "weight": "50"
+                        },
+                        {
+                          "ticker": "TLT",
+                          "weight": "50"
+                        }
+                      ],
+                      "start": 0,
+                      "rebalanceperiod": "string",
+                      "name": "string"
+                    },
+                    {
+                      "model": [
+                        {
+                          "ticker": "SPY",
+                          "weight": "60"
+                        },
+                        {
+                          "ticker": "TLT",
+                          "weight": "40"
+                        }
+                      ],
+                      "start": 0,
+                      "rebalanceperiod": "string",
+                      "name": "string"
+                    }
+                  ]
+                }
+              }
             }
           },
           "description": "Array of FTStaticModel Parameters"
@@ -2710,6 +2739,23 @@
           ],
           "default": 0
         }
+      },
+      "details": {
+        "name": "details",
+        "in": "query",
+        "required": false,
+        "style": "form",
+        "explode": true,
+        "schema": {
+          "type": "integer",
+          "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size.",
+          "default": 0,
+          "enum": [
+            0,
+            1
+          ]
+        },
+        "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size."
       }
     },
     "requestBodies": {},
