@@ -829,16 +829,7 @@
         "summary": "Calculate Multiple Static Models",
         "parameters": [
           {
-            "name": "start",
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "required": true,
-            "style": "form",
-            "explode": true,
-            "schema": {
-              "type": "string",
-              "format": "yyyy-MM-dd"
-            }
+            "$ref": "#/components/parameters/start"
           },
           {
             "$ref": "#/components/parameters/end"
@@ -906,9 +897,6 @@
             "token": []
           }
         ],
-        "tags": [
-          "4. Portfolio Modeling"
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -922,7 +910,11 @@
             }
           },
           "description": "Array of FTStaticModel Parameters"
-        }
+        },
+        "operationId": "staticmulti",
+        "tags": [
+          "4. Portfolio Modeling"
+        ]
       }
     },
     "v1/export/{ticker}": {
