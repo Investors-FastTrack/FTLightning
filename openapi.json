@@ -792,9 +792,55 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FTStaticModelParameters"
-              },
-              "examples": {}
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "$ref": "#/components/schemas/FTPosition"
+                    }
+                  },
+                  "start": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted"
+                  },
+                  "rebalanceperiod": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
+                    "enum": [
+                      "week",
+                      "month",
+                      "quarter",
+                      "annual",
+                      "[number of market days]"
+                    ]
+                  },
+                  "marginrate": {
+                    "type": "number",
+                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+                  },
+                  "seed": {
+                    "type": "number",
+                    "description": "value of portfolio on the first day of trading"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of model"
+                  }
+                },
+                "required": [
+                  "model",
+                  "start",
+                  "rebalanceperiod",
+                  "marginrate",
+                  "seed"
+                ]
+              }
             }
           },
           "description": ""
@@ -882,15 +928,32 @@
                       }
                     },
                     "start": {
-                      "type": "number"
+                      "type": "string",
+                      "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted"
                     },
                     "rebalanceperiod": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "enum": [
+                        "week",
+                        "month",
+                        "quarter",
+                        "annual",
+                        "[number of market days]"
+                      ]
                     },
                     "name": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "Name of model"
+                    },
+                    "marginrate": {
+                      "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
+                      "type": "number"
+                    },
+                    "seed": {
+                      "type": "number",
+                      "description": "value of portfolio on the first day of trading"
                     }
                   },
                   "required": [
@@ -2032,69 +2095,6 @@
           "Models"
         ]
       },
-      "FTStaticModelParameters": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/FTStaticModelParameters"
-            }
-          }
-        },
-        "type": "object",
-        "x-examples": {
-          "Static Model Parameter Example": {
-            "model": [
-              {
-                "ticker": "SPY",
-                "weight": "50"
-              },
-              {
-                "ticker": "TLT",
-                "weight": "50"
-              }
-            ],
-            "start": "2020-01-01",
-            "rebalanceperiod": "monthly",
-            "marginrate": 0,
-            "seed": 1000
-          }
-        },
-        "properties": {
-          "model": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FTPosition"
-            }
-          },
-          "start": {
-            "type": "string",
-            "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted"
-          },
-          "rebalanceperiod": {
-            "type": "string",
-            "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
-            "enum": [
-              "'week'",
-              "'month'",
-              "'quarter'",
-              "'annual'",
-              "'[number of market days]'"
-            ]
-          },
-          "marginrate": {
-            "type": "number",
-            "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
-          },
-          "seed": {
-            "type": "number",
-            "description": "value of portfolio on the first day of trading",
-            "default": 100000
-          }
-        },
-        "x-tags": [
-          "Models"
-        ]
-      },
       "FTModelResults": {
         "type": "object",
         "properties": {
@@ -2523,6 +2523,70 @@
           }
         },
         "description": "Array of FTModel results"
+      },
+      "FTStaticModelParam": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/FTStaticModelParam"
+            }
+          }
+        },
+        "type": "object",
+        "x-examples": {
+          "Static Model Parameter Example": {
+            "model": [
+              {
+                "ticker": "SPY",
+                "weight": "50"
+              },
+              {
+                "ticker": "TLT",
+                "weight": "50"
+              }
+            ],
+            "start": "2020-01-01",
+            "rebalanceperiod": "monthly",
+            "marginrate": 0,
+            "seed": 1000
+          }
+        },
+        "x-tags": [
+          "Models"
+        ],
+        "description": "Definition of static model",
+        "properties": {
+          "start": {
+            "type": "string",
+            "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns."
+          },
+          "rebalanceperiod": {
+            "type": "string",
+            "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
+            "enum": [
+              "'week'",
+              "'month'",
+              "'quarter'",
+              "'annual'",
+              "'[number of market days]'"
+            ]
+          },
+          "marginrate": {
+            "type": "number",
+            "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+          },
+          "seed": {
+            "type": "number",
+            "description": "value of portfolio on the first day of trading",
+            "default": 100000
+          },
+          "model": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FTPosition"
+            }
+          }
+        }
       }
     },
     "parameters": {
