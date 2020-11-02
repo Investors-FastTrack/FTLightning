@@ -83,7 +83,7 @@ The following items are available for all tickers in the FastTrack database
 - Yearly total return 1988 to the current year
 
 #### Dividends
-- Short Term
+- Short Term1
 - Long Term
 - Income
 
