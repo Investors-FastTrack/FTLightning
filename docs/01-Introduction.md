@@ -41,6 +41,18 @@ The following items are available for all tickers in the FastTrack database
 - Yield (Income only)
 - Yield Total (Income, Short, Long Term)
 
+#### Security Portfolio Data
+- Top 10 positions
+- Asset weighting
+- Sector weighting
+- Region weighting
+- Category
+- Expense Ratio
+- Prospectus Benchmark
+- FT Benchmark
+- Category Benchmark
+- 1 year turnover
+
 #### Risk
 - Alpha
 - Annualized Return
