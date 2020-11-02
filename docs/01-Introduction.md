@@ -41,7 +41,7 @@ The following items are available for all tickers in the FastTrack database
 - Yield (Income only)
 - Yield Total (Income, Short, Long Term)
 
-#### Security Portfolio Data
+#### [Security Portfolio Data](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1ref~1%7Bticker%7D~1portfolio/get)
 - Top 10 positions
 - Asset weighting
 - Sector weighting
