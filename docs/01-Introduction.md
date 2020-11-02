@@ -26,7 +26,7 @@ Search and chart our database here: https://ftcloud.fasttrack.net/web/search
 ### Available Data
 The following items are available for all tickers in the FastTrack database
 
-#### Pricing
+#### [Pricing](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1data~1%7Bticker%7D~1range/get)
 - Daily Adjusted and Unadjusted Closing Prices
 - Daily Open, High, Low Prices
 - Daily volume
@@ -53,7 +53,7 @@ The following items are available for all tickers in the FastTrack database
 - Category Benchmark
 - 1 year turnover
 
-#### Risk
+#### [Risk](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1stats~1%7Bticker%7D/get)
 - Alpha
 - Annualized Return
 - Beta
@@ -82,7 +82,7 @@ The following items are available for all tickers in the FastTrack database
 - Year to date
 - Yearly total return 1988 to the current year
 
-#### Dividends
+#### [Dividends](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1data~1%7Bticker%7D~1dividends/get)
 - Short Term
 - Long Term
 - Income
@@ -91,7 +91,7 @@ The following items are available for all tickers in the FastTrack database
 #### Moving Average
 - Any length moving average for any day back to 1988
 
-#### Portfolio Modeling
+#### [Portfolio Modeling](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1portfolios~1staticmodel/post)
 - Static models
 - Momentum models
 
