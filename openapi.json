@@ -2211,6 +2211,9 @@
         "description": "Describes a funds or ETFs holdings",
         "type": "object",
         "title": "FTInfoPortfolio",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "ticker": {
             "type": "string",
@@ -2396,11 +2399,30 @@
                 }
               }
             }
+          },
+          "sectorBond": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string"
+              },
+              "datalist": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "netweight": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTReturn": {
         "type": "object",
