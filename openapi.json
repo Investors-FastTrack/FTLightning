@@ -1173,7 +1173,7 @@
         ]
       }
     },
-    "v1/report/embed.html": {
+    "v1/report": {
       "get": {
         "summary": "Embed Chart (iframe)",
         "responses": {
