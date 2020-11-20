@@ -1270,10 +1270,22 @@
             "description": "toggle to show or hide header of report"
           },
           {
-            "$ref": "#/components/parameters/basis"
+            "in": "query",
+            "name": "basis",
+            "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
+            "schema": {
+              "default": "SP-DA",
+              "type": "string"
+            }
           },
           {
-            "$ref": "#/components/parameters/start"
+            "in": "query",
+            "name": "start",
+            "description": "First day in the date range of all calculations/requests",
+            "schema": {
+              "default": "12/31/{prior year}",
+              "type": "string"
+            }
           },
           {
             "schema": {
@@ -1309,6 +1321,24 @@
             "in": "query",
             "name": "datebuttons",
             "description": "comma separated list of date shortcut buttons to show. defined as number of months ie 24 = two years, 60 = 5 years"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "required": true,
+            "description": "authentication token returned from the /login endpoint "
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "appid",
+            "description": "application id assigned at account opening",
+            "required": true
           }
         ],
         "security": [],
