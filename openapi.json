@@ -1182,12 +1182,18 @@
             "content": {
               "text/html": {
                 "schema": {
-                  "type": "object",
+                  "type": "string",
                   "description": "simple HTML webpage that renders in any browser"
                 },
                 "examples": {}
               },
               "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "text/plain": {
                 "schema": {
                   "type": "object",
                   "properties": {}
@@ -1334,8 +1340,8 @@
           {
             "schema": {
               "type": "string",
-              "default": "2020-12-31",
-              "example": "2020-12-31",
+              "default": "2019-12-31",
+              "example": "2019-12-31",
               "pattern": "yyyy-MM-dd"
             },
             "in": "query",
