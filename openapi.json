@@ -24,7 +24,7 @@
           {
             "name": "account",
             "in": "query",
-            "required": false,
+            "required": true,
             "style": "form",
             "explode": true,
             "schema": {
@@ -35,7 +35,7 @@
           {
             "name": "pass",
             "in": "query",
-            "required": false,
+            "required": true,
             "style": "form",
             "explode": true,
             "schema": {
@@ -46,7 +46,7 @@
           {
             "name": "appid",
             "in": "query",
-            "required": false,
+            "required": true,
             "style": "form",
             "explode": true,
             "schema": {
@@ -67,7 +67,7 @@
             }
           }
         },
-        "description": "server authentication. The returned token must be passed with all other API calls",
+        "description": "Server authentication. The returned token must be passed as a header with all other API calls",
         "tags": [
           "1. Auth"
         ]
