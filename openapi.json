@@ -1544,6 +1544,65 @@
           }
         ]
       }
+    },
+    "/v1/portfolios/staticmodel/ref": {
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-portfolios-staticmodel-ref",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "portfolio": {
+                      "$ref": "#/components/schemas/FTInfoPortfolio"
+                    },
+                    "positiondata": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FTInfoPortfolio"
+                      }
+                    },
+                    "total": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "$ref": "#/components/schemas/FTStaticModelParam"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "returns reference data for portfolio and portfolio positions",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTStaticModelParam"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "$ref": "#/components/schemas/FTStaticModelParam"
+              }
+            }
+          },
+          "description": ""
+        }
+      }
     }
   },
   "components": {
