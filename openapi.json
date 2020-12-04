@@ -1547,7 +1547,7 @@
     },
     "/v1/ref/staticmodel": {
       "post": {
-        "summary": "Static Model Reference Data",
+        "summary": "Static Model Details",
         "operationId": "post-v1-portfolios-staticmodel-ref",
         "responses": {
           "200": {
@@ -1607,6 +1607,19 @@
         ]
       },
       "parameters": []
+    },
+    "/v1/staticmodel/ref": {
+      "post": {
+        "summary": "Static Model Reference Data",
+        "operationId": "post-v1-staticmodel-ref",
+        "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticemodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
+        "tags": [
+          "4. Portfolio Modeling"
+        ]
+      },
+      "get": {
+        "operationId": ""
+      }
     }
   },
   "components": {
