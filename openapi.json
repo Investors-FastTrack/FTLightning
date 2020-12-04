@@ -1545,7 +1545,7 @@
         ]
       }
     },
-    "/v1/portfolios/staticmodel/ref": {
+    "/v1/ref/staticmodel": {
       "post": {
         "summary": "Static Model Reference Data",
         "operationId": "post-v1-portfolios-staticmodel-ref",
@@ -1578,7 +1578,7 @@
             }
           }
         },
-        "description": "returns reference data for portfolio and portfolio positions",
+        "description": "returns reference data for portfolio and portfolio positions ",
         "parameters": [
           {
             "$ref": "#/components/parameters/appid"
@@ -1605,7 +1605,8 @@
         "tags": [
           "8. Reference Data"
         ]
-      }
+      },
+      "parameters": []
     }
   },
   "components": {
