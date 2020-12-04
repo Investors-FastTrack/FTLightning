@@ -1547,7 +1547,7 @@
     },
     "/v1/portfolios/staticmodel/ref": {
       "post": {
-        "summary": "",
+        "summary": "Static Model Reference Data",
         "operationId": "post-v1-portfolios-staticmodel-ref",
         "responses": {
           "200": {
@@ -1601,7 +1601,10 @@
             }
           },
           "description": ""
-        }
+        },
+        "tags": [
+          "4. Portfolio Modeling"
+        ]
       }
     }
   },
