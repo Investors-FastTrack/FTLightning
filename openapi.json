@@ -1620,6 +1620,119 @@
       "get": {
         "operationId": ""
       }
+    },
+    "/v1/portfolios/dynamicmodel": {
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-portfolios-dynamicmodel",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "marginrate": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+                  },
+                  "models": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "model": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "$ref": "#/components/schemas/FTPosition"
+                          }
+                        },
+                        "start": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "day to rebalance to positions"
+                        }
+                      },
+                      "required": [
+                        "start"
+                      ]
+                    }
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string",
+                    "description": "name of model"
+                  },
+                  "seedvalue": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "value of portfolio on the first day of trading"
+                  },
+                  "ticker": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "ticker to use in the response"
+                  }
+                },
+                "required": [
+                  "marginrate",
+                  "models",
+                  "name",
+                  "seedvalue",
+                  "ticker"
+                ]
+              },
+              "examples": {
+                "example": {
+                  "value": {
+                    "marginrate": "0",
+                    "models": [
+                      {
+                        "start": "12/31/2020",
+                        "model": [
+                          {
+                            "ticker": "SPY",
+                            "weight": "50"
+                          },
+                          {
+                            "ticker": "TLT",
+                            "weight": "50"
+                          }
+                        ]
+                      }
+                    ],
+                    "name": "Example Model",
+                    "seedvalue": "1000",
+                    "ticker": "XX$$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "4.1 Dynamic Portfolio"
+        ]
+      }
     }
   },
   "components": {
@@ -2037,6 +2150,10 @@
       },
       "FTDescribe": {
         "type": "object",
+        "description": "Various descriptive data points of security",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "sharesout": {
             "type": "string",
@@ -2056,7 +2173,7 @@
           },
           "yield": {
             "type": "string",
-            "description": "SEC yield for the priod 52 weeks from the \"end\" parameter"
+            "description": "Income dividend yield\n"
           },
           "name": {
             "type": "string",
@@ -2080,12 +2197,40 @@
           "yield_all": {
             "type": "string",
             "description": "52 week yield of all dividend types (income, short and long)"
+          },
+          "yieldL": {
+            "type": "string",
+            "description": "Long term dividend yield  "
+          },
+          "yieldS": {
+            "type": "string",
+            "description": "Short Term Dividend Yield"
           }
         },
-        "description": "Various descriptive data points of security",
-        "x-tags": [
-          "Models"
-        ]
+        "x-examples": {
+          "example": {
+            "high_52": "153.26",
+            "low_52": "76.197",
+            "marketcap": "466,605.794",
+            "name": "JPMorgan Chase & Company",
+            "price": "152.91",
+            "price_previous": "150.01",
+            "security_type": "Stock",
+            "sharesout": "3051.506",
+            "startdate": {
+              "juliandate": "32387",
+              "marketdate": "1",
+              "strdate": "09-01-1988"
+            },
+            "juliandate": "32387",
+            "marketdate": "1",
+            "strdate": "09-01-1988",
+            "yield": "2.35%",
+            "yieldL": "0.00%",
+            "yieldS": "0.00%",
+            "yield_all": "2.35%"
+          }
+        }
       },
       "FTStats": {
         "type": "object",
@@ -2262,7 +2407,224 @@
           "Models"
         ],
         "description": "Details and stats of portfolio model results",
-        "title": ""
+        "title": "",
+        "x-examples": {
+          "example": {
+            "aux": 1,
+            "describe": {
+              "high_52": "153.26",
+              "low_52": "76.197",
+              "marketcap": "466,605.794",
+              "name": "JPMorgan Chase & Company",
+              "price": "152.91",
+              "price_previous": "150.01",
+              "security_type": "Stock",
+              "sharesout": "3051.506",
+              "startdate": {
+                "juliandate": "32387",
+                "marketdate": "1",
+                "strdate": "09-01-1988"
+              },
+              "yield": "2.35%",
+              "yieldL": "0.00%",
+              "yieldS": "0.00%",
+              "yield_all": "2.35%"
+            },
+            "dteend": {
+              "juliandate": "44258",
+              "marketdate": "8189",
+              "strdate": "3/3/2021"
+            },
+            "dtestart": {
+              "juliandate": "44196",
+              "marketdate": "8148",
+              "strdate": "12/31/2020"
+            },
+            "err": null,
+            "returns": {
+              "annualized": {
+                "five": "24.08%",
+                "fiveday": "-10.88%",
+                "inception": "12.43%",
+                "ninemonths": "72.95%",
+                "one": "35.60%",
+                "oneday": "9,999.99%",
+                "onemonth": "414.75%",
+                "period": "225.97%",
+                "sixmonths": "140.17%",
+                "ten": "15.94%",
+                "three": "13.93%",
+                "threemonths": "173.11%",
+                "ytd": "225.97%"
+              },
+              "total": {
+                "five": "193.62%",
+                "fiveday": "-0.23%",
+                "inception": "4,405.30%",
+                "ninemonths": "50.49%",
+                "one": "35.60%",
+                "oneday": "1.93%",
+                "onemonth": "13.15%",
+                "period": "21.20%",
+                "sixmonths": "53.37%",
+                "ten": "337.95%",
+                "three": "47.80%",
+                "threemonths": "27.02%",
+                "ytd": "21.20%"
+              },
+              "years": [
+                {
+                  "returns": "4.35%",
+                  "year": "1989"
+                },
+                {
+                  "returns": "-60.25%",
+                  "year": "1990"
+                },
+                {
+                  "returns": "107.64%",
+                  "year": "1991"
+                },
+                {
+                  "returns": "88.02%",
+                  "year": "1992"
+                },
+                {
+                  "returns": "7.37%",
+                  "year": "1993"
+                },
+                {
+                  "returns": "-6.45%",
+                  "year": "1994"
+                },
+                {
+                  "returns": "68.76%",
+                  "year": "1995"
+                },
+                {
+                  "returns": "56.88%",
+                  "year": "1996"
+                },
+                {
+                  "returns": "25.54%",
+                  "year": "1997"
+                },
+                {
+                  "returns": "32.79%",
+                  "year": "1998"
+                },
+                {
+                  "returns": "11.66%",
+                  "year": "1999"
+                },
+                {
+                  "returns": "-10.05%",
+                  "year": "2000"
+                },
+                {
+                  "returns": "-17.41%",
+                  "year": "2001"
+                },
+                {
+                  "returns": "-30.71%",
+                  "year": "2002"
+                },
+                {
+                  "returns": "60.28%",
+                  "year": "2003"
+                },
+                {
+                  "returns": "9.97%",
+                  "year": "2004"
+                },
+                {
+                  "returns": "5.74%",
+                  "year": "2005"
+                },
+                {
+                  "returns": "25.60%",
+                  "year": "2006"
+                },
+                {
+                  "returns": "-6.90%",
+                  "year": "2007"
+                },
+                {
+                  "returns": "-25.13%",
+                  "year": "2008"
+                },
+                {
+                  "returns": "34.36%",
+                  "year": "2009"
+                },
+                {
+                  "returns": "2.30%",
+                  "year": "2010"
+                },
+                {
+                  "returns": "-19.98%",
+                  "year": "2011"
+                },
+                {
+                  "returns": "36.18%",
+                  "year": "2012"
+                },
+                {
+                  "returns": "36.71%",
+                  "year": "2013"
+                },
+                {
+                  "returns": "9.88%",
+                  "year": "2014"
+                },
+                {
+                  "returns": "8.37%",
+                  "year": "2015"
+                },
+                {
+                  "returns": "34.57%",
+                  "year": "2016"
+                },
+                {
+                  "returns": "26.73%",
+                  "year": "2017"
+                },
+                {
+                  "returns": "-6.65%",
+                  "year": "2018"
+                },
+                {
+                  "returns": "47.27%",
+                  "year": "2019"
+                },
+                {
+                  "returns": "-5.52%",
+                  "year": "2020"
+                },
+                {
+                  "returns": "21.20%",
+                  "year": "2021"
+                }
+              ]
+            },
+            "risk": {
+              "alpha": "206.53%",
+              "beta": "1.54",
+              "corr": "100.00%",
+              "downsidedeviation": "NaN",
+              "ftalpha": "2,860.5",
+              "r_squared": "100.00%",
+              "rsi": null,
+              "sd": "7.31%",
+              "sharpe": "8.42",
+              "sortino": "NaN",
+              "treynor": "147.07",
+              "ui": "3.63",
+              "upi": "58.80"
+            },
+            "ticker": "JPM"
+          }
+        }
       },
       "FTPortfolio": {
         "type": "object",
