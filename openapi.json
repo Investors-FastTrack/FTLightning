@@ -1064,7 +1064,8 @@
                   "marginrate": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
+                    "example": "0.03"
                   },
                   "models": {
                     "type": "array",
@@ -1084,7 +1085,8 @@
                         "start": {
                           "type": "string",
                           "minLength": 1,
-                          "description": "day to rebalance to positions"
+                          "description": "day to rebalance to positions",
+                          "example": "2001-01-11"
                         }
                       },
                       "required": [
@@ -1093,19 +1095,22 @@
                     }
                   },
                   "name": {
-                    "minLength": 1,
                     "type": "string",
-                    "description": "name of model"
+                    "minLength": 1,
+                    "description": "name of model",
+                    "example": "Example Dynamic Model"
                   },
                   "seedvalue": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "value of portfolio on the first day of trading"
+                    "description": "value of portfolio on the first day of trading",
+                    "example": "1000"
                   },
                   "ticker": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "ticker to use in the response"
+                    "description": "ticker to use in the response",
+                    "example": "$XX"
                   }
                 },
                 "required": [
