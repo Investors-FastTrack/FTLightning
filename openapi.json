@@ -1053,11 +1053,10 @@
           "4. Portfolio Modeling"
         ]
       }
-    }
-    ,
+    },
     "/v1/portfolios/dynamicmodel": {
       "post": {
-        "summary": "",
+        "summary": "Dynamic Model",
         "operationId": "post-v1-portfolios-dynamicmodel",
         "responses": {
           "200": {
