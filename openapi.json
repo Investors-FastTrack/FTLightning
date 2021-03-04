@@ -455,7 +455,7 @@
             "description": "bad input parameter"
           }
         },
-        "operationId": "",
+        "operationId": "1231jsoasd",
         "description": "Returns array with every date in the FastTrack database. This object is used to interpret the data/{ticker}/divadjprices and data/{ticker}/unadjprices results",
         "security": [
           {
@@ -1053,6 +1053,120 @@
           "4. Portfolio Modeling"
         ]
       }
+    }
+    ,
+    "/v1/portfolios/dynamicmodel": {
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-portfolios-dynamicmodel",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "marginrate": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
+                  },
+                  "models": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "model": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "$ref": "#/components/schemas/FTPosition"
+                          }
+                        },
+                        "start": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "day to rebalance to positions"
+                        }
+                      },
+                      "required": [
+                        "start"
+                      ]
+                    }
+                  },
+                  "name": {
+                    "minLength": 1,
+                    "type": "string",
+                    "description": "name of model"
+                  },
+                  "seedvalue": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "value of portfolio on the first day of trading"
+                  },
+                  "ticker": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "ticker to use in the response"
+                  }
+                },
+                "required": [
+                  "marginrate",
+                  "models",
+                  "name",
+                  "seedvalue",
+                  "ticker"
+                ]
+              },
+              "examples": {
+                "example": {
+                  "value": {
+                    "marginrate": "0",
+                    "models": [
+                      {
+                        "start": "12/31/2020",
+                        "model": [
+                          {
+                            "ticker": "SPY",
+                            "weight": "50"
+                          },
+                          {
+                            "ticker": "TLT",
+                            "weight": "50"
+                          }
+                        ]
+                      }
+                    ],
+                    "name": "Example Model",
+                    "seedvalue": "1000",
+                    "ticker": "XX$$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "4.4 Dynamic Portfolios"
+        ]
+      }
     },
     "v1/export/{ticker}": {
       "get": {
@@ -1618,120 +1732,7 @@
         ]
       },
       "get": {
-        "operationId": ""
-      }
-    },
-    "/v1/portfolios/dynamicmodel": {
-      "post": {
-        "summary": "",
-        "operationId": "post-v1-portfolios-dynamicmodel",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTModelResults"
-                },
-                "examples": {}
-              }
-            }
-          }
-        },
-        "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "marginrate": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
-                  },
-                  "models": {
-                    "type": "array",
-                    "uniqueItems": true,
-                    "minItems": 1,
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "model": {
-                          "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
-                          "items": {
-                            "$ref": "#/components/schemas/FTPosition"
-                          }
-                        },
-                        "start": {
-                          "type": "string",
-                          "minLength": 1,
-                          "description": "day to rebalance to positions"
-                        }
-                      },
-                      "required": [
-                        "start"
-                      ]
-                    }
-                  },
-                  "name": {
-                    "minLength": 1,
-                    "type": "string",
-                    "description": "name of model"
-                  },
-                  "seedvalue": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "value of portfolio on the first day of trading"
-                  },
-                  "ticker": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "ticker to use in the response"
-                  }
-                },
-                "required": [
-                  "marginrate",
-                  "models",
-                  "name",
-                  "seedvalue",
-                  "ticker"
-                ]
-              },
-              "examples": {
-                "example": {
-                  "value": {
-                    "marginrate": "0",
-                    "models": [
-                      {
-                        "start": "12/31/2020",
-                        "model": [
-                          {
-                            "ticker": "SPY",
-                            "weight": "50"
-                          },
-                          {
-                            "ticker": "TLT",
-                            "weight": "50"
-                          }
-                        ]
-                      }
-                    ],
-                    "name": "Example Model",
-                    "seedvalue": "1000",
-                    "ticker": "XX$$"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "4.4 Dynamic Portfolios"
-        ]
+        "operationId": "hsadaslsdan"
       }
     }
   },
