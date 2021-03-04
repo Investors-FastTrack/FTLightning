@@ -1146,6 +1146,40 @@
         },
         "tags": [
           "Dynamic Modeling"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/details"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          }
+        ],
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
         ]
       }
     },
