@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "v1/auth/login": {
+    "/v1/auth/login": {
       "get": {
         "summary": "Login",
         "parameters": [
@@ -73,7 +73,7 @@
         ]
       }
     },
-    "v1/data/{ticker}/range": {
+    "/v1/data/{ticker}/range": {
       "get": {
         "summary": "Data Range",
         "parameters": [
@@ -130,7 +130,7 @@
         }
       ]
     },
-    "v1/data/xmulti/range": {
+    "/v1/data/xmulti/range": {
       "post": {
         "summary": "Data Range - Multiple Tickers",
         "parameters": [
@@ -189,7 +189,7 @@
         }
       }
     },
-    "v1/data/{ticker}": {
+    "/v1/data/{ticker}": {
       "get": {
         "summary": "Bulk Data",
         "parameters": [
@@ -235,7 +235,7 @@
         ]
       }
     },
-    "v1/data/xmulti": {
+    "/v1/data/xmulti": {
       "post": {
         "summary": "Bulk Data - Multiple Tickers",
         "parameters": [
@@ -287,7 +287,7 @@
         ]
       }
     },
-    "v1/data/{ticker}/divadjprices": {
+    "/v1/data/{ticker}/divadjprices": {
       "get": {
         "summary": "Closing Prices - Adjusted",
         "parameters": [
@@ -324,7 +324,7 @@
         ]
       }
     },
-    "v1/data/{ticker}/unadjprices": {
+    "/v1/data/{ticker}/unadjprices": {
       "get": {
         "summary": "Closing Prices - Unadjusted",
         "parameters": [
@@ -361,7 +361,7 @@
         ]
       }
     },
-    "v1/data/{ticker}/startday": {
+    "/v1/data/{ticker}/startday": {
       "get": {
         "summary": "Inception Date",
         "parameters": [
@@ -398,7 +398,7 @@
         ]
       }
     },
-    "v1/data/{ticker}/symname": {
+    "/v1/data/{ticker}/symname": {
       "get": {
         "summary": "Name",
         "parameters": [
@@ -436,7 +436,7 @@
       },
       "parameters": []
     },
-    "v1/data/dates": {
+    "/v1/data/dates": {
       "get": {
         "summary": "Dates",
         "parameters": [],
@@ -470,7 +470,7 @@
         ]
       }
     },
-    "v1/family/{strFamily}": {
+    "/v1/family/{strFamily}": {
       "get": {
         "summary": "Family",
         "parameters": [
@@ -514,7 +514,7 @@
         ]
       }
     },
-    "v1/family/": {
+    "/v1/family/": {
       "get": {
         "summary": "Family Search",
         "parameters": [
@@ -575,7 +575,7 @@
         ]
       }
     },
-    "v1/stats/{ticker}": {
+    "/v1/stats/{ticker}": {
       "get": {
         "summary": "One Ticker",
         "parameters": [
@@ -656,7 +656,7 @@
         }
       ]
     },
-    "v1/stats/xmulti": {
+    "/v1/stats/xmulti": {
       "post": {
         "summary": "Multiple Tickers",
         "parameters": [
@@ -726,7 +726,7 @@
         }
       }
     },
-    "v1/portfolios/staticmodel": {
+    "/v1/portfolios/staticmodel": {
       "post": {
         "summary": "Calculate Static Model",
         "parameters": [
@@ -823,26 +823,17 @@
                     "default": "quarter"
                   },
                   "marginrate": {
-                    "type": [
-                      "number",
-                      "null"
-                    ],
+                    "type": "number",
                     "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
                     "default": 0
                   },
                   "seed": {
-                    "type": [
-                      "number",
-                      "null"
-                    ],
+                    "type": "number",
                     "description": "value of portfolio on the first day of trading",
                     "default": 100000
                   },
                   "name": {
-                    "type": [
-                      "string",
-                      "null"
-                    ],
+                    "type": "string",
                     "description": "Name of model"
                   }
                 },
@@ -879,7 +870,7 @@
         }
       }
     },
-    "v1/portfolios/staticmodel/xmulti": {
+    "/v1/portfolios/staticmodel/xmulti": {
       "post": {
         "summary": "Calculate Multiple Static Models",
         "parameters": [
@@ -977,26 +968,17 @@
                       "default": "quarter"
                     },
                     "name": {
-                      "type": [
-                        "string",
-                        "null"
-                      ],
+                      "type": "string",
                       "minLength": 1,
                       "description": "Name of model"
                     },
                     "marginrate": {
-                      "type": [
-                        "number",
-                        "null"
-                      ],
+                      "type": "number",
                       "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
                       "default": 0
                     },
                     "seed": {
-                      "type": [
-                        "number",
-                        "null"
-                      ],
+                      "type": "number",
                       "description": "value of portfolio on the first day of trading",
                       "default": 100000
                     }
@@ -1167,7 +1149,7 @@
         ]
       }
     },
-    "v1/export/{ticker}": {
+    "/v1/export/{ticker}": {
       "get": {
         "summary": "Export CSV",
         "parameters": [
@@ -1286,7 +1268,7 @@
         ]
       }
     },
-    "v1/report": {
+    "/v1/report": {
       "get": {
         "summary": "Embed Chart (iframe)",
         "responses": {
@@ -1454,7 +1436,6 @@
             "schema": {
               "type": "string",
               "default": "2019-12-31",
-              "example": "2019-12-31",
               "pattern": "yyyy-MM-dd"
             },
             "in": "query",
@@ -1470,7 +1451,7 @@
       },
       "parameters": []
     },
-    "v1/ref/{ticker}/details": {
+    "/v1/ref/{ticker}/details": {
       "parameters": [
         {
           "$ref": "#/components/parameters/ticker"
@@ -1506,7 +1487,7 @@
         ]
       }
     },
-    "v1/ref/{ticker}/portfolio": {
+    "/v1/ref/{ticker}/portfolio": {
       "parameters": [
         {
           "$ref": "#/components/parameters/ticker"
@@ -1545,7 +1526,7 @@
         ]
       }
     },
-    "v1/search": {
+    "/v1/search": {
       "get": {
         "parameters": [
           {
@@ -1728,10 +1709,12 @@
         "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticemodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
         "tags": [
           "4. Portfolio Modeling"
-        ]
-      },
-      "get": {
-        "operationId": "hsadaslsdan"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     }
   },
@@ -2697,7 +2680,6 @@
             "description": "Ticker symbol of security requested"
           },
           "bondexposure": {
-            "type": "null",
             "description": "Subscription required - bond grading exposure"
           },
           "topten": {
@@ -2771,7 +2753,6 @@
             }
           },
           "flows": {
-            "type": "null",
             "description": "Subscription required - Flows in and out of fund"
           },
           "assetclass": {
@@ -2840,11 +2821,9 @@
             }
           },
           "bondquality": {
-            "type": "null",
             "description": "Subscription required"
           },
           "marketcap": {
-            "type": "null",
             "description": "Subscription required"
           },
           "sector": {
@@ -3065,13 +3044,6 @@
         ]
       },
       "FTStaticModelParam": {
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/FTStaticModelParam"
-            }
-          }
-        },
         "type": "object",
         "x-examples": {
           "Static Model Parameter Example": {
