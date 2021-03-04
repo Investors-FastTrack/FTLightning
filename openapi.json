@@ -1071,6 +1071,7 @@
                     "type": "array",
                     "uniqueItems": true,
                     "minItems": 1,
+                    "description": "Array of FTStaticModelParameters that define the dynamic model",
                     "items": {
                       "type": "object",
                       "properties": {
@@ -1078,6 +1079,7 @@
                           "type": "array",
                           "uniqueItems": true,
                           "minItems": 1,
+                          "description": "List of FTPositions that define the positions on \"start\"",
                           "items": {
                             "$ref": "#/components/schemas/FTPosition"
                           }
@@ -1122,7 +1124,7 @@
                 ]
               },
               "examples": {
-                "example": {
+                "example-dynamic": {
                   "value": {
                     "marginrate": "0",
                     "models": [
