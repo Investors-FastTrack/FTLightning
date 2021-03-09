@@ -2076,6 +2076,9 @@
         "type": "object",
         "title": "",
         "description": "Object containing various annualized/total return values and history of yearly total returns",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "annualized": {
             "$ref": "#/components/schemas/FTReturn"
@@ -2089,11 +2092,11 @@
             "items": {
               "$ref": "#/components/schemas/FTYearReturns"
             }
+          },
+          "dates": {
+            "$ref": "#/components/schemas/FTReturnDates"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTYearReturns": {
         "type": "object",
@@ -2924,6 +2927,9 @@
         "type": "object",
         "description": "Annualized (CAGR) / Total returns for the described time periods",
         "title": "",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "period": {
             "type": "string",
@@ -2972,11 +2978,12 @@
           "ytd": {
             "type": "string",
             "description": "year to date annualized/total return from the \"end\" parameter"
+          },
+          "inception": {
+            "type": "string",
+            "description": "annualized/total return since security's start"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTDividends": {
         "title": "FTDividends",
@@ -3138,6 +3145,58 @@
             "items": {
               "$ref": "#/components/schemas/FTPosition"
             }
+          }
+        }
+      },
+      "FTReturnDates": {
+        "title": "FTReturnDates",
+        "type": "object",
+        "properties": {
+          "one": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "three": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "five": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "ten": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "onemonth": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "threemonth": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "sixmonth": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "ytd": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "oneday": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "fiveday": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "ninemonths": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          }
+        },
+        "description": "dates used to calculate total and annualized returns in FTReturns Object"
+      },
+      "FTDateSpan": {
+        "title": "FTDateSpan",
+        "type": "object",
+        "properties": {
+          "dtestart": {
+            "$ref": "#/components/schemas/FTDate"
+          },
+          "dteend": {
+            "$ref": "#/components/schemas/FTDate"
           }
         }
       }
