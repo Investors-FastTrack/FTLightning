@@ -1039,7 +1039,7 @@
     "/v1/portfolios/dynamicmodel": {
       "post": {
         "summary": "Dynamic Model",
-        "operationId": "post-v1-portfolios-dynamicmodel",
+        "operationId": "dynamicmodel-post-v1-portfolios",
         "responses": {
           "200": {
             "description": "OK",
@@ -1152,7 +1152,7 @@
           }
         },
         "tags": [
-          "Dynamic Modeling"
+          "4.1 Dynamic Modeling"
         ],
         "parameters": [
           {
