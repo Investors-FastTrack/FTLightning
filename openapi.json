@@ -1039,7 +1039,32 @@
     "/v1/portfolios/dynamicmodel": {
       "post": {
         "summary": "Dynamic Model",
-        "operationId": "dynamicmodel-post-v1-portfolios",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/details"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -1054,6 +1079,14 @@
           }
         },
         "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1151,42 +1184,9 @@
             }
           }
         },
+        "operationId": "dynamicmodel-post-v1-portfolios",
         "tags": [
           "4.1 Dynamic Modeling"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "$ref": "#/components/parameters/maxdraw"
-          },
-          {
-            "$ref": "#/components/parameters/details"
-          },
-          {
-            "$ref": "#/components/parameters/chart"
-          },
-          {
-            "$ref": "#/components/parameters/basis"
-          },
-          {
-            "$ref": "#/components/parameters/len"
-          }
-        ],
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
         ]
       }
     },
