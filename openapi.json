@@ -3450,6 +3450,9 @@
       "name": "4. Portfolio Modeling"
     },
     {
+      "name": "4.1 Dynamic Modeling"
+    },
+    {
       "name": "5. Dividends"
     },
     {
@@ -3463,6 +3466,9 @@
     },
     {
       "name": "9. Search"
+    },
+    {
+      "name":"Other Data"
     }
   ]
 }
