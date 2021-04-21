@@ -889,56 +889,7 @@
                 "minItems": 1,
                 "uniqueItems": true,
                 "items": {
-                  "type": "object",
-                  "description": "Array of FTStaticModelParameters",
-                  "properties": {
-                    "model": {
-                      "type": "array",
-                      "uniqueItems": true,
-                      "minItems": 1,
-                      "description": "FTStaticModelParameter",
-                      "items": {
-                        "$ref": "#/components/schemas/FTPosition"
-                      }
-                    },
-                    "start": {
-                      "type": "string",
-                      "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted",
-                      "default": "1988-09-01"
-                    },
-                    "rebalanceperiod": {
-                      "type": "string",
-                      "minLength": 1,
-                      "enum": [
-                        "week",
-                        "month",
-                        "quarter",
-                        "annual",
-                        "[number of market days]"
-                      ],
-                      "default": "quarter"
-                    },
-                    "name": {
-                      "type": "string",
-                      "minLength": 1,
-                      "description": "Name of model"
-                    },
-                    "marginrate": {
-                      "type": "number",
-                      "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
-                      "default": 0
-                    },
-                    "seed": {
-                      "type": "number",
-                      "description": "value of portfolio on the first day of trading",
-                      "default": 100000
-                    }
-                  },
-                  "required": [
-                    "model",
-                    "start",
-                    "rebalanceperiod"
-                  ]
+                  "$ref": "#/components/schemas/FTStaticModel"
                 }
               },
               "examples": {
@@ -971,7 +922,7 @@
                         }
                       ],
                       "start": "12/31/2000",
-                      "rebalanceperiod": "quarter",
+                      "rebalanceperiod": "month",
                       "name": "60 40 Static Model"
                     }
                   ]
