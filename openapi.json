@@ -794,7 +794,27 @@
               "schema": {
                 "$ref": "#/components/schemas/FTStaticModel"
               },
-              "examples": {}
+              "examples": {
+                "Static Model Example": {
+                  "value": {
+                    "start": "2000-12-31",
+                    "rebalanceperiod": "month",
+                    "marginrate": 0,
+                    "seed": 100000,
+                    "model": [
+                      {
+                        "ticker": "SPY",
+                        "weight": "50"
+                      },
+                      {
+                        "ticker": "TLT",
+                        "weight": "50"
+                      }
+                    ],
+                    "name": "Example Model"
+                  }
+                }
+              }
             }
           },
           "description": ""
