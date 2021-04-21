@@ -792,78 +792,9 @@
           "content": {
             "application/json": {
               "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "model": {
-                    "type": "array",
-                    "uniqueItems": true,
-                    "minItems": 1,
-                    "items": {
-                      "$ref": "#/components/schemas/FTPosition"
-                    }
-                  },
-                  "start": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "Model's start date. The first date the model is allocated to 'weights'. All dates prior are money market returns. Calendar, Julian, or market dates are accepted",
-                    "default": "1988-09-01"
-                  },
-                  "rebalanceperiod": {
-                    "type": "string",
-                    "minLength": 1,
-                    "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
-                    "enum": [
-                      "week",
-                      "month",
-                      "quarter",
-                      "annual",
-                      "[number of market days]"
-                    ],
-                    "default": "quarter"
-                  },
-                  "marginrate": {
-                    "type": "number",
-                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
-                    "default": 0
-                  },
-                  "seed": {
-                    "type": "number",
-                    "description": "value of portfolio on the first day of trading",
-                    "default": 100000
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Name of model"
-                  }
-                },
-                "required": [
-                  "model",
-                  "start",
-                  "rebalanceperiod"
-                ]
+                "$ref": "#/components/schemas/FTStaticModel"
               },
-              "examples": {
-                "Single Static Model Example": {
-                  "value": {
-                    "model": [
-                      {
-                        "ticker": "SPY",
-                        "weight": "50"
-                      },
-                      {
-                        "ticker": "TLT",
-                        "weight": "50"
-                      }
-                    ],
-                    "start": "12/31/2016",
-                    "rebalanceperiod": "week",
-                    "marginrate": 0,
-                    "seed": 1000,
-                    "name": "John's Portfolio"
-                  }
-                }
-              }
+              "examples": {}
             }
           },
           "description": ""
@@ -3091,10 +3022,10 @@
           "Models"
         ]
       },
-      "FTStaticModelParam": {
+      "FTStaticModel": {
         "type": "object",
         "x-examples": {
-          "Static Model Parameter Example": {
+          "Static Model Example": {
             "model": [
               {
                 "ticker": "SPY",
@@ -3106,7 +3037,7 @@
               }
             ],
             "start": "2020-01-01",
-            "rebalanceperiod": "monthly",
+            "rebalanceperiod": "month",
             "marginrate": 0,
             "seed": 1000
           }
@@ -3145,6 +3076,9 @@
             "items": {
               "$ref": "#/components/schemas/FTPosition"
             }
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
