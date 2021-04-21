@@ -1628,7 +1628,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FTStaticModelParam"
+                "$ref": "#/components/schemas/FTStaticModel"
               }
             },
             "application/xml": {
@@ -1649,7 +1649,7 @@
       "post": {
         "summary": "Reference Data - Static Model",
         "operationId": "post-v1-staticmodel-ref",
-        "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticemodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
+        "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticmodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
         "tags": [
           "4. Portfolio Modeling"
         ],
