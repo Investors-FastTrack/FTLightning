@@ -2987,11 +2987,27 @@
           },
           "category": {
             "type": "string",
-            "description": "Category of security"
+            "description": "FUNDS/ETFS ONLY - Category of security"
           },
           "expenseratio": {
             "type": "string",
-            "description": "Expense ratio (multiply by 100 to get percentage value)"
+            "description": "FUNDS/ETFS ONLY - Expense ratio. Multiply by 100 to get percentage value."
+          },
+          "sector": {
+            "type": "string",
+            "description": "STOCKS ONLY - sectory of security"
+          },
+          "country": {
+            "type": "string",
+            "description": "STOCKS ONLY - country of incorporation"
+          },
+          "industry": {
+            "type": "string",
+            "description": "STOCKS ONLY - industry of security"
+          },
+          "exchange": {
+            "type": "string",
+            "description": "STOCKS ONLY - main trading exchange"
           }
         }
       },
