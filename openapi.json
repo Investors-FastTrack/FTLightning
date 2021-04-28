@@ -1683,7 +1683,7 @@
     },
     "/v1/precalc/winlose": {
       "get": {
-        "summary": "/v1/precal/winlose",
+        "summary": "Winners and Losers",
         "tags": [
           "10. Pre Calculated Data"
         ],
