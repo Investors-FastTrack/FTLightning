@@ -1680,6 +1680,66 @@
           }
         }
       }
+    },
+    "/v1/precalc/winlose": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTWinLose"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-precalc-topten",
+        "description": "",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "STOCKS1",
+                "STOCKS2",
+                "EQUTYFUNDS",
+                "BONDFUNDS",
+                "BONDETFS",
+                "EQUITYETFS",
+                "ETFS"
+              ]
+            },
+            "in": "query",
+            "name": "db",
+            "required": true,
+            "description": "universe of securities to calculate winners and losers"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "yyyyMMdd",
+              "example": "20201231"
+            },
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "description": "end date of rankings"
+          }
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -3141,6 +3201,76 @@
             "$ref": "#/components/schemas/FTDate"
           }
         }
+      },
+      "FTWinLose": {
+        "description": "Object containing lists of winners and losers for specific databases and time periods",
+        "type": "object",
+        "properties": {
+          "err": {
+            "$ref": "#/components/schemas/err"
+          },
+          "db": {
+            "minLength": 1,
+            "type": "string",
+            "description": "Universe of securities used in calculations"
+          },
+          "list": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "description": "List of all time period winners and losers",
+            "items": {
+              "$ref": "#/components/schemas/FTWinLoseItem"
+            }
+          }
+        }
+      },
+      "FTWinLoseItem": {
+        "type": "object",
+        "description": "List of all winners and losers for a time period",
+        "title": "",
+        "properties": {
+          "period": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Time period used of win/lose calculation"
+          },
+          "dteend": {
+            "$ref": "#/components/schemas/FTDate"
+          },
+          "dtestart": {
+            "$ref": "#/components/schemas/FTDate"
+          },
+          "datalist": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/FTWinLoseListItem"
+            }
+          }
+        }
+      },
+      "FTWinLoseListItem": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Name of winner or loser"
+          },
+          "ticker": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Ticker of winner or loser"
+          },
+          "val": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Value in ranking (percent return)"
+          }
+        }
       }
     },
     "parameters": {
@@ -3408,6 +3538,9 @@
     },
     {
       "name": "9. Search"
+    },
+    {
+      "name": "10. Pre Calculated Data"
     },
     {
       "name": "Other Data"
