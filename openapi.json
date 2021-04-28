@@ -1684,7 +1684,9 @@
     "/v1/precalc/winlose": {
       "get": {
         "summary": "Your GET endpoint",
-        "tags": [],
+        "tags": [
+          "10. Pre Calculated Data"
+        ],
         "responses": {
           "200": {
             "description": "OK",
