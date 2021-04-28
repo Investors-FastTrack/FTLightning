@@ -1683,7 +1683,7 @@
     },
     "/v1/precalc/winlose": {
       "get": {
-        "summary": "Your GET endpoint",
+        "summary": "/v1/precal/winlose",
         "tags": [
           "10. Pre Calculated Data"
         ],
@@ -1700,7 +1700,7 @@
           }
         },
         "operationId": "get-v1-precalc-topten",
-        "description": "",
+        "description": "Retrieve top ten winners and losers of a specific security universe",
         "security": [
           {
             "appid": []
