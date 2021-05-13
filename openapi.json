@@ -1397,7 +1397,17 @@
     "/v1/ref/{ticker}/details": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/ticker"
+          "name": "ticker",
+          "in": "path",
+          "description": "ticker symbol",
+          "style": "simple",
+          "explode": false,
+          "schema": {
+            "type": "string",
+            "example": "JPM"
+          },
+          "example": "JPM",
+          "required": true
         }
       ],
       "get": {
@@ -1465,6 +1475,21 @@
           },
           {
             "appid": []
+          }
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MAX",
+                "0",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "topcount",
+            "description": "Include with value of \"MAX\" to return all known positions (usually top 25 positions)"
           }
         ]
       }
@@ -2713,7 +2738,7 @@
           },
           "topten": {
             "type": "object",
-            "description": "Top ten holdings by weight",
+            "description": "Top ten (or more) holdings by weight",
             "properties": {
               "date": {
                 "type": "string",
@@ -3055,6 +3080,10 @@
             "type": "string",
             "description": "FUNDS/ETFS ONLY - Expense ratio. Multiply by 100 to get percentage value."
           },
+          "objective": {
+            "type": "string",
+            "description": "FUNDS/ETFS ONLY - Investment objective classification"
+          },
           "sector": {
             "type": "string",
             "description": "STOCKS ONLY - sectory of security"
@@ -3304,13 +3333,14 @@
         "name": "ticker",
         "in": "path",
         "description": "ticker symbol",
-        "required": true,
         "style": "simple",
         "explode": false,
         "schema": {
-          "type": "string"
+          "type": "string",
+          "example": "JPM"
         },
-        "example": "JPM"
+        "example": "JPM",
+        "required": true
       },
       "riskfree": {
         "schema": {
