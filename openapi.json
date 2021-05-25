@@ -3791,9 +3791,6 @@
       "name": "2. Market Data"
     },
     {
-      "name": "2.1 Bulk Data"
-    },
-    {
       "name": "3. Stats"
     },
     {
@@ -3825,6 +3822,9 @@
     },
     {
       "name": "Other Data"
+    },
+    {
+      "name": "12. Bulk Data"
     }
   ]
 }
