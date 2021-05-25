@@ -3297,7 +3297,10 @@
           "dteend": {
             "$ref": "#/components/schemas/FTDate"
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTWinLose": {
         "description": "Object containing lists of winners and losers for specific databases and time periods",
