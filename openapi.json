@@ -191,7 +191,7 @@
     },
     "/v1/data/{ticker}": {
       "get": {
-        "summary": "Bulk Data",
+        "summary": "OHLCV Data",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
@@ -237,7 +237,7 @@
     },
     "/v1/data/xmulti": {
       "post": {
-        "summary": "Bulk Data - Multiple Tickers",
+        "summary": "Multiple OHLCV Data",
         "parameters": [
           {
             "$ref": "#/components/parameters/unadj"
@@ -400,7 +400,7 @@
     },
     "/v1/data/{ticker}/symname": {
       "get": {
-        "summary": "Name",
+        "summary": "Symbol Name",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
@@ -438,7 +438,7 @@
     },
     "/v1/data/dates": {
       "get": {
-        "summary": "Dates",
+        "summary": "All Dates",
         "parameters": [],
         "responses": {
           "200": {
