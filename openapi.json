@@ -1767,6 +1767,69 @@
         ]
       },
       "parameters": []
+    },
+    "/portfolios/momentummodel": {
+      "post": {
+        "summary": "Momentum Model",
+        "operationId": "post-portfolios-MomentumModel",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTMomentumModelParameters"
+              },
+              "examples": {
+                "Banks Example": {
+                  "value": {
+                    "seedvalue": 1000,
+                    "rebalanceperiod": "Q",
+                    "model": {
+                      "universe": [
+                        "JPM",
+                        "BAC",
+                        "GS",
+                        "MS"
+                      ],
+                      "number_holdings": "1",
+                      "basis": "SP-DA",
+                      "ranking_system": "R",
+                      "ranking_period": "Q",
+                      "model": "M",
+                      "tradedelay": "1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "4.2 Momentum Modeling"
+        ],
+        "x-internal": false
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -3219,7 +3282,10 @@
             "$ref": "#/components/schemas/FTDateSpan"
           }
         },
-        "description": "dates used to calculate total and annualized returns in FTReturns Object"
+        "description": "dates used to calculate total and annualized returns in FTReturns Object",
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTDateSpan": {
         "title": "FTDateSpan",
@@ -3254,12 +3320,16 @@
               "$ref": "#/components/schemas/FTWinLoseItem"
             }
           }
-        }
+        },
+        "title": "FTWinLose",
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTWinLoseItem": {
         "type": "object",
         "description": "List of all winners and losers for a time period",
-        "title": "",
+        "title": "FTWinLoseItem",
         "properties": {
           "period": {
             "type": "string",
@@ -3280,7 +3350,10 @@
               "$ref": "#/components/schemas/FTWinLoseListItem"
             }
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTWinLoseListItem": {
         "description": "",
@@ -3301,7 +3374,174 @@
             "minLength": 1,
             "description": "Value in ranking (percent return)"
           }
-        }
+        },
+        "title": "FTWinLoseListItem",
+        "x-tags": [
+          "Models"
+        ]
+      },
+      "FTMomentumModel": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "Banks": {
+            "universe": [
+              "JPM",
+              "BAC"
+            ],
+            "number_holdings": "1",
+            "basis": "sp-da",
+            "ranking_system": "R",
+            "ranking_period": "Q",
+            "model": "M",
+            "tradedelay": "1",
+            "value": {
+              "universe": [
+                "JPM",
+                "BAC"
+              ],
+              "number_holdings": "1",
+              "basis": "sp-da",
+              "ranking_system": "R",
+              "ranking_period": "Q",
+              "model": "M",
+              "tradedelay": "1"
+            }
+          }
+        },
+        "title": "FTMomentumModel",
+        "x-tags": [
+          "Models"
+        ],
+        "properties": {
+          "universe": {
+            "type": "array",
+            "description": "Universe of securities used for investing",
+            "items": {
+              "type": "string"
+            }
+          },
+          "number_holdings": {
+            "type": "string",
+            "minLength": 1,
+            "description": "number of positions to hold",
+            "example": "4"
+          },
+          "basis": {
+            "type": "string",
+            "minLength": 1,
+            "description": "The basis to use when calculating universe rankings on FTAlpha, Sharpe, and UPI. Set to \"-1\" to use the history of the equity curve (the model)",
+            "example": "SPY"
+          },
+          "ranking_system": {
+            "type": "string",
+            "minLength": 1,
+            "description": "How to rank the universe: Return, Sharpe, FTAlpha, UPI",
+            "enum": [
+              "return",
+              "ftalpha",
+              "sharpe",
+              "upi"
+            ],
+            "example": "return"
+          },
+          "ranking_period": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Lookback period for each ranking",
+            "enum": [
+              "[number]",
+              "month",
+              "quarter",
+              "annual",
+              "semi-annual"
+            ],
+            "example": "quarterly"
+          },
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Momentum or Value",
+            "enum": [
+              "momentum",
+              "value"
+            ],
+            "example": "momentum"
+          },
+          "tradedelay": {
+            "type": "string",
+            "minLength": 1,
+            "description": "number of days AFTER ranking to wait to make the trade",
+            "example": "1"
+          }
+        },
+        "required": [
+          "universe",
+          "number_holdings",
+          "basis",
+          "ranking_system",
+          "ranking_period",
+          "model",
+          "tradedelay"
+        ]
+      },
+      "FTMomentumModelParameters": {
+        "description": "",
+        "type": "object",
+        "x-examples": {
+          "banks": {
+            "seedvalue": 10000,
+            "rebalanceperiod": "Q",
+            "model": null,
+            "value": {
+              "model": {
+                "universe": [
+                  "JPM",
+                  "BAC"
+                ],
+                "number_holdings": "1",
+                "basis": "SP-DA",
+                "ranking_system": "R",
+                "ranking_period": "Q",
+                "model": "M",
+                "tradedelay": "1"
+              },
+              "seedvalue": 10000,
+              "rebalanceperiod": "Q"
+            }
+          }
+        },
+        "properties": {
+          "seedvalue": {
+            "type": "number",
+            "description": "portfolio value on first day of trading",
+            "example": 1000
+          },
+          "rebalanceperiod": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Frequency to turn over portfolio",
+            "enum": [
+              "never",
+              "[number]",
+              "month",
+              "quarter",
+              "annual"
+            ],
+            "example": "month"
+          },
+          "model": {
+            "$ref": "#/components/schemas/FTMomentumModel"
+          }
+        },
+        "required": [
+          "seedvalue",
+          "rebalanceperiod"
+        ],
+        "title": "FTMomentumModelParameters",
+        "x-tags": [
+          "Models"
+        ]
       }
     },
     "parameters": {
