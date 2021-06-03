@@ -3162,6 +3162,15 @@
           "exchange": {
             "type": "string",
             "description": "STOCKS ONLY - main trading exchange"
+          },
+          "security_type": {
+            "type": "string",
+            "description": "ETF, Mutual Fund, Stock, or Index",
+            "enum": [
+              "ETF",
+              "Mutual Fund",
+              "Stock"
+            ]
           }
         }
       },
