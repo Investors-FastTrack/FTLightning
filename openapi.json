@@ -1768,7 +1768,7 @@
       },
       "parameters": []
     },
-    "/portfolios/momentummodel": {
+    "/v1/portfolios/momentummodel": {
       "post": {
         "summary": "Momentum Model",
         "operationId": "post-portfolios-MomentumModel",
@@ -1827,7 +1827,8 @@
         "tags": [
           "4.2 Momentum Modeling"
         ],
-        "x-internal": false
+        "x-internal": false,
+        "description": ""
       },
       "parameters": []
     }
