@@ -1802,7 +1802,7 @@
                 "Banks Example": {
                   "value": {
                     "seedvalue": 1000,
-                    "rebalanceperiod": "Q",
+                    "rebalanceperiod": "quarter",
                     "model": {
                       "universe": [
                         "JPM",
@@ -1812,9 +1812,9 @@
                       ],
                       "number_holdings": "1",
                       "basis": "SP-DA",
-                      "ranking_system": "R",
-                      "ranking_period": "Q",
-                      "model": "M",
+                      "ranking_system": "return",
+                      "ranking_period": "quarter",
+                      "model": "momentum",
                       "tradedelay": "1"
                     }
                   }
@@ -3414,10 +3414,10 @@
                 "BAC"
               ],
               "number_holdings": "1",
-              "basis": "sp-da",
-              "ranking_system": "R",
-              "ranking_period": "Q",
-              "model": "M",
+              "basis": "SP-DA",
+              "ranking_system": "return",
+              "ranking_period": "quarter",
+              "model": "momentum",
               "tradedelay": "1"
             }
           }
@@ -3469,7 +3469,7 @@
               "annual",
               "semi-annual"
             ],
-            "example": "quarterly"
+            "example": "quarter"
           },
           "model": {
             "type": "string",
@@ -3514,13 +3514,13 @@
                 ],
                 "number_holdings": "1",
                 "basis": "SP-DA",
-                "ranking_system": "R",
-                "ranking_period": "Q",
-                "model": "M",
+                "ranking_system": "return",
+                "ranking_period": "quarter",
+                "model": "momentum",
                 "tradedelay": "1"
               },
               "seedvalue": 10000,
-              "rebalanceperiod": "Q"
+              "rebalanceperiod": "quarter"
             }
           }
         },
