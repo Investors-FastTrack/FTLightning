@@ -1857,23 +1857,6 @@
           "in": "path",
           "required": true,
           "description": "Statistic to return"
-        },
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "ql",
-          "in": "path",
-          "required": true,
-          "description": "Quarterly Lookback"
-        },
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "basis",
-          "in": "path",
-          "description": "Basis used for correlation, UPI, Sharpe Ratio, etc"
         }
       ],
       "get": {
@@ -2879,6 +2862,17 @@
           },
           {
             "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "integer"
+            },
+            "in": "query",
+            "name": "ql",
+            "description": "Number of quarters to lookback when calculating stats. ql=4 is trailing 1 year. ql=12  is trialing 3 years, etc"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
           }
         ],
         "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
