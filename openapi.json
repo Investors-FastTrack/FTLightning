@@ -2877,6 +2877,157 @@
         ],
         "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
       }
+    },
+    "/v1/ref/{ticker}/shareclasses": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ],
+      "get": {
+        "summary": "Share Classes",
+        "tags": [
+          "8. Reference Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "ticker": "MDISX",
+                      "datalist": [
+                        {
+                          "expense_ratio": "0.92",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000000",
+                          "shareclass": "Retirement",
+                          "ticker": "FMDRX"
+                        },
+                        {
+                          "expense_ratio": "1.03",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "100000",
+                          "shareclass": "Inst",
+                          "ticker": "MDISX"
+                        },
+                        {
+                          "expense_ratio": "1.28",
+                          "expense_12b": "0.25",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "A",
+                          "ticker": "TEDIX"
+                        },
+                        {
+                          "expense_ratio": "1.53",
+                          "expense_12b": "0.5",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "Retirement",
+                          "ticker": "TEDRX"
+                        },
+                        {
+                          "expense_ratio": "2.03",
+                          "expense_12b": "1",
+                          "expense_deferred": "1",
+                          "initial_purchase": "1000",
+                          "shareclass": "C",
+                          "ticker": "TEDSX"
+                        }
+                      ]
+                    }
+                  },
+                  "properties": {
+                    "ticker": {
+                      "type": "string",
+                      "minLength": 1,
+                      "description": "requested ticker"
+                    },
+                    "datalist": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "$ref": "#/components/schemas/FTFees"
+                      }
+                    }
+                  },
+                  "required": [
+                    "ticker",
+                    "datalist"
+                  ]
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "ticker": "MDISX",
+                      "datalist": [
+                        {
+                          "expense_ratio": "0.92",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000000",
+                          "shareclass": "Retirement",
+                          "ticker": "FMDRX"
+                        },
+                        {
+                          "expense_ratio": "1.03",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "100000",
+                          "shareclass": "Inst",
+                          "ticker": "MDISX"
+                        },
+                        {
+                          "expense_ratio": "1.28",
+                          "expense_12b": "0.25",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "A",
+                          "ticker": "TEDIX"
+                        },
+                        {
+                          "expense_ratio": "1.53",
+                          "expense_12b": "0.5",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "Retirement",
+                          "ticker": "TEDRX"
+                        },
+                        {
+                          "expense_ratio": "2.03",
+                          "expense_12b": "1",
+                          "expense_deferred": "1",
+                          "initial_purchase": "1000",
+                          "shareclass": "C",
+                          "ticker": "TEDSX"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-ref-ticker-shareclasses",
+        "description": "Retrieve information about all other share classes of security",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -4613,6 +4764,36 @@
           "val": {
             "type": "string",
             "description": "Calculated stat value"
+          }
+        }
+      },
+      "FTFees": {
+        "title": "FTFees",
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "description": "Ticker symbol"
+          },
+          "expense_12b": {
+            "type": "string",
+            "description": "12b-1 fee. Annual marketing or distribution fee."
+          },
+          "expense_deferred": {
+            "type": "string",
+            "description": "Fee usually charged upon sale of fund"
+          },
+          "expense_ratio": {
+            "type": "string",
+            "description": "securities's expense ratio"
+          },
+          "initial_purchase": {
+            "type": "string",
+            "description": "minimum initial purchase amount in USD"
+          },
+          "shareclass": {
+            "type": "string",
+            "description": "Share class listed in prospectus"
           }
         }
       }
