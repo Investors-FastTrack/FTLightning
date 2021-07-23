@@ -5024,7 +5024,7 @@
         "name": "appid",
         "type": "apiKey",
         "in": "header",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at [http://apitrial.fasttrack.net](http://apitrial.fasttrack.net)"
+        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net"
       },
       "token": {
         "name": "token",
