@@ -22,7 +22,7 @@ Once the data is downloaded, the code pops and alert to indicate JPM's most rece
 
 function getData(){
   var ticker = 'JPM' 
-  var url = 'https://ftlightning.fasttrack.net/v1/data/' + ticker + '/divadjprices'
+  var url = 'https://ftl.fasttrack.net/v1/data/' + ticker + '/divadjprices'
   fetch(url,
       {headers: {
         "appid" : appid ,

@@ -1,6 +1,6 @@
 # Authentication
 
-FT Lightning uses a token based authentication system. All request to FT Lightning must include two headers:
+FT Market Data API uses a token based authentication system. All request to FT Market Data API must include two headers:
 
 
 #### appid 
@@ -16,10 +16,10 @@ This is a temporary 36 character string that is retrieved from the **/auth/login
 ### Example HTTP GET 
 ##### with Authentication Headers
 ```javascript
-GET https://ftlightning.fasttrack.net/v1/data/sp-da HTTP/1.1
+GET https://ftl.fasttrack.net/v1/data/sp-da HTTP/1.1
 appid: ff867cec-64c8-4d5d-a8d7-3a956d696c5e
 token: 0ca5061c-4688-4e4a-ab15-eadd7c2944c7
-Host: ftlightning.fasttrack.net
+Host: ftl.fasttrack.net
 
 ```
 

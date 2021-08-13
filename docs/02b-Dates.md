@@ -4,7 +4,7 @@
 Dates are important when calculating market stats! Read on to ensure you're getting the calculations you expect.
 
 ## Date Parameters
-Many endpoints in the FastTrack data API take **start=** and/or **end=** query strings as parameters. These parameters determine the date range used to calculate various stats and time series.
+Many endpoints in the FastTrack Data API take **start=** and/or **end=** query strings as parameters. These parameters determine the date range used to calculate various stats and time series.
 
 FastTrack's API accepts a variety of date formats:
 

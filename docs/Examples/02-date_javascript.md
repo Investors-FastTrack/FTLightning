@@ -5,7 +5,7 @@ title: "My code snippet"
 lineNumbers: true
 -->
 
-FT Lightning include 2 end points that return timeseries data for ALL dates since 9/1/1988. We refer to these as "bulk data" endpoints
+FT Market Data API include 2 end points that return timeseries data for ALL dates since 9/1/1988. We refer to these as "bulk data" endpoints
 
 - `GET /data/{ticker}`
 - `POST /data/xmulti`
@@ -63,7 +63,7 @@ var dte = null;
 
 function downloadDates() {
     //call ftlightning and get data object
-  fetch("https://ftlightning.fasttrack.net/v1/data/dates", 
+  fetch("https://ftl.fasttrack.net/v1/data/dates", 
   {
     headers: {
       "appid": appid,
@@ -85,7 +85,7 @@ var appid = 'XXXXX-XXXX-XXXXX';
 var ftdata;
 function downloadData() {
     //call ftlightning and get data object
-  fetch("https://ftlightning.fasttrack.net/v1/data/jpm/divadjprices", 
+  fetch("https://ftl.fasttrack.net/v1/data/jpm/divadjprices", 
   {
     headers: {
       "appid": appid,

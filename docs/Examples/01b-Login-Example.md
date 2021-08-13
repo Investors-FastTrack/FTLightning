@@ -2,7 +2,7 @@
 
 The code below shows how exchange your account number, password, and appid for a temporary token.
 
-The temporary token and appid must be passed as a header to all other FT Cloud API requests.
+The temporary token and appid must be passed as a header to all other FT Market Data API requests.
 
 >Save the token as a local variable. The request to the /auth/login end point only needs to be called once.
 
@@ -15,7 +15,7 @@ var account = '123456';
 var pass = '12345678';
 var appid = 'xxxxxx-xxxxx-xxxxxxx';
 var token;
-var url = 'https://ftlightning.fasttrack.net/v1/auth/login';
+var url = 'https://ftl.fasttrack.net/v1/auth/login';
 
 function login(){
   url = url + "?account=" + account + "&pass=" + pass + "&appid=" + appid;
@@ -54,7 +54,7 @@ The token is reset daily at approximately
 
 Request new tokens periodically by calling the /auth/login endpoint again.
 
-Any time an expired or invalid token is used, FT Lightning returns a -5500000 Invalid Token error. 
+Any time an expired or invalid token is used, FT Market Data API returns a -5500000 Invalid Token error. 
 
 See all errors here: [Error Codes](../01b-Errors.md)
 

@@ -1,7 +1,7 @@
 # Error Codes
 
 ### Errors
-FT Lightning responds with HTTP status codes of 200 or 400 only.
+FT Market Data API responds with HTTP status codes of 200 or 400 only.
 
 Errors are returned as a 200, and errors are indicated in the "err" object of the response. 
 
@@ -46,5 +46,5 @@ Error Code | Definition
 -5500000 | Invalid or expired token
 -5600000 | Restricted to free user 
 -5700000 | FastTrack's Excel Addin requires a FT Cloud+ subscription or atleast 2 FT4web database subscriptions.
--5800000 | Subscription does not include dividend export. Contact ftlightning@fasttrack.net to upgrade.
--5810000|Subscription does not include unadjusted prices or ticker/cusip translation. Contact ftlightning@fasttrack.net to upgrade.
+-5800000 | Subscription does not include dividend export. Contact api@fasttrack.net to upgrade.
+-5810000|Subscription does not include unadjusted prices or ticker/cusip translation. Contact api@fasttrack.net to upgrade.
