@@ -31,7 +31,7 @@ Call this endpoint with valid **account number**, **password**, and **app id** i
 
 
 ### Credentials
-**account number**, **password**, and **app id** are sent when you sign up for FT Lightning API
+**account number**, **password**, and **app id** are sent when you sign up for FT Market Data API
 
 If you need credentials, Use this link to sign up for an account:
 [https://subscribe.fasttrack.net/landing/api/apilanding](https://subscribe.fasttrack.net/landing/api/apilanding.html)
