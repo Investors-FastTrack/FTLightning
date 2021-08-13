@@ -1,7 +1,7 @@
 # Introduction
 
-### FT Lightning Data API
-FT Lightning is Investors FastTrack's data API organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
+### FastTrack Market Data API
+FastTrack Market Data API is Investors FastTrack's data API organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
 
 <!-- theme: danger -->
 >### *Technical Documentation*
