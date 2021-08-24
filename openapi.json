@@ -3034,7 +3034,7 @@
         ]
       }
     },
-    "/v1/ref/xmulti/detail": {
+    "/v1/ref/xmulti/details": {
       "post": {
         "summary": "Ticker Details - Multiple",
         "operationId": "post-v1-ref-xmulti-detail",
