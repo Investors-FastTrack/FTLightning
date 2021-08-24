@@ -4392,6 +4392,32 @@
             "type": "string",
             "description": "FUNDS/ETFS ONLY - Expense ratio. Multiply by 100 to get percentage value."
           },
+          "expense_detail": {
+            "type": "object",
+            "description": "FUNDS/ETFS ONLY - Additional expense ratios and other details",
+            "properties": {
+              "deferred": {
+                "type": "string",
+                "description": "Deferred expense ratio"
+              },
+              "b12": {
+                "type": "string",
+                "description": "12b-1 expense ratio"
+              },
+              "frontload": {
+                "type": "string",
+                "description": "Front load expense ratio"
+              },
+              "initpurchase": {
+                "type": "string",
+                "description": "Initial purchase amount in USD"
+              },
+              "redemption": {
+                "type": "string",
+                "description": "Redeption fee ratio  "
+              }
+            }
+          },
           "objective": {
             "type": "string",
             "description": "FUNDS/ETFS ONLY - Investment objective classification"
@@ -4420,32 +4446,6 @@
               "Mutual Fund",
               "Stock"
             ]
-          },
-          "expense_detail": {
-            "type": "object",
-            "description": "Additional expense ratios and other details",
-            "properties": {
-              "deferred": {
-                "type": "string",
-                "description": "Deferred expense ratio"
-              },
-              "b12": {
-                "type": "string",
-                "description": "12b-1 expense ratio"
-              },
-              "frontload": {
-                "type": "string",
-                "description": "Front load expense ratio"
-              },
-              "initpurchase": {
-                "type": "string",
-                "description": "Initial purchase amount in USD"
-              },
-              "redemption": {
-                "type": "string",
-                "description": "Redeption fee ratio  "
-              }
-            }
           }
         }
       },
