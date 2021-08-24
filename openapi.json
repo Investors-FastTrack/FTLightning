@@ -3044,7 +3044,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": ""
+                  "$ref": "#/components/schemas/FTInfoTickerList"
                 }
               }
             }
