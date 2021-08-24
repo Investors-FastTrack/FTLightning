@@ -1632,7 +1632,7 @@
                       "type": "string"
                     },
                     "model": {
-                      "$ref": "#/components/schemas/FTStaticModelParam"
+                      "$ref": "#/components/schemas/FTStaticModel"
                     }
                   }
                 }
@@ -1675,11 +1675,6 @@
                     "name": "Example Model"
                   }
                 }
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/FTStaticModelParam"
               }
             }
           },
@@ -1835,7 +1830,17 @@
     "/v1/stats/{ticker}/{stat}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/ticker"
+          "name": "ticker",
+          "in": "path",
+          "description": "ticker symbol",
+          "style": "simple",
+          "explode": false,
+          "schema": {
+            "type": "string",
+            "example": "JPM"
+          },
+          "example": "JPM",
+          "required": true
         },
         {
           "schema": {
@@ -1853,7 +1858,7 @@
               "upi"
             ]
           },
-          "name": "report",
+          "name": "stat",
           "in": "path",
           "required": true,
           "description": "Statistic to return"
@@ -3026,6 +3031,52 @@
           {
             "$ref": "#/components/parameters/appid"
           }
+        ]
+      }
+    },
+    "/v1/ref/xmulti/detail": {
+      "post": {
+        "summary": "Ticker Details - Multiple",
+        "operationId": "post-v1-ref-xmulti-detail",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": ""
+                }
+              }
+            }
+          }
+        },
+        "description": "Get details data about multiple tickers",
+        "parameters": [],
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "tags": [
+          "8. Reference Data"
         ]
       }
     }
@@ -4369,6 +4420,50 @@
               "Mutual Fund",
               "Stock"
             ]
+          },
+          "expense_detail": {
+            "type": "object",
+            "description": "Additional expense ratios and other details",
+            "properties": {
+              "deferred": {
+                "type": "string",
+                "description": "Deferred expense ratio"
+              },
+              "b12": {
+                "type": "string",
+                "description": "12b-1 expense ratio"
+              },
+              "frontload": {
+                "type": "string",
+                "description": "Front load expense ratio"
+              },
+              "initpurchase": {
+                "type": "string",
+                "description": "Initial purchase amount in USD"
+              },
+              "redemption": {
+                "type": "string",
+                "description": "Redeption fee ratio  "
+              }
+            }
+          }
+        }
+      },
+      "FTInfoTickerList": {
+        "title": "FTInfoTickerList",
+        "type": "object",
+        "x-tags": [
+          "Models"
+        ],
+        "properties": {
+          "datalist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FTInfoTicker"
+            }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
           }
         }
       },
@@ -4424,11 +4519,11 @@
             "type": "string",
             "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
             "enum": [
-              "'week'",
-              "'month'",
-              "'quarter'",
-              "'annual'",
-              "'[number of market days]'"
+              "week",
+              "month",
+              "quarter",
+              "annual",
+              "number of market days"
             ]
           },
           "marginrate": {
@@ -4970,7 +5065,7 @@
         "style": "form",
         "schema": {
           "type": "string",
-          "default": 1000
+          "default": "1000"
         }
       },
       "monthend": {
