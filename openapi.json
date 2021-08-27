@@ -3079,6 +3079,271 @@
           "8. Reference Data"
         ]
       }
+    },
+    "/v1/family/screener": {
+      "post": {
+        "summary": "Family  Screener",
+        "operationId": "post-v1-family-screener",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "resulttickers": [
+                        "ANCMX",
+                        "ANNPX",
+                        "ANZAX",
+                        "ANZCX",
+                        "AVK",
+                        "BCV",
+                        "CAGCX",
+                        "CBH",
+                        "CCD",
+                        "CCGCX",
+                        "CCVIX",
+                        "CHI",
+                        "CHY",
+                        "CICVX",
+                        "CNSAX",
+                        "CNSCX",
+                        "CNSDX",
+                        "COCRX",
+                        "COVRX",
+                        "CSFYX",
+                        "CWB",
+                        "CXGCX",
+                        "ECF",
+                        "EWCO",
+                        "FACVX",
+                        "FBMPX",
+                        "FCCVX",
+                        "FCOM",
+                        "FCSZX",
+                        "FCVSX",
+                        "FCVT",
+                        "FGDMX",
+                        "FGEMX",
+                        "FGHMX",
+                        "FGJMX",
+                        "FGKMX",
+                        "FICVX",
+                        "FIJGX",
+                        "FIQVX",
+                        "FISCX",
+                        "FIVG",
+                        "FLICX",
+                        "FNETX",
+                        "FROTX",
+                        "FSTCX",
+                        "FTCVX",
+                        "FTICX",
+                        "FTUAX",
+                        "FTUCX",
+                        "FTUIX",
+                        "FTUTX",
+                        "FWRLX",
+                        "GABTX",
+                        "GCV",
+                        "GTCAX",
+                        "GTTIX",
+                        "HACSX",
+                        "HICSX",
+                        "ICVT",
+                        "IEME",
+                        "IWFH",
+                        "IXP",
+                        "IYZ",
+                        "JHCS",
+                        "LACCX",
+                        "LACFX",
+                        "LBFFX",
+                        "LCFYX",
+                        "MCFAX",
+                        "MCFCX",
+                        "MCIFX",
+                        "MCINX",
+                        "MCNVX",
+                        "MCOAX",
+                        "MCPIX",
+                        "MCSVX",
+                        "NCIAX",
+                        "NCV",
+                        "NCZ",
+                        "PACIX",
+                        "PBXIX",
+                        "PCF",
+                        "PCGYX",
+                        "PCONX",
+                        "PRMTX",
+                        "QCON",
+                        "RYCSX",
+                        "RYMAX",
+                        "RYMIX",
+                        "RYTLX",
+                        "SBFCX",
+                        "TISHX",
+                        "TTMIX",
+                        "VICIX",
+                        "VOX",
+                        "VPOP",
+                        "VTCAX",
+                        "WESIX",
+                        "WESRX",
+                        "XLC",
+                        "XTL"
+                      ],
+                      "resulttotal": "101",
+                      "screener": [
+                        {
+                          "count": "62",
+                          "family": "CONVERTIBLES",
+                          "operation": "ADD",
+                          "rank": "1"
+                        },
+                        {
+                          "count": "101",
+                          "family": "COMMUNICATIONS",
+                          "operation": "ADD",
+                          "rank": "2"
+                        }
+                      ]
+                    }
+                  },
+                  "properties": {
+                    "resulttickers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "resulttotal": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "screener": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "count": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "family": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "operation": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "rank": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "count",
+                          "family",
+                          "operation",
+                          "rank"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "resulttickers",
+                    "resulttotal",
+                    "screener"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "description": "Mix and match families (custom and predefined lists of securities) with add, interset, and remove operations. ",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "x-examples": {
+                  "example-1": {
+                    "screener": [
+                      {
+                        "family": "Convertibles ",
+                        "operation": "Add",
+                        "rank": "1"
+                      },
+                      {
+                        "family": "COMMUNICATIONS",
+                        "operation": "Add",
+                        "rank": "2"
+                      }
+                    ]
+                  }
+                },
+                "properties": {
+                  "screener": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "family": {
+                          "type": "string"
+                        },
+                        "operation": {
+                          "type": "string"
+                        },
+                        "rank": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "examples": {
+                "FT Screener": {
+                  "value": {
+                    "screener": [
+                      {
+                        "family": "Convertibles ",
+                        "operation": "add",
+                        "rank": "1"
+                      },
+                      {
+                        "family": "COMMUNICATIONS",
+                        "operation": "add",
+                        "rank": "2"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ],
+        "tags": [
+          "Other Data"
+        ]
+      }
     }
   },
   "components": {
