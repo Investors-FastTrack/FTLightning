@@ -3217,13 +3217,15 @@
                   "properties": {
                     "resulttickers": {
                       "type": "array",
+                      "description": "Array of tickers symbols that result in the screen",
                       "items": {
                         "type": "string"
                       }
                     },
                     "resulttotal": {
                       "type": "string",
-                      "minLength": 1
+                      "minLength": 1,
+                      "description": "total number of ticker symbols in the results"
                     },
                     "screener": {
                       "type": "array",
@@ -3234,35 +3236,28 @@
                         "properties": {
                           "count": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "description": "total number of results at current level of the screen"
                           },
                           "family": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "description": "family used in the screen"
                           },
                           "operation": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "description": "operation used in the screen"
                           },
                           "rank": {
                             "type": "string",
-                            "minLength": 1
+                            "minLength": 1,
+                            "description": "order applied in the screen"
                           }
-                        },
-                        "required": [
-                          "count",
-                          "family",
-                          "operation",
-                          "rank"
-                        ]
+                        }
                       }
                     }
-                  },
-                  "required": [
-                    "resulttickers",
-                    "resulttotal",
-                    "screener"
-                  ]
+                  }
                 }
               }
             }
@@ -3294,17 +3289,17 @@
                 "properties": {
                   "screener": {
                     "type": "array",
+                    "description": "Array of screener operations. Applied in order listed in array",
                     "items": {
                       "type": "object",
                       "properties": {
                         "family": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "A predefined list of securites created by FastTrack"
                         },
                         "operation": {
-                          "type": "string"
-                        },
-                        "rank": {
-                          "type": "string"
+                          "type": "string",
+                          "description": "add, and, or remove"
                         }
                       }
                     }
@@ -3330,7 +3325,8 @@
                 }
               }
             }
-          }
+          },
+          "description": "The list of family and operations to apply in the screen. Order of screener array is order screen is applied, first index is applied first, then second, third, etc."
         },
         "security": [
           {
