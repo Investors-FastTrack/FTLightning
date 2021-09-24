@@ -1855,7 +1855,12 @@
               "sharpe",
               "sd",
               "ui",
-              "upi"
+              "upi",
+              "sharpe_month",
+              "beta_month",
+              "sd_month",
+              "alpha",
+              "alpha_month"
             ]
           },
           "name": "stat",
