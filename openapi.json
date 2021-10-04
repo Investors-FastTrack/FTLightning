@@ -4656,7 +4656,7 @@
           },
           "expenseratio": {
             "type": "string",
-            "description": "FUNDS/ETFS ONLY - Expense ratio. Multiply by 100 to get percentage value."
+            "description": "FUNDS/ETFS ONLY - Expense ratio. Multiply by 100 to get percentage value. Taken from security's audited annual report based on the prior year's actual charges."
           },
           "expense_detail": {
             "type": "object",
@@ -4681,6 +4681,10 @@
               "redemption": {
                 "type": "string",
                 "description": "Redeption fee ratio  "
+              },
+              "expense_prospectus": {
+                "type": "string",
+                "description": "expense ratio listed in most recent prospectus. This is a forward looking estimate created by managing company."
               }
             }
           },
