@@ -15,6 +15,10 @@ Visit http://www.fasttrack.net for information on our non technical software and
 ### Base URL
 >[https://ftl.fasttrack.net/v1/]
 
+### Free Trial Tickers
+Free Trials have access to all indexes in our database, including equity, bond, commodity, etc. 
+
+21 Sector SPRD ETFs are also available to demo. No account or trial needed. See the full list here: https://ftl.fasttrack.net/v3/api/freetickers
 
 ### FastTrack Database
 FastTrack's database includes all US listed Mutual Fund, ETF, and Stocks (approx 30k securities). We additionally provide over 1200+ global indexes.
