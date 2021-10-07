@@ -5150,7 +5150,11 @@
           },
           "expense_ratio": {
             "type": "string",
-            "description": "securities's expense ratio"
+            "description": "expense ratio listed in annual report. This is backwards looking and reflects an investors actual experience looking back."
+          },
+          "expense_ratio_prospectus": {
+            "type": "string",
+            "description": "expense ratio listed in most recent prospectus. This is a forward looking estimate provided by fund manager."
           },
           "initial_purchase": {
             "type": "string",
