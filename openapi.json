@@ -5399,7 +5399,7 @@
         "name": "token",
         "type": "apiKey",
         "in": "header",
-        "description": "Temporary token received from auth/login end point "
+        "description": "Temporary token received from auth/login end point"
       }
     }
   },
@@ -5448,6 +5448,14 @@
     },
     {
       "name": "Other Data"
+    }
+  ],
+  "security": [
+    {
+      "appid": []
+    },
+    {
+      "token": []
     }
   ]
 }
