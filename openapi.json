@@ -70,7 +70,8 @@
         "description": "Server authentication. The returned token must be passed as a header with all other API calls",
         "tags": [
           "1. Auth"
-        ]
+        ],
+        "security": []
       }
     },
     "/v1/data/{ticker}/range": {
