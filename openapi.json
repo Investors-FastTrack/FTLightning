@@ -1642,14 +1642,7 @@
           }
         },
         "description": "returns reference data for portfolio and portfolio positions ",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
+        "parameters": [],
         "requestBody": {
           "content": {
             "application/json": {
@@ -2869,12 +2862,6 @@
         "operationId": "get-v1-stats-ticker-report",
         "parameters": [
           {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          },
-          {
             "schema": {
               "type": "integer"
             },
@@ -2886,7 +2873,15 @@
             "$ref": "#/components/parameters/basis"
           }
         ],
-        "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
+        "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ]
       }
     },
     "/v1/ref/{ticker}/shareclasses": {
@@ -3030,12 +3025,13 @@
         },
         "operationId": "get-v1-ref-ticker-shareclasses",
         "description": "Retrieve information about all other share classes of security",
-        "parameters": [
+        "parameters": [],
+        "security": [
           {
-            "$ref": "#/components/parameters/token"
+            "appid": []
           },
           {
-            "$ref": "#/components/parameters/appid"
+            "token": []
           }
         ]
       }
