@@ -1693,7 +1693,8 @@
           "200": {
             "description": "OK"
           }
-        }
+        },
+        "security": []
       }
     },
     "/v1/precalc/winlose": {
