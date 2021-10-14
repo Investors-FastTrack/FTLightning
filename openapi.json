@@ -1161,7 +1161,8 @@
         "description": "Returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
         "tags": [
           "6. CSV Export"
-        ]
+        ],
+        "security": []
       },
       "parameters": [
         {
