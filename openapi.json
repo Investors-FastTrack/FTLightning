@@ -95,6 +95,12 @@
           },
           {
             "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -113,14 +119,6 @@
           }
         },
         "description": "Retrieve a single ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "2. Market Data"
         ]
@@ -149,6 +147,12 @@
           },
           {
             "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -167,14 +171,6 @@
           }
         },
         "description": "Retrieve multiple ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "operationId": "",
         "tags": [
           "2. Market Data"
@@ -205,6 +201,12 @@
           },
           {
             "$ref": "#/components/parameters/yield"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -223,14 +225,6 @@
           }
         },
         "description": "Returns all data for the entire data range of a single ticker. Entire date range is 9/1/1988 to the most recent market day.\n",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -248,6 +242,12 @@
           },
           {
             "$ref": "#/components/parameters/yield"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "requestBody": {
@@ -275,14 +275,6 @@
           }
         },
         "description": "Returns all data for the entire data range of multiple tickers. Entire date range is 9/1/1988 to the most recent market day.\n",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -294,6 +286,12 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -312,14 +310,6 @@
           }
         },
         "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -331,6 +321,12 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -349,14 +345,6 @@
           }
         },
         "description": "Returns ticker's unadjusted closing prices for all days in FastTrack database. All other objects are null",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -368,6 +356,12 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -386,14 +380,6 @@
           }
         },
         "description": "Returns ticker's start date. All other objects are null",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -405,6 +391,12 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -423,14 +415,6 @@
           }
         },
         "description": "Returns ticker's name. All other objects are null",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -440,7 +424,14 @@
     "/v1/data/dates": {
       "get": {
         "summary": "All Dates",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
         "responses": {
           "200": {
             "description": "data points associated with ticker",
@@ -458,14 +449,6 @@
         },
         "operationId": "1231jsoasd",
         "description": "Returns array with every date in the FastTrack database. This object is used to interpret the data/{ticker}/divadjprices and data/{ticker}/unadjprices results",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "12. Bulk Data"
         ]
@@ -484,6 +467,12 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -502,14 +491,6 @@
           }
         },
         "description": "A \"family\" is a group of ticker symbols created by FastTrack. This function returns the requested family. Requested name must match FastTrack's family name exactly, CASE INSENSITIVE",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "Other Data"
         ]
@@ -545,6 +526,12 @@
                 "all"
               ]
             }
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -563,14 +550,6 @@
           }
         },
         "description": "A \"family\" is a group of ticker symbols created by FastTrack. This function searches all FastTrack families by family name, family partial name, and family members (tickers).",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "Other Data"
         ]
@@ -609,6 +588,12 @@
           },
           {
             "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -639,14 +624,6 @@
           }
         },
         "description": "Returns calulated statistics on a single ticker over the date range",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "3. Stats"
         ]
@@ -687,6 +664,12 @@
           },
           {
             "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -705,14 +688,6 @@
           }
         },
         "description": "Returns calulated statistics on multiple ticker over the date range",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "3. Stats"
         ],
@@ -760,6 +735,12 @@
           },
           {
             "$ref": "#/components/parameters/details"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -778,14 +759,6 @@
           }
         },
         "description": "Calculates the specified portfolio over the specifed rebalance period",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "4. Portfolio Modeling"
         ],
@@ -855,6 +828,12 @@
           },
           {
             "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -873,14 +852,6 @@
           }
         },
         "description": "Calculates the specified portfolios over the specifed rebalance period",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -966,6 +937,12 @@
           },
           {
             "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -982,14 +959,6 @@
           }
         },
         "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1192,20 +1161,18 @@
         },
         "operationId": "get-v1-data-ticker-dividends",
         "description": "Retrieve all dividends for a specific ticker",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "parameters": [
           {
             "$ref": "#/components/parameters/start"
           },
           {
             "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "tags": [
@@ -1431,13 +1398,12 @@
         },
         "operationId": "get-info-tickeR-details",
         "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
-        "parameters": [],
-        "security": [
+        "parameters": [
           {
-            "appid": []
+            "$ref": "#/components/parameters/appid"
           },
           {
-            "token": []
+            "$ref": "#/components/parameters/token"
           }
         ]
       }
@@ -1471,14 +1437,6 @@
         },
         "operationId": "get-info-ticker-portfolio",
         "description": "Get mutual fund or ETF's top ten positions, sector weighting, and net 1 year flows \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
-        "security": [
-          {
-            "token": []
-          },
-          {
-            "appid": []
-          }
-        ],
         "parameters": [
           {
             "schema": {
@@ -1492,6 +1450,12 @@
             "in": "query",
             "name": "topcount",
             "description": "Include with value of \"MAX\" to return all known positions (usually top 25 positions)"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ]
       }
@@ -1537,6 +1501,12 @@
               "type": "string"
             },
             "description": "number of results to return"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
@@ -1598,15 +1568,7 @@
         "tags": [
           "9. Search"
         ],
-        "summary": "Search Database",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ]
+        "summary": "Search Database"
       }
     },
     "/v1/ref/staticmodel": {
@@ -1643,7 +1605,14 @@
           }
         },
         "description": "returns reference data for portfolio and portfolio positions ",
-        "parameters": [],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1717,14 +1686,6 @@
         },
         "operationId": "get-v1-precalc-topten",
         "description": "Retrieve top ten winners and losers of a specific security universe",
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "parameters": [
           {
             "schema": {
@@ -1754,6 +1715,12 @@
             "name": "date",
             "required": true,
             "description": "end date of rankings"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ]
       },
@@ -1775,14 +1742,6 @@
             }
           }
         },
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1819,7 +1778,15 @@
           "4.2 Momentum Modeling"
         ],
         "x-internal": false,
-        "description": ""
+        "description": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
       },
       "parameters": []
     },
@@ -2873,17 +2840,15 @@
           },
           {
             "$ref": "#/components/parameters/basis"
-          }
-        ],
-        "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc",
-        "security": [
-          {
-            "appid": []
           },
           {
-            "token": []
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
-        ]
+        ],
+        "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
       }
     },
     "/v1/ref/{ticker}/shareclasses": {
@@ -3027,13 +2992,12 @@
         },
         "operationId": "get-v1-ref-ticker-shareclasses",
         "description": "Retrieve information about all other share classes of security",
-        "parameters": [],
-        "security": [
+        "parameters": [
           {
-            "appid": []
+            "$ref": "#/components/parameters/appid"
           },
           {
-            "token": []
+            "$ref": "#/components/parameters/token"
           }
         ]
       }
@@ -3055,13 +3019,12 @@
           }
         },
         "description": "Get details data about multiple tickers",
-        "parameters": [],
-        "security": [
+        "parameters": [
           {
-            "appid": []
+            "$ref": "#/components/parameters/appid"
           },
           {
-            "token": []
+            "$ref": "#/components/parameters/token"
           }
         ],
         "requestBody": {
@@ -3332,16 +3295,16 @@
           },
           "description": "The list of family and operations to apply in the screen. Order of screener array is order screen is applied, first index is applied first, then second, third, etc."
         },
-        "security": [
-          {
-            "appid": []
-          },
-          {
-            "token": []
-          }
-        ],
         "tags": [
           "Other Data"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
         ]
       }
     }
@@ -5447,14 +5410,6 @@
     },
     {
       "name": "Other Data"
-    }
-  ],
-  "security": [
-    {
-      "appid": []
-    },
-    {
-      "token": []
     }
   ]
 }
