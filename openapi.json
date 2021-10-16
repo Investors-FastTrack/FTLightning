@@ -79,6 +79,12 @@
         "summary": "Data Range",
         "parameters": [
           {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
             "$ref": "#/components/parameters/ticker"
           },
           {
@@ -95,12 +101,6 @@
           },
           {
             "$ref": "#/components/parameters/olhv"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
           }
         ],
         "responses": {
