@@ -3320,7 +3320,6 @@
       ],
       "get": {
         "summary": "Bond Pricing",
-        "tags": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -3378,6 +3377,9 @@
             "name": "end",
             "schema": {}
           }
+        ],
+        "tags": [
+          "2.2. Bond Data"
         ]
       }
     },
@@ -3394,7 +3396,6 @@
       ],
       "get": {
         "summary": "Bond Description",
-        "tags": [],
         "responses": {
           "200": {
             "description": "OK",
@@ -3416,6 +3417,9 @@
           {
             "$ref": "#/components/parameters/token"
           }
+        ],
+        "tags": [
+          "2.2. Bond Data"
         ]
       }
     }
@@ -5583,6 +5587,9 @@
     },
     {
       "name": "2. Market Data"
+    },
+    {
+      "name": "2.2. Bond Data"
     },
     {
       "name": "3. Stats"
