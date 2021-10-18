@@ -1347,8 +1347,7 @@
           {
             "schema": {
               "type": "string",
-              "default": "2019-12-31",
-              "pattern": "yyyy-MM-dd"
+              "default": "2019-12-31"
             },
             "in": "query",
             "name": "start",
@@ -3307,6 +3306,118 @@
           }
         ]
       }
+    },
+    "/v1/bonds/{cusip}/data": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "cusip",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Bond Pricing",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "datalist": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cusip": {
+                            "type": "string",
+                            "description": "requested cusip"
+                          },
+                          "prices": {
+                            "type": "array",
+                            "items": {
+                              "$ref": "#/components/schemas/FTBondPrice"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-bonds-cusip-data",
+        "description": "Bond pricing and data for cusips",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "in": "query",
+            "description": "First day in the date range of all calculations/requests",
+            "name": "start",
+            "schema": {}
+          },
+          {
+            "in": "query",
+            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
+            "name": "end",
+            "schema": {}
+          }
+        ]
+      }
+    },
+    "/v1/bonds/{cusip}/description": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "cusip",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Bond Description",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTBondDescription"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-bonds-cusip-desciption",
+        "description": "Description of requested cusip ",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -5125,6 +5236,107 @@
           "shareclass": {
             "type": "string",
             "description": "Share class listed in prospectus"
+          }
+        }
+      },
+      "FTBondPrice": {
+        "title": "FTBondPrice",
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "string",
+            "description": "last quote of day"
+          },
+          "date": {
+            "type": "string",
+            "description": "date of quote yyyyMMdd"
+          },
+          "duration": {
+            "type": "object",
+            "properties": {
+              "effective_bid": {
+                "type": "string"
+              },
+              "effective_mid": {
+                "type": "string"
+              },
+              "modified_bid": {
+                "type": "string"
+              },
+              "modified_mid": {
+                "type": "string"
+              },
+              "macaulay_bid": {
+                "type": "string"
+              },
+              "macaulay_mid": {
+                "type": "string"
+              }
+            }
+          },
+          "convexity": {
+            "type": "object",
+            "properties": {
+              "bid": {
+                "type": "string"
+              },
+              "mid": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "FTBondDescription": {
+        "description": "",
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "cusip": {
+            "type": "string",
+            "description": "8 digit cusip of requested sticker\n"
+          },
+          "description": {
+            "type": "string",
+            "description": "description of issuer"
+          },
+          "rate": {
+            "type": "string",
+            "description": "orignal coupon rate"
+          },
+          "date_maturity": {
+            "type": "string",
+            "description": "date the issue matures"
+          },
+          "callable": {
+            "type": "string",
+            "description": "true or false if bond is callable"
+          },
+          "naics_code": {
+            "type": "string",
+            "description": "NAICS code of issuer"
+          },
+          "issuer_type": {
+            "type": "string",
+            "description": "type of issuer"
+          },
+          "payment_frequency": {
+            "type": "string",
+            "description": "frequency of coupon payments"
+          },
+          "ratings": {
+            "type": "object",
+            "properties": {
+              "moodys": {
+                "type": "string"
+              },
+              "sandp": {
+                "type": "string"
+              },
+              "fitch": {
+                "type": "string"
+              }
+            }
           }
         }
       }
