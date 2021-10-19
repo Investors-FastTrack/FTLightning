@@ -5300,34 +5300,6 @@
             "type": "string",
             "description": "8 digit cusip of requested sticker\n"
           },
-          "description": {
-            "type": "string",
-            "description": "description of issuer"
-          },
-          "rate": {
-            "type": "string",
-            "description": "orignal coupon rate"
-          },
-          "date_maturity": {
-            "type": "string",
-            "description": "date the issue matures"
-          },
-          "callable": {
-            "type": "string",
-            "description": "true or false if bond is callable"
-          },
-          "naics_code": {
-            "type": "string",
-            "description": "NAICS code of issuer"
-          },
-          "issuer_type": {
-            "type": "string",
-            "description": "type of issuer"
-          },
-          "payment_frequency": {
-            "type": "string",
-            "description": "frequency of coupon payments"
-          },
           "ratings": {
             "type": "object",
             "properties": {
@@ -5338,6 +5310,75 @@
                 "type": "string"
               },
               "fitch": {
+                "type": "string"
+              }
+            }
+          },
+          "redemptive_items": {
+            "type": "object",
+            "properties": {
+              "callable": {
+                "type": "string"
+              },
+              "makewhole_call": {
+                "type": "string"
+              },
+              "date_first_par_call": {
+                "type": "string"
+              },
+              "date_current_call": {
+                "type": "string"
+              }
+            }
+          },
+          "details": {
+            "type": "object",
+            "properties": {
+              "naics_code": {
+                "type": "string"
+              },
+              "convertable": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "sic_code": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "rate": {
+                "type": "string"
+              },
+              "date_maturity": {
+                "type": "string"
+              },
+              "payment_frequency": {
+                "type": "string"
+              }
+            }
+          },
+          "issuer": {
+            "type": "object",
+            "properties": {
+              "issue_date": {
+                "type": "string"
+              },
+              "issue_size": {
+                "type": "string"
+              },
+              "issue_price": {
+                "type": "string"
+              },
+              "nominal_value": {
+                "type": "string"
+              },
+              "coupon_type": {
                 "type": "string"
               }
             }
