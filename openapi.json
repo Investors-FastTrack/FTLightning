@@ -3422,6 +3422,54 @@
           "2.2. Bond Data"
         ]
       }
+    },
+    "/v1/bonds/xmulti/description": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-v1-bonds-xmulti-description",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "datalist": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FTBondDescription"
+                      }
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
     }
   },
   "components": {
