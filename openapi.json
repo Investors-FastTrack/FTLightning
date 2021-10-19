@@ -3426,7 +3426,7 @@
     "/v1/bonds/xmulti/description": {
       "parameters": [],
       "post": {
-        "summary": "",
+        "summary": "Bond Description Multi",
         "operationId": "post-v1-bonds-xmulti-description",
         "responses": {
           "200": {
@@ -3468,6 +3468,9 @@
           {
             "$ref": "#/components/parameters/token"
           }
+        ],
+        "tags": [
+          "2.2. Bond Data"
         ]
       }
     }
