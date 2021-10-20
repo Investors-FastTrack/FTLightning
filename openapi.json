@@ -3048,7 +3048,7 @@
     },
     "/v1/family/screener": {
       "post": {
-        "summary": "Family  Screener",
+        "summary": "Family Screener",
         "operationId": "post-v1-family-screener",
         "responses": {
           "200": {
@@ -3319,7 +3319,7 @@
         }
       ],
       "get": {
-        "summary": "Bond Pricing",
+        "summary": "Bond Pricing & Data",
         "responses": {
           "200": {
             "description": "OK",
@@ -3474,9 +3474,9 @@
         ]
       }
     },
-    "/v1/bonds/xmulti/prices": {
+    "/v1/bonds/xmulti/data": {
       "post": {
-        "summary": "Bond Prices - Multiple",
+        "summary": "Bond Pricing & Data - Multiple",
         "operationId": "post-v1-bonds-xmulti-prices",
         "responses": {
           "200": {
@@ -3522,7 +3522,8 @@
         "tags": [
           "2.2. Bond Data"
         ]
-      }
+      },
+      "parameters": []
     }
   },
   "components": {
