@@ -3426,7 +3426,7 @@
     "/v1/bonds/xmulti/description": {
       "parameters": [],
       "post": {
-        "summary": "Bond Description Multi",
+        "summary": "Bond Description - Multiple",
         "operationId": "post-v1-bonds-xmulti-description",
         "responses": {
           "200": {
@@ -3469,6 +3469,56 @@
             "$ref": "#/components/parameters/token"
           }
         ],
+        "tags": [
+          "2.2. Bond Data"
+        ]
+      }
+    },
+    "/v1/bonds/xmulti/prices": {
+      "post": {
+        "summary": "Bond Prices - Multiple",
+        "operationId": "post-v1-bonds-xmulti-prices",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "datalist": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FTBondPrice"
+                      }
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Retrieve bond prices for more than one cusip over a specific date range",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        },
         "tags": [
           "2.2. Bond Data"
         ]
