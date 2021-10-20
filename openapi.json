@@ -5545,7 +5545,6 @@
         "name": "start",
         "in": "query",
         "description": "First day in the date range of all calculations/requests",
-        "required": true,
         "style": "form",
         "schema": {
           "type": "string",
