@@ -3508,6 +3508,12 @@
           },
           {
             "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
           }
         ],
         "requestBody": {
