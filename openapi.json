@@ -3455,7 +3455,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TickerArray"
+                "$ref": "#/components/schemas/CUSIPArray"
               }
             }
           },
@@ -3520,7 +3520,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TickerArray"
+                "$ref": "#/components/schemas/CUSIPArray"
               }
             }
           }
@@ -4824,6 +4824,25 @@
           "Models"
         ]
       },
+      "CUSIPArray": {
+        "title": "CUSIPArray",
+        "type": "array",
+        "description": "list of requested bond CUSIP ",
+        "items": {
+          "type": "string"
+        },
+        "x-examples": {
+          "Ticker Array": [
+            "91282CAG6",
+            "912828L24",
+            "9128282S8",
+            "912828XW5"
+          ]
+        },
+        "x-tags": [
+          "Models"
+        ]
+      },
       "FTInfoTicker": {
         "title": "FTInfoTicker",
         "type": "object",
@@ -5365,29 +5384,37 @@
           },
           "duration": {
             "type": "object",
+            "description": "Duration measures a bond's price sensitivity to interest rate changes.",
             "properties": {
               "effective_bid": {
-                "type": "string"
+                "type": "string",
+                "description": "Effective duration is a measure of the duration for bonds with embedded options (e.g., callable bonds)"
               },
               "effective_mid": {
-                "type": "string"
+                "type": "string",
+                "description": "Effective duration is a measure of the duration for bonds with embedded options (e.g., callable bonds)"
               },
               "modified_bid": {
-                "type": "string"
+                "type": "string",
+                "description": "Modified duration measures the price change in a bond given a 1% change in interest rates"
               },
               "modified_mid": {
-                "type": "string"
+                "type": "string",
+                "description": "Modified duration measures the price change in a bond given a 1% change in interest rates"
               },
               "macaulay_bid": {
-                "type": "string"
+                "type": "string",
+                "description": "Macaulay duration estimates how many years it will take for an investor to be repaid the bond’s price by its total cash flows"
               },
               "macaulay_mid": {
-                "type": "string"
+                "type": "string",
+                "description": "Macaulay duration estimates how many years it will take for an investor to be repaid the bond’s price by its total cash flows"
               }
             }
           },
           "convexity": {
             "type": "object",
+            "description": "Convexity is a measure of the curvature in the relationship between bond prices and bond yields. Convexity demonstrates how the duration of a bond changes as the interest rate changes",
             "properties": {
               "bid": {
                 "type": "string"
