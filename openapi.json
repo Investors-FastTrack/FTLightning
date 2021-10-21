@@ -5334,7 +5334,10 @@
             "type": "string",
             "description": "Calculated stat value"
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTFees": {
         "title": "FTFees",
@@ -5368,7 +5371,10 @@
             "type": "string",
             "description": "Share class listed in prospectus"
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTBondPrice": {
         "title": "FTBondPrice",
@@ -5424,7 +5430,10 @@
               }
             }
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       },
       "FTBondDescription": {
         "description": "",
@@ -5518,7 +5527,10 @@
               }
             }
           }
-        }
+        },
+        "x-tags": [
+          "Models"
+        ]
       }
     },
     "parameters": {
