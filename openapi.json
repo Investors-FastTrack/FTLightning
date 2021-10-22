@@ -967,22 +967,19 @@
                 "properties": {
                   "marginrate": {
                     "type": "string",
-                    "minLength": 1,
                     "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
                     "example": "0.03"
                   },
                   "models": {
                     "type": "array",
-                    "uniqueItems": true,
-                    "minItems": 1,
+                    "uniqueItems": false,
                     "description": "Array of FTStaticModelParameters that define the dynamic model",
                     "items": {
                       "type": "object",
                       "properties": {
                         "model": {
                           "type": "array",
-                          "uniqueItems": true,
-                          "minItems": 1,
+                          "uniqueItems": false,
                           "description": "List of FTPositions that define the positions on \"start\"",
                           "items": {
                             "$ref": "#/components/schemas/FTPosition"
@@ -990,42 +987,28 @@
                         },
                         "start": {
                           "type": "string",
-                          "minLength": 1,
                           "description": "day to rebalance to positions",
                           "example": "2001-01-11"
                         }
-                      },
-                      "required": [
-                        "start"
-                      ]
+                      }
                     }
                   },
                   "name": {
                     "type": "string",
-                    "minLength": 1,
                     "description": "name of model",
                     "example": "Example Dynamic Model"
                   },
                   "seedvalue": {
                     "type": "string",
-                    "minLength": 1,
                     "description": "value of portfolio on the first day of trading",
                     "example": "1000"
                   },
                   "ticker": {
                     "type": "string",
-                    "minLength": 1,
                     "description": "ticker to use in the response",
                     "example": "$XX"
                   }
-                },
-                "required": [
-                  "marginrate",
-                  "models",
-                  "name",
-                  "seedvalue",
-                  "ticker"
-                ]
+                }
               },
               "examples": {
                 "example-dynamic": {
@@ -2799,7 +2782,7 @@
                     },
                     "overview": {
                       "type": "object",
-                      "description": "Overview of results",
+                      "description": "Overview of results: highest value, lowest value, and simple average of all values",
                       "properties": {
                         "high": {
                           "$ref": "#/components/schemas/FTBulkStatItem"
@@ -4478,7 +4461,6 @@
         "properties": {
           "ticker": {
             "type": "string",
-            "minLength": 1,
             "description": "Ticker symbol of security requested"
           },
           "bondexposure": {
@@ -4490,27 +4472,22 @@
             "properties": {
               "date": {
                 "type": "string",
-                "minLength": 1,
                 "description": "as of Date of data"
               },
               "datalist": {
                 "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
+                "uniqueItems": false,
                 "items": {
                   "type": "object",
                   "properties": {
                     "name": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "ticker": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "netweight": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     }
                   }
                 }
@@ -4526,8 +4503,7 @@
                 "description": "FastTrack's mapped index, based on security's category, style, and correlations",
                 "properties": {
                   "name": {
-                    "type": "string",
-                    "minLength": 1
+                    "type": "string"
                   },
                   "ticker": {
                     "type": "string"
@@ -4563,30 +4539,25 @@
             "properties": {
               "date": {
                 "type": "string",
-                "minLength": 1,
                 "description": "as of date of data"
               },
               "datalist": {
                 "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
+                "uniqueItems": false,
                 "items": {
                   "type": "object",
                   "properties": {
                     "name": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "longweight": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "shortweight": {
                       "type": "string"
                     },
                     "netweight": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     }
                   }
                 }
@@ -4599,23 +4570,19 @@
             "properties": {
               "date": {
                 "type": "string",
-                "minLength": 1,
                 "description": "as of date of data"
               },
               "datalist": {
                 "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
+                "uniqueItems": false,
                 "items": {
                   "type": "object",
                   "properties": {
                     "netweight": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "name": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     }
                   }
                 }
@@ -4634,23 +4601,19 @@
             "properties": {
               "date": {
                 "type": "string",
-                "minLength": 1,
                 "description": "as of date of data"
               },
               "datalist": {
                 "type": "array",
-                "uniqueItems": true,
-                "minItems": 1,
+                "uniqueItems": false,
                 "items": {
                   "type": "object",
                   "properties": {
                     "netweight": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     },
                     "name": {
-                      "type": "string",
-                      "minLength": 1
+                      "type": "string"
                     }
                   }
                 }
@@ -5066,38 +5029,38 @@
       "FTWinLose": {
         "description": "Object containing lists of winners and losers for specific databases and time periods",
         "type": "object",
+        "title": "FTWinLose",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
-          "err": {
-            "$ref": "#/components/schemas/err"
-          },
           "db": {
-            "minLength": 1,
             "type": "string",
             "description": "Universe of securities used in calculations"
           },
           "list": {
             "type": "array",
-            "uniqueItems": true,
-            "minItems": 1,
+            "uniqueItems": false,
             "description": "List of all time period winners and losers",
             "items": {
               "$ref": "#/components/schemas/FTWinLoseItem"
             }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
           }
-        },
-        "title": "FTWinLose",
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTWinLoseItem": {
         "type": "object",
         "description": "List of all winners and losers for a time period",
         "title": "FTWinLoseItem",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "period": {
             "type": "string",
-            "minLength": 1,
             "description": "Time period used of win/lose calculation"
           },
           "dteend": {
@@ -5109,40 +5072,33 @@
           "datalist": {
             "type": "array",
             "uniqueItems": true,
-            "minItems": 1,
             "items": {
               "$ref": "#/components/schemas/FTWinLoseListItem"
             }
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTWinLoseListItem": {
         "description": "",
         "type": "object",
+        "title": "FTWinLoseListItem",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "name": {
             "type": "string",
-            "minLength": 1,
             "description": "Name of winner or loser"
           },
           "ticker": {
             "type": "string",
-            "minLength": 1,
             "description": "Ticker of winner or loser"
           },
           "val": {
             "type": "string",
-            "minLength": 1,
             "description": "Value in ranking (percent return)"
           }
-        },
-        "title": "FTWinLoseListItem",
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTMomentumModel": {
         "description": "",
