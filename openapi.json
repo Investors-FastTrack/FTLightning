@@ -70,8 +70,7 @@
         "description": "Server authentication. The returned token must be passed as a header with all other API calls",
         "tags": [
           "1. Auth"
-        ],
-        "security": []
+        ]
       }
     },
     "/v1/data/{ticker}/range": {
@@ -2919,13 +2918,11 @@
                   "properties": {
                     "ticker": {
                       "type": "string",
-                      "minLength": 1,
                       "description": "requested ticker"
                     },
                     "datalist": {
                       "type": "array",
-                      "uniqueItems": true,
-                      "minItems": 1,
+                      "uniqueItems": false,
                       "items": {
                         "$ref": "#/components/schemas/FTFees"
                       }
@@ -3190,34 +3187,28 @@
                     },
                     "resulttotal": {
                       "type": "string",
-                      "minLength": 1,
                       "description": "total number of ticker symbols in the results"
                     },
                     "screener": {
                       "type": "array",
-                      "uniqueItems": true,
-                      "minItems": 1,
+                      "uniqueItems": false,
                       "items": {
                         "type": "object",
                         "properties": {
                           "count": {
                             "type": "string",
-                            "minLength": 1,
                             "description": "total number of results at current level of the screen"
                           },
                           "family": {
                             "type": "string",
-                            "minLength": 1,
                             "description": "family used in the screen"
                           },
                           "operation": {
                             "type": "string",
-                            "minLength": 1,
                             "description": "operation used in the screen"
                           },
                           "rank": {
                             "type": "string",
-                            "minLength": 1,
                             "description": "order applied in the screen"
                           }
                         }
@@ -3366,16 +3357,10 @@
             "$ref": "#/components/parameters/token"
           },
           {
-            "in": "query",
-            "description": "First day in the date range of all calculations/requests",
-            "name": "start",
-            "schema": {}
+            "$ref": "#/components/parameters/start"
           },
           {
-            "in": "query",
-            "description": "Last day in the date range of all calculations/requests. If not provided, the last market day in the database is used",
-            "name": "end",
-            "schema": {}
+            "$ref": "#/components/parameters/end"
           }
         ],
         "tags": [
