@@ -5380,10 +5380,13 @@
         "description": "",
         "type": "object",
         "x-examples": {},
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "cusip": {
             "type": "string",
-            "description": "8 digit cusip of requested sticker\n"
+            "description": "8 digit cusip of requested security\n"
           },
           "ratings": {
             "type": "object",
@@ -5403,10 +5406,12 @@
             "type": "object",
             "properties": {
               "callable": {
-                "type": "string"
+                "type": "boolean",
+                "description": "True or false if bond is callable"
               },
               "makewhole_call": {
-                "type": "string"
+                "type": "boolean",
+                "description": "True or false if cusip has a make whole provision"
               },
               "date_first_par_call": {
                 "type": "string"
@@ -5419,32 +5424,45 @@
           "details": {
             "type": "object",
             "properties": {
-              "naics_code": {
-                "type": "string"
+              "issuer_type": {
+                "type": "string",
+                "description": "Description of the security issuer "
               },
-              "convertable": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
+              "asset_type": {
+                "type": "string",
+                "description": "Description of the actual instrument: high yield bond, corporate bond, government bond, certificate of deposit, etc"
               },
               "sic_code": {
-                "type": "string"
+                "type": "string",
+                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
               },
-              "country": {
-                "type": "string"
+              "naics_code": {
+                "type": "string",
+                "description": "NAICS code description classifying businesses based on the primary type of work the business performs"
               },
               "description": {
-                "type": "string"
+                "type": "string",
+                "description": "Issuer Name"
+              },
+              "country": {
+                "type": "string",
+                "description": "Issuer country"
               },
               "rate": {
-                "type": "string"
+                "type": "string",
+                "description": "Annual interest rate paid on a the face value of security"
               },
               "date_maturity": {
-                "type": "string"
+                "type": "string",
+                "description": "Date security matures"
               },
               "payment_frequency": {
-                "type": "string"
+                "type": "string",
+                "description": "Frequency of interest payments"
+              },
+              "convertable": {
+                "type": "boolean",
+                "description": "True or false if bond is a convertible bond"
               }
             }
           },
@@ -5452,26 +5470,28 @@
             "type": "object",
             "properties": {
               "issue_date": {
-                "type": "string"
+                "type": "string",
+                "description": "Date bond was issued"
               },
               "issue_size": {
-                "type": "string"
+                "type": "string",
+                "description": "Total amount of debt raise by issuance"
               },
               "issue_price": {
-                "type": "string"
+                "type": "string",
+                "description": "Price security issued"
               },
               "nominal_value": {
-                "type": "string"
+                "type": "string",
+                "description": "Face value of bond"
               },
               "coupon_type": {
-                "type": "string"
+                "type": "string",
+                "description": "Type of coupon payment: fixed, floating, etc"
               }
             }
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       }
     },
     "parameters": {
