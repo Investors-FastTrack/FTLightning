@@ -3306,23 +3306,14 @@
                     "datalist": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "properties": {
-                          "cusip": {
-                            "type": "string",
-                            "description": "requested cusip"
-                          },
-                          "prices": {
-                            "type": "array",
-                            "items": {
-                              "$ref": "#/components/schemas/FTBondPrice"
-                            }
-                          }
-                        }
+                        "$ref": "#/components/schemas/FTBondPrice"
                       }
                     },
                     "id": {
                       "type": "string"
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
                     }
                   }
                 }
@@ -5320,6 +5311,9 @@
       "FTBondPrice": {
         "title": "FTBondPrice",
         "type": "object",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "price": {
             "type": "string",
@@ -5364,17 +5358,33 @@
             "description": "Convexity is a measure of the curvature in the relationship between bond prices and bond yields. Convexity demonstrates how the duration of a bond changes as the interest rate changes",
             "properties": {
               "bid": {
-                "type": "string"
+                "type": "string",
+                "description": "convexity calculated using the bid quote"
               },
               "mid": {
-                "type": "string"
+                "type": "string",
+                "description": "convexity calculated using the midpoint between bid and ask quotes"
               }
             }
+          },
+          "ytm": {
+            "type": "object",
+            "description": "yield to maturity",
+            "properties": {
+              "bid": {
+                "type": "string",
+                "description": "yield to maturity calculated using the bid quote"
+              },
+              "mid": {
+                "type": "string",
+                "description": "yield to maturity calculated using the midpoint between bid and ask quotes"
+              }
+            }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTBondDescription": {
         "description": "",
@@ -5490,6 +5500,9 @@
                 "description": "Type of coupon payment: fixed, floating, etc"
               }
             }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
           }
         }
       }
