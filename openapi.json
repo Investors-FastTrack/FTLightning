@@ -3505,17 +3505,8 @@
       },
       "parameters": []
     },
-    "/v1/usage/{account}/bonds": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "account",
-          "in": "path",
-          "required": true
-        }
-      ],
+    "/v1/usage/bonds": {
+      "parameters": [],
       "get": {
         "summary": "Bond Usage",
         "tags": [
@@ -3549,6 +3540,24 @@
                           }
                         }
                       }
+                    },
+                    "account": {
+                      "type": "string",
+                      "description": "usage account number "
+                    },
+                    "report_date": {
+                      "type": "object",
+                      "description": "month of report",
+                      "properties": {
+                        "year": {
+                          "type": "string",
+                          "description": "year of report"
+                        },
+                        "month": {
+                          "type": "string",
+                          "description": "month of report"
+                        }
+                      }
                     }
                   }
                 }
@@ -3564,7 +3573,7 @@
             },
             "in": "query",
             "name": "year",
-            "description": "year of report",
+            "description": "year of report (yyyy)",
             "required": true
           },
           {
@@ -3579,11 +3588,84 @@
             },
             "in": "query",
             "name": "month",
-            "description": "month of report",
+            "description": "month of report (MM)",
             "required": true
           }
         ],
         "description": "Total number and list of CUSIPsused in a month "
+      }
+    },
+    "/v1/usage/bonds/count": {
+      "parameters": [],
+      "get": {
+        "summary": "Bond Usage Count",
+        "tags": [
+          "Other Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_tickers": {
+                      "type": "string",
+                      "description": "total cusips accessed in the month"
+                    },
+                    "account": {
+                      "type": "string",
+                      "description": "report account number "
+                    },
+                    "report_date": {
+                      "type": "object",
+                      "description": "date of report",
+                      "properties": {
+                        "month": {
+                          "type": "string",
+                          "description": "month of report"
+                        },
+                        "year": {
+                          "type": "string",
+                          "description": "year of report"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-usage-account-bonds",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "year",
+            "description": "year of report (yyyy)",
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "month",
+            "description": "month of report (MM)",
+            "required": true
+          }
+        ],
+        "description": "Total number of cusips used in a month"
       }
     }
   },
