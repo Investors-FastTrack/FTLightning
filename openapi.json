@@ -3504,6 +3504,87 @@
         ]
       },
       "parameters": []
+    },
+    "/v1/usage/{account}/bonds": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "account",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Bond Usage",
+        "tags": [
+          "Other Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_tickers": {
+                      "type": "string",
+                      "description": "total cusips accessed in the month"
+                    },
+                    "usage_list": {
+                      "type": "array",
+                      "description": "list of all cusips accessed in month",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cusip": {
+                            "type": "string",
+                            "description": "cusip accessed"
+                          },
+                          "last_access": {
+                            "type": "string",
+                            "description": "date last accessed cusip"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-usage-account-bonds",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "year",
+            "description": "year of report",
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "month",
+            "description": "month of report",
+            "required": true
+          }
+        ],
+        "description": "Total number and list of CUSIPsused in a month "
+      }
     }
   },
   "components": {
