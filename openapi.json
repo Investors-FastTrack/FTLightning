@@ -3397,6 +3397,7 @@
                   "properties": {
                     "datalist": {
                       "type": "array",
+                      "description": "Array of bond description objects",
                       "items": {
                         "$ref": "#/components/schemas/FTBondDescription"
                       }
@@ -3448,7 +3449,21 @@
                     "datalist": {
                       "type": "array",
                       "items": {
-                        "$ref": "#/components/schemas/FTBondPrice"
+                        "type": "object",
+                        "description": "Array of bond price lists",
+                        "properties": {
+                          "cusip": {
+                            "type": "string",
+                            "description": "cusip of security"
+                          },
+                          "prices": {
+                            "type": "array",
+                            "description": "Array of prices and data points for requested dates ",
+                            "items": {
+                              "$ref": "#/components/schemas/FTBondPrice"
+                            }
+                          }
+                        }
                       }
                     },
                     "err": {
@@ -5318,6 +5333,14 @@
           "price": {
             "type": "string",
             "description": "last quote of day"
+          },
+          "bid": {
+            "type": "string",
+            "description": "Bid quote for date"
+          },
+          "ask": {
+            "type": "string",
+            "description": "ask price for date"
           },
           "date": {
             "type": "string",
