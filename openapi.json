@@ -2816,8 +2816,8 @@
               "type": "integer"
             },
             "in": "query",
-            "name": "ql",
-            "description": "Number of quarters to lookback when calculating stats. ql=4 is trailing 1 year. ql=12  is trialing 3 years, etc"
+            "name": "ml",
+            "description": "Number of months to lookback when calculating stats. ql=4 is trailing 1 year. ql=12  is trialing 3 years, etc"
           },
           {
             "$ref": "#/components/parameters/basis"
