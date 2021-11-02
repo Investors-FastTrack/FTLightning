@@ -381,7 +381,8 @@
         "description": "Returns ticker's start date. All other objects are null",
         "tags": [
           "12. Bulk Data"
-        ]
+        ],
+        "operationId": ""
       }
     },
     "/v1/data/xmulti/startday": {
@@ -419,7 +420,10 @@
             }
           },
           "description": ""
-        }
+        },
+        "tags": [
+          "12. Bulk Data"
+        ]
       }
     },
     "/v1/data/{ticker}/symname": {
