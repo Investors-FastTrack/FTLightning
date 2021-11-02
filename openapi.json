@@ -384,6 +384,44 @@
         ]
       }
     },
+    "/v1/data/xmulti/startday": {
+      "parameters": [],
+      "post": {
+        "summary": "Inception Date Multiple",
+        "operationId": "post-v1-data-xmulti-startday",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns ticker's start date. All other objects are null",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
     "/v1/data/{ticker}/symname": {
       "get": {
         "summary": "Symbol Name",
