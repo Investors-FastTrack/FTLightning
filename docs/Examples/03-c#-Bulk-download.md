@@ -1,4 +1,4 @@
-# C\# Downloading Data 
+# C# Downloading Data 
 
 ## Step 1 - Authenicate to web service
 FastTrack's API token is reset every 8 hours. Make a request to /v1/auth/login with your account number, password, and app id. 
