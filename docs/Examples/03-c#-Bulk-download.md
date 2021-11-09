@@ -18,6 +18,8 @@ a = (auth)makeGET("https://ftl.fasttrack.net/v1/auth/login?account=" + account +
 ```
 
 ## Step 2 - Request all ETFs Tickers
+
+
 ```csharp
 
 // request all funds and ETFs in FT database with screener
