@@ -1,4 +1,6 @@
-# Using C# to Downloading Statistics Data 
+# C# Example
+##### *Using C# to download stats for 300+ tickers*
+
 
 The example below details 
 * Authenticating to the API
