@@ -1,6 +1,13 @@
-# C# Downloading Data 
+# Using C# to Downloading Statistics Data 
 
-## Step 1 - Authenicate to web service
+The example below details 
+* Authenticating to the API
+* Getting a pre defined list of ticker symbols
+* Gathering stats about those tickers.
+
+
+
+### 1. Authenicate to web service
 FastTrack's API token is reset every 8 hours. Make a request to /v1/auth/login with your account number, password, and app id. 
 
 Recieve the response and extract the token to use in all other API requests. 
@@ -17,21 +24,23 @@ a = (auth)makeGET("https://ftl.fasttrack.net/v1/auth/login?account=" + account +
 
 ```
 
-## Step 2 - Request all ETFs Tickers
+### 2. Request all Vanguard Tickers
+Each FT API request needs a ticker or list of tickers included in the request. This example pulls all Vanguard Funds and ETFs from the database using the screener endpoint. 
 
+Other common sources are user input, external database, or flat files of ticker symbols.
 
 ```csharp
 
-// request all funds and ETFs in FT database with screener
+// request all Vanguard funds and ETFs in FT database with screener
 // docs: https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1family~1screener/post
 
 // create screener request
 FTScreener ftr = new FTScreener();
 ftr.screener = new List<FTScreenItem>();
 
-// Add ALL - ETF screen to object
+// Add ALL - Vanguard screen to object
 FTScreenItem fti1 = new FTScreenItem();
-fti1.family = "ALL - ETF";/// family for ALL funds in database
+fti1.family = "ALL - Vanguard";/// family for ALL Vanguard funds and ETFS in database
 fti1.operation = "add";
 ftr.screener.Add(fti1);
 
@@ -42,9 +51,12 @@ ftscreen = (FTScreenerResult)makePOST("https://ftl.fasttrack.net/v1/family/scree
 // Extract ticker list from screener. 
 // Transform to List<> to send in POST body
 string[] tickers = ftscreen.resulttickers.ToArray();
+```
 
-// Split ticker arrya into 200 ticker mini arrays
-// to multithread request 
+### 3. Split Tickers into Mini Arrays to multi thread
+Speed up your execution times by multi-threading your request. The below code splits the ticker array into 200 ticker mini arrays.
+```csharp
+ 
 String[][] chunks = tickers
         .Select((s, i) => new { Value = s, Index = i })
         .GroupBy(x => x.Index / 200)
@@ -54,7 +66,9 @@ String[][] chunks = tickers
 
 ```
 
-## Step 3 - Get Stats
+### 4. Request Statistics for Tickers
+Using the tickers retieved above, multi thread the request for ticker stats.
+Gennerally, 100-200 tickers per request achieves the best performance. Each app id is limited to 10 concurrent threads.    
 
 ```csharp
 
@@ -66,10 +80,10 @@ string dteend = pervious_year.ToString() + "-" + pervious_month.ToString("0#") +
 string dtestart = dtestart = (pervious_year - 5).ToString() + "-" + pervious_month.ToString("0#") + "-" + DateTime.DaysInMonth(pervious_year, pervious_month);
 
 // multi thread the 200 ticker chunk request
-// store all results in "master_statslist"
+// store all results in "toplevel_statslist"
 
-FTStatsList master_statslist = new FTStatsList();
-master_statslist.statslist = new List<FTStats>();
+FTStatsList toplevel_statslist = new FTStatsList();
+toplevel_statslist.statslist = new List<FTStats>();
 ParallelOptions popt = new ParallelOptions() { MaxDegreeOfParallelism = 4 };
 Parallel.For(0, chunks.Length, popt, i =>
 {
@@ -78,19 +92,84 @@ Parallel.For(0, chunks.Length, popt, i =>
     // docs: https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1stats~1xmulti/post
     FTStatsList stats = new FTStatsList();
     stats = (FTStatsList)makePOST("https://ftl.fasttrack.net/v1/stats/xmulti?start=" + dtestart + "&end=" + dteend, stats, chunks[i], a.token, a.appid);
-    lock (master_statslist)
+    lock (toplevel_statslist)
     {
-        master_statslist.statslist.AddRange(stats.statslist);
-        Console.WriteLine(master_statslist.statslist.Count().ToString() + " / " + tickers.Count().ToString());
+        toplevel_statslist.statslist.AddRange(stats.statslist);
+        Console.WriteLine(toplevel_statslist.statslist.Count().ToString() + " / " + tickers.Count().ToString());
     }
 });
+```
+
+### 5. Write Data to Console
+```csharp
+// write dates
+Console.WriteLine("Start: " + dtestart);
+Console.WriteLine("End: " + dteend);
+
+/// write stats of first ticker
+Console.WriteLine("Ticker: " + toplevel_statslist.statslist[0].ticker);
+Console.WriteLine("Name: " + toplevel_statslist.statslist[0].describe.name);
+Console.WriteLine("5 Year Total Return: " + toplevel_statslist.statslist[0].returns.total.period);
+Console.WriteLine("5 Year Annualized Return: " + toplevel_statslist.statslist[0].returns.annualized.period);
+Console.WriteLine("5 Year SD: " + toplevel_statslist.statslist[0].risk.sd);
+
 
 ```
 
+## Utility Functions Used Above
+```csharp
+public static object makeGET(string _base, object obj, string token, string appid)
+{
+    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(_base);
+    request.Headers.Add("token", token);
+    request.Headers.Add("appid", appid);
 
-Stats Classes
+    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+    using (Stream receiveStream = response.GetResponseStream())
+    {
+        StreamReader stre = new StreamReader(receiveStream);
+        String json = stre.ReadToEnd();
+        JsonTextReader reader = new JsonTextReader(new StringReader(json));
+        JsonSerializer serializer = new JsonSerializer();
+        obj = serializer.Deserialize(reader, obj.GetType());
+        return obj;
+    }
+}
+
+public static object makePOST(string _base, Object result, Object body, string token, string appid)
+{
+    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(_base);
+    request.Method = "POST";
+    request.Headers.Add("token", token);
+    request.Headers.Add("appid", appid);
+
+    request.AutomaticDecompression = DecompressionMethods.GZip;
+
+    String val = JsonConvert.SerializeObject(body);
+    Byte[] bytes = Encoding.UTF8.GetBytes(val);
+
+    Stream requestStream = request.GetRequestStream();
+    requestStream.Write(bytes, 0, bytes.Length);
+
+    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+    using (Stream receiveStream = response.GetResponseStream())
+    {
+        StreamReader stre = new StreamReader(receiveStream);
+        String json = stre.ReadToEnd();
+        JsonTextReader reader = new JsonTextReader(new StringReader(json));
+        JsonSerializer serializer = new JsonSerializer();
+        result = serializer.Deserialize(reader, result.GetType());
+        return result;
+    }
+}
+
+```
+## Various Classes Used in Example
 
 ```csharp
+//Stats Classes
 public class FTStats
 {
   public string ticker;
@@ -207,10 +286,10 @@ public class FTMaxDraw
   public string valleydate;
 }
 
-```
-Details Classes
 
-```csharp 
+/// Details Classes
+
+
 public class FTDetailsList
 {
   public List<FTDetails> datalist;
@@ -267,10 +346,9 @@ public class FTScreenerResult
   public List<string> resulttickers;
   public err err;
 }
-```
 
-Authentication, Date, Error Classes
-```csharp
+/// Authentication, Date, Error Classes
+
 public class auth
 {
   public string accountnumber { get; set; }
