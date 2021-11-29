@@ -635,6 +635,9 @@
           },
           {
             "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/ma"
           }
         ],
         "responses": {
@@ -711,6 +714,9 @@
           },
           {
             "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/ma"
           }
         ],
         "responses": {
@@ -5952,6 +5958,16 @@
           ]
         },
         "description": "include or exclude \"modeldetails\" object in resutl. Pass \"0\" to reduce result size."
+      },
+      "ma": {
+        "name": "ma",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "10, 50,100"
+        },
+        "description": "Comma separated list of moving average lengths"
       }
     },
     "requestBodies": {},
