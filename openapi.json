@@ -4220,6 +4220,9 @@
       "FTStats": {
         "type": "object",
         "description": "various stats and data points for a ticker or model",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "ticker": {
             "type": "string",
@@ -4235,29 +4238,29 @@
           "dteend": {
             "$ref": "#/components/schemas/FTDate"
           },
-          "aux": {
-            "type": "integer",
-            "description": "describes the order which tickers were received."
-          },
-          "max": {
-            "$ref": "#/components/schemas/FTMaxDraw"
-          },
-          "risk": {
-            "$ref": "#/components/schemas/FTRisk"
-          },
-          "returns": {
-            "$ref": "#/components/schemas/FTReturns"
+          "chartprices": {
+            "$ref": "#/components/schemas/FTChartData"
           },
           "describe": {
             "$ref": "#/components/schemas/FTDescribe"
           },
-          "chartprices": {
-            "$ref": "#/components/schemas/FTChartData"
+          "max": {
+            "$ref": "#/components/schemas/FTMaxDraw"
+          },
+          "movingaverage": {
+            "$ref": "#/components/schemas/FTMovingAverage"
+          },
+          "returns": {
+            "$ref": "#/components/schemas/FTReturns"
+          },
+          "risk": {
+            "$ref": "#/components/schemas/FTRisk"
+          },
+          "aux": {
+            "type": "integer",
+            "description": "describes the order which tickers were received."
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTStatsList": {
         "type": "object",
@@ -5739,6 +5742,69 @@
             "$ref": "#/components/schemas/err"
           }
         }
+      },
+      "FTMovingAverage": {
+        "description": "List of moving averages requested in the ma= query string",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "movingaverages": [
+              {
+                "dte": {
+                  "juliandate": "44526",
+                  "marketdate": "8376",
+                  "strdate": "11/26/2021"
+                },
+                "length": "10",
+                "value": "165.198"
+              },
+              {
+                "dte": {
+                  "juliandate": "44526",
+                  "marketdate": "8376",
+                  "strdate": "11/26/2021"
+                },
+                "length": "50",
+                "value": "165.393"
+              },
+              {
+                "dte": {
+                  "juliandate": "44526",
+                  "marketdate": "8376",
+                  "strdate": "11/26/2021"
+                },
+                "length": "100",
+                "value": "161.594"
+              }
+            ]
+          }
+        },
+        "properties": {
+          "movingaverages": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "properties": {
+                "dte": {
+                  "$ref": "#/components/schemas/FTDate"
+                },
+                "length": {
+                  "type": "string",
+                  "description": "Length of moving average "
+                },
+                "value": {
+                  "type": "string",
+                  "description": "Value of moving average"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "movingaverages"
+        ]
       }
     },
     "parameters": {
