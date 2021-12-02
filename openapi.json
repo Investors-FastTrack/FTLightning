@@ -3778,6 +3778,19 @@
           },
           {
             "$ref": "#/components/parameters/start"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "CSV",
+              "enum": [
+                "CSV",
+                "JSON"
+              ]
+            },
+            "in": "query",
+            "name": "format",
+            "description": "Return CSV or JSON format. CSV is default result."
           }
         ]
       }
