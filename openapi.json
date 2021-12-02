@@ -3715,6 +3715,72 @@
         ],
         "description": "Total number of cusips used in a month"
       }
+    },
+    "/v1/export/xmulti/{TickerList}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "example": "JPM,BAC,C,GS"
+          },
+          "name": "TickerList",
+          "in": "path",
+          "required": true,
+          "description": "Comma separated list of tickers"
+        }
+      ],
+      "get": {
+        "summary": "Multiple Security CSV Export",
+        "tags": [
+          "6. CSV Export"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "description": "Data for requested tickers in the CSV format: {ticker},{date},{adjusted price},{unadjusted price},{open},{low},{high},{volume}"
+                },
+                "examples": {
+                  "Banks Example": {
+                    "value": "ticker,date,adjusted price,unadjusted price,open,low,high,volume JPM,12/31/2020,123.977,127.07,122.038,121.751,124.249,8580.21 BAC,12/31/2020,29.883,30.31,29.585,29.474,29.966,28716.04 C,12/31/2020,59.793,61.66,58.868,58.69,60.02,12500.74 GS,12/31/2020,259.198,263.71,254.378,253.546,259.46,2043.05"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-export-xmulti-TickerList",
+        "description": "Export multiple tickers to CSV format",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "description": "36 characher GUID received from the auth/login end point",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "appid",
+            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          }
+        ]
+      }
     }
   },
   "components": {
