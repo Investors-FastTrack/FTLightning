@@ -1,4 +1,4 @@
-# Python - Export Expense Ratios
+# Python Example
 
 ### Authenticate to web service
 Import the necesary libraries, then make a request to the v1/auth/login end point with your account, password and appid
