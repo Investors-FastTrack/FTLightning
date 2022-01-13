@@ -6,10 +6,10 @@ FastTrack Market Data API is Investors FastTrack's data API organized around [RE
 <!-- theme: danger -->
 >### *Technical Documentation*
 >This documentation is **intended for computer programmers and developers**. 
->
-FastTrack offers other software products that do not require technical or coding knowledge. 
->
-Visit http://www.fasttrack.net for information on our non technical software and data products.
+
+<!-- theme: none -->
+>FastTrack offers other software products that do not require technical or coding knowledge. 
+>Visit http://www.fasttrack.net for information on our non technical software and data products.
 
 
 ### Base URL
