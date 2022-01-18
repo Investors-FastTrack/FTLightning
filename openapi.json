@@ -4762,9 +4762,6 @@
             "type": "string",
             "description": "Ticker symbol of security requested"
           },
-          "bondexposure": {
-            "description": "Subscription required - bond grading exposure"
-          },
           "topten": {
             "type": "object",
             "description": "Top ten (or more) holdings by weight",
@@ -4829,9 +4826,6 @@
               }
             }
           },
-          "flows": {
-            "description": "Subscription required - Flows in and out of fund"
-          },
           "assetclass": {
             "type": "object",
             "description": "Percentage weighting of holdings by asset class",
@@ -4889,10 +4883,50 @@
             }
           },
           "bondquality": {
-            "description": "Subscription required"
+            "description": "Bond quality details (AAA,AA,A, B, BB, etc)",
+            "type": "object",
+            "properties": {
+              "datalist": {
+                "type": "array",
+                "description": "Array of objects describing bond rating exposure",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Bond rating category"
+                    },
+                    "netweight": {
+                      "type": "string",
+                      "description": "Net weight of bond rating"
+                    }
+                  }
+                }
+              }
+            }
           },
           "marketcap": {
-            "description": "Subscription required"
+            "description": "Object showing security's equity holding details by market cap ",
+            "type": "object",
+            "properties": {
+              "datalist": {
+                "type": "array",
+                "description": "Array of equity holding's equity market cap details ",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Category of equity size"
+                    },
+                    "netweight": {
+                      "type": "string",
+                      "description": "Net weight of size"
+                    }
+                  }
+                }
+              }
+            }
           },
           "sector": {
             "type": "object",
