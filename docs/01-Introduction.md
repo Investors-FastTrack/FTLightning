@@ -18,7 +18,7 @@ FastTrack Market Data API is Investors FastTrack's data API organized around [RE
 ### Free Trial Tickers
 Free Trials have access to all indexes in our database, including equity, bond, commodity, etc. 
 
-21 Sector SPRD ETFs are available to demo. Sign up for a trial account and app id, then request on any GET request. (POST request not included on free symbols)
+21 Sector SPRD ETFs and 13 Large Cap Stocks are available to demo. Sign up for a trial account and app id, then request on any GET request. (POST request not included on free symbols)
 
 See the full list of tickers here: https://ftl.fasttrack.net/v3/api/freetickers
 

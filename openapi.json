@@ -5308,7 +5308,29 @@
       "FTReturnDates": {
         "title": "FTReturnDates",
         "type": "object",
+        "description": "dates used to calculate total and annualized returns in FTReturns Object",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
+          "oneday": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "fiveday": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "onemonth": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "threemonth": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "sixmonth": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
+          "ninemonths": {
+            "$ref": "#/components/schemas/FTDateSpan"
+          },
           "one": {
             "$ref": "#/components/schemas/FTDateSpan"
           },
@@ -5321,32 +5343,10 @@
           "ten": {
             "$ref": "#/components/schemas/FTDateSpan"
           },
-          "onemonth": {
-            "$ref": "#/components/schemas/FTDateSpan"
-          },
-          "threemonth": {
-            "$ref": "#/components/schemas/FTDateSpan"
-          },
-          "sixmonth": {
-            "$ref": "#/components/schemas/FTDateSpan"
-          },
           "ytd": {
             "$ref": "#/components/schemas/FTDateSpan"
-          },
-          "oneday": {
-            "$ref": "#/components/schemas/FTDateSpan"
-          },
-          "fiveday": {
-            "$ref": "#/components/schemas/FTDateSpan"
-          },
-          "ninemonths": {
-            "$ref": "#/components/schemas/FTDateSpan"
           }
-        },
-        "description": "dates used to calculate total and annualized returns in FTReturns Object",
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTDateSpan": {
         "title": "FTDateSpan",
