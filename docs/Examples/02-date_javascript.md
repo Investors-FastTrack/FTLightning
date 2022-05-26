@@ -115,14 +115,14 @@ function downloadData() {
 ```javascript
 function getDate(dte) {
 
-	    // IMPORTANT//
-	    // loop through ftdate object and find the "strdate"
-      // that matches your desired date
-	    // get the "marketday" from ftdate.dtes object that matches your desired date
-	    // marketdate  == index in data array
-	    // use that index to get the value from data.prices
+    // IMPORTANT//
+    // loop through ftdate object and find the "strdate"
+    // that matches your desired date
+    // get the "marketday" from ftdate.dtes object that matches your desired date
+    // marketdate  == index in data array
+    // use that index to get the value from data.prices
 
-	    for (var i = 0; i < ftdate.dtes.length; i++) {
+    for (var i = 0; i < ftdate.dtes.length; i++) {
 
 		if (Date.parse(ftdate.dtes[i].strdate) == dte) {
 		    /// get marketday of desired date
@@ -133,8 +133,8 @@ function getDate(dte) {
 		    document.getElementById("output").value = data.prices[mktday]
 		    //exit loop
 		    break;
-		}
-	    }
+		  }
+	  }
 	})
 }
 ```
