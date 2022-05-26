@@ -457,7 +457,7 @@
         },
         "description": "Returns ticker's name. All other objects are null",
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       },
       "parameters": []
