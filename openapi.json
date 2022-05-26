@@ -225,7 +225,7 @@
         },
         "description": "Returns all data for the entire data range of a single ticker. Entire date range is 9/1/1988 to the most recent market day.\n",
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       }
     },
@@ -275,7 +275,7 @@
         },
         "description": "Returns all data for the entire data range of multiple tickers. Entire date range is 9/1/1988 to the most recent market day.\n",
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       }
     },
@@ -310,7 +310,7 @@
         },
         "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       }
     },
@@ -345,7 +345,7 @@
         },
         "description": "Returns ticker's unadjusted closing prices for all days in FastTrack database. All other objects are null",
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       }
     },
@@ -379,10 +379,10 @@
           }
         },
         "description": "Returns ticker's start date. All other objects are null",
+        "operationId": "",
         "tags": [
-          "12. Bulk Data"
-        ],
-        "operationId": ""
+          "11. Bulk Data"
+        ]
       }
     },
     "/v1/data/xmulti/startday": {
@@ -422,7 +422,7 @@
           "description": ""
         },
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       }
     },
@@ -491,7 +491,7 @@
         "operationId": "1231jsoasd",
         "description": "Returns array with every date in the FastTrack database. This object is used to interpret the data/{ticker}/divadjprices and data/{ticker}/unadjprices results",
         "tags": [
-          "12. Bulk Data"
+          "11. Bulk Data"
         ]
       }
     },
@@ -6208,7 +6208,7 @@
       "name": "10. Pre Calculated Data"
     },
     {
-      "name": "12. Bulk Data"
+      "name": "11. Bulk Data"
     },
     {
       "name": "Other Data"
