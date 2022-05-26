@@ -1,4 +1,4 @@
-# C# Stats Example
+# C\# Stats Example
 
 ##### *Using C# to download stats for 300+ tickers*
 
