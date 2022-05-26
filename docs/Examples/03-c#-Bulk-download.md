@@ -9,13 +9,13 @@ The example below details
 
 
 
-### 1. Authenicate to web service
+### 1. Authenticate to web service
 FastTrack's API token is reset every 8 hours. Make a request to /v1/auth/login with your account number, password, and app id. 
 
-Recieve the response and extract the token to use in all other API requests. 
+Receive the response and extract the token to use in all other API requests. 
 
 ```csharp
-// authenicate to web service
+// authenticate to web service
 // docs: https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1auth~1login/get
 
 string account = "xxxxxx";
