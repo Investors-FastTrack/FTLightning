@@ -115,26 +115,26 @@ function downloadData() {
 ```javascript
 function getDate(dte) {
 
-    // IMPORTANT//
-    // loop through ftdate object and find the "strdate"
-    // that matches your desired date
-    // get the "marketday" from ftdate.dtes object that matches your desired date
-    // marketdate  == index in data array
-    // use that index to get the value from data.prices
+// IMPORTANT//
+// loop through ftdate object and find the "strdate"
+// that matches your desired date
+// get the "marketday" from ftdate.dtes object that matches your desired date
+// marketdate  == index in data array
+// use that index to get the value from data.prices
 
-    for (var i = 0; i < ftdate.dtes.length; i++) {
+for (var i = 0; i < ftdate.dtes.length; i++) {
 
-		if (Date.parse(ftdate.dtes[i].strdate) == dte) {
-		    /// get marketday of desired date
-		    // market day == index in the "data.prices" array
-		    var mktday = ftdate.dtes[i].marketdate;
+if (Date.parse(ftdate.dtes[i].strdate) == dte) {
+/// get marketday of desired date
+// market day == index in the "data.prices" array
+var mktday = ftdate.dtes[i].marketdate;
 
-		    // set value in form
-		    document.getElementById("output").value = data.prices[mktday]
-		    //exit loop
-		    break;
-		  }
-	  }
-	})
+// set value in form
+document.getElementById("output").value = data.prices[mktday]
+//exit loop
+break;
+}
+}
+})
 }
 ```
