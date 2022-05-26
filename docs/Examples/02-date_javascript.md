@@ -111,7 +111,7 @@ function downloadData() {
 
 
 ### Get Price Value
-
+Loop through the [v1/data/dates] object to find the date you want to display. Save the index or marketdate value of that date, then use that as the index in the [v1/data/{ticker}] result to get the date's closing price.
 ```javascript
 function getDate(dte) {
 
@@ -122,19 +122,19 @@ function getDate(dte) {
 // marketdate  == index in data array
 // use that index to get the value from data.prices
 
-for (var i = 0; i < ftdate.dtes.length; i++) {
+  for (var i = 0; i < ftdate.dtes.length; i++) {
 
-if (Date.parse(ftdate.dtes[i].strdate) == dte) {
-/// get marketday of desired date
-// market day == index in the "data.prices" array
-var mktday = ftdate.dtes[i].marketdate;
+    if (Date.parse(ftdate.dtes[i].strdate) == dte) {
+      /// get marketday of desired date
+      // market day == index in the "data.prices" array
+      var mktday = ftdate.dtes[i].marketdate;
 
-// set value in form
-document.getElementById("output").value = data.prices[mktday]
-//exit loop
-break;
+      // set value in form
+      document.getElementById("output").value = data.prices[mktday];
+      //exit loop
+      break;
+    }
+  }
 }
-}
-})
-}
+
 ```
