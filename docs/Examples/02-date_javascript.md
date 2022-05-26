@@ -54,10 +54,13 @@ The [/data/dates/] endpoint returns a complete list of market days in the databa
 
 ### Request Dates
 
-Before requesting any Bulk data, you need to download the [/data/dates/] array and store locally. This data is critical to translating the bulk data arrays.
+Before requesting any bulk data, you need to download the [v1/data/dates] array and store locally. This dates object contains all dates in the FastTrack database ordered from first to last day. You will pair this date array with the [v1/data/{ticker}] result to find the price on a given day. This date data is critical to translating the bulk data arrays.
 
 
 ```javascript
+var token = 'XXXXX-XXXX-XXXXx';
+var appid = 'XXXXX-XXXX-XXXXX';
+
 var ftdate = {};
 var dte = null;
 
@@ -79,13 +82,20 @@ function downloadDates() {
 
 
 ### Request Adjusted Closing Prices
+
+Request the bulk data array for the ticker. The data array will be sized the same length as the [v1/data/dates] array. You will find the date you want in the [v1/data/date] result, then use that index to reference the index in the [v1/data/{ticker}] result.
+
 ```javascript
 var token = 'XXXXX-XXXX-XXXXx';
 var appid = 'XXXXX-XXXX-XXXXX';
 var ftdata;
+
 function downloadData() {
+
+  var ticker = "TSLA";
+
     //call ftlightning and get data object
-  fetch("https://ftl.fasttrack.net/v1/data/jpm/divadjprices", 
+  fetch("https://ftl.fasttrack.net/v1/data/" + ticker, 
   {
     headers: {
       "appid": appid,
@@ -107,7 +117,7 @@ function getDate(dte) {
 
 	    // IMPORTANT//
 	    // loop through ftdate object and find the "strdate"
-       // that matches your desired date
+      // that matches your desired date
 	    // get the "marketday" from ftdate.dtes object that matches your desired date
 	    // marketdate  == index in data array
 	    // use that index to get the value from data.prices
