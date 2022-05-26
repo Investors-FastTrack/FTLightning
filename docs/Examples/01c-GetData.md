@@ -21,11 +21,12 @@ Once the data is downloaded, the code pops and alert to indicate JPM's most rece
 ``` javascript
 
 function getData(){
-  var ticker = 'JPM' 
-  var url = 'https://ftl.fasttrack.net/v1/data/' + ticker + '/divadjprices'
+  var ticker = 'JPM';
+  var url = 'https://ftl.fasttrack.net/v1/data/' + ticker + '/range';
+
   fetch(url,
       {headers: {
-        "appid" : appid ,
+        "appid" : appid,
         "token" : token
         }}
     )
@@ -37,11 +38,18 @@ function getData(){
   .then(
     function (ftdata) {
         if (ftdata.err == null) {
-          var lastprice = ftdata.prices[ftdata.prices.length-1]
-          alert("The last price of JPM is: $" + lastprice)
+
+          var last_price = ftdata.datarange[ftdata.datarange.length - 1].price;
+          var last_date = ftdata.datarange[ftdata.datarange.length - 1].date.strdate;
+          var name = ftdata.name;
+
+          alert("The last price of " + ftdata.name + " is $" + last_price + " for date " + last_date);
+        
         }
         else {
+        
           alert(ftdata.err.message);
+        
         }
       }
     )
