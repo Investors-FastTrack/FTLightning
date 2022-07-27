@@ -3351,7 +3351,7 @@
                   "description": "",
                   "type": "object",
                   "properties": {
-                    "datalist": {
+                    "prices": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/FTBondPrice"

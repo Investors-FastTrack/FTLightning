@@ -1,6 +1,7 @@
 {
   "name": "FastTrack Market Data API",
   "description": "",
+  "spectralExtends": [],
   "formats": [
     "oas2",
     "oas3",
