@@ -1128,6 +1128,19 @@
             "name": "token",
             "description": "Temporary token received from auth/login end point",
             "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1",
+                "0"
+              ],
+              "default": "1"
+            },
+            "in": "query",
+            "name": "backfill",
+            "description": "This function exports data for all requested dates. If a requested date/date range date is before the security's inception, the security's first known value is shown. Turn this off by sending a 0 value."
           }
         ],
         "responses": {
