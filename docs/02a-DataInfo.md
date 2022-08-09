@@ -14,8 +14,11 @@ Liquid Alts, smaller funds, some international funds commonly report delayed NAV
 #### Publish 2 - 8:25 PM EST
 Publish 2 includes any changes made to Publish 1 and all remaining open-end funds and indexes not reported in Publish 1.
 
-#### Publish 3 - 7:25 AM EST
-Publish 3 is released the following morning and includes any updates and dividends processed overnight and early morning.
+#### Publish 3 - 9:10 PM EST
+Publish 3 is a quick update pulling ~100 bond index values. Funds, ETFs, and stocks are not updated in Publish 3.
+
+#### Publish 4 - 7:25 AM EST
+Publish 4 is released the following morning and includes any updates and dividends processed overnight and early morning.
 
 Check data update status with the [/v1/status](https://fasttrack.stoplight.io/docs/ftlightning/ad1cc0b0b84ef-data-update-status) end point
 
