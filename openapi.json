@@ -379,7 +379,7 @@
           }
         },
         "description": "Returns ticker's start date. All other objects are null",
-        "operationId": "",
+        "operationId": "zxzsdzsd",
         "tags": [
           "11. Bulk Data"
         ]
@@ -3699,7 +3699,7 @@
             }
           }
         },
-        "operationId": "get-v1-usage-account-bonds",
+        "operationId": "zxfzfzx",
         "parameters": [
           {
             "schema": {
@@ -6304,6 +6304,9 @@
     },
     {
       "name": "11. Bulk Data"
+    },
+    {
+      "name": "12. Status"
     },
     {
       "name": "Other Data"
