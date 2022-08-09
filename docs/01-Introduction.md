@@ -1,7 +1,7 @@
 # Introduction
 
 ### FastTrack Market Data API
-FastTrack Market Data API is Investors FastTrack's data API organized around [REST](http://en.wikipedia.org/wiki/Representational_State_Transfer). All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
+FastTrack Market Data API is Investors FastTrack's data REST API. All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
 
 <!-- theme: danger -->
 >### *Technical Documentation*
@@ -32,7 +32,7 @@ Search and chart our database here: https://ftcloud.fasttrack.net/web/search
 ### Available Data
 The following items are available for all tickers in the FastTrack database
 
-#### [Pricing](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1data~1%7Bticker%7D~1range/get)
+#### [Pricing](https://fasttrack.stoplight.io/docs/ftlightning/aff23f320c5df-data-range-multiple-tickers)
 - Daily Adjusted and Unadjusted Closing Prices
 - Daily Open, High, Low Prices
 - Daily volume
@@ -47,7 +47,7 @@ The following items are available for all tickers in the FastTrack database
 - Yield (Income only)
 - Yield Total (Income, Short, Long Term)
 
-#### [Security Portfolio Data](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1ref~1%7Bticker%7D~1portfolio/get)
+#### [Security Portfolio Data](https://fasttrack.stoplight.io/docs/ftlightning/264aa1a7657f9-portfolio-details)
 - Top 10 positions
 - Asset weighting
 - Sector weighting
@@ -59,7 +59,7 @@ The following items are available for all tickers in the FastTrack database
 - Category Benchmark
 - 1 year turnover
 
-#### [Risk](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1stats~1%7Bticker%7D/get)
+#### [Risk](https://fasttrack.stoplight.io/docs/ftlightning/c5068d5e59f7e-multiple-tickers)
 - Alpha
 - Annualized Return
 - Beta
@@ -88,7 +88,7 @@ The following items are available for all tickers in the FastTrack database
 - Year to date
 - Yearly total return 1988 to the current year
 
-#### [Dividends](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1data~1%7Bticker%7D~1dividends/get)
+#### [Dividends](https://fasttrack.stoplight.io/docs/ftlightning/9609a82a71987-dividends)
 - Short Term
 - Long Term
 - Income
@@ -97,7 +97,7 @@ The following items are available for all tickers in the FastTrack database
 #### Moving Average
 - Any length moving average for any day back to 1988
 
-#### [Portfolio Modeling](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/v1~1portfolios~1staticmodel/post)
+#### [Portfolio Modeling](https://fasttrack.stoplight.io/docs/ftlightning/c6683def5f895-calculate-static-model)
 - Static models
 - Momentum models
 

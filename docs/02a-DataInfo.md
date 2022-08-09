@@ -17,6 +17,8 @@ Publish 2 includes any changes made to Publish 1 and all remaining open-end fund
 #### Publish 3 - 7:25 AM EST
 Publish 3 is released the following morning and includes any updates and dividends processed overnight and early morning.
 
+Check data update status with the [/v1/status](https://fasttrack.stoplight.io/docs/ftlightning/ad1cc0b0b84ef-data-update-status) end point
+
 ---
 
 ## Missing Prices
