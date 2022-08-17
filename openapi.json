@@ -5816,6 +5816,54 @@
               }
             }
           },
+          "spreads": {
+            "type": "object",
+            "description": "The spreads conatined describe the difference between the bond's yield and the current spread basis yield",
+            "properties": {
+              "oas_libor": {
+                "type": "object",
+                "description": "Spread between OAS LIBOR and the bond's market yield",
+                "properties": {
+                  "bid": {
+                    "type": "string",
+                    "description": "OAS LIBOR spread using the bid quote"
+                  },
+                  "mid": {
+                    "type": "string",
+                    "description": "OAS LIBOR spread using the mid quote"
+                  }
+                }
+              },
+              "oas_treasury": {
+                "type": "object",
+                "description": "Spread between US Treasuries and the bond's market yield",
+                "properties": {
+                  "bid": {
+                    "type": "string",
+                    "description": "OAS Treasury spreads using the bid quote"
+                  },
+                  "mid": {
+                    "type": "string",
+                    "description": "OAS Treasury spreads using the mid quote"
+                  }
+                }
+              },
+              "z": {
+                "type": "object",
+                "description": "Z Spread - the constant spread that makes the price of a security equal to the present value of its cash flows when added to the yield at each point on the spot rate Treasury curve where cash flow is received",
+                "properties": {
+                  "bid": {
+                    "type": "string",
+                    "description": "Z spread using the bid quote"
+                  },
+                  "mid": {
+                    "type": "string",
+                    "description": "Z spread using the mid quote"
+                  }
+                }
+              }
+            }
+          },
           "ytm": {
             "type": "object",
             "description": "yield to maturity",
