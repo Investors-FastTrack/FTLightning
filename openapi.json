@@ -4525,7 +4525,7 @@
       },
       "err": {
         "type": "object",
-        "description": "error responses. see full list of error codes [here](https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/01b-Errors.md?srn=gh/investors-fasttrack/ftlightning/docs/01b-Errors.md)",
+        "description": "error responses. see full list of error codes [here](https://fasttrack.stoplight.io/docs/ftlightning/ZG9jOjMwNzY2Mw-error-codes)",
         "title": "",
         "properties": {
           "code": {
