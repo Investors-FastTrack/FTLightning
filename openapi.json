@@ -3903,9 +3903,6 @@
       ],
       "get": {
         "summary": "Earing Per Share (Stocks)",
-        "tags": [
-          "Other Data"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3913,33 +3910,6 @@
               "application/json": {
                 "schema": {
                   "type": "object",
-                  "properties": {
-                    "ticker": {
-                      "type": "string"
-                    },
-                    "eps": {
-                      "type": "object",
-                      "properties": {
-                        "value": {
-                          "type": "string"
-                        },
-                        "date": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "dilluted_eps": {
-                      "type": "object",
-                      "properties": {
-                        "value": {
-                          "type": "string"
-                        },
-                        "date": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  },
                   "x-examples": {
                     "example-1": {
                       "ticker": "GE",
@@ -3951,6 +3921,42 @@
                         "value": "-4.03",
                         "date": "2022-06-30"
                       }
+                    }
+                  },
+                  "properties": {
+                    "ticker": {
+                      "type": "string"
+                    },
+                    "eps": {
+                      "type": "object",
+                      "description": "Trailing 12 month EPS",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "description": "EPS value"
+                        },
+                        "date": {
+                          "type": "string",
+                          "description": "EPS date"
+                        }
+                      }
+                    },
+                    "dilluted_eps": {
+                      "type": "object",
+                      "description": "Trailing 12 months dilluted EPS",
+                      "properties": {
+                        "value": {
+                          "type": "string",
+                          "description": "Dilluted EPS value"
+                        },
+                        "date": {
+                          "type": "string",
+                          "description": "Dilluted EPS date"
+                        }
+                      }
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
                     }
                   }
                 }
@@ -3967,7 +3973,10 @@
             "$ref": "#/components/parameters/token"
           }
         ],
-        "description": "Returns the current Trailing 12 months EPS for security"
+        "description": "Returns the current Trailing 12 months EPS for security",
+        "tags": [
+          "13. Beta Endpoints"
+        ]
       }
     }
   },
