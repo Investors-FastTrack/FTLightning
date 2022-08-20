@@ -3902,8 +3902,10 @@
         }
       ],
       "get": {
-        "summary": "Your GET endpoint",
-        "tags": [],
+        "summary": "Earing Per Share (Stocks)",
+        "tags": [
+          "Other Data"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3957,14 +3959,15 @@
           }
         },
         "operationId": "get-beta-ref-ticker-eps",
-        "security": [
+        "parameters": [
           {
-            "appid": []
+            "$ref": "#/components/parameters/appid"
           },
           {
-            "token": []
+            "$ref": "#/components/parameters/token"
           }
-        ]
+        ],
+        "description": "Returns the current Trailing 12 months EPS for security"
       }
     }
   },
