@@ -3889,6 +3889,83 @@
         "operationId": "get-v1-status",
         "description": "Returns information about FastTrack's data status. Use this endpoint to check when latest updates are avaialble."
       }
+    },
+    "/beta/ref/{ticker}/eps": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ticker": {
+                      "type": "string"
+                    },
+                    "eps": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "date": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "dilluted_eps": {
+                      "type": "object",
+                      "properties": {
+                        "value": {
+                          "type": "string"
+                        },
+                        "date": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "x-examples": {
+                    "example-1": {
+                      "ticker": "GE",
+                      "eps": {
+                        "value": "-4.03",
+                        "date": "2022-06-30"
+                      },
+                      "dilluted_eps": {
+                        "value": "-4.03",
+                        "date": "2022-06-30"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-beta-ref-ticker-eps",
+        "security": [
+          {
+            "appid": []
+          },
+          {
+            "token": []
+          }
+        ]
+      }
     }
   },
   "components": {
