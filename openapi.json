@@ -5992,9 +5992,6 @@
               },
               "sandp": {
                 "type": "string"
-              },
-              "fitch": {
-                "type": "string"
               }
             }
           },
@@ -6445,7 +6442,9 @@
     {
       "name": "12. Status"
     },
-    {"name":"13. Beta Endpoints"},
+    {
+      "name": "13. Beta Endpoints"
+    },
     {
       "name": "Other Data"
     }
