@@ -5861,6 +5861,20 @@
             "type": "string",
             "description": "date of quote yyyyMMdd"
           },
+          "convexity": {
+            "type": "object",
+            "description": "Convexity is a measure of the curvature in the relationship between bond prices and bond yields. Convexity demonstrates how the duration of a bond changes as the interest rate changes",
+            "properties": {
+              "bid": {
+                "type": "string",
+                "description": "convexity calculated using the bid quote"
+              },
+              "mid": {
+                "type": "string",
+                "description": "convexity calculated using the midpoint between bid and ask quotes"
+              }
+            }
+          },
           "duration": {
             "type": "object",
             "description": "Duration measures a bond's price sensitivity to interest rate changes.",
@@ -5888,20 +5902,6 @@
               "macaulay_mid": {
                 "type": "string",
                 "description": "Macaulay duration estimates how many years it will take for an investor to be repaid the bond’s price by its total cash flows"
-              }
-            }
-          },
-          "convexity": {
-            "type": "object",
-            "description": "Convexity is a measure of the curvature in the relationship between bond prices and bond yields. Convexity demonstrates how the duration of a bond changes as the interest rate changes",
-            "properties": {
-              "bid": {
-                "type": "string",
-                "description": "convexity calculated using the bid quote"
-              },
-              "mid": {
-                "type": "string",
-                "description": "convexity calculated using the midpoint between bid and ask quotes"
               }
             }
           },
@@ -5953,24 +5953,44 @@
               }
             }
           },
-          "ytm": {
+          "yield": {
             "type": "object",
-            "description": "yield to maturity",
             "properties": {
-              "bid": {
-                "type": "string",
-                "description": "yield to maturity calculated using the bid quote"
+              "ytm": {
+                "type": "object",
+                "description": "yield to maturity",
+                "properties": {
+                  "bid": {
+                    "type": "string",
+                    "description": "yield to maturity calculated using the bid quote"
+                  },
+                  "mid": {
+                    "type": "string",
+                    "description": "yield to maturity calculated using the midpoint between bid and ask quotes"
+                  }
+                }
               },
-              "mid": {
-                "type": "string",
-                "description": "yield to maturity calculated using the midpoint between bid and ask quotes"
+              "current": {
+                "type": "object",
+                "description": "Current yield",
+                "properties": {
+                  "bid": {
+                    "type": "string",
+                    "description": "current yield calculated using the bid quote"
+                  },
+                  "mid": {
+                    "type": "string",
+                    "description": "current yield calculated using the midpoint between bid and ask quotes"
+                  }
+                }
               }
             }
           },
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        }
+        },
+        "description": ""
       },
       "FTBondDescription": {
         "description": "",
