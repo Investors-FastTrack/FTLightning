@@ -3978,6 +3978,44 @@
           "13. Beta Endpoints"
         ]
       }
+    },
+    "/beta/bonds/filter": {
+      "post": {
+        "summary": "Bond Filter",
+        "operationId": "post-v1-bonds-filter",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTBondFilterResult"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTBondFilterRequest"
+              }
+            }
+          },
+          "description": ""
+        },
+        "description": "Filter all bonds based on requested criteria. Maximum of 500 data points will be returned.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -6166,6 +6204,362 @@
             }
           }
         }
+      },
+      "FTBondFilterRequest": {
+        "title": "FTBondFilterRequest",
+        "x-stoplight": {
+          "id": "r2t0ojjky50rz"
+        },
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "integer",
+            "description": "Histoical date to run filter as YYYMMDD formatted date. Any issue offered AFTER this date is excluded. ",
+            "format": "int32",
+            "default": 20220101,
+            "example": 20220901,
+            "minimum": 19880901,
+            "nullable": true
+          },
+          "timetomaturity": {
+            "type": "object",
+            "description": "Filter based on time to maturity. Measured in years from 'date' parameter. Min and Max values can be whole or decimal numbers",
+            "nullable": true,
+            "properties": {
+              "min": {
+                "type": "number",
+                "description": "Min years to maturity",
+                "default": null,
+                "format": "float",
+                "example": 5.5,
+                "nullable": true
+              },
+              "max": {
+                "type": "number",
+                "description": "Maximum years to maturity",
+                "example": 7.5,
+                "format": "float",
+                "default": null,
+                "nullable": true
+              }
+            }
+          },
+          "coupon": {
+            "type": "object",
+            "description": "Filter based on coupon value. Measued as percentage between 0.0 and 100.0",
+            "nullable": true,
+            "properties": {
+              "min": {
+                "type": "number",
+                "format": "float",
+                "default": null,
+                "example": 4,
+                "nullable": true
+              },
+              "max": {
+                "type": "number",
+                "format": "float",
+                "default": null,
+                "example": 5,
+                "nullable": true
+              }
+            }
+          },
+          "putable": {
+            "type": "boolean",
+            "description": "Filter based on put option. True, False, or Null",
+            "enum": [
+              null,
+              true,
+              false
+            ],
+            "default": null,
+            "nullable": true
+          },
+          "callable": {
+            "type": "boolean",
+            "description": "Filter based on call option, True, False, or Null",
+            "enum": [
+              null,
+              true,
+              false
+            ],
+            "default": null,
+            "nullable": true
+          },
+          "countries": {
+            "type": "array",
+            "description": "Array of countries to include results",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "collateral": {
+            "type": "array",
+            "description": "Array of collateral types to include in results",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "asset_type": {
+            "type": "array",
+            "description": "Array of asset types to include in results",
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "security_type": {
+            "type": "array",
+            "description": "Array of security types to include in results",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "currency": {
+            "type": "array",
+            "description": "Array of currencies to include in results",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "issuer_type": {
+            "type": "array",
+            "description": "Array of issuer types to include in results",
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "issuer_type_primary": {
+            "type": "array",
+            "description": "Array of bond primary types to include in results",
+            "items": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          "ratings": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "moodys": {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "min": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "max": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              },
+              "sp": {
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                  "min": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "max": {
+                    "type": "string",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FTBondFilterResult": {
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "datalist": [
+              {
+                "cusip": "91282CFF",
+                "details": {
+                  "amount_outstanding": "57136938400",
+                  "asset_type": "U.S. Treasury/U.S. Government Agency",
+                  "collateral": "Note",
+                  "country": "United States",
+                  "date_maturity": "20320815",
+                  "description": "UNITED STATES TREAS NTS",
+                  "issuer_type": "National Government",
+                  "naics_code": "Public Finance Activities",
+                  "payment_frequency": "Semi-annual",
+                  "rate": "2.75",
+                  "sic_code": "Finance, taxation, & monetary policy"
+                },
+                "issuer": {
+                  "coupon_type": "Fixed rate",
+                  "currency": "United States dollar",
+                  "dated_date": "20220815",
+                  "issue_date": "20220803",
+                  "issue_price": "99.95656",
+                  "issue_size": "57136938400",
+                  "nominal_value": "100"
+                },
+                "ratings": {
+                  "moodys": "AAA",
+                  "sandp": null
+                },
+                "redemptive_items": {
+                  "call_timing": "!NA",
+                  "callable": "0",
+                  "putable": "0"
+                }
+              },
+              {
+                "cusip": "91282CEP",
+                "details": {
+                  "amount_outstanding": "133340633900",
+                  "asset_type": "U.S. Treasury/U.S. Government Agency",
+                  "collateral": "Note",
+                  "country": "United States",
+                  "date_maturity": "20320515",
+                  "description": "UNITED STATES TREAS NTS",
+                  "issuer_type": "National Government",
+                  "naics_code": "Public Finance Activities",
+                  "payment_frequency": "Semi-annual",
+                  "rate": "2.875",
+                  "sic_code": "Finance, taxation, & monetary policy"
+                },
+                "issuer": {
+                  "coupon_type": "Fixed rate",
+                  "currency": "United States dollar",
+                  "dated_date": "20220515",
+                  "issue_date": "20220504",
+                  "issue_price": "99.41465",
+                  "issue_size": "61194142100",
+                  "nominal_value": "100"
+                },
+                "ratings": {
+                  "moodys": "AAA",
+                  "sandp": null
+                },
+                "redemptive_items": {
+                  "call_timing": "!NA",
+                  "callable": "0",
+                  "putable": "0"
+                }
+              },
+              {
+                "cusip": "91282CDJ",
+                "details": {
+                  "amount_outstanding": "144644275900",
+                  "asset_type": "U.S. Treasury/U.S. Government Agency",
+                  "collateral": "Note",
+                  "country": "United States",
+                  "date_maturity": "20311115",
+                  "description": "UNITED STATES TREAS NTS",
+                  "issuer_type": "National Government",
+                  "naics_code": "Public Finance Activities",
+                  "payment_frequency": "Semi-annual",
+                  "rate": "1.375",
+                  "sic_code": "Finance, taxation, & monetary policy"
+                },
+                "issuer": {
+                  "coupon_type": "Fixed rate",
+                  "currency": "United States dollar",
+                  "dated_date": "20211115",
+                  "issue_date": "20211103",
+                  "issue_price": "99.35965",
+                  "issue_size": "61559787100",
+                  "nominal_value": "100"
+                },
+                "ratings": {
+                  "moodys": "AAA",
+                  "sandp": null
+                },
+                "redemptive_items": {
+                  "call_timing": "!NA",
+                  "callable": "0",
+                  "putable": "0"
+                }
+              },
+              {
+                "cusip": "91282CDY",
+                "details": {
+                  "amount_outstanding": "141206705100",
+                  "asset_type": "U.S. Treasury/U.S. Government Agency",
+                  "collateral": "Note",
+                  "country": "United States",
+                  "date_maturity": "20320215",
+                  "description": "UNITED STATES TREAS NTS",
+                  "issuer_type": "National Government",
+                  "naics_code": "Public Finance Activities",
+                  "payment_frequency": "Semi-annual",
+                  "rate": "1.875",
+                  "sic_code": "Finance, taxation, & monetary policy"
+                },
+                "issuer": {
+                  "coupon_type": "Fixed rate",
+                  "currency": "United States dollar",
+                  "dated_date": "20220215",
+                  "issue_date": "20220202",
+                  "issue_price": "99.73707",
+                  "issue_size": "59383597100",
+                  "nominal_value": "100"
+                },
+                "ratings": {
+                  "moodys": "AAA",
+                  "sandp": null
+                },
+                "redemptive_items": {
+                  "call_timing": "!NA",
+                  "callable": "0",
+                  "putable": "0"
+                }
+              }
+            ],
+            "filter": {
+              "coupon": {
+                "max": "10",
+                "min": "0"
+              },
+              "date": "20220915",
+              "ratings": {
+                "moodys": {
+                  "max": "AAA",
+                  "min": "AAA"
+                },
+                "sp": {
+                  "max": "Aaa",
+                  "min": "Aaa"
+                }
+              },
+              "timetomaturity": {
+                "max": "10",
+                "min": "9"
+              }
+            },
+            "total_results": "4"
+          }
+        },
+        "properties": {
+          "datalist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FTBondDescription"
+            }
+          },
+          "filter": {
+            "$ref": "#/components/schemas/FTBondFilterRequest"
+          },
+          "total_results": {
+            "type": "string"
+          }
+        },
+        "title": ""
       }
     },
     "parameters": {
