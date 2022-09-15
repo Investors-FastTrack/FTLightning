@@ -6311,10 +6311,10 @@
           "asset_type": {
             "type": "array",
             "description": "Array of asset types to include in results",
+            "default": null,
             "nullable": true,
             "items": {
-              "type": "string",
-              "default": null
+              "type": "string"
             }
           },
           "security_type": {
