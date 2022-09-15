@@ -4000,6 +4000,47 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/FTBondFilterRequest"
+              },
+              "examples": {
+                "AAA Filter": {
+                  "value": {
+                    "date": 20220101,
+                    "timetomaturity": {
+                      "min": "0",
+                      "max": "100"
+                    },
+                    "coupon": {
+                      "min": "0",
+                      "max": "1"
+                    },
+                    "putable": false,
+                    "callable": false,
+                    "countries": [
+                      "United States"
+                    ],
+                    "collateral": "Note",
+                    "asset_type": [
+                      "U.S. Treasury/U.S. Government Agency"
+                    ],
+                    "security_type": null,
+                    "currency": [
+                      "United States dollar"
+                    ],
+                    "issuer_type": [
+                      "U.S. government or agency"
+                    ],
+                    "issuer_type_primary": [
+                      "National Government"
+                    ],
+                    "ratings": {
+                      "moodys": {
+                        "min": "AAA",
+                        "max": "AAA"
+                      },
+                      "sandp": null
+                    }
+                  }
+                }
               }
             }
           },
