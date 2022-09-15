@@ -4013,6 +4013,9 @@
           {
             "$ref": "#/components/parameters/token"
           }
+        ],
+        "tags": [
+          "2.2. Bond Data"
         ]
       },
       "parameters": []
@@ -6545,9 +6548,12 @@
             "total_results": "4"
           }
         },
+        "title": "",
+        "description": "Bonds that meet all critera of the filter",
         "properties": {
           "datalist": {
             "type": "array",
+            "description": "Array of bond description objects that result from the filter",
             "items": {
               "$ref": "#/components/schemas/FTBondDescription"
             }
@@ -6556,10 +6562,10 @@
             "$ref": "#/components/schemas/FTBondFilterRequest"
           },
           "total_results": {
-            "type": "string"
+            "type": "string",
+            "description": "Total number of bonds that match filter criteria"
           }
-        },
-        "title": ""
+        }
       }
     },
     "parameters": {
