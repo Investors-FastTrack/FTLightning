@@ -6227,6 +6227,7 @@
           "timetomaturity": {
             "type": "object",
             "description": "Filter based on time to maturity. Measured in years from 'date' parameter. Min and Max values can be whole or decimal numbers",
+            "default": null,
             "nullable": true,
             "properties": {
               "min": {
@@ -6250,6 +6251,7 @@
           "coupon": {
             "type": "object",
             "description": "Filter based on coupon value. Measued as percentage between 0.0 and 100.0",
+            "default": null,
             "nullable": true,
             "properties": {
               "min": {
