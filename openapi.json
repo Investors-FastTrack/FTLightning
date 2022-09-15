@@ -6355,32 +6355,39 @@
           },
           "ratings": {
             "type": "object",
+            "default": null,
             "nullable": true,
             "properties": {
               "moodys": {
                 "type": "object",
+                "default": null,
                 "nullable": true,
                 "properties": {
                   "min": {
                     "type": "string",
+                    "default": null,
                     "nullable": true
                   },
                   "max": {
                     "type": "string",
+                    "default": null,
                     "nullable": true
                   }
                 }
               },
               "sp": {
                 "type": "object",
+                "default": null,
                 "nullable": true,
                 "properties": {
                   "min": {
                     "type": "string",
+                    "default": null,
                     "nullable": true
                   },
                   "max": {
                     "type": "string",
+                    "default": null,
                     "nullable": true
                   }
                 }
