@@ -3399,7 +3399,7 @@
           }
         ],
         "tags": [
-          "2.2. Bond Data"
+          "Other Data"
         ]
       }
     },
@@ -3439,14 +3439,14 @@
           }
         ],
         "tags": [
-          "2.2. Bond Data"
+          "Other Data"
         ]
       }
     },
     "/v1/bonds/xmulti/description": {
       "parameters": [],
       "post": {
-        "summary": "Bond Description - Multiple",
+        "summary": "Bond Descriptions",
         "operationId": "post-v1-bonds-xmulti-description",
         "responses": {
           "200": {
@@ -3497,7 +3497,7 @@
     },
     "/v1/bonds/xmulti/data": {
       "post": {
-        "summary": "Bond Pricing & Data - Multiple",
+        "summary": "Bond Pricing & Data",
         "operationId": "post-v1-bonds-xmulti-prices",
         "responses": {
           "200": {
