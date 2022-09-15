@@ -4024,7 +4024,9 @@
                     "asset_type": [
                       "U.S. Treasury/U.S. Government Agency"
                     ],
-                    "security_type": null,
+                    "security_type": [
+                      "Debt Issue"
+                    ],
                     "currency": [
                       "United States dollar"
                     ],
