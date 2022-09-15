@@ -4011,7 +4011,7 @@
                     },
                     "coupon": {
                       "min": "0",
-                      "max": "1"
+                      "max": "2"
                     },
                     "putable": false,
                     "callable": false,
@@ -4019,7 +4019,7 @@
                       "United States"
                     ],
                     "collateral": [
-                      "Note"
+                      "Debt Issue"
                     ],
                     "asset_type": [
                       "U.S. Treasury/U.S. Government Agency"
