@@ -4018,7 +4018,9 @@
                     "countries": [
                       "United States"
                     ],
-                    "collateral": "Note",
+                    "collateral": [
+                      "Note"
+                    ],
                     "asset_type": [
                       "U.S. Treasury/U.S. Government Agency"
                     ],
