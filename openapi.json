@@ -6293,6 +6293,7 @@
           "countries": {
             "type": "array",
             "description": "Array of countries to include results",
+            "default": null,
             "nullable": true,
             "items": {
               "type": "string"
@@ -6301,6 +6302,7 @@
           "collateral": {
             "type": "array",
             "description": "Array of collateral types to include in results",
+            "default": null,
             "nullable": true,
             "items": {
               "type": "string"
@@ -6309,14 +6311,16 @@
           "asset_type": {
             "type": "array",
             "description": "Array of asset types to include in results",
+            "nullable": true,
             "items": {
               "type": "string",
-              "nullable": true
+              "default": null
             }
           },
           "security_type": {
             "type": "array",
             "description": "Array of security types to include in results",
+            "default": null,
             "nullable": true,
             "items": {
               "type": "string"
@@ -6325,6 +6329,7 @@
           "currency": {
             "type": "array",
             "description": "Array of currencies to include in results",
+            "default": null,
             "nullable": true,
             "items": {
               "type": "string"
@@ -6333,17 +6338,19 @@
           "issuer_type": {
             "type": "array",
             "description": "Array of issuer types to include in results",
+            "default": null,
+            "nullable": true,
             "items": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             }
           },
           "issuer_type_primary": {
             "type": "array",
             "description": "Array of bond primary types to include in results",
+            "default": null,
+            "nullable": true,
             "items": {
-              "type": "string",
-              "nullable": true
+              "type": "string"
             }
           },
           "ratings": {
