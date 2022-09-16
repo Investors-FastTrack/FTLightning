@@ -4337,6 +4337,10 @@
       },
       "FTDate": {
         "type": "object",
+        "description": "Contains date information of a single date",
+        "x-tags": [
+          "Models"
+        ],
         "properties": {
           "marketdate": {
             "type": "integer",
@@ -4349,12 +4353,12 @@
           "strdate": {
             "type": "string",
             "description": "MM-dd-yy formatted date"
+          },
+          "yyyymmdd": {
+            "type": "string",
+            "description": "yyyyMMddd (Year Month Day) representation"
           }
-        },
-        "description": "Contains date information of a single date",
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTFamily": {
         "type": "object",
