@@ -6266,7 +6266,7 @@
         "properties": {
           "date": {
             "type": "integer",
-            "description": "Histoical date to run filter as YYYMMDD formatted date. Any issue offered AFTER this date is excluded. ",
+            "description": "Historical date to run filter as YYYMMDD formatted date. Any issue offered AFTER this date is excluded. ",
             "format": "int32",
             "default": 20220101,
             "example": 20220901,
