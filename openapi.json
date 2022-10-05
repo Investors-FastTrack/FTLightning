@@ -4006,12 +4006,12 @@
                   "value": {
                     "date": 20220101,
                     "timetomaturity": {
-                      "min": "0",
-                      "max": "100"
+                      "min": 0,
+                      "max": 100
                     },
                     "coupon": {
-                      "min": "0",
-                      "max": "2"
+                      "min": 0,
+                      "max": 2
                     },
                     "putable": false,
                     "callable": false,
@@ -4038,8 +4038,8 @@
                     ],
                     "ratings": {
                       "moodys": {
-                        "min": "AAA",
-                        "max": "AAA"
+                        "min": "Aaa",
+                        "max": "Aaa"
                       },
                       "sandp": null
                     }
@@ -6307,7 +6307,7 @@
                 "type": "number",
                 "format": "float",
                 "default": null,
-                "example": "4.0",
+                "example": 4,
                 "nullable": true
               },
               "max": {
@@ -6407,21 +6407,65 @@
           "ratings": {
             "type": "object",
             "default": null,
+            "description": "Filter by the defining upper and lower bounds of ratings by two rating agencies.",
             "nullable": true,
             "properties": {
               "moodys": {
                 "type": "object",
                 "default": null,
+                "description": "Upper and lower bounds of allowed moody's rating",
                 "nullable": true,
                 "properties": {
                   "min": {
                     "type": "string",
                     "default": null,
+                    "description": "Only show values greater than or equal",
+                    "enum": [
+                      null,
+                      "None",
+                      "Aaa",
+                      "AA+",
+                      "AA",
+                      "AA-",
+                      "A+",
+                      "A",
+                      "A-",
+                      "BBB+",
+                      "BBB",
+                      "BBB-",
+                      "BB+",
+                      "BB",
+                      "BB-",
+                      "B+",
+                      "B",
+                      "B-"
+                    ],
                     "nullable": true
                   },
                   "max": {
                     "type": "string",
                     "default": null,
+                    "description": "Only show values less than or equal",
+                    "enum": [
+                      null,
+                      "None",
+                      "Aaa",
+                      "AA+",
+                      "AA",
+                      "AA-",
+                      "A+",
+                      "A",
+                      "A-",
+                      "BBB+",
+                      "BBB",
+                      "BBB-",
+                      "BB+",
+                      "BB",
+                      "BB-",
+                      "B+",
+                      "B",
+                      "B-"
+                    ],
                     "nullable": true
                   }
                 }
@@ -6429,16 +6473,59 @@
               "sp": {
                 "type": "object",
                 "default": null,
+                "description": "Upper and lower bounds of S&P ratings",
                 "nullable": true,
                 "properties": {
                   "min": {
                     "type": "string",
                     "default": null,
+                    "description": "Only show values greater than or equal",
+                    "enum": [
+                      null,
+                      "None",
+                      "AAA",
+                      "Aa1",
+                      "AA",
+                      "Aa3",
+                      "A1",
+                      "A2",
+                      "A3",
+                      "Baa1",
+                      "Baa2",
+                      "Baa3",
+                      "Ba1",
+                      "Ba2",
+                      "Ba3",
+                      "B1",
+                      "B2",
+                      "B3"
+                    ],
                     "nullable": true
                   },
                   "max": {
                     "type": "string",
                     "default": null,
+                    "description": "Only show values less than or equal",
+                    "enum": [
+                      null,
+                      "None",
+                      "AAA",
+                      "Aa1",
+                      "AA",
+                      "Aa3",
+                      "A1",
+                      "A2",
+                      "A3",
+                      "Baa1",
+                      "Baa2",
+                      "Baa3",
+                      "Ba1",
+                      "Ba2",
+                      "Ba3",
+                      "B1",
+                      "B2",
+                      "B3"
+                    ],
                     "nullable": true
                   }
                 }
