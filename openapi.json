@@ -6307,7 +6307,7 @@
                 "type": "number",
                 "format": "float",
                 "default": null,
-                "example": 4,
+                "example": "4.0",
                 "nullable": true
               },
               "max": {
