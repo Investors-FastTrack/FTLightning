@@ -4064,6 +4064,60 @@
         ]
       },
       "parameters": []
+    },
+    "/beta/bonds/filter/columns/{filter object}": {
+      "get": {
+        "summary": "Filter Enum Options",
+        "tags": [
+          "2.2. Bond Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Array of all available options for filter object.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-beta-bonds-filter-columns",
+        "description": "Available enum values for the various filter objects.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asset_type",
+              "collateral",
+              "issuer_type",
+              "country",
+              "issuer_type_primary",
+              "currency",
+              "security_type"
+            ]
+          },
+          "name": "filter object",
+          "in": "path",
+          "required": true,
+          "description": "Name of filter object options to retrieve"
+        }
+      ]
     }
   },
   "components": {
