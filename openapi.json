@@ -6492,7 +6492,12 @@
                       "BB-",
                       "B+",
                       "B",
-                      "B-"
+                      "B-",
+                      "CCC+",
+                      "CCC",
+                      "CCC-",
+                      "CC",
+                      "C"
                     ],
                     "nullable": true
                   },
@@ -6518,7 +6523,12 @@
                       "BB-",
                       "B+",
                       "B",
-                      "B-"
+                      "B-",
+                      "CCC+",
+                      "CCC",
+                      "CCC-",
+                      "CC",
+                      "C"
                     ],
                     "nullable": true
                   }
@@ -6552,7 +6562,12 @@
                       "Ba3",
                       "B1",
                       "B2",
-                      "B3"
+                      "B3",
+                      "Caa1",
+                      "Caa2",
+                      "Caa3",
+                      "Ca",
+                      "C"
                     ],
                     "nullable": true
                   },
@@ -6578,7 +6593,12 @@
                       "Ba3",
                       "B1",
                       "B2",
-                      "B3"
+                      "B3",
+                      "Caa1",
+                      "Caa2",
+                      "Caa3",
+                      "Ca",
+                      "C"
                     ],
                     "nullable": true
                   }
