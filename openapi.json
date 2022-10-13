@@ -6464,7 +6464,7 @@
             "description": "Filter by the defining upper and lower bounds of ratings by two rating agencies.",
             "nullable": true,
             "properties": {
-              "moodys": {
+              "sp": {
                 "type": "object",
                 "default": null,
                 "description": "Upper and lower bounds of allowed moody's rating",
@@ -6534,7 +6534,7 @@
                   }
                 }
               },
-              "sp": {
+              "moodys": {
                 "type": "object",
                 "default": null,
                 "description": "Upper and lower bounds of S&P ratings",
