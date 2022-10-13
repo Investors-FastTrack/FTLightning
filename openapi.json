@@ -6476,7 +6476,6 @@
                     "description": "Only show values greater than or equal",
                     "enum": [
                       null,
-                      "None",
                       "Aaa",
                       "AA+",
                       "AA",
@@ -6507,7 +6506,6 @@
                     "description": "Only show values less than or equal",
                     "enum": [
                       null,
-                      "None",
                       "Aaa",
                       "AA+",
                       "AA",
@@ -6546,7 +6544,6 @@
                     "description": "Only show values greater than or equal",
                     "enum": [
                       null,
-                      "None",
                       "AAA",
                       "Aa1",
                       "AA",
@@ -6577,7 +6574,6 @@
                     "description": "Only show values less than or equal",
                     "enum": [
                       null,
-                      "None",
                       "AAA",
                       "Aa1",
                       "AA",
