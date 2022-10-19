@@ -4109,7 +4109,9 @@
               "country",
               "issuer_type_primary",
               "currency",
-              "security_type"
+              "security_type",
+              "naics",
+              "issue_status"
             ]
           },
           "name": "filter object",
