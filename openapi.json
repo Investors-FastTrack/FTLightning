@@ -6269,7 +6269,8 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        }
+        },
+        "title": ""
       },
       "FTMovingAverage": {
         "description": "List of moving averages requested in the ma= query string",
