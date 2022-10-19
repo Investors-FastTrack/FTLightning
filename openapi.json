@@ -4057,6 +4057,20 @@
           },
           {
             "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "number",
+              "enum": [
+                1,
+                0
+              ],
+              "example": 1,
+              "default": "null"
+            },
+            "in": "query",
+            "name": "summary",
+            "description": "Flag to include summary data and values of spreads and yield values."
           }
         ],
         "tags": [
@@ -6337,7 +6351,7 @@
             "properties": {
               "min": {
                 "type": "number",
-                "description": "Min years to maturity",
+                "description": "Min years to maturity. Use decimal for partial year. ie 1.5 = 1 year and 6 months",
                 "default": null,
                 "format": "float",
                 "example": 5.5,
@@ -6345,7 +6359,7 @@
               },
               "max": {
                 "type": "number",
-                "description": "Maximum years to maturity",
+                "description": "Maximum years to maturity. Use decimal for partial year. ie 1.75 = 1 year and 9 months.",
                 "example": 7.5,
                 "format": "float",
                 "default": null,
@@ -6596,12 +6610,21 @@
                       "Caa2",
                       "Caa3",
                       "Ca",
-                      "C"
+                      "C",
+                      null
                     ],
                     "nullable": true
                   }
                 }
               }
+            }
+          },
+          "naics": {
+            "type": "array",
+            "description": "Array of 2, 3, and 4 digit NAICS codes. ",
+            "items": {
+              "type": "number",
+              "default": null
             }
           }
         }
@@ -6788,6 +6811,63 @@
           "total_results": {
             "type": "string",
             "description": "Total number of bonds that match filter criteria"
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "spreads": {
+                "type": "object",
+                "properties": {
+                  "asset_swap": {
+                    "$ref": "#/components/schemas/FTBondSummary"
+                  },
+                  "oas_libor": {
+                    "$ref": "#/components/schemas/FTBondSummary"
+                  },
+                  "oas_treasury": {
+                    "$ref": "#/components/schemas/FTBondSummary"
+                  },
+                  "z": {
+                    "$ref": "#/components/schemas/FTBondSummary"
+                  }
+                }
+              },
+              "yield": {
+                "type": "object",
+                "properties": {
+                  "current": {
+                    "$ref": "#/components/schemas/FTBondSummary"
+                  },
+                  "ytm": {
+                    "$ref": "#/components/schemas/FTBondSummary"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "FTBondSummary": {
+        "title": "FTBondSummary",
+        "x-stoplight": {
+          "id": "e9f4ysuxy3hps"
+        },
+        "type": "object",
+        "properties": {
+          "average": {
+            "type": "string"
+          },
+          "median": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "high": {
+            "type": "string"
+          },
+          "low": {
+            "type": "string"
           }
         }
       }
