@@ -6161,6 +6161,7 @@
         "x-tags": [
           "Models"
         ],
+        "title": "",
         "properties": {
           "cusip": {
             "type": "string",
@@ -6238,6 +6239,32 @@
               "convertable": {
                 "type": "boolean",
                 "description": "True or false if bond is a convertible bond"
+              },
+              "naics": {
+                "description": "Sector, sub-sector, and industiry information derived from NAICS codes **Avaialble only in filter results**",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Full 6 digit NAICS code for issuer"
+                  },
+                  "code2txt": {
+                    "type": "string",
+                    "description": "Sector - 2 digit NAICS code "
+                  },
+                  "code3txt": {
+                    "type": "string",
+                    "description": "Sub Sector - 3 digit NAICS code"
+                  },
+                  "code4txt": {
+                    "type": "string",
+                    "description": "Industry Group - 4 digit NAICS code"
+                  },
+                  "code6txt": {
+                    "type": "string",
+                    "description": "National Industry - 6 digit NACIS code"
+                  }
+                }
               }
             }
           },
@@ -6268,9 +6295,11 @@
           },
           "err": {
             "$ref": "#/components/schemas/err"
+          },
+          "prices": {
+            "$ref": "#/components/schemas/FTBondPrice"
           }
-        },
-        "title": ""
+        }
       },
       "FTMovingAverage": {
         "description": "List of moving averages requested in the ma= query string",
