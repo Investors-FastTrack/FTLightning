@@ -4039,7 +4039,7 @@
                     "ratings": {
                       "moodys": {
                         "min": "Aaa",
-                        "max": "Aaa"
+                        "max": null
                       },
                       "sp": null
                     }
@@ -4050,7 +4050,7 @@
           },
           "description": ""
         },
-        "description": "Filter all bonds based on requested criteria. Maximum of 500 data points will be returned.",
+        "description": "Filter all bonds based on requested criteria. Maximum of 2500 data points will be returned.",
         "parameters": [
           {
             "$ref": "#/components/parameters/appid"
@@ -4060,17 +4060,19 @@
           },
           {
             "schema": {
-              "type": "number",
+              "type": "string",
               "enum": [
-                1,
-                0
+                "1",
+                "0",
+                "null"
               ],
-              "example": 1,
+              "example": "1",
               "default": "null"
             },
             "in": "query",
             "name": "summary",
-            "description": "Flag to include summary data and values of spreads and yield values."
+            "description": "Flag to include summary data and values of spreads and yield values.",
+            "allowEmptyValue": true
           }
         ],
         "tags": [
@@ -4079,7 +4081,7 @@
       },
       "parameters": []
     },
-    "/beta/bonds/filter/columns/{filter object}": {
+    "/beta/bonds/filter/columns/{filter_object}": {
       "get": {
         "summary": "Filter Enum Options",
         "tags": [
@@ -4128,10 +4130,10 @@
               "issue_status"
             ]
           },
-          "name": "filter object",
+          "name": "filter_object",
           "in": "path",
-          "required": true,
-          "description": "Name of filter object options to retrieve"
+          "description": "Name of filter object options to retrieve",
+          "required": true
         }
       ]
     }
@@ -6483,7 +6485,7 @@
               "sp": {
                 "type": "object",
                 "default": null,
-                "description": "Upper and lower bounds of allowed S&P rating",
+                "description": "Upper and lower bounds of allowed S&P's rating",
                 "nullable": true,
                 "properties": {
                   "min": {
@@ -6492,7 +6494,7 @@
                     "description": "Only show values greater than or equal",
                     "enum": [
                       null,
-                      "Aaa",
+                      "AAA",
                       "AA+",
                       "AA",
                       "AA-",
@@ -6521,8 +6523,7 @@
                     "default": null,
                     "description": "Only show values less than or equal",
                     "enum": [
-                      null,
-                      "Aaa",
+                      "AAA",
                       "AA+",
                       "AA",
                       "AA-",
@@ -6542,7 +6543,8 @@
                       "CCC",
                       "CCC-",
                       "CC",
-                      "C"
+                      "C",
+                      null
                     ],
                     "nullable": true
                   }
@@ -6560,7 +6562,7 @@
                     "description": "Only show values greater than or equal",
                     "enum": [
                       null,
-                      "AAA",
+                      "Aaa",
                       "Aa1",
                       "AA",
                       "Aa3",
@@ -6590,7 +6592,7 @@
                     "description": "Only show values less than or equal",
                     "enum": [
                       null,
-                      "AAA",
+                      "Aaa",
                       "Aa1",
                       "AA",
                       "Aa3",
@@ -6610,8 +6612,7 @@
                       "Caa2",
                       "Caa3",
                       "Ca",
-                      "C",
-                      null
+                      "C"
                     ],
                     "nullable": true
                   }
@@ -6623,8 +6624,7 @@
             "type": "array",
             "description": "Array of 2, 3, and 4 digit NAICS codes. ",
             "items": {
-              "type": "number",
-              "default": null
+              "type": "string"
             }
           }
         }
