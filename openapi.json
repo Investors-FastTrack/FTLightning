@@ -6341,9 +6341,9 @@
             "type": "integer",
             "description": "Historical date to run filter as YYYMMDD formatted date. Any issue offered AFTER this date is excluded. ",
             "format": "int32",
-            "default": 20220101,
             "example": 20220901,
             "minimum": 19880901,
+            "default": "[current date]",
             "nullable": true
           },
           "timetomaturity": {
@@ -6624,8 +6624,11 @@
           "naics": {
             "type": "array",
             "description": "Array of 2, 3, and 4 digit NAICS codes. ",
+            "default": null,
+            "nullable": true,
             "items": {
-              "type": "string"
+              "type": "string",
+              "default": null
             }
           }
         }
@@ -6815,6 +6818,7 @@
           },
           "summary": {
             "type": "object",
+            "description": "Contains summary/aggregate information about filter result spreads and yields",
             "properties": {
               "spreads": {
                 "type": "object",
