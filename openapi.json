@@ -6925,6 +6925,10 @@
           },
           "prices": {
             "$ref": "#/components/schemas/FTBondPrice"
+          },
+          "cusip": {
+            "type": "string",
+            "description": "CUSIP id of security"
           }
         }
       }
