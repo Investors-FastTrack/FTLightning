@@ -3989,7 +3989,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FTBondFilterResult"
+                  "$ref": "#/components/schemas/FTBondFilterResults"
                 }
               }
             }
@@ -6241,7 +6241,7 @@
                 "description": "True or false if bond is a convertible bond"
               },
               "naics": {
-                "description": "Sector, sub-sector, and industiry information derived from NAICS codes **Avaialble only in filter results**",
+                "description": "***Avaialble only in filter results*** Sector, sub-sector, and industiry information derived from NAICS codes",
                 "type": "object",
                 "properties": {
                   "code": {
@@ -6662,7 +6662,7 @@
           }
         }
       },
-      "FTBondFilterResult": {
+      "FTBondFilterResults": {
         "type": "object",
         "x-examples": {
           "example-1": {
@@ -6835,15 +6835,11 @@
             "type": "array",
             "description": "Array of bond description objects that result from the filter",
             "items": {
-              "$ref": "#/components/schemas/FTBondDescription"
+              "$ref": "#/components/schemas/FTFilterResult"
             }
           },
           "filter": {
             "$ref": "#/components/schemas/FTBondFilterRequest"
-          },
-          "total_results": {
-            "type": "string",
-            "description": "Total number of bonds that match filter criteria"
           },
           "summary": {
             "type": "object",
@@ -6883,6 +6879,10 @@
               }
             }
           },
+          "total_results": {
+            "type": "string",
+            "description": "Total number of bonds that match filter criteria"
+          },
           "included_results": {
             "type": "string",
             "description": "Total number of cusips included in response. Maximum value is 2500"
@@ -6910,6 +6910,21 @@
           },
           "low": {
             "type": "string"
+          }
+        }
+      },
+      "FTFilterResult": {
+        "title": "FTFilterResult",
+        "x-stoplight": {
+          "id": "yotdq7k6i09i3"
+        },
+        "type": "object",
+        "properties": {
+          "describe": {
+            "$ref": "#/components/schemas/FTBondDescription"
+          },
+          "prices": {
+            "$ref": "#/components/schemas/FTBondPrice"
           }
         }
       }
