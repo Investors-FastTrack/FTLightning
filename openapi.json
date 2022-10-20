@@ -6152,10 +6152,10 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "description": ""
+        "description": "All price related date such as yield and spreads, plus duration and convexity"
       },
       "FTBondDescription": {
-        "description": "",
+        "description": "Descriptive data about the security such as rate, maturity, sector, industry, etc",
         "type": "object",
         "x-examples": {},
         "x-tags": [
@@ -6295,9 +6295,6 @@
           },
           "err": {
             "$ref": "#/components/schemas/err"
-          },
-          "prices": {
-            "$ref": "#/components/schemas/FTBondPrice"
           }
         }
       },
@@ -6833,7 +6830,7 @@
         "properties": {
           "datalist": {
             "type": "array",
-            "description": "Array of bond description objects that result from the filter",
+            "description": "Array of bond description and price objects that result from the applying the requested filter to the entire FastTrack database",
             "items": {
               "$ref": "#/components/schemas/FTFilterResult"
             }
