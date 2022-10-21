@@ -6652,7 +6652,7 @@
           },
           "naics": {
             "type": "array",
-            "description": "Array of 2, 3, and 4 digit NAICS codes. Add any combination of NAICS codes to this list to filter as desired. 2 digit codes represent Sector, three digitis represent sub-sector, and 4 digits represent industiry. All filters are derived from the securities 6 digit NAICS codes.",
+            "description": "Array of 2, 3, and 4 digit NAICS codes. ***Results will include securities that match ANY of the codes in the list.*** 2 digit codes represent Sector, three digitis represent sub-sector, and 4 digits represent industiry. All filters are derived from the securities 6 digit NAICS codes.",
             "default": null,
             "nullable": true,
             "items": {
