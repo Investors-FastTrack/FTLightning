@@ -6216,30 +6216,6 @@
                 "type": "string",
                 "description": "NAICS code description classifying businesses based on the primary type of work the business performs"
               },
-              "description": {
-                "type": "string",
-                "description": "Issuer Name"
-              },
-              "country": {
-                "type": "string",
-                "description": "Issuer country"
-              },
-              "rate": {
-                "type": "string",
-                "description": "Annual interest rate paid on a the face value of security"
-              },
-              "date_maturity": {
-                "type": "string",
-                "description": "Date security matures"
-              },
-              "payment_frequency": {
-                "type": "string",
-                "description": "Frequency of interest payments"
-              },
-              "convertable": {
-                "type": "boolean",
-                "description": "True or false if bond is a convertible bond"
-              },
               "naics": {
                 "description": "***Avaialble only in filter results*** Sector, sub-sector, and industiry information derived from NAICS codes",
                 "type": "object",
@@ -6265,6 +6241,30 @@
                     "description": "National Industry - 6 digit NACIS code"
                   }
                 }
+              },
+              "description": {
+                "type": "string",
+                "description": "Issuer Name"
+              },
+              "country": {
+                "type": "string",
+                "description": "Issuer country"
+              },
+              "rate": {
+                "type": "string",
+                "description": "Annual interest rate paid on a the face value of security"
+              },
+              "date_maturity": {
+                "type": "string",
+                "description": "Date security matures"
+              },
+              "payment_frequency": {
+                "type": "string",
+                "description": "Frequency of interest payments"
+              },
+              "convertable": {
+                "type": "boolean",
+                "description": "True or false if bond is a convertible bond"
               }
             }
           },
@@ -6649,7 +6649,7 @@
           },
           "naics": {
             "type": "array",
-            "description": "Array of 2, 3, and 4 digit NAICS codes. ",
+            "description": "Array of 2, 3, and 4 digit NAICS codes. Add any combination of NAICS codes to this list to filter as desired. 2 digit codes represent Sector, three digitis represent sub-sector, and 4 digits represent industiry. All filters are derived from the securities 6 digit NAICS codes.",
             "default": null,
             "nullable": true,
             "items": {
