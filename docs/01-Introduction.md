@@ -13,7 +13,7 @@ FastTrack Market Data API is Investors FastTrack's data REST API. All requests s
 
 
 ### Base URL
->[https://ftl.fasttrack.net/v1/]
+>https://ftl.fasttrack.net/v1/
 
 ### Free Trial Tickers
 Free Trials have access to all indexes in our database, including equity, bond, commodity, etc. 
