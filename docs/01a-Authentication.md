@@ -1,5 +1,8 @@
 # Authentication
+<!-- theme: warning -->
+>If you haven't signed up for a trial, visit https://subscribe.fasttrack.net/landing/api/apilanding.html and sign up for a free trial before moving forward.
 
+## Overview
 FT Market Data API uses a token based authentication system. All request to FT Market Data API must include two headers:
 
 
