@@ -1055,6 +1055,10 @@
                     "type": "string",
                     "description": "ticker to use in the response",
                     "example": "$XX"
+                  },
+                  "rebalanceperiod": {
+                    "type": "string",
+                    "description": "Specify the rebalance frequency. This is how often the portfolio trades."
                   }
                 }
               },
