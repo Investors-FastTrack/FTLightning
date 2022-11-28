@@ -1876,7 +1876,8 @@
               "beta_month",
               "sd_month",
               "alpha",
-              "alpha_month"
+              "alpha_month",
+              "market_cap_month"
             ]
           },
           "name": "stat",
