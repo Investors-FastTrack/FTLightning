@@ -432,6 +432,440 @@
         ]
       }
     },
+    "/v1/portfolios/staticmodel": {
+      "post": {
+        "summary": "Static Model",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/details"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with static model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Calculates the specified portfolio over the specifed rebalance period",
+        "tags": [
+          "Portfolio Modeling"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTStaticModel"
+              },
+              "examples": {
+                "Static Model Example": {
+                  "value": {
+                    "start": "2000-12-31",
+                    "rebalanceperiod": "month",
+                    "marginrate": 0,
+                    "seed": 100000,
+                    "model": [
+                      {
+                        "ticker": "SPY",
+                        "weight": "50"
+                      },
+                      {
+                        "ticker": "TLT",
+                        "weight": "50"
+                      }
+                    ],
+                    "name": "Example Model"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        }
+      }
+    },
+    "/v1/portfolios/staticmodel/xmulti": {
+      "post": {
+        "summary": "Static Models - Multiple",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/details"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with static models",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResultsList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Calculates the specified portfolios over the specifed rebalance period",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "description": "",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/components/schemas/FTStaticModel"
+                }
+              },
+              "examples": {
+                "Multi Static Model Example": {
+                  "value": [
+                    {
+                      "model": [
+                        {
+                          "ticker": "SPY",
+                          "weight": "50"
+                        },
+                        {
+                          "ticker": "TLT",
+                          "weight": "50"
+                        }
+                      ],
+                      "start": "12/31/2000",
+                      "rebalanceperiod": "quarter",
+                      "name": "50 50 Static Model"
+                    },
+                    {
+                      "model": [
+                        {
+                          "ticker": "SPY",
+                          "weight": "60"
+                        },
+                        {
+                          "ticker": "TLT",
+                          "weight": "40"
+                        }
+                      ],
+                      "start": "12/31/2000",
+                      "rebalanceperiod": "month",
+                      "name": "60 40 Static Model"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "description": "Array of FTStaticModel Parameters"
+        },
+        "operationId": "staticmulti",
+        "tags": [
+          "Portfolio Modeling"
+        ]
+      }
+    },
+    "/v1/staticmodel/ref": {
+      "post": {
+        "summary": "Static Model - Reference Data",
+        "operationId": "post-v1-staticmodel-ref",
+        "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticmodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
+        "tags": [
+          "Portfolio Modeling"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": []
+      }
+    },
+    "/v1/portfolios/dynamicmodel": {
+      "post": {
+        "summary": "Dynamic Model",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/details"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                },
+                "examples": {}
+              }
+            }
+          }
+        },
+        "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "marginrate": {
+                    "type": "string",
+                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
+                    "example": "0.03"
+                  },
+                  "models": {
+                    "type": "array",
+                    "uniqueItems": false,
+                    "description": "Array of FTStaticModelParameters that define the dynamic model",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "model": {
+                          "type": "array",
+                          "uniqueItems": false,
+                          "description": "List of FTPositions that define the positions on \"start\"",
+                          "items": {
+                            "$ref": "#/components/schemas/FTPosition"
+                          }
+                        },
+                        "start": {
+                          "type": "string",
+                          "description": "day to rebalance to positions",
+                          "example": "2001-01-11"
+                        }
+                      }
+                    }
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of model",
+                    "example": "Example Dynamic Model"
+                  },
+                  "seedvalue": {
+                    "type": "string",
+                    "description": "value of portfolio on the first day of trading",
+                    "example": "1000"
+                  },
+                  "ticker": {
+                    "type": "string",
+                    "description": "ticker to use in the response",
+                    "example": "$XX"
+                  },
+                  "rebalanceperiod": {
+                    "type": "string",
+                    "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
+                    "enum": [
+                      "week",
+                      "month",
+                      "quarter",
+                      "annual",
+                      "number of market days"
+                    ]
+                  }
+                }
+              },
+              "examples": {
+                "example-dynamic": {
+                  "value": {
+                    "marginrate": "0",
+                    "models": [
+                      {
+                        "start": "12/31/2020",
+                        "model": [
+                          {
+                            "ticker": "SPY",
+                            "weight": "50"
+                          },
+                          {
+                            "ticker": "TLT",
+                            "weight": "50"
+                          }
+                        ]
+                      }
+                    ],
+                    "name": "Example Model",
+                    "seedvalue": "1000",
+                    "ticker": "XX$$"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "dynamicmodel-post-v1-portfolios",
+        "tags": [
+          "Portfolio Modeling"
+        ]
+      }
+    },
+    "/v1/portfolios/momentummodel": {
+      "post": {
+        "summary": "Momentum Model",
+        "operationId": "post-portfolios-MomentumModel",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTModelResults"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTMomentumModelParameters"
+              },
+              "examples": {
+                "Banks Example": {
+                  "value": {
+                    "seedvalue": 1000,
+                    "rebalanceperiod": "quarter",
+                    "model": {
+                      "universe": [
+                        "JPM",
+                        "BAC",
+                        "GS",
+                        "MS"
+                      ],
+                      "number_holdings": "1",
+                      "basis": "SP-DA",
+                      "ranking_system": "return",
+                      "ranking_period": "quarter",
+                      "model": "momentum",
+                      "tradedelay": "1"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "x-internal": false,
+        "description": "",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "tags": [
+          "Portfolio Modeling"
+        ]
+      },
+      "parameters": []
+    },
     "/v1/data/{ticker}/unadjprices": {
       "get": {
         "summary": "Closing Prices - Unadjusted",
@@ -746,360 +1180,6 @@
         "description": "A \"family\" is a group of ticker symbols created by FastTrack. This function searches all FastTrack families by family name, family partial name, and family members (tickers).",
         "tags": [
           "Other Data"
-        ]
-      }
-    },
-    "/v1/portfolios/staticmodel": {
-      "post": {
-        "summary": "Calculate Static Model",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/basis"
-          },
-          {
-            "$ref": "#/components/parameters/len"
-          },
-          {
-            "$ref": "#/components/parameters/maxdraw"
-          },
-          {
-            "$ref": "#/components/parameters/chart"
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "$ref": "#/components/parameters/monthend"
-          },
-          {
-            "$ref": "#/components/parameters/riskfree"
-          },
-          {
-            "$ref": "#/components/parameters/details"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with static model",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTModelResults"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Calculates the specified portfolio over the specifed rebalance period",
-        "tags": [
-          "Portfolio Modeling"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FTStaticModel"
-              },
-              "examples": {
-                "Static Model Example": {
-                  "value": {
-                    "start": "2000-12-31",
-                    "rebalanceperiod": "month",
-                    "marginrate": 0,
-                    "seed": 100000,
-                    "model": [
-                      {
-                        "ticker": "SPY",
-                        "weight": "50"
-                      },
-                      {
-                        "ticker": "TLT",
-                        "weight": "50"
-                      }
-                    ],
-                    "name": "Example Model"
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
-        }
-      }
-    },
-    "/v1/portfolios/staticmodel/xmulti": {
-      "post": {
-        "summary": "Calculate Multiple Static Models",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/basis"
-          },
-          {
-            "$ref": "#/components/parameters/len"
-          },
-          {
-            "$ref": "#/components/parameters/details"
-          },
-          {
-            "$ref": "#/components/parameters/maxdraw"
-          },
-          {
-            "$ref": "#/components/parameters/chart"
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "$ref": "#/components/parameters/monthend"
-          },
-          {
-            "$ref": "#/components/parameters/riskfree"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with static models",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTModelResultsList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Calculates the specified portfolios over the specifed rebalance period",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "description": "",
-                "minItems": 1,
-                "uniqueItems": true,
-                "items": {
-                  "$ref": "#/components/schemas/FTStaticModel"
-                }
-              },
-              "examples": {
-                "Multi Static Model Example": {
-                  "value": [
-                    {
-                      "model": [
-                        {
-                          "ticker": "SPY",
-                          "weight": "50"
-                        },
-                        {
-                          "ticker": "TLT",
-                          "weight": "50"
-                        }
-                      ],
-                      "start": "12/31/2000",
-                      "rebalanceperiod": "quarter",
-                      "name": "50 50 Static Model"
-                    },
-                    {
-                      "model": [
-                        {
-                          "ticker": "SPY",
-                          "weight": "60"
-                        },
-                        {
-                          "ticker": "TLT",
-                          "weight": "40"
-                        }
-                      ],
-                      "start": "12/31/2000",
-                      "rebalanceperiod": "month",
-                      "name": "60 40 Static Model"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "description": "Array of FTStaticModel Parameters"
-        },
-        "operationId": "staticmulti",
-        "tags": [
-          "Portfolio Modeling"
-        ]
-      }
-    },
-    "/v1/portfolios/dynamicmodel": {
-      "post": {
-        "summary": "Dynamic Model",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "$ref": "#/components/parameters/maxdraw"
-          },
-          {
-            "$ref": "#/components/parameters/details"
-          },
-          {
-            "$ref": "#/components/parameters/chart"
-          },
-          {
-            "$ref": "#/components/parameters/basis"
-          },
-          {
-            "$ref": "#/components/parameters/len"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTModelResults"
-                },
-                "examples": {}
-              }
-            }
-          }
-        },
-        "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "description": "",
-                "type": "object",
-                "properties": {
-                  "marginrate": {
-                    "type": "string",
-                    "description": "annual percent interest on borrowed money. All interest is accrued quarterly.",
-                    "example": "0.03"
-                  },
-                  "models": {
-                    "type": "array",
-                    "uniqueItems": false,
-                    "description": "Array of FTStaticModelParameters that define the dynamic model",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "model": {
-                          "type": "array",
-                          "uniqueItems": false,
-                          "description": "List of FTPositions that define the positions on \"start\"",
-                          "items": {
-                            "$ref": "#/components/schemas/FTPosition"
-                          }
-                        },
-                        "start": {
-                          "type": "string",
-                          "description": "day to rebalance to positions",
-                          "example": "2001-01-11"
-                        }
-                      }
-                    }
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "name of model",
-                    "example": "Example Dynamic Model"
-                  },
-                  "seedvalue": {
-                    "type": "string",
-                    "description": "value of portfolio on the first day of trading",
-                    "example": "1000"
-                  },
-                  "ticker": {
-                    "type": "string",
-                    "description": "ticker to use in the response",
-                    "example": "$XX"
-                  },
-                  "rebalanceperiod": {
-                    "type": "string",
-                    "description": "Specify the rebalance frequency. This is how often the portfolio trades.",
-                    "enum": [
-                      "week",
-                      "month",
-                      "quarter",
-                      "annual",
-                      "number of market days"
-                    ]
-                  }
-                }
-              },
-              "examples": {
-                "example-dynamic": {
-                  "value": {
-                    "marginrate": "0",
-                    "models": [
-                      {
-                        "start": "12/31/2020",
-                        "model": [
-                          {
-                            "ticker": "SPY",
-                            "weight": "50"
-                          },
-                          {
-                            "ticker": "TLT",
-                            "weight": "50"
-                          }
-                        ]
-                      }
-                    ],
-                    "name": "Example Model",
-                    "seedvalue": "1000",
-                    "ticker": "XX$$"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "dynamicmodel-post-v1-portfolios",
-        "tags": [
-          "Portfolio Modeling"
         ]
       }
     },
@@ -1703,22 +1783,6 @@
       },
       "parameters": []
     },
-    "/v1/staticmodel/ref": {
-      "post": {
-        "summary": "Reference Data - Static Model",
-        "operationId": "post-v1-staticmodel-ref",
-        "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticmodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
-        "tags": [
-          "Portfolio Modeling"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        },
-        "security": []
-      }
-    },
     "/v1/precalc/winlose": {
       "get": {
         "summary": "Winners and Losers",
@@ -1775,70 +1839,6 @@
           {
             "$ref": "#/components/parameters/token"
           }
-        ]
-      },
-      "parameters": []
-    },
-    "/v1/portfolios/momentummodel": {
-      "post": {
-        "summary": "Momentum Model",
-        "operationId": "post-portfolios-MomentumModel",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTModelResults"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FTMomentumModelParameters"
-              },
-              "examples": {
-                "Banks Example": {
-                  "value": {
-                    "seedvalue": 1000,
-                    "rebalanceperiod": "quarter",
-                    "model": {
-                      "universe": [
-                        "JPM",
-                        "BAC",
-                        "GS",
-                        "MS"
-                      ],
-                      "number_holdings": "1",
-                      "basis": "SP-DA",
-                      "ranking_system": "return",
-                      "ranking_period": "quarter",
-                      "model": "momentum",
-                      "tradedelay": "1"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
-        },
-        "x-internal": false,
-        "description": "",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "tags": [
-          "Portfolio Modeling"
         ]
       },
       "parameters": []
