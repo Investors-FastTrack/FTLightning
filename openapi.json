@@ -119,7 +119,8 @@
         },
         "description": "Retrieve a single ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range",
         "tags": [
-          "2. Market Data"
+          "2. Market Data",
+          "xda"
         ]
       },
       "parameters": [
@@ -172,7 +173,8 @@
         "description": "Retrieve multiple ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range",
         "operationId": "",
         "tags": [
-          "2. Market Data"
+          "2. Market Data",
+          "yda"
         ],
         "requestBody": {
           "content": {
