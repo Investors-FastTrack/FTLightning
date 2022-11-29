@@ -866,6 +866,376 @@
       },
       "parameters": []
     },
+    "/v1/ref/{ticker}/details": {
+      "parameters": [
+        {
+          "name": "ticker",
+          "in": "path",
+          "description": "ticker symbol",
+          "style": "simple",
+          "explode": false,
+          "schema": {
+            "type": "string",
+            "example": "JPM"
+          },
+          "example": "JPM",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Ticker Details",
+        "tags": [
+          "Reference Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTInfoTicker"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-info-tickeR-details",
+        "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
+    },
+    "/v1/ref/{ticker}/portfolio": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ],
+      "get": {
+        "summary": "Portfolio Details",
+        "tags": [
+          "Reference Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTInfoPortfolio"
+                },
+                "examples": {}
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "operationId": "get-info-ticker-portfolio",
+        "description": "Get mutual fund or ETF's top ten positions, sector weighting, and net 1 year flows \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "MAX",
+                "0",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "topcount",
+            "description": "Include with value of \"MAX\" to return all known positions (usually top 25 positions)"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
+    },
+    "/v1/ref/xmulti/details": {
+      "post": {
+        "summary": "Ticker Details - Multiple",
+        "operationId": "post-v1-ref-xmulti-detail",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTInfoTickerList"
+                }
+              }
+            }
+          }
+        },
+        "description": "Get details data about multiple tickers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            },
+            "application/xml": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        },
+        "tags": [
+          "Reference Data"
+        ]
+      }
+    },
+    "/v1/ref/staticmodel": {
+      "post": {
+        "summary": "Static Model Details",
+        "operationId": "post-v1-portfolios-staticmodel-ref",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "portfolio": {
+                      "$ref": "#/components/schemas/FTInfoPortfolio"
+                    },
+                    "positiondata": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FTInfoPortfolio"
+                      }
+                    },
+                    "total": {
+                      "type": "string"
+                    },
+                    "model": {
+                      "$ref": "#/components/schemas/FTStaticModel"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "returns reference data for portfolio and portfolio positions ",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTStaticModel"
+              },
+              "examples": {
+                "Static Model Example": {
+                  "value": {
+                    "start": "2000-12-31",
+                    "rebalanceperiod": "month",
+                    "marginrate": 0,
+                    "seed": 100000,
+                    "model": [
+                      {
+                        "ticker": "SPY",
+                        "weight": "50"
+                      },
+                      {
+                        "ticker": "TLT",
+                        "weight": "50"
+                      }
+                    ],
+                    "name": "Example Model"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "Reference Data"
+        ]
+      },
+      "parameters": []
+    },
+    "/v1/ref/{ticker}/shareclasses": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ],
+      "get": {
+        "summary": "Share Classes",
+        "tags": [
+          "Reference Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "ticker": "MDISX",
+                      "datalist": [
+                        {
+                          "expense_ratio": "0.92",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000000",
+                          "shareclass": "Retirement",
+                          "ticker": "FMDRX"
+                        },
+                        {
+                          "expense_ratio": "1.03",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "100000",
+                          "shareclass": "Inst",
+                          "ticker": "MDISX"
+                        },
+                        {
+                          "expense_ratio": "1.28",
+                          "expense_12b": "0.25",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "A",
+                          "ticker": "TEDIX"
+                        },
+                        {
+                          "expense_ratio": "1.53",
+                          "expense_12b": "0.5",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "Retirement",
+                          "ticker": "TEDRX"
+                        },
+                        {
+                          "expense_ratio": "2.03",
+                          "expense_12b": "1",
+                          "expense_deferred": "1",
+                          "initial_purchase": "1000",
+                          "shareclass": "C",
+                          "ticker": "TEDSX"
+                        }
+                      ]
+                    }
+                  },
+                  "properties": {
+                    "ticker": {
+                      "type": "string",
+                      "description": "requested ticker"
+                    },
+                    "datalist": {
+                      "type": "array",
+                      "uniqueItems": false,
+                      "items": {
+                        "$ref": "#/components/schemas/FTFees"
+                      }
+                    }
+                  },
+                  "required": [
+                    "ticker",
+                    "datalist"
+                  ]
+                },
+                "examples": {
+                  "Example": {
+                    "value": {
+                      "ticker": "MDISX",
+                      "datalist": [
+                        {
+                          "expense_ratio": "0.92",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000000",
+                          "shareclass": "Retirement",
+                          "ticker": "FMDRX"
+                        },
+                        {
+                          "expense_ratio": "1.03",
+                          "expense_12b": "",
+                          "expense_deferred": "0",
+                          "initial_purchase": "100000",
+                          "shareclass": "Inst",
+                          "ticker": "MDISX"
+                        },
+                        {
+                          "expense_ratio": "1.28",
+                          "expense_12b": "0.25",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "A",
+                          "ticker": "TEDIX"
+                        },
+                        {
+                          "expense_ratio": "1.53",
+                          "expense_12b": "0.5",
+                          "expense_deferred": "0",
+                          "initial_purchase": "1000",
+                          "shareclass": "Retirement",
+                          "ticker": "TEDRX"
+                        },
+                        {
+                          "expense_ratio": "2.03",
+                          "expense_12b": "1",
+                          "expense_deferred": "1",
+                          "initial_purchase": "1000",
+                          "shareclass": "C",
+                          "ticker": "TEDSX"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-ref-ticker-shareclasses",
+        "description": "Retrieve information about all other share classes of security",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
+    },
     "/v1/data/{ticker}/unadjprices": {
       "get": {
         "summary": "Closing Prices - Unadjusted",
@@ -1496,103 +1866,6 @@
       },
       "parameters": []
     },
-    "/v1/ref/{ticker}/details": {
-      "parameters": [
-        {
-          "name": "ticker",
-          "in": "path",
-          "description": "ticker symbol",
-          "style": "simple",
-          "explode": false,
-          "schema": {
-            "type": "string",
-            "example": "JPM"
-          },
-          "example": "JPM",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Ticker Details",
-        "tags": [
-          "8. Reference Data"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTInfoTicker"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-info-tickeR-details",
-        "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ]
-      }
-    },
-    "/v1/ref/{ticker}/portfolio": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/ticker"
-        }
-      ],
-      "get": {
-        "summary": "Portfolio Details",
-        "tags": [
-          "8. Reference Data"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTInfoPortfolio"
-                },
-                "examples": {}
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        },
-        "operationId": "get-info-ticker-portfolio",
-        "description": "Get mutual fund or ETF's top ten positions, sector weighting, and net 1 year flows \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "MAX",
-                "0",
-                "false"
-              ]
-            },
-            "in": "query",
-            "name": "topcount",
-            "description": "Include with value of \"MAX\" to return all known positions (usually top 25 positions)"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ]
-      }
-    },
     "/v1/search": {
       "get": {
         "parameters": [
@@ -1703,85 +1976,6 @@
         ],
         "summary": "Search Database"
       }
-    },
-    "/v1/ref/staticmodel": {
-      "post": {
-        "summary": "Static Model Details",
-        "operationId": "post-v1-portfolios-staticmodel-ref",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "portfolio": {
-                      "$ref": "#/components/schemas/FTInfoPortfolio"
-                    },
-                    "positiondata": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/FTInfoPortfolio"
-                      }
-                    },
-                    "total": {
-                      "type": "string"
-                    },
-                    "model": {
-                      "$ref": "#/components/schemas/FTStaticModel"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "returns reference data for portfolio and portfolio positions ",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FTStaticModel"
-              },
-              "examples": {
-                "Static Model Example": {
-                  "value": {
-                    "start": "2000-12-31",
-                    "rebalanceperiod": "month",
-                    "marginrate": 0,
-                    "seed": 100000,
-                    "model": [
-                      {
-                        "ticker": "SPY",
-                        "weight": "50"
-                      },
-                      {
-                        "ticker": "TLT",
-                        "weight": "50"
-                      }
-                    ],
-                    "name": "Example Model"
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
-        },
-        "tags": [
-          "8. Reference Data"
-        ]
-      },
-      "parameters": []
     },
     "/v1/precalc/winlose": {
       "get": {
@@ -2903,200 +3097,6 @@
           }
         ],
         "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
-      }
-    },
-    "/v1/ref/{ticker}/shareclasses": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/ticker"
-        }
-      ],
-      "get": {
-        "summary": "Share Classes",
-        "tags": [
-          "8. Reference Data"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "x-examples": {
-                    "example-1": {
-                      "ticker": "MDISX",
-                      "datalist": [
-                        {
-                          "expense_ratio": "0.92",
-                          "expense_12b": "",
-                          "expense_deferred": "0",
-                          "initial_purchase": "1000000",
-                          "shareclass": "Retirement",
-                          "ticker": "FMDRX"
-                        },
-                        {
-                          "expense_ratio": "1.03",
-                          "expense_12b": "",
-                          "expense_deferred": "0",
-                          "initial_purchase": "100000",
-                          "shareclass": "Inst",
-                          "ticker": "MDISX"
-                        },
-                        {
-                          "expense_ratio": "1.28",
-                          "expense_12b": "0.25",
-                          "expense_deferred": "0",
-                          "initial_purchase": "1000",
-                          "shareclass": "A",
-                          "ticker": "TEDIX"
-                        },
-                        {
-                          "expense_ratio": "1.53",
-                          "expense_12b": "0.5",
-                          "expense_deferred": "0",
-                          "initial_purchase": "1000",
-                          "shareclass": "Retirement",
-                          "ticker": "TEDRX"
-                        },
-                        {
-                          "expense_ratio": "2.03",
-                          "expense_12b": "1",
-                          "expense_deferred": "1",
-                          "initial_purchase": "1000",
-                          "shareclass": "C",
-                          "ticker": "TEDSX"
-                        }
-                      ]
-                    }
-                  },
-                  "properties": {
-                    "ticker": {
-                      "type": "string",
-                      "description": "requested ticker"
-                    },
-                    "datalist": {
-                      "type": "array",
-                      "uniqueItems": false,
-                      "items": {
-                        "$ref": "#/components/schemas/FTFees"
-                      }
-                    }
-                  },
-                  "required": [
-                    "ticker",
-                    "datalist"
-                  ]
-                },
-                "examples": {
-                  "Example": {
-                    "value": {
-                      "ticker": "MDISX",
-                      "datalist": [
-                        {
-                          "expense_ratio": "0.92",
-                          "expense_12b": "",
-                          "expense_deferred": "0",
-                          "initial_purchase": "1000000",
-                          "shareclass": "Retirement",
-                          "ticker": "FMDRX"
-                        },
-                        {
-                          "expense_ratio": "1.03",
-                          "expense_12b": "",
-                          "expense_deferred": "0",
-                          "initial_purchase": "100000",
-                          "shareclass": "Inst",
-                          "ticker": "MDISX"
-                        },
-                        {
-                          "expense_ratio": "1.28",
-                          "expense_12b": "0.25",
-                          "expense_deferred": "0",
-                          "initial_purchase": "1000",
-                          "shareclass": "A",
-                          "ticker": "TEDIX"
-                        },
-                        {
-                          "expense_ratio": "1.53",
-                          "expense_12b": "0.5",
-                          "expense_deferred": "0",
-                          "initial_purchase": "1000",
-                          "shareclass": "Retirement",
-                          "ticker": "TEDRX"
-                        },
-                        {
-                          "expense_ratio": "2.03",
-                          "expense_12b": "1",
-                          "expense_deferred": "1",
-                          "initial_purchase": "1000",
-                          "shareclass": "C",
-                          "ticker": "TEDSX"
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-ref-ticker-shareclasses",
-        "description": "Retrieve information about all other share classes of security",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ]
-      }
-    },
-    "/v1/ref/xmulti/details": {
-      "post": {
-        "summary": "Ticker Details - Multiple",
-        "operationId": "post-v1-ref-xmulti-detail",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTInfoTickerList"
-                }
-              }
-            }
-          }
-        },
-        "description": "Get details data about multiple tickers",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TickerArray"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "type": "object",
-                "properties": {}
-              }
-            }
-          }
-        },
-        "tags": [
-          "8. Reference Data"
-        ]
       }
     },
     "/v1/family/screener": {
@@ -7205,6 +7205,9 @@
       "name": "Portfolio Modeling"
     },
     {
+      "name": "Reference Data"
+    },
+    {
       "name": "2.2. Bond Data"
     },
     {
@@ -7218,9 +7221,6 @@
     },
     {
       "name": "7. iFrame Chart"
-    },
-    {
-      "name": "8. Reference Data"
     },
     {
       "name": "9. Search"
