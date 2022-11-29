@@ -873,7 +873,7 @@
         }
       ],
       "get": {
-        "summary": "Portfolio Details",
+        "summary": "Portfolio",
         "tags": [
           "Reference Data"
         ],
@@ -935,7 +935,7 @@
         }
       ],
       "get": {
-        "summary": "Ticker Details",
+        "summary": "Details",
         "tags": [
           "Reference Data"
         ],
@@ -965,7 +965,7 @@
     },
     "/v1/ref/xmulti/details": {
       "post": {
-        "summary": "Ticker Details - Multiple",
+        "summary": "Details - Multiple",
         "operationId": "post-v1-ref-xmulti-detail",
         "responses": {
           "200": {
@@ -1010,7 +1010,7 @@
     },
     "/v1/ref/staticmodel": {
       "post": {
-        "summary": "Static Model Details",
+        "summary": "Details - Static Model",
         "operationId": "post-v1-portfolios-staticmodel-ref",
         "responses": {
           "200": {
