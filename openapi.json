@@ -185,6 +185,159 @@
         }
       }
     },
+    "/v1/stats/xmulti": {
+      "post": {
+        "summary": "Multiple Tickers",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/ma"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTStatsList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns calulated statistics on multiple ticker over the date range",
+        "tags": [
+          "Statistics & Returns"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/stats/{ticker}": {
+      "get": {
+        "summary": "One Ticker",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/ma"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTStats"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns calulated statistics on a single ticker over the date range",
+        "tags": [
+          "Statistics & Returns"
+        ]
+      },
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ]
+    },
     "/v1/data/{ticker}": {
       "get": {
         "summary": "OHLCV Data",
@@ -274,41 +427,6 @@
           }
         },
         "description": "Returns all data for the entire data range of multiple tickers. Entire date range is 9/1/1988 to the most recent market day.\n",
-        "tags": [
-          "11. Bulk Data"
-        ]
-      }
-    },
-    "/v1/data/{ticker}/divadjprices": {
-      "get": {
-        "summary": "Closing Prices - Adjusted",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
         "tags": [
           "11. Bulk Data"
         ]
@@ -462,6 +580,41 @@
       },
       "parameters": []
     },
+    "/v1/data/{ticker}/divadjprices": {
+      "get": {
+        "summary": "Closing Prices - Adjusted",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
+        "tags": [
+          "11. Bulk Data"
+        ]
+      }
+    },
     "/v1/data/dates": {
       "get": {
         "summary": "All Dates",
@@ -594,159 +747,6 @@
         "tags": [
           "Other Data"
         ]
-      }
-    },
-    "/v1/stats/{ticker}": {
-      "get": {
-        "summary": "One Ticker",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/basis"
-          },
-          {
-            "$ref": "#/components/parameters/len"
-          },
-          {
-            "$ref": "#/components/parameters/maxdraw"
-          },
-          {
-            "$ref": "#/components/parameters/chart"
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "$ref": "#/components/parameters/monthend"
-          },
-          {
-            "$ref": "#/components/parameters/riskfree"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          },
-          {
-            "$ref": "#/components/parameters/ma"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTStats"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns calulated statistics on a single ticker over the date range",
-        "tags": [
-          "3. Stats"
-        ]
-      },
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/ticker"
-        }
-      ]
-    },
-    "/v1/stats/xmulti": {
-      "post": {
-        "summary": "Multiple Tickers",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/basis"
-          },
-          {
-            "$ref": "#/components/parameters/len"
-          },
-          {
-            "$ref": "#/components/parameters/maxdraw"
-          },
-          {
-            "$ref": "#/components/parameters/chart"
-          },
-          {
-            "$ref": "#/components/parameters/count"
-          },
-          {
-            "$ref": "#/components/parameters/monthend"
-          },
-          {
-            "$ref": "#/components/parameters/riskfree"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          },
-          {
-            "$ref": "#/components/parameters/ma"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTStatsList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns calulated statistics on multiple ticker over the date range",
-        "tags": [
-          "3. Stats"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TickerArray"
-              }
-            }
-          }
-        }
       }
     },
     "/v1/portfolios/staticmodel": {
@@ -7202,7 +7202,7 @@
       "name": "2.2. Bond Data"
     },
     {
-      "name": "3. Stats"
+      "name": "Statistics & Returns"
     },
     {
       "name": "3.1. Bulk Stats"
