@@ -807,7 +807,7 @@
         },
         "description": "Calculates the specified portfolio over the specifed rebalance period",
         "tags": [
-          "4. Portfolio Modeling"
+          "Portfolio Modeling"
         ],
         "requestBody": {
           "content": {
@@ -953,7 +953,7 @@
         },
         "operationId": "staticmulti",
         "tags": [
-          "4. Portfolio Modeling"
+          "Portfolio Modeling"
         ]
       }
     },
@@ -1099,7 +1099,7 @@
         },
         "operationId": "dynamicmodel-post-v1-portfolios",
         "tags": [
-          "4.1 Dynamic Modeling"
+          "Portfolio Modeling"
         ]
       }
     },
@@ -1709,7 +1709,7 @@
         "operationId": "post-v1-staticmodel-ref",
         "description": "Returns reference data for portfolio and portfolio positions\n\nUSE:\nJump to [v1/staticmodel/ref](https://fasttrack.stoplight.io/docs/ftlightning/openapi.json/paths/~1v1~1ref~1staticmodel/post)",
         "tags": [
-          "4. Portfolio Modeling"
+          "Portfolio Modeling"
         ],
         "responses": {
           "200": {
@@ -1827,9 +1827,6 @@
           },
           "description": ""
         },
-        "tags": [
-          "4.2 Momentum Modeling"
-        ],
         "x-internal": false,
         "description": "",
         "parameters": [
@@ -1839,6 +1836,9 @@
           {
             "$ref": "#/components/parameters/token"
           }
+        ],
+        "tags": [
+          "Portfolio Modeling"
         ]
       },
       "parameters": []
@@ -7199,22 +7199,16 @@
       "name": "Market Data"
     },
     {
-      "name": "2.2. Bond Data"
+      "name": "Statistics & Returns"
     },
     {
-      "name": "Statistics & Returns"
+      "name": "2.2. Bond Data"
     },
     {
       "name": "3.1. Bulk Stats"
     },
     {
-      "name": "4. Portfolio Modeling"
-    },
-    {
-      "name": "4.1 Dynamic Modeling"
-    },
-    {
-      "name": "4.2 Momentum Modeling"
+      "name": "Portfolio Modeling"
     },
     {
       "name": "5. Dividends"
