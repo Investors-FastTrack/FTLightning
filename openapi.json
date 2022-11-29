@@ -69,7 +69,7 @@
         },
         "description": "Server authentication. The returned token must be passed as a header with all other API calls",
         "tags": [
-          "1. Auth"
+          "Authentication"
         ]
       }
     },
@@ -7193,7 +7193,7 @@
   },
   "tags": [
     {
-      "name": "1. Auth"
+      "name": "Authentication"
     },
     {
       "name": "2. Market Data"
