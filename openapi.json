@@ -866,51 +866,6 @@
       },
       "parameters": []
     },
-    "/v1/ref/{ticker}/details": {
-      "parameters": [
-        {
-          "name": "ticker",
-          "in": "path",
-          "description": "ticker symbol",
-          "style": "simple",
-          "explode": false,
-          "schema": {
-            "type": "string",
-            "example": "JPM"
-          },
-          "example": "JPM",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Ticker Details",
-        "tags": [
-          "Reference Data"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTInfoTicker"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-info-tickeR-details",
-        "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ]
-      }
-    },
     "/v1/ref/{ticker}/portfolio": {
       "parameters": [
         {
@@ -954,6 +909,51 @@
             "name": "topcount",
             "description": "Include with value of \"MAX\" to return all known positions (usually top 25 positions)"
           },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
+    },
+    "/v1/ref/{ticker}/details": {
+      "parameters": [
+        {
+          "name": "ticker",
+          "in": "path",
+          "description": "ticker symbol",
+          "style": "simple",
+          "explode": false,
+          "schema": {
+            "type": "string",
+            "example": "JPM"
+          },
+          "example": "JPM",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Ticker Details",
+        "tags": [
+          "Reference Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTInfoTicker"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-info-tickeR-details",
+        "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "parameters": [
           {
             "$ref": "#/components/parameters/appid"
           },
