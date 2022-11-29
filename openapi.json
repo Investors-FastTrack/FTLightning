@@ -2298,6 +2298,330 @@
         ]
       }
     },
+    "/v1/bonds/{cusip}/description": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "cusip",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Bond Description",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTBondDescription"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-bonds-cusip-desciption",
+        "description": "Description of requested cusip ",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "tags": [
+          "Other Data"
+        ]
+      }
+    },
+    "/v1/bonds/xmulti/description": {
+      "parameters": [],
+      "post": {
+        "summary": "Bond Descriptions",
+        "operationId": "post-v1-bonds-xmulti-description",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "datalist": {
+                      "type": "array",
+                      "description": "Array of bond description objects",
+                      "items": {
+                        "$ref": "#/components/schemas/FTBondDescription"
+                      }
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CUSIPArray"
+              }
+            }
+          },
+          "description": ""
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "tags": [
+          "Bond Data"
+        ]
+      }
+    },
+    "/v1/bonds/xmulti/data": {
+      "post": {
+        "summary": "Bond Pricing & Data",
+        "operationId": "post-v1-bonds-xmulti-prices",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "datalist": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "Array of bond price lists",
+                        "properties": {
+                          "cusip": {
+                            "type": "string",
+                            "description": "cusip of security"
+                          },
+                          "prices": {
+                            "type": "array",
+                            "description": "Array of prices and data points for requested dates ",
+                            "items": {
+                              "$ref": "#/components/schemas/FTBondPrice"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Retrieve bond prices for more than one cusip over a specific date range",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CUSIPArray"
+              }
+            }
+          }
+        },
+        "tags": [
+          "Bond Data"
+        ]
+      },
+      "parameters": []
+    },
+    "/beta/bonds/filter/columns/{filter_object}": {
+      "get": {
+        "summary": "Filter Enum Options",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Array of all available options for filter object.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-beta-bonds-filter-columns",
+        "description": "Available enum values for the various filter objects.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "tags": [
+          "Bond Data"
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asset_type",
+              "collateral",
+              "issuer_type",
+              "country",
+              "issuer_type_primary",
+              "currency",
+              "security_type",
+              "naics",
+              "issue_status"
+            ]
+          },
+          "name": "filter_object",
+          "in": "path",
+          "description": "Name of filter object options to retrieve",
+          "required": true
+        }
+      ]
+    },
+    "/beta/bonds/filter": {
+      "post": {
+        "summary": "Bond Filter",
+        "operationId": "post-v1-bonds-filter",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTBondFilterResults"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FTBondFilterRequest"
+              },
+              "examples": {
+                "AAA Filter": {
+                  "value": {
+                    "date": 20220101,
+                    "timetomaturity": {
+                      "min": 0,
+                      "max": 100
+                    },
+                    "coupon": {
+                      "min": 0,
+                      "max": 2
+                    },
+                    "putable": false,
+                    "callable": false,
+                    "countries": [
+                      "United States"
+                    ],
+                    "collateral": [
+                      "Debenture"
+                    ],
+                    "asset_type": [
+                      "U.S. Treasury/U.S. Government Agency"
+                    ],
+                    "security_type": [
+                      "Debt Issue"
+                    ],
+                    "currency": [
+                      "United States dollar"
+                    ],
+                    "issuer_type": [
+                      "U.S. government or agency"
+                    ],
+                    "issuer_type_primary": [
+                      "National Government"
+                    ],
+                    "ratings": {
+                      "moodys": {
+                        "min": "Aaa",
+                        "max": null
+                      },
+                      "sp": null
+                    },
+                    "naics": [
+                      "92"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
+        },
+        "description": "Filter all bonds based on requested criteria. Maximum of 2500 data points will be returned.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1",
+                "0",
+                "null"
+              ],
+              "example": "1",
+              "default": "null"
+            },
+            "in": "query",
+            "name": "summary",
+            "description": "Flag to include summary data and values of spreads and yield values.",
+            "allowEmptyValue": true
+          }
+        ],
+        "tags": [
+          "Bond Data"
+        ]
+      },
+      "parameters": []
+    },
     "/v1/data/{ticker}/unadjprices": {
       "get": {
         "summary": "Closing Prices - Unadjusted",
@@ -3415,170 +3739,6 @@
         ]
       }
     },
-    "/v1/bonds/{cusip}/description": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "cusip",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Bond Description",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTBondDescription"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-bonds-cusip-desciption",
-        "description": "Description of requested cusip ",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "tags": [
-          "Other Data",
-          "abc"
-        ]
-      }
-    },
-    "/v1/bonds/xmulti/description": {
-      "parameters": [],
-      "post": {
-        "summary": "Bond Descriptions",
-        "operationId": "post-v1-bonds-xmulti-description",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "datalist": {
-                      "type": "array",
-                      "description": "Array of bond description objects",
-                      "items": {
-                        "$ref": "#/components/schemas/FTBondDescription"
-                      }
-                    },
-                    "err": {
-                      "$ref": "#/components/schemas/err"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CUSIPArray"
-              }
-            }
-          },
-          "description": ""
-        },
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "tags": [
-          "2.2. Bond Data"
-        ]
-      }
-    },
-    "/v1/bonds/xmulti/data": {
-      "post": {
-        "summary": "Bond Pricing & Data",
-        "operationId": "post-v1-bonds-xmulti-prices",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "datalist": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "description": "Array of bond price lists",
-                        "properties": {
-                          "cusip": {
-                            "type": "string",
-                            "description": "cusip of security"
-                          },
-                          "prices": {
-                            "type": "array",
-                            "description": "Array of prices and data points for requested dates ",
-                            "items": {
-                              "$ref": "#/components/schemas/FTBondPrice"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "err": {
-                      "$ref": "#/components/schemas/err"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "description": "Retrieve bond prices for more than one cusip over a specific date range",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          },
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CUSIPArray"
-              }
-            }
-          }
-        },
-        "tags": [
-          "2.2. Bond Data"
-        ]
-      },
-      "parameters": []
-    },
     "/v1/usage/bonds": {
       "parameters": [],
       "get": {
@@ -3991,167 +4151,6 @@
           "13. Beta Endpoints"
         ]
       }
-    },
-    "/beta/bonds/filter": {
-      "post": {
-        "summary": "Bond Filter",
-        "operationId": "post-v1-bonds-filter",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTBondFilterResults"
-                }
-              }
-            }
-          }
-        },
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/FTBondFilterRequest"
-              },
-              "examples": {
-                "AAA Filter": {
-                  "value": {
-                    "date": 20220101,
-                    "timetomaturity": {
-                      "min": 0,
-                      "max": 100
-                    },
-                    "coupon": {
-                      "min": 0,
-                      "max": 2
-                    },
-                    "putable": false,
-                    "callable": false,
-                    "countries": [
-                      "United States"
-                    ],
-                    "collateral": [
-                      "Debenture"
-                    ],
-                    "asset_type": [
-                      "U.S. Treasury/U.S. Government Agency"
-                    ],
-                    "security_type": [
-                      "Debt Issue"
-                    ],
-                    "currency": [
-                      "United States dollar"
-                    ],
-                    "issuer_type": [
-                      "U.S. government or agency"
-                    ],
-                    "issuer_type_primary": [
-                      "National Government"
-                    ],
-                    "ratings": {
-                      "moodys": {
-                        "min": "Aaa",
-                        "max": null
-                      },
-                      "sp": null
-                    },
-                    "naics": [
-                      "92"
-                    ]
-                  }
-                }
-              }
-            }
-          },
-          "description": ""
-        },
-        "description": "Filter all bonds based on requested criteria. Maximum of 2500 data points will be returned.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "1",
-                "0",
-                "null"
-              ],
-              "example": "1",
-              "default": "null"
-            },
-            "in": "query",
-            "name": "summary",
-            "description": "Flag to include summary data and values of spreads and yield values.",
-            "allowEmptyValue": true
-          }
-        ],
-        "tags": [
-          "2.2. Bond Data"
-        ]
-      },
-      "parameters": []
-    },
-    "/beta/bonds/filter/columns/{filter_object}": {
-      "get": {
-        "summary": "Filter Enum Options",
-        "tags": [
-          "2.2. Bond Data"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "description": "Array of all available options for filter object.",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-beta-bonds-filter-columns",
-        "description": "Available enum values for the various filter objects.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ]
-      },
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "enum": [
-              "asset_type",
-              "collateral",
-              "issuer_type",
-              "country",
-              "issuer_type_primary",
-              "currency",
-              "security_type",
-              "naics",
-              "issue_status"
-            ]
-          },
-          "name": "filter_object",
-          "in": "path",
-          "description": "Name of filter object options to retrieve",
-          "required": true
-        }
-      ]
     }
   },
   "components": {
@@ -7208,7 +7207,7 @@
       "name": "Reference Data"
     },
     {
-      "name": "2.2. Bond Data"
+      "name": "Bond Data"
     },
     {
       "name": "3.1. Bulk Stats"
