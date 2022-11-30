@@ -3018,9 +3018,6 @@
           }
         },
         "description": "Returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
-        "tags": [
-          "Other"
-        ],
         "security": []
       },
       "parameters": [
@@ -3066,7 +3063,7 @@
           }
         ],
         "tags": [
-          "Other Data"
+          "Other"
         ]
       }
     },
@@ -3145,7 +3142,7 @@
           }
         ],
         "tags": [
-          "Other Data"
+          "Other"
         ]
       }
     },
@@ -3256,7 +3253,7 @@
         "description": "Search the fasttrack database accross ticker, name, and cusip",
         "summary": "Search Database",
         "tags": [
-          "Other Data"
+          "Other"
         ]
       }
     },
