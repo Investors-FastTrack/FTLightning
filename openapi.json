@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "FastTrack Market Data API",
+    "title": "Funds, ETFs, Stocks, Indexes API",
     "description": "FastTrack Market Data API provides REST access to FastTrack investment data for our 30k+ funds, ETFs, stocks, and indexes. The data includes dividend adjusted closing prices back to 1988, derived statistics and portfolio models. \n\nVisit https://apitrial.fasttrack.net for a trial account. \n\nSearch the FastTrack database here: https://ftcloud.fasttrack.net/web/search\n",
     "contact": {
       "email": "api@fasttrack.net",
