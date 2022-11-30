@@ -3029,47 +3029,6 @@
         }
       ]
     },
-    "/v1/data/{ticker}/dividends": {
-      "parameters": [
-        {
-          "$ref": "#/components/parameters/ticker"
-        }
-      ],
-      "get": {
-        "summary": "Dividends",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTDividends"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-data-ticker-dividends",
-        "description": "Retrieve all dividends for a specific ticker",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "tags": [
-          "Other"
-        ]
-      }
-    },
     "/v1/export/xmulti/{TickerList}": {
       "parameters": [
         {
@@ -3142,6 +3101,47 @@
             "in": "query",
             "name": "format",
             "description": "Return CSV or JSON format. CSV is default result."
+          }
+        ],
+        "tags": [
+          "Other"
+        ]
+      }
+    },
+    "/v1/data/{ticker}/dividends": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ],
+      "get": {
+        "summary": "Dividends",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDividends"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-data-ticker-dividends",
+        "description": "Retrieve all dividends for a specific ticker",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
           }
         ],
         "tags": [
@@ -3821,6 +3821,88 @@
         ]
       }
     },
+    "/v1/status": {
+      "get": {
+        "summary": "Data Update Status",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "example-1": {
+                      "update_status": {
+                        "last_update": "8/9/2022 7:22:40 AM",
+                        "signature": "8E661695E64D5DE9942F2DE65494B856",
+                        "maxnumdays": {
+                          "strdate": "8/8/2022",
+                          "marketdate": "8550"
+                        }
+                      },
+                      "request": {
+                        "time": "1660048850432",
+                        "id": "93dd1330-58bd-43a6-98fa-67aeb24be2bb"
+                      }
+                    }
+                  },
+                  "properties": {
+                    "update_status": {
+                      "type": "object",
+                      "description": "Details about latest database update",
+                      "properties": {
+                        "last_update": {
+                          "type": "string",
+                          "description": "Date database was last updated in Eastern Time Zone"
+                        },
+                        "signature": {
+                          "type": "string",
+                          "description": "Unique ID for current update. Each update is issued a new, unique ID."
+                        },
+                        "maxnumdays": {
+                          "description": "Last avaialble date in the database",
+                          "type": "object",
+                          "properties": {
+                            "strdate": {
+                              "type": "string",
+                              "description": "MM/dd/yyyy"
+                            },
+                            "marketdate": {
+                              "type": "string",
+                              "description": "Numner of days since 9/1/88 (first day in the FastTrack database)"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "request": {
+                      "type": "object",
+                      "description": "Information about recent request",
+                      "properties": {
+                        "time": {
+                          "type": "string",
+                          "description": "Time requested EPOC"
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "ID of request"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-status",
+        "description": "Returns information about FastTrack's data status. Use this endpoint to check when latest updates are avaialble.",
+        "tags": [
+          "Status"
+        ]
+      }
+    },
     "/v1/usage/bonds": {
       "parameters": [],
       "get": {
@@ -3979,88 +4061,6 @@
           }
         ],
         "description": "Total number of cusips used in a month",
-        "tags": [
-          "Status"
-        ]
-      }
-    },
-    "/v1/status": {
-      "get": {
-        "summary": "Data Update Status",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "x-examples": {
-                    "example-1": {
-                      "update_status": {
-                        "last_update": "8/9/2022 7:22:40 AM",
-                        "signature": "8E661695E64D5DE9942F2DE65494B856",
-                        "maxnumdays": {
-                          "strdate": "8/8/2022",
-                          "marketdate": "8550"
-                        }
-                      },
-                      "request": {
-                        "time": "1660048850432",
-                        "id": "93dd1330-58bd-43a6-98fa-67aeb24be2bb"
-                      }
-                    }
-                  },
-                  "properties": {
-                    "update_status": {
-                      "type": "object",
-                      "description": "Details about latest database update",
-                      "properties": {
-                        "last_update": {
-                          "type": "string",
-                          "description": "Date database was last updated in Eastern Time Zone"
-                        },
-                        "signature": {
-                          "type": "string",
-                          "description": "Unique ID for current update. Each update is issued a new, unique ID."
-                        },
-                        "maxnumdays": {
-                          "description": "Last avaialble date in the database",
-                          "type": "object",
-                          "properties": {
-                            "strdate": {
-                              "type": "string",
-                              "description": "MM/dd/yyyy"
-                            },
-                            "marketdate": {
-                              "type": "string",
-                              "description": "Numner of days since 9/1/88 (first day in the FastTrack database)"
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "request": {
-                      "type": "object",
-                      "description": "Information about recent request",
-                      "properties": {
-                        "time": {
-                          "type": "string",
-                          "description": "Time requested EPOC"
-                        },
-                        "id": {
-                          "type": "string",
-                          "description": "ID of request"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-status",
-        "description": "Returns information about FastTrack's data status. Use this endpoint to check when latest updates are avaialble.",
         "tags": [
           "Status"
         ]
