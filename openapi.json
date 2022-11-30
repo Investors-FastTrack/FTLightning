@@ -1400,100 +1400,6 @@
         "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
       }
     },
-    "/v1/data/{ticker}": {
-      "get": {
-        "summary": "OHLCV Data",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/unadj"
-          },
-          {
-            "$ref": "#/components/parameters/olhv"
-          },
-          {
-            "$ref": "#/components/parameters/yield"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns all data for the entire data range of a single ticker. Entire date range is 9/1/1988 to the most recent market day.\n",
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
-    "/v1/data/xmulti": {
-      "post": {
-        "summary": "Multiple OHLCV Data",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/unadj"
-          },
-          {
-            "$ref": "#/components/parameters/olhv"
-          },
-          {
-            "$ref": "#/components/parameters/yield"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TickerArray"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "data points associated with tickers",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTDataList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns all data for the entire data range of multiple tickers. Entire date range is 9/1/1988 to the most recent market day.\n",
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
     "/v1/portfolios/staticmodel": {
       "post": {
         "summary": "Static Model",
@@ -3366,25 +3272,19 @@
         ]
       }
     },
-    "/v1/data/xmulti/startday": {
-      "parameters": [],
+    "/v1/data/xmulti": {
       "post": {
-        "summary": "Inception Date Multiple",
-        "operationId": "post-v1-data-xmulti-startday",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTDataList"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns ticker's start date. All other objects are null",
+        "summary": "Multiple OHLCV Data",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/unadj"
+          },
+          {
+            "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "$ref": "#/components/parameters/yield"
+          },
           {
             "$ref": "#/components/parameters/appid"
           },
@@ -3399,12 +3299,71 @@
                 "$ref": "#/components/schemas/TickerArray"
               }
             }
-          },
-          "description": ""
+          }
         },
+        "responses": {
+          "200": {
+            "description": "data points associated with tickers",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns all data for the entire data range of multiple tickers. Entire date range is 9/1/1988 to the most recent market day.\n",
         "tags": [
           "Bulk Data"
         ]
+      }
+    },
+    "/v1/data/xmulti/divadjprices": {
+      "post": {
+        "summary": "Closing Prices - Adjusted",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
+        "tags": [
+          "Bulk Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        }
       }
     },
     "/v1/data/xmulti/symname": {
@@ -3452,23 +3411,14 @@
       },
       "parameters": []
     },
-    "/v1/data/xmulti/divadjprices": {
+    "/v1/data/xmulti/startday": {
+      "parameters": [],
       "post": {
-        "summary": "Closing Prices - Adjusted",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
+        "summary": "Inception Date Multiple",
+        "operationId": "post-v1-data-xmulti-startday",
         "responses": {
           "200": {
-            "description": "data points associated with ticker",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -3476,14 +3426,16 @@
                 }
               }
             }
-          },
-          "400": {
-            "description": "bad input parameter"
           }
         },
-        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
-        "tags": [
-          "Bulk Data"
+        "description": "Returns ticker's start date. All other objects are null",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
         ],
         "requestBody": {
           "content": {
@@ -3492,8 +3444,12 @@
                 "$ref": "#/components/schemas/TickerArray"
               }
             }
-          }
-        }
+          },
+          "description": ""
+        },
+        "tags": [
+          "Bulk Data"
+        ]
       }
     },
     "/v1/data/xmulti/unadjprices": {
@@ -3538,6 +3494,51 @@
             }
           }
         }
+      }
+    },
+    "/v1/data/{ticker}": {
+      "get": {
+        "summary": "OHLCV Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/unadj"
+          },
+          {
+            "$ref": "#/components/parameters/olhv"
+          },
+          {
+            "$ref": "#/components/parameters/yield"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns all data for the entire data range of a single ticker. Entire date range is 9/1/1988 to the most recent market day.\n",
+        "tags": [
+          "Bulk Data"
+        ],
+        "x-internal": true
       }
     },
     "/v1/data/{ticker}/unadjprices": {
