@@ -71,12 +71,12 @@
     },
     {
       "type": "item",
-      "title": "Market Data API",
+      "title": "Funds, ETFs, Stocks, & Index Data",
       "uri": "/openapi.json"
     },
     {
       "type": "item",
-      "title": "Bond Data & Calcs API",
+      "title": "Bond (CUSIP) Data & Calcs API",
       "uri": "/bonds_fasttrack.json"
     }
   ]
