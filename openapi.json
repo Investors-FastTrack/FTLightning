@@ -4773,9 +4773,6 @@
       "FTStats": {
         "type": "object",
         "description": "various stats and data points for a ticker or model",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "ticker": {
             "type": "string",
