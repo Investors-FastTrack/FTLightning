@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Funds, ETFs, Stocks, Indexes API",
+    "title": "API for Funds, ETFs, Stocks, Indexes",
     "description": "FastTrack Market Data API provides REST access to FastTrack investment data for our 30k+ funds, ETFs, stocks, and indexes. The data includes dividend adjusted closing prices back to 1988, derived statistics and portfolio models. \n\nVisit https://apitrial.fasttrack.net for a trial account. \n\nSearch the FastTrack database here: https://ftcloud.fasttrack.net/web/search\n",
     "contact": {
       "email": "api@fasttrack.net",
@@ -2335,7 +2335,8 @@
         ],
         "tags": [
           "Other Data"
-        ]
+        ],
+        "x-internal": true
       }
     },
     "/v1/bonds/xmulti/description": {
@@ -2387,7 +2388,8 @@
         ],
         "tags": [
           "Bond Data"
-        ]
+        ],
+        "x-internal": true
       }
     },
     "/v1/bonds/xmulti/data": {
@@ -2457,7 +2459,8 @@
         },
         "tags": [
           "Bond Data"
-        ]
+        ],
+        "x-internal": true
       },
       "parameters": []
     },
@@ -2519,7 +2522,8 @@
         ],
         "tags": [
           "Other Data"
-        ]
+        ],
+        "x-internal": true
       }
     },
     "/beta/bonds/filter/columns/{filter_object}": {
@@ -2553,7 +2557,8 @@
         ],
         "tags": [
           "Bond Data"
-        ]
+        ],
+        "x-internal": true
       },
       "parameters": [
         {
@@ -2679,7 +2684,8 @@
         ],
         "tags": [
           "Bond Data"
-        ]
+        ],
+        "x-internal": true
       },
       "parameters": []
     },
@@ -3990,7 +3996,8 @@
         "description": "Total number and list of CUSIPsused in a month ",
         "tags": [
           "Status"
-        ]
+        ],
+        "x-internal": true
       }
     },
     "/v1/usage/bonds/count": {
@@ -4063,7 +4070,8 @@
         "description": "Total number of cusips used in a month",
         "tags": [
           "Status"
-        ]
+        ],
+        "x-internal": true
       }
     },
     "/beta/ref/{ticker}/eps": {
