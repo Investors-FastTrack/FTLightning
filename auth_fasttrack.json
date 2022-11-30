@@ -18,7 +18,7 @@
     "version": "v1"
   },
   "servers": [
-    {
+    { 
       "url": "https://ftl.fasttrack.net"
     }
   ],
