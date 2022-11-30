@@ -18,7 +18,7 @@
     "version": "v1"
   },
   "servers": [
-    { 
+    {
       "url": "https://ftl.fasttrack.net"
     }
   ],
@@ -107,10 +107,7 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "description": "Basic information about user subscription",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "Basic information about user subscription"
       },
       "err": {
         "type": "object",
@@ -132,10 +129,7 @@
             "format": "url",
             "description": "link describing error"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       }
     },
     "requestBodies": {},
