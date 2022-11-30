@@ -2,8 +2,12 @@
   "collapseTableOfContents": false,
   "items": [
     {
+      "type": "divider",
+      "title": "Introduction"
+    },
+    {
       "type": "item",
-      "title": "Introduction",
+      "title": "Getting Started",
       "uri": "/docs/01-Introduction.md"
     },
     {
@@ -32,12 +36,16 @@
       "uri": "/docs/Portfolio-Modeling.md"
     },
     {
-      "type": "divider",
-      "title": "Examples"
+      "type": "divider"
     },
     {
       "type": "item",
-      "title": "Login",
+      "title": "API - Funds, ETFs, Stocks, & Indexes",
+      "uri": "/openapi.json"
+    },
+    {
+      "type": "item",
+      "title": "Javascript - Login",
       "uri": "/docs/Examples/01b-Login-Example.md"
     },
     {
@@ -52,31 +60,25 @@
     },
     {
       "type": "item",
-      "title": "C# Stats Example",
+      "title": "C# - Stats Example",
       "uri": "/docs/Examples/03-c#-Bulk-download.md"
     },
     {
       "type": "item",
-      "title": "Python Example",
+      "title": "Python - Example",
       "uri": "/docs/Examples/04-python-example.md"
     },
     {
       "type": "item",
-      "title": "VBA Code Example",
+      "title": "VBA Code (Excel) - Example",
       "uri": "/docs/Examples/05-vba-example.md"
     },
     {
-      "type": "divider",
-      "title": "APIS"
+      "type": "divider"
     },
     {
       "type": "item",
-      "title": "Funds, ETFs, Stocks, & Index Data",
-      "uri": "/openapi.json"
-    },
-    {
-      "type": "item",
-      "title": "Bond (CUSIP) Data & Calcs API",
+      "title": "API - Bond (CUSIP)",
       "uri": "/bonds_fasttrack.json"
     }
   ]
