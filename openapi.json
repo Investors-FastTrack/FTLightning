@@ -4334,9 +4334,6 @@
           }
         },
         "description": "Basic information about user subscription",
-        "x-tags": [
-          "Models"
-        ],
         "x-internal": true
       },
       "FTData": {
@@ -4427,10 +4424,7 @@
             }
           }
         },
-        "title": "",
-        "x-tags": [
-          "Models"
-        ]
+        "title": ""
       },
       "FTDataList": {
         "type": "object",
@@ -4445,10 +4439,7 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "description": "List of FTDataList objects containing bulk pricing data for multiple tickers ",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "List of FTDataList objects containing bulk pricing data for multiple tickers "
       },
       "FTDataRange": {
         "type": "object",
@@ -4480,10 +4471,7 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTDataRangeList": {
         "type": "object",
@@ -4504,10 +4492,7 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "description": "List of FTDataRAnge objects containing pricing data for multiple tickers over a date range",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "List of FTDataRAnge objects containing pricing data for multiple tickers over a date range"
       },
       "FTPrice": {
         "type": "object",
@@ -4540,10 +4525,7 @@
             "description": "adjusted daily volume of ticker"
           }
         },
-        "description": "Various pricing pricing data points for a single day",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "Various pricing pricing data points for a single day"
       },
       "FTDates": {
         "type": "object",
@@ -4569,17 +4551,11 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "description": "This object contains all date information for FastTrack. There are \"MaxNumDays\" in the database. All prices and date arrays are sized \"MaxNumdays\". The index of the array is also the market day of that value. A date's market day is number of market days elapsed since 9/1/88, the first day in the FastTrack database.",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "This object contains all date information for FastTrack. There are \"MaxNumDays\" in the database. All prices and date arrays are sized \"MaxNumdays\". The index of the array is also the market day of that value. A date's market day is number of market days elapsed since 9/1/88, the first day in the FastTrack database."
       },
       "FTDate": {
         "type": "object",
         "description": "Contains date information of a single date",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "marketdate": {
             "type": "integer",
@@ -4617,18 +4593,12 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTReturns": {
         "type": "object",
         "title": "",
         "description": "Object containing various annualized/total return values and history of yearly total returns",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "annualized": {
             "$ref": "#/components/schemas/FTReturn"
@@ -4663,10 +4633,7 @@
         "x-examples": {
           "example-1": {}
         },
-        "description": "Year and total return value for that year",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "Year and total return value for that year"
       },
       "FTRisk": {
         "type": "object",
@@ -4720,17 +4687,11 @@
         },
         "x-examples": {
           "example-1": {}
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTDescribe": {
         "type": "object",
         "description": "Various descriptive data points of security",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "sharesout": {
             "type": "string",
@@ -4867,10 +4828,7 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "description": "Array of FTStats objects",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "Array of FTStats objects"
       },
       "FTChartData": {
         "type": "object",
@@ -4907,10 +4865,7 @@
             "$ref": "#/components/schemas/FTDates"
           }
         },
-        "description": "Pre calculated data used to draw charts",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "Pre calculated data used to draw charts"
       },
       "FTMaxDraw": {
         "type": "object",
@@ -4936,14 +4891,11 @@
             "type": "string",
             "description": "day the drawdown reached it bottom"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "err": {
         "type": "object",
-        "description": "error responses. see full list of error codes [here](https://fasttrack.stoplight.io/docs/ftlightning/ZG9jOjMwNzY2Mw-error-codes)",
+        "description": "error responses. see full list of error codes [here](https://docs.fasttrack.net/docs/ftlightning/ZG9jOjMwNzY2Mw-error-codes)",
         "title": "",
         "properties": {
           "code": {
@@ -4961,10 +4913,7 @@
             "format": "url",
             "description": "link describing error"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTModelResults": {
         "type": "object",
@@ -4983,9 +4932,6 @@
             "$ref": "#/components/schemas/err"
           }
         },
-        "x-tags": [
-          "Models"
-        ],
         "description": "Details and stats of portfolio model results",
         "title": "",
         "x-examples": {
@@ -5223,10 +5169,7 @@
               "$ref": "#/components/schemas/FTPosition"
             }
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTPosition": {
         "type": "object",
@@ -5240,9 +5183,6 @@
             "weight": 50
           }
         },
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "ticker": {
             "type": "string",
@@ -5267,9 +5207,6 @@
         "description": "Describes a funds or ETFs holdings",
         "type": "object",
         "title": "FTInfoPortfolio",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "ticker": {
             "type": "string",
@@ -5494,9 +5431,6 @@
         "type": "object",
         "description": "Annualized (CAGR) / Total returns for the described time periods",
         "title": "",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "period": {
             "type": "string",
@@ -5570,10 +5504,7 @@
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTDividend": {
         "title": "FTDividend",
@@ -5594,10 +5525,7 @@
             "type": "number",
             "description": "Dollar value of dividend"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "TickerArray": {
         "title": "TickerArray",
@@ -5613,10 +5541,7 @@
             "SPY",
             "SP-DA"
           ]
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "CUSIPArray": {
         "title": "CUSIPArray",
@@ -5632,17 +5557,11 @@
             "9128282S8",
             "912828XW5"
           ]
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTInfoTicker": {
         "title": "FTInfoTicker",
         "type": "object",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "ticker": {
             "type": "string",
@@ -5724,9 +5643,6 @@
       "FTInfoTickerList": {
         "title": "FTInfoTickerList",
         "type": "object",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "datalist": {
             "type": "array",
@@ -5753,10 +5669,7 @@
             }
           }
         },
-        "description": "Array of FTModel results",
-        "x-tags": [
-          "Models"
-        ]
+        "description": "Array of FTModel results"
       },
       "FTStaticModel": {
         "type": "object",
@@ -5778,9 +5691,6 @@
             "seed": 1000
           }
         },
-        "x-tags": [
-          "Models"
-        ],
         "description": "Definition of static model",
         "properties": {
           "start": {
@@ -5822,9 +5732,6 @@
         "title": "FTReturnDates",
         "type": "object",
         "description": "dates used to calculate total and annualized returns in FTReturns Object",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "oneday": {
             "$ref": "#/components/schemas/FTDateSpan"
@@ -5871,18 +5778,12 @@
           "dteend": {
             "$ref": "#/components/schemas/FTDate"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTWinLose": {
         "description": "Object containing lists of winners and losers for specific databases and time periods",
         "type": "object",
         "title": "FTWinLose",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "db": {
             "type": "string",
@@ -5906,9 +5807,6 @@
         "type": "object",
         "description": "List of all winners and losers for a time period",
         "title": "FTWinLoseItem",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "period": {
             "type": "string",
@@ -5934,9 +5832,6 @@
         "description": "",
         "type": "object",
         "title": "FTWinLoseListItem",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "name": {
             "type": "string",
@@ -5983,9 +5878,6 @@
           }
         },
         "title": "FTMomentumModel",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "universe": {
             "type": "array",
@@ -6111,10 +6003,7 @@
           "seedvalue",
           "rebalanceperiod"
         ],
-        "title": "FTMomentumModelParameters",
-        "x-tags": [
-          "Models"
-        ]
+        "title": "FTMomentumModelParameters"
       },
       "FTBulkStatItem": {
         "title": "FTBulkStatItem",
@@ -6128,10 +6017,7 @@
             "type": "string",
             "description": "Calculated stat value"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTFees": {
         "title": "FTFees",
@@ -6165,17 +6051,11 @@
             "type": "string",
             "description": "Share class listed in prospectus"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTBondPrice": {
         "title": "FTBondPrice",
         "type": "object",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "price": {
             "type": "string",
@@ -6329,9 +6209,6 @@
         "description": "Descriptive data about the security such as rate, maturity, sector, industry, etc",
         "type": "object",
         "x-examples": {},
-        "x-tags": [
-          "Models"
-        ],
         "title": "",
         "properties": {
           "cusip": {
