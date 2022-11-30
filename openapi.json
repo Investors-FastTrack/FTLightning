@@ -3825,9 +3825,6 @@
       "parameters": [],
       "get": {
         "summary": "Bond Usage",
-        "tags": [
-          "Other Data"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3908,16 +3905,16 @@
             "required": true
           }
         ],
-        "description": "Total number and list of CUSIPsused in a month "
+        "description": "Total number and list of CUSIPsused in a month ",
+        "tags": [
+          "Status"
+        ]
       }
     },
     "/v1/usage/bonds/count": {
       "parameters": [],
       "get": {
         "summary": "Bond Usage Count",
-        "tags": [
-          "Other Data"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -3981,15 +3978,15 @@
             "required": true
           }
         ],
-        "description": "Total number of cusips used in a month"
+        "description": "Total number of cusips used in a month",
+        "tags": [
+          "Status"
+        ]
       }
     },
     "/v1/status": {
       "get": {
         "summary": "Data Update Status",
-        "tags": [
-          "12. Status"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -4063,7 +4060,10 @@
           }
         },
         "operationId": "get-v1-status",
-        "description": "Returns information about FastTrack's data status. Use this endpoint to check when latest updates are avaialble."
+        "description": "Returns information about FastTrack's data status. Use this endpoint to check when latest updates are avaialble.",
+        "tags": [
+          "Status"
+        ]
       }
     },
     "/beta/ref/{ticker}/eps": {
@@ -7216,22 +7216,10 @@
       "name": "Other"
     },
     {
-      "name": "6. CSV Export"
-    },
-    {
-      "name": "7. iFrame Chart"
-    },
-    {
-      "name": "9. Search"
-    },
-    {
-      "name": "10. Pre Calculated Data"
+      "name": "Status"
     },
     {
       "name": "11. Bulk Data"
-    },
-    {
-      "name": "12. Status"
     },
     {
       "name": "13. Beta Endpoints"
