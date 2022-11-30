@@ -2461,6 +2461,67 @@
       },
       "parameters": []
     },
+    "/v1/bonds/{cusip}/data": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "cusip",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Bond Pricing & Data",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "prices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FTBondPrice"
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-bonds-cusip-data",
+        "description": "Bond pricing and data for cusips",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          }
+        ],
+        "tags": [
+          "Other Data"
+        ]
+      }
+    },
     "/beta/bonds/filter/columns/{filter_object}": {
       "get": {
         "summary": "Filter Enum Options",
@@ -3757,67 +3818,6 @@
           {
             "$ref": "#/components/parameters/token"
           }
-        ]
-      }
-    },
-    "/v1/bonds/{cusip}/data": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string"
-          },
-          "name": "cusip",
-          "in": "path",
-          "required": true
-        }
-      ],
-      "get": {
-        "summary": "Bond Pricing & Data",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "description": "",
-                  "type": "object",
-                  "properties": {
-                    "prices": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/FTBondPrice"
-                      }
-                    },
-                    "id": {
-                      "type": "string"
-                    },
-                    "err": {
-                      "$ref": "#/components/schemas/err"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-bonds-cusip-data",
-        "description": "Bond pricing and data for cusips",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          },
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          }
-        ],
-        "tags": [
-          "Other Data"
         ]
       }
     },

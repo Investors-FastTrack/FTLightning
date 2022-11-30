@@ -32,7 +32,7 @@
         }
       ],
       "get": {
-        "summary": "Bond Description",
+        "summary": "Description",
         "responses": {
           "200": {
             "description": "OK",
@@ -56,14 +56,14 @@
           }
         ],
         "tags": [
-          "Other Data"
+          "Description"
         ]
       }
     },
     "/v1/bonds/xmulti/description": {
       "parameters": [],
       "post": {
-        "summary": "Bond Descriptions",
+        "summary": "Description - Multi",
         "operationId": "post-v1-bonds-xmulti-description",
         "responses": {
           "200": {
@@ -108,13 +108,74 @@
           }
         ],
         "tags": [
-          "Bond Data"
+          "Description"
+        ]
+      }
+    },
+    "/v1/bonds/{cusip}/data": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "cusip",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pricing & Calcs",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "prices": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/FTBondPrice"
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-bonds-cusip-data",
+        "description": "Bond pricing and data for cusips",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          }
+        ],
+        "tags": [
+          "Data & Calculations"
         ]
       }
     },
     "/v1/bonds/xmulti/data": {
       "post": {
-        "summary": "Bond Pricing & Data",
+        "summary": "Pricing & Calcs - Multi",
         "operationId": "post-v1-bonds-xmulti-prices",
         "responses": {
           "200": {
@@ -178,66 +239,10 @@
           }
         },
         "tags": [
-          "Bond Data"
+          "Data & Calculations"
         ]
       },
       "parameters": []
-    },
-    "/beta/bonds/filter/columns/{filter_object}": {
-      "get": {
-        "summary": "Filter Enum Options",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "description": "Array of all available options for filter object.",
-                  "items": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-beta-bonds-filter-columns",
-        "description": "Available enum values for the various filter objects.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "tags": [
-          "Bond Data"
-        ]
-      },
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "enum": [
-              "asset_type",
-              "collateral",
-              "issuer_type",
-              "country",
-              "issuer_type_primary",
-              "currency",
-              "security_type",
-              "naics",
-              "issue_status"
-            ]
-          },
-          "name": "filter_object",
-          "in": "path",
-          "description": "Name of filter object options to retrieve",
-          "required": true
-        }
-      ]
     },
     "/beta/bonds/filter": {
       "post": {
@@ -339,10 +344,66 @@
           }
         ],
         "tags": [
-          "Bond Data"
+          "Filtering"
         ]
       },
       "parameters": []
+    },
+    "/beta/bonds/filter/columns/{filter_object}": {
+      "get": {
+        "summary": "Filter Enum Options",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "description": "Array of all available options for filter object.",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-beta-bonds-filter-columns",
+        "description": "Available enum values for the various filter objects.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "tags": [
+          "Filtering"
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asset_type",
+              "collateral",
+              "issuer_type",
+              "country",
+              "issuer_type_primary",
+              "currency",
+              "security_type",
+              "naics",
+              "issue_status"
+            ]
+          },
+          "name": "filter_object",
+          "in": "path",
+          "description": "Name of filter object options to retrieve",
+          "required": true
+        }
+      ]
     },
     "/v1/usage/bonds": {
       "parameters": [],
@@ -1494,7 +1555,16 @@
       "name": "Authentication"
     },
     {
-      "name": "Bond Data"
+      "name": "Description"
+    },
+    {
+      "name": "Data & Calculations"
+    },
+    {
+      "name": "Filtering"
+    },
+    {
+      "name": "Status"
     }
   ]
 }
