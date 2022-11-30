@@ -3249,7 +3249,8 @@
         "tags": [
           "7. iFrame Chart"
         ],
-        "deprecated": true
+        "deprecated": true,
+        "x-internal": true
       },
       "parameters": []
     },
