@@ -1,0 +1,144 @@
+{
+  "openapi": "3.0.0",
+  "x-stoplight": {
+    "id": "6bxc4ip7a5h8e"
+  },
+  "info": {
+    "title": "Authentication API",
+    "description": "This is the first request required before using any other API. Send your account number, password, and App ID to this end point and retrieve your TOKEN. \n\nInclude your APPID and TOKEN in the header of all other API requests",
+    "contact": {
+      "email": "api@fasttrack.net",
+      "name": "FT Market Data API Support",
+      "url": "http://www.fasttrack.net"
+    },
+    "license": {
+      "name": "End User Agreement",
+      "url": "https://cdn.fasttrack.net/EULA/FastTrackEULA.pdf"
+    },
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://ftl.fasttrack.net"
+    }
+  ],
+  "paths": {
+    "/v1/auth/login": {
+      "get": {
+        "summary": "Login",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "account number"
+          },
+          {
+            "name": "pass",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "password"
+          },
+          {
+            "name": "appid",
+            "in": "query",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "application id received with sign up email"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Basic user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserInfo"
+                }
+              }
+            }
+          }
+        },
+        "description": "Server authentication. The returned token must be passed as a header with all other API calls",
+        "operationId": "auth_login"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "AcountNumber": {
+            "type": "string",
+            "description": "User's account number"
+          },
+          "Pass": {
+            "type": "string",
+            "description": "User password"
+          },
+          "Token": {
+            "type": "string",
+            "description": "authentication token to include in all other API request."
+          },
+          "AppID": {
+            "type": "string",
+            "description": "string representing developers app id"
+          },
+          "Expiration": {
+            "type": "string",
+            "description": "account's expiration date"
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
+          }
+        },
+        "description": "Basic information about user subscription",
+        "x-tags": [
+          "Models"
+        ]
+      },
+      "err": {
+        "type": "object",
+        "description": "error responses. see full list of error codes [here](https://fasttrack.stoplight.io/docs/ftlightning/ZG9jOjMwNzY2Mw-error-codes)",
+        "title": "",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "-5000000",
+            "description": "numeric code of error. see full list of error codes [here](https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/01b-Errors.md?srn=gh/investors-fasttrack/ftlightning/docs/01b-Errors.md)"
+          },
+          "message": {
+            "type": "string",
+            "example": "invalid ticker",
+            "description": "text based error message"
+          },
+          "link": {
+            "type": "string",
+            "format": "url",
+            "description": "link describing error"
+          }
+        },
+        "x-tags": [
+          "Models"
+        ]
+      }
+    },
+    "requestBodies": {},
+    "securitySchemes": {}
+  }
+}

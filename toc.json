@@ -77,6 +77,11 @@
       "title":"APIS"
     },
     {
+      "type":"item",
+      "title":"Authentication",
+      "uri":"/auth_fasttrack.json"
+    },
+    {
       "type": "item",
       "title": "Funds, ETFs, Stocks, & Indexes",
       "uri": "/openapi.json"
