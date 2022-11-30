@@ -3248,7 +3248,8 @@
         "description": "Embed custom FastTrack charts on your webpage with an iframe.",
         "tags": [
           "7. iFrame Chart"
-        ]
+        ],
+        "deprecated": true
       },
       "parameters": []
     },
@@ -7208,9 +7209,6 @@
     },
     {
       "name": "Bond Data"
-    },
-    {
-      "name": "3.1. Bulk Stats"
     },
     {
       "name": "5. Dividends"
