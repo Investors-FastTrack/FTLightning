@@ -36,13 +36,8 @@
       "uri": "/docs/Portfolio-Modeling.md"
     },
     {
-      "type": "divider",
-      "title":"APIS"
-    },
-    {
-      "type": "item",
-      "title": "API - Funds, ETFs, Stocks, & Indexes",
-      "uri": "/openapi.json"
+      "type":"divider",
+      "title":"Code Examples"
     },
     {
       "type": "item",
@@ -78,8 +73,17 @@
       "type": "divider"
     },
     {
+      "type": "divider",
+      "title":"APIS"
+    },
+    {
       "type": "item",
-      "title": "API - Bond (CUSIP)",
+      "title": "Funds, ETFs, Stocks, & Indexes",
+      "uri": "/openapi.json"
+    },
+    {
+      "type": "item",
+      "title": "Bond (CUSIP)",
       "uri": "/bonds_fasttrack.json"
     }
   ]
