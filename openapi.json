@@ -2689,222 +2689,6 @@
       },
       "parameters": []
     },
-    "/v1/data/{ticker}/unadjprices": {
-      "get": {
-        "summary": "Closing Prices - Unadjusted",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns ticker's unadjusted closing prices for all days in FastTrack database. All other objects are null",
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
-    "/v1/data/{ticker}/startday": {
-      "get": {
-        "summary": "Inception Date",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns ticker's start date. All other objects are null",
-        "operationId": "zxzsdzsd",
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
-    "/v1/data/xmulti/startday": {
-      "parameters": [],
-      "post": {
-        "summary": "Inception Date Multiple",
-        "operationId": "post-v1-data-xmulti-startday",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          }
-        },
-        "description": "Returns ticker's start date. All other objects are null",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TickerArray"
-              }
-            }
-          },
-          "description": ""
-        },
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
-    "/v1/data/{ticker}/symname": {
-      "get": {
-        "summary": "Symbol Name",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns ticker's name. All other objects are null",
-        "tags": [
-          "Bulk Data"
-        ]
-      },
-      "parameters": []
-    },
-    "/v1/data/{ticker}/divadjprices": {
-      "get": {
-        "summary": "Closing Prices - Adjusted",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTData"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
-    "/v1/data/dates": {
-      "get": {
-        "summary": "All Dates",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "data points associated with ticker",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTDates"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        },
-        "operationId": "1231jsoasd",
-        "description": "Returns array with every date in the FastTrack database. This object is used to interpret the data/{ticker}/divadjprices and data/{ticker}/unadjprices results",
-        "tags": [
-          "Bulk Data"
-        ]
-      }
-    },
     "/v1/family/{strFamily}": {
       "get": {
         "summary": "Family",
@@ -3327,251 +3111,6 @@
         ]
       }
     },
-    "/v1/report": {
-      "get": {
-        "summary": "Embed Chart (iframe)",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/html": {
-                "schema": {
-                  "type": "string",
-                  "description": "simple HTML webpage that renders in any browser"
-                },
-                "examples": {}
-              },
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              },
-              "text/plain": {
-                "schema": {
-                  "type": "object",
-                  "properties": {}
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-chart-report.html",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "pattern": "[hex],[hex],[hex]"
-            },
-            "in": "query",
-            "name": "colors",
-            "description": "comma separated values for chart line colors. color order is applied the same as \"tickers\". Specify hex code and do not include \"#\""
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "000000",
-              "pattern": ""
-            },
-            "in": "query",
-            "name": "fore",
-            "description": "foreground (text) color of chart and report in hex code (do not include \"#\")"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "ffccbc",
-              "default": "FFFFFF"
-            },
-            "in": "query",
-            "name": "bg",
-            "description": "background color of chart and report in hex code (do not include \"#\")"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "1",
-              "default": "1",
-              "enum": [
-                "1",
-                "0"
-              ]
-            },
-            "in": "query",
-            "name": "showdates",
-            "description": "toggle to show or hide date selectors on chart"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "example": "1",
-              "default": "1",
-              "enum": [
-                "1",
-                "0"
-              ]
-            },
-            "in": "query",
-            "name": "showheader",
-            "description": "toggle to show or hide header on report"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "1",
-              "example": "1",
-              "enum": [
-                "1",
-                "0"
-              ]
-            },
-            "in": "query",
-            "name": "showreport",
-            "description": "toggle to show or hide header of report"
-          },
-          {
-            "in": "query",
-            "name": "basis",
-            "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
-            "schema": {
-              "default": "SP-DA",
-              "type": "string"
-            }
-          },
-          {
-            "schema": {
-              "type": "string",
-              "pattern": "ticker,ticker,ticker"
-            },
-            "in": "query",
-            "name": "tickers",
-            "required": true,
-            "description": "comma separated list of tickers to display in chart, and report"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "y",
-                "1",
-                "2",
-                "3",
-                "6",
-                "9",
-                "12",
-                "24",
-                "36",
-                "60",
-                "84",
-                "120",
-                "180",
-                "240",
-                "m"
-              ]
-            },
-            "in": "query",
-            "name": "datebuttons",
-            "description": "comma separated list of date shortcut buttons to show. defined as number of months ie 24 = two years, 60 = 5 years"
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "token",
-            "required": true,
-            "description": "authentication token returned from the /login endpoint "
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "appid",
-            "description": "application id assigned at account opening",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "2019-12-31"
-            },
-            "in": "query",
-            "name": "start",
-            "description": "First day in the date range of all calculations/requests"
-          }
-        ],
-        "security": [],
-        "description": "Embed custom FastTrack charts on your webpage with an iframe.",
-        "tags": [
-          "7. iFrame Chart"
-        ],
-        "deprecated": true,
-        "x-internal": true
-      },
-      "parameters": []
-    },
-    "/v1/precalc/winlose": {
-      "get": {
-        "summary": "Winners and Losers",
-        "tags": [
-          "10. Pre Calculated Data"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FTWinLose"
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-precalc-topten",
-        "description": "Retrieve top ten winners and losers of a specific security universe",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "STOCKS1",
-                "STOCKS2",
-                "EQUTYFUNDS",
-                "BONDFUNDS",
-                "BONDETFS",
-                "EQUITYETFS",
-                "ETFS"
-              ]
-            },
-            "in": "query",
-            "name": "db",
-            "required": true,
-            "description": "universe of securities to calculate winners and losers"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "format": "yyyyMMdd",
-              "example": "20201231"
-            },
-            "in": "query",
-            "name": "date",
-            "required": true,
-            "description": "end date of rankings"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "x-internal": true
-      },
-      "parameters": []
-    },
     "/v1/family/screener": {
       "post": {
         "summary": "Family Screener",
@@ -3824,6 +3363,359 @@
           {
             "$ref": "#/components/parameters/token"
           }
+        ]
+      }
+    },
+    "/v1/data/xmulti/startday": {
+      "parameters": [],
+      "post": {
+        "summary": "Inception Date Multiple",
+        "operationId": "post-v1-data-xmulti-startday",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          }
+        },
+        "description": "Returns ticker's start date. All other objects are null",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          },
+          "description": ""
+        },
+        "tags": [
+          "Bulk Data"
+        ]
+      }
+    },
+    "/v1/data/xmulti/symname": {
+      "post": {
+        "summary": "Symbol Name",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns list of ticker's names.",
+        "tags": [
+          "Bulk Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    },
+    "/v1/data/xmulti/divadjprices": {
+      "post": {
+        "summary": "Closing Prices - Adjusted",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
+        "tags": [
+          "Bulk Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/data/xmulti/unadjprices": {
+      "post": {
+        "summary": "Closing Prices - Unadjusted",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDataList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's unadjusted closing prices for all days in FastTrack database. All other objects are null",
+        "tags": [
+          "Bulk Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/data/{ticker}/unadjprices": {
+      "get": {
+        "summary": "Closing Prices - Unadjusted",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's unadjusted closing prices for all days in FastTrack database. All other objects are null",
+        "tags": [
+          "Bulk Data"
+        ],
+        "x-internal": true
+      }
+    },
+    "/v1/data/{ticker}/startday": {
+      "get": {
+        "summary": "Inception Date",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's start date. All other objects are null",
+        "operationId": "zxzsdzsd",
+        "tags": [
+          "Bulk Data"
+        ],
+        "x-internal": true
+      }
+    },
+    "/v1/data/{ticker}/symname": {
+      "get": {
+        "summary": "Symbol Name",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's name. All other objects are null",
+        "tags": [
+          "Bulk Data"
+        ],
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/v1/data/{ticker}/divadjprices": {
+      "get": {
+        "summary": "Closing Prices - Adjusted",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ticker"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "Returns ticker's dividend adjusted closing prices for all days in FastTrack database. All other objects are null",
+        "tags": [
+          "Bulk Data"
+        ],
+        "x-internal": true
+      }
+    },
+    "/v1/data/dates": {
+      "get": {
+        "summary": "All Dates",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTDates"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "operationId": "1231jsoasd",
+        "description": "Returns array with every date in the FastTrack database. This object is used to interpret the data/{ticker}/divadjprices and data/{ticker}/unadjprices results",
+        "tags": [
+          "Bulk Data"
         ]
       }
     },
@@ -4163,6 +4055,251 @@
         ],
         "x-internal": true
       }
+    },
+    "/v1/report": {
+      "get": {
+        "summary": "Embed Chart (iframe)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html": {
+                "schema": {
+                  "type": "string",
+                  "description": "simple HTML webpage that renders in any browser"
+                },
+                "examples": {}
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              },
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-chart-report.html",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "[hex],[hex],[hex]"
+            },
+            "in": "query",
+            "name": "colors",
+            "description": "comma separated values for chart line colors. color order is applied the same as \"tickers\". Specify hex code and do not include \"#\""
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "000000",
+              "pattern": ""
+            },
+            "in": "query",
+            "name": "fore",
+            "description": "foreground (text) color of chart and report in hex code (do not include \"#\")"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "ffccbc",
+              "default": "FFFFFF"
+            },
+            "in": "query",
+            "name": "bg",
+            "description": "background color of chart and report in hex code (do not include \"#\")"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "1",
+              "default": "1",
+              "enum": [
+                "1",
+                "0"
+              ]
+            },
+            "in": "query",
+            "name": "showdates",
+            "description": "toggle to show or hide date selectors on chart"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "1",
+              "default": "1",
+              "enum": [
+                "1",
+                "0"
+              ]
+            },
+            "in": "query",
+            "name": "showheader",
+            "description": "toggle to show or hide header on report"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "1",
+              "example": "1",
+              "enum": [
+                "1",
+                "0"
+              ]
+            },
+            "in": "query",
+            "name": "showreport",
+            "description": "toggle to show or hide header of report"
+          },
+          {
+            "in": "query",
+            "name": "basis",
+            "description": "Basis used for correlation, beta, sharpe ratio, ulcer performance index",
+            "schema": {
+              "default": "SP-DA",
+              "type": "string"
+            }
+          },
+          {
+            "schema": {
+              "type": "string",
+              "pattern": "ticker,ticker,ticker"
+            },
+            "in": "query",
+            "name": "tickers",
+            "required": true,
+            "description": "comma separated list of tickers to display in chart, and report"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "y",
+                "1",
+                "2",
+                "3",
+                "6",
+                "9",
+                "12",
+                "24",
+                "36",
+                "60",
+                "84",
+                "120",
+                "180",
+                "240",
+                "m"
+              ]
+            },
+            "in": "query",
+            "name": "datebuttons",
+            "description": "comma separated list of date shortcut buttons to show. defined as number of months ie 24 = two years, 60 = 5 years"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "required": true,
+            "description": "authentication token returned from the /login endpoint "
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "appid",
+            "description": "application id assigned at account opening",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "2019-12-31"
+            },
+            "in": "query",
+            "name": "start",
+            "description": "First day in the date range of all calculations/requests"
+          }
+        ],
+        "security": [],
+        "description": "Embed custom FastTrack charts on your webpage with an iframe.",
+        "tags": [
+          "7. iFrame Chart"
+        ],
+        "deprecated": true,
+        "x-internal": true
+      },
+      "parameters": []
+    },
+    "/v1/precalc/winlose": {
+      "get": {
+        "summary": "Winners and Losers",
+        "tags": [
+          "10. Pre Calculated Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTWinLose"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-precalc-topten",
+        "description": "Retrieve top ten winners and losers of a specific security universe",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "STOCKS1",
+                "STOCKS2",
+                "EQUTYFUNDS",
+                "BONDFUNDS",
+                "BONDETFS",
+                "EQUITYETFS",
+                "ETFS"
+              ]
+            },
+            "in": "query",
+            "name": "db",
+            "required": true,
+            "description": "universe of securities to calculate winners and losers"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "format": "yyyyMMdd",
+              "example": "20201231"
+            },
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "description": "end date of rankings"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "x-internal": true
+      },
+      "parameters": []
     }
   },
   "components": {
@@ -4201,7 +4338,7 @@
       },
       "FTData": {
         "type": "object",
-        "description": "Contains various pricing data points for a single ticker. View [docs] (https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md?srn=gh/investors-fasttrack/ftlightning/docs/Examples/02-date_javascript.md#data-date-translation]) for information on pricing array translation to dates",
+        "description": "Contains various pricing data points for a single ticker. View documentation example for information on pricing array translation to dates",
         "properties": {
           "ticker": {
             "example": "SPY",
