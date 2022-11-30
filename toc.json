@@ -73,6 +73,11 @@
       "type": "item",
       "title": "FastTrack Market Data API",
       "uri": "/openapi.json"
+    },
+    {
+      "type": "item",
+      "title": "FastTrack Market Data API",
+      "uri": "/bonds_fasttrack.json"
     }
   ]
 }
