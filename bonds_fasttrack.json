@@ -591,10 +591,7 @@
             "format": "url",
             "description": "link describing error"
           }
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "CUSIPArray": {
         "title": "CUSIPArray",
@@ -610,17 +607,11 @@
             "9128282S8",
             "912828XW5"
           ]
-        },
-        "x-tags": [
-          "Models"
-        ]
+        }
       },
       "FTBondPrice": {
         "title": "FTBondPrice",
         "type": "object",
-        "x-tags": [
-          "Models"
-        ],
         "properties": {
           "price": {
             "type": "string",
@@ -773,9 +764,6 @@
         "description": "Descriptive data about the security such as rate, maturity, sector, industry, etc",
         "type": "object",
         "x-examples": {},
-        "x-tags": [
-          "Models"
-        ],
         "title": "",
         "properties": {
           "cusip": {
