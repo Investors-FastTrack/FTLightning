@@ -3274,7 +3274,7 @@
     },
     "/v1/data/xmulti": {
       "post": {
-        "summary": "Multiple OHLCV Data",
+        "summary": "All Data - Multiple",
         "parameters": [
           {
             "$ref": "#/components/parameters/unadj"
@@ -3324,7 +3324,7 @@
     },
     "/v1/data/xmulti/divadjprices": {
       "post": {
-        "summary": "Closing Prices - Adjusted",
+        "summary": "Adjusted Closing Prices - Multi",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
@@ -3368,7 +3368,7 @@
     },
     "/v1/data/xmulti/symname": {
       "post": {
-        "summary": "Symbol Name",
+        "summary": "Symbol Name - Multi",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
@@ -3414,7 +3414,7 @@
     "/v1/data/xmulti/startday": {
       "parameters": [],
       "post": {
-        "summary": "Inception Date Multiple",
+        "summary": "Inception Date - Multi",
         "operationId": "post-v1-data-xmulti-startday",
         "responses": {
           "200": {
@@ -3454,7 +3454,7 @@
     },
     "/v1/data/xmulti/unadjprices": {
       "post": {
-        "summary": "Closing Prices - Unadjusted",
+        "summary": "Unadjusted Closing Prices - Multi",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
