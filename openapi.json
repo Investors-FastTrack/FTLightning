@@ -3019,7 +3019,7 @@
         },
         "description": "Returns a CSV file of a single ticker's adjusted/unadjusted closing prices.",
         "tags": [
-          "6. CSV Export"
+          "Other"
         ],
         "security": []
       },
@@ -3066,7 +3066,197 @@
           }
         ],
         "tags": [
-          "5. Dividends"
+          "Other Data"
+        ]
+      }
+    },
+    "/v1/export/xmulti/{TickerList}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string",
+            "example": "JPM,BAC,C,GS"
+          },
+          "name": "TickerList",
+          "in": "path",
+          "required": true,
+          "description": "Comma separated list of tickers"
+        }
+      ],
+      "get": {
+        "summary": "Multiple Security CSV Export",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string",
+                  "description": "Data for requested tickers in the CSV format: {ticker},{date},{adjusted price},{unadjusted price},{open},{low},{high},{volume}"
+                },
+                "examples": {
+                  "Banks Example": {
+                    "value": "ticker,date,adjusted price,unadjusted price,open,low,high,volume JPM,12/31/2020,123.977,127.07,122.038,121.751,124.249,8580.21 BAC,12/31/2020,29.883,30.31,29.585,29.474,29.966,28716.04 C,12/31/2020,59.793,61.66,58.868,58.69,60.02,12500.74 GS,12/31/2020,259.198,263.71,254.378,253.546,259.46,2043.05"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-export-xmulti-TickerList",
+        "description": "Export multiple tickers to CSV format",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "token",
+            "description": "36 characher GUID received from the auth/login end point",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "appid",
+            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "default": "CSV",
+              "enum": [
+                "CSV",
+                "JSON"
+              ]
+            },
+            "in": "query",
+            "name": "format",
+            "description": "Return CSV or JSON format. CSV is default result."
+          }
+        ],
+        "tags": [
+          "Other Data"
+        ]
+      }
+    },
+    "/v1/search": {
+      "get": {
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "curor position of search results. ie index of first result to return. Use this to page through results"
+          },
+          {
+            "name": "fq",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "db:1",
+                "db:2",
+                "db:3",
+                "db:15"
+              ]
+            },
+            "description": "filter options. Use 1 for Funds, 2 for ETFs, 3 for Stocks, and 15 for indexes."
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "text or phrase to search for"
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "number of results to return"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "string",
+                      "description": "total results for search request"
+                    },
+                    "start": {
+                      "type": "string",
+                      "description": "start index of search results (used in paging through results)"
+                    },
+                    "hit": {
+                      "type": "array",
+                      "description": "list of all search results",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "description": "security name"
+                          },
+                          "ticker": {
+                            "type": "string",
+                            "description": "security ticker"
+                          },
+                          "score": {
+                            "type": "string",
+                            "description": "items relevance score relative to search term"
+                          },
+                          "db": {
+                            "type": "string",
+                            "description": "security type: 1 = Funds, 2 = ETF, 3 = Stock, 15 = Index"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-search",
+        "description": "Search the fasttrack database accross ticker, name, and cusip",
+        "summary": "Search Database",
+        "tags": [
+          "Other Data"
         ]
       }
     },
@@ -3254,117 +3444,6 @@
       },
       "parameters": []
     },
-    "/v1/search": {
-      "get": {
-        "parameters": [
-          {
-            "name": "start",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "curor position of search results. ie index of first result to return. Use this to page through results"
-          },
-          {
-            "name": "fq",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "db:1",
-                "db:2",
-                "db:3",
-                "db:15"
-              ]
-            },
-            "description": "filter options. Use 1 for Funds, 2 for ETFs, 3 for Stocks, and 15 for indexes."
-          },
-          {
-            "name": "q",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "text or phrase to search for"
-          },
-          {
-            "name": "size",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "number of results to return"
-          },
-          {
-            "$ref": "#/components/parameters/appid"
-          },
-          {
-            "$ref": "#/components/parameters/token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "200 response",
-            "headers": {
-              "Access-Control-Allow-Origin": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "string",
-                      "description": "total results for search request"
-                    },
-                    "start": {
-                      "type": "string",
-                      "description": "start index of search results (used in paging through results)"
-                    },
-                    "hit": {
-                      "type": "array",
-                      "description": "list of all search results",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "description": "security name"
-                          },
-                          "ticker": {
-                            "type": "string",
-                            "description": "security ticker"
-                          },
-                          "score": {
-                            "type": "string",
-                            "description": "items relevance score relative to search term"
-                          },
-                          "db": {
-                            "type": "string",
-                            "description": "security type: 1 = Funds, 2 = ETF, 3 = Stock, 15 = Index"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-search",
-        "description": "Search the fasttrack database accross ticker, name, and cusip",
-        "tags": [
-          "9. Search"
-        ],
-        "summary": "Search Database"
-      }
-    },
     "/v1/precalc/winlose": {
       "get": {
         "summary": "Winners and Losers",
@@ -3421,7 +3500,8 @@
           {
             "$ref": "#/components/parameters/token"
           }
-        ]
+        ],
+        "x-internal": true
       },
       "parameters": []
     },
@@ -3902,85 +3982,6 @@
           }
         ],
         "description": "Total number of cusips used in a month"
-      }
-    },
-    "/v1/export/xmulti/{TickerList}": {
-      "parameters": [
-        {
-          "schema": {
-            "type": "string",
-            "example": "JPM,BAC,C,GS"
-          },
-          "name": "TickerList",
-          "in": "path",
-          "required": true,
-          "description": "Comma separated list of tickers"
-        }
-      ],
-      "get": {
-        "summary": "Multiple Security CSV Export",
-        "tags": [
-          "6. CSV Export"
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/csv": {
-                "schema": {
-                  "type": "string",
-                  "description": "Data for requested tickers in the CSV format: {ticker},{date},{adjusted price},{unadjusted price},{open},{low},{high},{volume}"
-                },
-                "examples": {
-                  "Banks Example": {
-                    "value": "ticker,date,adjusted price,unadjusted price,open,low,high,volume JPM,12/31/2020,123.977,127.07,122.038,121.751,124.249,8580.21 BAC,12/31/2020,29.883,30.31,29.585,29.474,29.966,28716.04 C,12/31/2020,59.793,61.66,58.868,58.69,60.02,12500.74 GS,12/31/2020,259.198,263.71,254.378,253.546,259.46,2043.05"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "operationId": "get-v1-export-xmulti-TickerList",
-        "description": "Export multiple tickers to CSV format",
-        "parameters": [
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "token",
-            "description": "36 characher GUID received from the auth/login end point",
-            "required": true
-          },
-          {
-            "schema": {
-              "type": "string"
-            },
-            "in": "query",
-            "name": "appid",
-            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
-            "required": true
-          },
-          {
-            "$ref": "#/components/parameters/end"
-          },
-          {
-            "$ref": "#/components/parameters/start"
-          },
-          {
-            "schema": {
-              "type": "string",
-              "default": "CSV",
-              "enum": [
-                "CSV",
-                "JSON"
-              ]
-            },
-            "in": "query",
-            "name": "format",
-            "description": "Return CSV or JSON format. CSV is default result."
-          }
-        ]
       }
     },
     "/v1/status": {
@@ -7212,7 +7213,7 @@
       "name": "Bond Data"
     },
     {
-      "name": "5. Dividends"
+      "name": "Other"
     },
     {
       "name": "6. CSV Export"
