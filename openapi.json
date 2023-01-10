@@ -7021,11 +7021,11 @@
       "riskfree": {
         "schema": {
           "type": "string",
-          "example": "VMMXX"
+          "example": "VMFXX"
         },
         "in": "query",
         "name": "riskfree",
-        "description": "ticker or % rate of return used as the \"risk free rate\" in alpha calculation. Default is VMMXX, Vanguard Money Market Fund"
+        "description": "ticker or % rate of return used as the \"risk free rate\" in alpha calculation. Default is VMFXX, Vanguard Money Market Fund"
       },
       "start": {
         "name": "start",
