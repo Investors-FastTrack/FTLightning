@@ -13,7 +13,7 @@
     }
   ],
   "paths": {
-    "/statements/{ticker}/{statement}": {
+    "/statements/{ticker}/cashflow": {
       "parameters": [
         {
           "schema": {
@@ -23,20 +23,6 @@
           "in": "path",
           "required": true,
           "description": "Ticker of company"
-        },
-        {
-          "schema": {
-            "type": "string",
-            "enum": [
-              "cashflow",
-              "income",
-              "balancesheet"
-            ]
-          },
-          "name": "statement",
-          "in": "path",
-          "required": true,
-          "description": "Type of statement requested"
         }
       ],
       "get": {
