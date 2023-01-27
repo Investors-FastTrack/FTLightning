@@ -1523,20 +1523,7 @@
       }
     },
     "requestBodies": {},
-    "securitySchemes": {
-      "appid": {
-        "name": "appid",
-        "type": "apiKey",
-        "in": "header",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net"
-      },
-      "token": {
-        "name": "token",
-        "type": "apiKey",
-        "in": "header",
-        "description": "Temporary token received from auth/login end point"
-      }
-    }
+    "securitySchemes": {}
   },
   "tags": [
     {

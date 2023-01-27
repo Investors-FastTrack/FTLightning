@@ -1,0 +1,597 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "0hchmzhn44r5d"
+  },
+  "info": {
+    "title": "financials",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://financials.fasttrack.net/v1/"
+    }
+  ],
+  "paths": {
+    "/statements/{ticker}/{statement}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true,
+          "description": "Ticker of company"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "cashflow",
+              "income",
+              "balancesheet"
+            ]
+          },
+          "name": "statement",
+          "in": "path",
+          "required": true,
+          "description": "Type of statement requested"
+        }
+      ],
+      "get": {
+        "summary": "Get User Info by User ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "User Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTCashFlow",
+                  "x-examples": {
+                    "Example 1": {
+                      "ticker": "AAPL",
+                      "cashflow": {
+                        "operating": {
+                          "accounts": [
+                            {
+                              "name": "changes in working capital",
+                              "value": "1,200",
+                              "subaccounts": [
+                                {
+                                  "value": "9,448",
+                                  "name": "accounts payable"
+                                },
+                                {
+                                  "value": "(6,499)",
+                                  "name": "other assets"
+                                },
+                                {
+                                  "value": "1,484",
+                                  "name": "inventories"
+                                },
+                                {
+                                  "value": "(9,343)",
+                                  "name": "accounts receivable"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "cash interest pd",
+                              "value": "2,865"
+                            },
+                            {
+                              "name": "cash taxes pd",
+                              "value": "19,573"
+                            },
+                            {
+                              "name": "non-cash items",
+                              "value": "9,149"
+                            },
+                            {
+                              "name": "deferred taxes",
+                              "value": "895"
+                            },
+                            {
+                              "name": "depreciation",
+                              "value": "11,104"
+                            },
+                            {
+                              "name": "net income",
+                              "value": "99,803"
+                            }
+                          ],
+                          "total": {
+                            "value": "122,151"
+                          }
+                        },
+                        "investing": {
+                          "accounts": [
+                            {
+                              "name": "otherinvestcashflowitms",
+                              "value": "(11,646)",
+                              "subaccounts": [
+                                {
+                                  "value": "(1,780)",
+                                  "name": "other investing cash flow"
+                                },
+                                {
+                                  "value": "(76,923)",
+                                  "name": "purchase of investments"
+                                },
+                                {
+                                  "value": "67,363",
+                                  "name": "sale"
+                                },
+                                {
+                                  "value": "(306)",
+                                  "name": "acquisition of business"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "capital expenditures",
+                              "value": "(10,708)"
+                            }
+                          ],
+                          "total": {
+                            "value": "(22,354)"
+                          }
+                        },
+                        "financing": {
+                          "accounts": [
+                            {
+                              "name": "iss (retirmnt) of debt",
+                              "value": "(123)",
+                              "subaccounts": [
+                                {
+                                  "value": "(4,078)",
+                                  "name": "long term debt"
+                                },
+                                {
+                                  "value": "3,955",
+                                  "name": "short term debt"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "iss (retirmnt) of stock",
+                              "value": "(89,402)"
+                            },
+                            {
+                              "name": "total cash dividends paid",
+                              "value": "(14,841)"
+                            },
+                            {
+                              "name": "financing cash flow items",
+                              "value": "(6,383)"
+                            }
+                          ],
+                          "total": {
+                            "value": "(110,749)"
+                          }
+                        },
+                        "net": {
+                          "accounts": [
+                            {
+                              "name": "netcash-ending_balance",
+                              "value": "24,977"
+                            },
+                            {
+                              "name": "netcash-beginning_balance",
+                              "value": "35,929"
+                            }
+                          ],
+                          "net_change": {
+                            "value": "(10,952)"
+                          }
+                        }
+                      },
+                      "date": "2022-09-24",
+                      "quarter": "202204"
+                    }
+                  }
+                },
+                "examples": {
+                  "Get User Alice Smith": {
+                    "value": {
+                      "id": 142,
+                      "firstName": "Alice",
+                      "lastName": "Smith",
+                      "email": "alice.smith@gmail.com",
+                      "dateOfBirth": "1997-10-31",
+                      "emailVerified": true,
+                      "signUpDate": "2019-08-24"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          }
+        },
+        "operationId": "get-users-userId",
+        "description": "Retrieve the information of the user with the matching user ID.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FTCashFlow": {
+        "type": "object",
+        "x-examples": {
+          "Example 1": {
+            "ticker": "AAPL",
+            "cashflow": {
+              "operating": {
+                "accounts": [
+                  {
+                    "name": "changes in working capital",
+                    "value": "1,200",
+                    "subaccounts": [
+                      {
+                        "value": "9,448",
+                        "name": "accounts payable"
+                      },
+                      {
+                        "value": "(6,499)",
+                        "name": "other assets"
+                      },
+                      {
+                        "value": "1,484",
+                        "name": "inventories"
+                      },
+                      {
+                        "value": "(9,343)",
+                        "name": "accounts receivable"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "cash interest pd",
+                    "value": "2,865"
+                  },
+                  {
+                    "name": "cash taxes pd",
+                    "value": "19,573"
+                  },
+                  {
+                    "name": "non-cash items",
+                    "value": "9,149"
+                  },
+                  {
+                    "name": "deferred taxes",
+                    "value": "895"
+                  },
+                  {
+                    "name": "depreciation",
+                    "value": "11,104"
+                  },
+                  {
+                    "name": "net income",
+                    "value": "99,803"
+                  }
+                ],
+                "total": {
+                  "value": "122,151"
+                }
+              },
+              "investing": {
+                "accounts": [
+                  {
+                    "name": "otherinvestcashflowitms",
+                    "value": "(11,646)",
+                    "subaccounts": [
+                      {
+                        "value": "(1,780)",
+                        "name": "other investing cash flow"
+                      },
+                      {
+                        "value": "(76,923)",
+                        "name": "purchase of investments"
+                      },
+                      {
+                        "value": "67,363",
+                        "name": "sale"
+                      },
+                      {
+                        "value": "(306)",
+                        "name": "acquisition of business"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "capital expenditures",
+                    "value": "(10,708)"
+                  }
+                ],
+                "total": {
+                  "value": "(22,354)"
+                }
+              },
+              "financing": {
+                "accounts": [
+                  {
+                    "name": "iss (retirmnt) of debt",
+                    "value": "(123)",
+                    "subaccounts": [
+                      {
+                        "value": "(4,078)",
+                        "name": "long term debt"
+                      },
+                      {
+                        "value": "3,955",
+                        "name": "short term debt"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "iss (retirmnt) of stock",
+                    "value": "(89,402)"
+                  },
+                  {
+                    "name": "total cash dividends paid",
+                    "value": "(14,841)"
+                  },
+                  {
+                    "name": "financing cash flow items",
+                    "value": "(6,383)"
+                  }
+                ],
+                "total": {
+                  "value": "(110,749)"
+                }
+              },
+              "net": {
+                "accounts": [
+                  {
+                    "name": "netcash-ending_balance",
+                    "value": "24,977"
+                  },
+                  {
+                    "name": "netcash-beginning_balance",
+                    "value": "35,929"
+                  }
+                ],
+                "net_change": {
+                  "value": "(10,952)"
+                }
+              }
+            },
+            "date": "2022-09-24",
+            "quarter": "202204"
+          }
+        },
+        "properties": {
+          "ticker": {
+            "type": "string"
+          },
+          "cashflow": {
+            "type": "object",
+            "properties": {
+              "operating": {
+                "type": "object",
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "subaccounts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "total": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "investing": {
+                "type": "object",
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "subaccounts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "total": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "financing": {
+                "type": "object",
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        },
+                        "subaccounts": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "value": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "total": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "net": {
+                "type": "object",
+                "properties": {
+                  "accounts": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "net_change": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "date": {
+            "type": "string"
+          },
+          "quarter": {
+            "type": "string"
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
+          }
+        }
+      },
+      "err": {
+        "type": "object",
+        "description": "error responses. see full list of error codes [here](https://fasttrack.stoplight.io/docs/ftlightning/ZG9jOjMwNzY2Mw-error-codes)",
+        "title": "",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "-5000000",
+            "description": "numeric code of error. see full list of error codes [here](https://stoplight.io/p/docs/gh/investors-fasttrack/ftlightning/docs/01b-Errors.md?srn=gh/investors-fasttrack/ftlightning/docs/01b-Errors.md)"
+          },
+          "message": {
+            "type": "string",
+            "example": "invalid ticker",
+            "description": "text based error message"
+          },
+          "link": {
+            "type": "string",
+            "format": "url",
+            "description": "link describing error"
+          }
+        }
+      }
+    },
+    "securitySchemes": {},
+    "parameters": {
+      "appid": {
+        "name": "appid",
+        "in": "header",
+        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+      },
+      "token": {
+        "name": "token",
+        "in": "header",
+        "description": "36 characher GUID received from the auth/login end point",
+        "required": true,
+        "style": "simple",
+        "explode": false,
+        "schema": {
+          "type": "string"
+        },
+        "example": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+      }
+    }
+  }
+}
