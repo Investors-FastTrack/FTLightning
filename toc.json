@@ -90,6 +90,11 @@
       "type": "item",
       "title": "Bond (CUSIP)",
       "uri": "/bonds_fasttrack.json"
+    },
+    {
+      "type": "item",
+      "title": "Financials",
+      "uri": "/financials.json"
     }
   ]
 }
