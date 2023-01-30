@@ -182,15 +182,158 @@
                   }
                 },
                 "examples": {
-                  "Get User Alice Smith": {
+                  "JPMorgan Cash Flow": {
                     "value": {
-                      "id": 142,
-                      "firstName": "Alice",
-                      "lastName": "Smith",
-                      "email": "alice.smith@gmail.com",
-                      "dateOfBirth": "1997-10-31",
-                      "emailVerified": true,
-                      "signUpDate": "2019-08-24"
+                      "ticker": "JPM",
+                      "cashflow": {
+                        "operating": {
+                          "accounts": [
+                            {
+                              "name": "changes in working capital",
+                              "value": "(26,511)"
+                            },
+                            {
+                              "name": "payable",
+                              "value": "75,961"
+                            },
+                            {
+                              "name": "other assets",
+                              "value": "(172,741)"
+                            },
+                            {
+                              "name": "loan loss provision",
+                              "value": "4,101"
+                            },
+                            {
+                              "name": "cash interest pd",
+                              "value": "11,075"
+                            },
+                            {
+                              "name": "cash taxes pd",
+                              "value": "226"
+                            },
+                            {
+                              "name": "non-cash items",
+                              "value": "3,815"
+                            },
+                            {
+                              "name": "deferred taxes",
+                              "value": "(3,455)"
+                            },
+                            {
+                              "name": "depreciation",
+                              "value": "5,380"
+                            },
+                            {
+                              "name": "net income",
+                              "value": "26,668"
+                            }
+                          ]
+                        },
+                        "investing": {
+                          "accounts": [
+                            {
+                              "name": "other investing cash flow",
+                              "value": "(48,244)"
+                            },
+                            {
+                              "name": "loans",
+                              "value": "(59,952)"
+                            },
+                            {
+                              "name": "purchase of investments",
+                              "value": "(104,533)"
+                            },
+                            {
+                              "name": "sale",
+                              "value": "126,440"
+                            }
+                          ]
+                        },
+                        "financing": {
+                          "accounts": [
+                            {
+                              "name": "iss (retirmnt) of debt",
+                              "value": "28,703"
+                            },
+                            {
+                              "name": "long term debt",
+                              "value": "33,516"
+                            },
+                            {
+                              "name": "short term debt",
+                              "value": "(4,813)"
+                            },
+                            {
+                              "name": "iss (retirmnt) of stock",
+                              "value": "(5,162)",
+                              "subaccounts": [
+                                {
+                                  "value": "(2,000)",
+                                  "name": "preferred stock"
+                                },
+                                {
+                                  "value": "(3,162)",
+                                  "name": "common stock"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "total cash dividends paid",
+                              "value": "(10,186)",
+                              "subaccounts": [
+                                {
+                                  "value": "(1,239)",
+                                  "name": "cash divs paid - preferred"
+                                },
+                                {
+                                  "value": "(8,947)",
+                                  "name": "cash divids paid - common"
+                                }
+                              ]
+                            },
+                            {
+                              "name": "financing cash flow items",
+                              "value": "2,732",
+                              "subaccounts": [
+                                {
+                                  "value": "1,158",
+                                  "name": "other financing cash flow"
+                                },
+                                {
+                                  "value": "45,910",
+                                  "name": "fed. funds"
+                                },
+                                {
+                                  "value": "(44,336)",
+                                  "name": "deposits"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        "net": {
+                          "accounts": [
+                            {
+                              "name": "netcash-ending_balance",
+                              "value": "644,187"
+                            },
+                            {
+                              "name": "netcash-beginning_balance",
+                              "value": "740,834"
+                            },
+                            {
+                              "name": "foreign exchange effects",
+                              "value": "(32,342)"
+                            }
+                          ],
+                          "net_change": {
+                            "value": "(96,647)"
+                          }
+                        }
+                      },
+                      "date": "2022-09-30",
+                      "quarter": "202203"
                     }
                   }
                 }
