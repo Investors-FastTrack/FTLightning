@@ -3001,11 +3001,25 @@
             "in": "query",
             "name": "backfill",
             "description": "This function exports data for all requested dates. If a requested date/date range date is before the security's inception, the security's first known value is shown. Turn this off by sending a 0 value."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1",
+                "0",
+                "true",
+                "false"
+              ]
+            },
+            "in": "query",
+            "name": "describe",
+            "description": "Insert ticker symbol as the first line and security name as the second line."
           }
         ],
         "responses": {
           "200": {
-            "description": "CSV file with dates and closing prices",
+            "description": "CSV file with dates and closing prices (and optional ticker symbol and name)",
             "headers": {
               "Content-Disposition": {
                 "style": "simple",
@@ -3034,7 +3048,17 @@
         "security": [],
         "tags": [
           "Other"
-        ]
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          }
+        }
       },
       "parameters": [
         {

@@ -352,6 +352,15 @@
           },
           {
             "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "202201"
+            },
+            "in": "query",
+            "name": "quarter",
+            "description": "Date of cash flow. Format = YYYYQQ. QQ options are 01, 02, 03, or 04"
           }
         ]
       }
