@@ -12,8 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://ftl.fasttrack.net",
-      "description": ""
+      "url": "https://ftl.fasttrack.net"
     }
   ],
   "paths": {
@@ -4316,6 +4315,78 @@
         "x-internal": true
       },
       "parameters": []
+    },
+    "/v1/docs/{ticker}/{file}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        },
+        {
+          "schema": {
+            "type": "string",
+            "enum": [
+              "prospectus",
+              "sprospectus"
+            ]
+          },
+          "name": "file",
+          "in": "path",
+          "required": true,
+          "description": "Indicate which file you desire: Prospectus or Summary prospectus"
+        }
+      ],
+      "get": {
+        "summary": "Prospectus and Summary Prospectus",
+        "tags": [
+          "Documents"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "Example 1": {
+                      "link": "https://ftprospectus.s3.amazonaws.com/464287515/prospectus.pdf?AWSAccessKeyId=ASIAXF332BXLDV6YIP24&Expires=1677786303&Signature=js%2BjzHQDHWcWl8ex8wDNfBQ5p3s%3D&X-Amzn-Trace-Id=Root%3D1-6400fa65-0134e4f502c000406e484ed5%3BParent%3D6d1153e61e5264d2%3BSampled%3D0&x-amz-security-token=IQoJb3JpZ2luX2VjEAQaCXVzLWVhc3QtMSJHMEUCIETEa1v1rL4A6eSTfRzecwJhttgdInb1r1QXcqhyO6xwAiEAmn%2FNGUuQfzPIZg6rRblm8hWS54uJEovpYPoipzE%2BsjAqiQMIrf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw0OTM2NDQwMjUzMDIiDL16tiWQvJwLp5GuNSrdAivZArwp19JXYA345t%2FIcNy9QcYl%2ByWWXQcoRk36OWzY%2BCiPZMqVVqIsUPgCMq9vflozTikkVlh3o5cXNCTIPsF%2B85hjpz1izovylREG8o%2FzHiyzfA6U7wodKetgrboFF0N1qasOEq%2B2ycVgGO28t29D8gTR4%2BFDZpgh%2Fgxmg1wkJGMuwsK%2FWwJtPSqFBJ2wgpF4xfzcmQv0BfvDgZ%2F0iMHr39a8lBJxAaVOQiaWfUZfQjIowS1dSqIDrPNkjMTmUGZ8iBcg4VpvrXqNionM5nJgH1cTurM1z1vsRuC%2FaRPyJ42irr5y2gI45DbAd%2Fzsb1Tc5fonn0HlaxcuorqW5cqYdluTj8ldl7D84Hm0CpmvpUmmrrMi2TdsEtBtpvNHrFgkwPdkJFrI%2BoJQjmcn4KdLKEvU53wXh6Q1EyoKCtuk%2BKWGD4l2SwtdCZR8cJiiHjUXjlYs%2FI0K326ilyIw5fSDoAY6ngH%2BKeTflJLfA40QkaeqyNIOW27nVQEZo8qfgjTV855EovMAsjqpX%2Fsxqmtcg7zIRnyWfqsjC4GI7xKU4OobBKfj5xepS7O7ypAEZHo5aT3k4hhoYQ4xCzeLvWENd%2BZ%2B36UnrnWOciEFGJuXACtFFd1ASB7rQO76yZzgXY%2Fg%2Fv4QCNq7ibhhavp0SAA7BdD6OTL%2BtyGDiW3uIsj%2F%2BCgT6g%3D%3D",
+                      "valid_until": "3/2/2023, 9:45:03 AM",
+                      "ticker": "IGV"
+                    }
+                  },
+                  "properties": {
+                    "link": {
+                      "type": "string",
+                      "description": "Download link for document"
+                    },
+                    "valid_until": {
+                      "type": "string",
+                      "description": "Time (EST) when link expires"
+                    },
+                    "ticker": {
+                      "type": "string",
+                      "description": "Requested Ticker"
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-docs-ticker-file",
+        "description": "Retrieve URL to download mutual fund and ETF prospectus and summary prospectus.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -7247,6 +7318,9 @@
     },
     {
       "name": "Families"
+    },
+    {
+      "name": "Documents"
     },
     {
       "name": "Other"
