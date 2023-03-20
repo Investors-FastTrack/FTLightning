@@ -32,6 +32,9 @@ Search and chart our database here: https://ftcloud.fasttrack.net/web/search
 ### Available Data
 The following items are available for all tickers in the FastTrack database
 
+[Launch End Point Data List](https://ftcloud.fasttrack.net/web/iframe/apidatapoints.html)
+
+
 #### [Pricing](https://fasttrack.stoplight.io/docs/ftlightning/aff23f320c5df-data-range-multiple-tickers)
 - Daily Adjusted and Unadjusted Closing Prices
 - Daily Open, High, Low Prices
