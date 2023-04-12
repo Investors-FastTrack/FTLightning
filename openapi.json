@@ -1862,7 +1862,7 @@
           }
         },
         "operationId": "get-info-ticker-portfolio",
-        "description": "Get mutual fund or ETF's top ten positions, sector weighting, and net 1 year flows \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "description": "This endpoint returns ETF or Mutual Fund's top 10 or 25 holdings, index, turnover, asset class, region, sector, sector bond, countries, bond quality, and market capitalization. The top ten holdings are listed with their ticker symbols and net weightings. The region, sector, and countries data provide net weightings for each region, sector, and country where the ETF holds assets. The market cap data provides the percentage of holdings in companies with different market capitalizations.",
         "parameters": [
           {
             "schema": {
@@ -2009,7 +2009,7 @@
             }
           }
         },
-        "description": "returns reference data for portfolio and portfolio positions ",
+        "description": "This API endpoint allows the user to submit a portfolio of securities and corresponding weightings via a POST request. The API then calculates various weighted data points for the portfolio, including sector, category, asset class, and region breakdowns. <br><br>Additionally, it calculates the bond weighting, bond sector breakdown (if applicable), and weighted average expense ratio for the portfolio.",
         "parameters": [
           {
             "$ref": "#/components/parameters/appid"
