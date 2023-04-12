@@ -2772,12 +2772,11 @@
             }
           }
         },
-        "description": "Mix and match families (custom and predefined lists of securities) with add, interset, and remove operations. ",
+        "description": "The endpoint provides a simple and efficient way for users to apply multiple filters to a large set of tickers, and return only those that meet the defined criteria.\n\nFilter on FastTrack's predefined families using ADD, REMOVE, and AND operators",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "description": "",
                 "type": "object",
                 "x-examples": {
                   "example-1": {
@@ -2798,7 +2797,7 @@
                 "properties": {
                   "screener": {
                     "type": "array",
-                    "description": "Array of screener operations. Applied in order listed in array",
+                    "description": "Array of objects that define the families of financial instruments to filter. Applied in order listed in array",
                     "items": {
                       "type": "object",
                       "properties": {
@@ -2808,7 +2807,22 @@
                         },
                         "operation": {
                           "type": "string",
-                          "description": "add, and, or remove"
+                          "description": "**add** operation adds the financial instruments in the specified family to the filtered list. <br>\n**remove** operation removes the financial instruments in the specified family from the filtered list.<br>\n**and** operation applies an intersection operation to the filtered list and the specified family, retaining only the financial instruments that are present in both sets.\n",
+                          "enum": [
+                            "add",
+                            "remove",
+                            "and"
+                          ]
+                        },
+                        "rank": {
+                          "type": [
+                            "string"
+                          ],
+                          "x-stoplight": {
+                            "id": "cnggouea6mcvf"
+                          },
+                          "description": "Rank property is used to determine the order in which the filters should be applied, with lower rank values being applied before higher rank values.",
+                          "example": "1"
                         }
                       }
                     }
