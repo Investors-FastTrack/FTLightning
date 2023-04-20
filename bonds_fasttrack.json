@@ -764,7 +764,6 @@
         "description": "Descriptive data about the security such as rate, maturity, sector, industry, etc",
         "type": "object",
         "x-examples": {},
-        "title": "",
         "properties": {
           "cusip": {
             "type": "string",
@@ -786,34 +785,63 @@
             "properties": {
               "callable": {
                 "type": "boolean",
-                "description": "True or false if bond is callable"
+                "description": "A boolean value indicating whether the bond is callable or not. If it is callable, the issuer has the right to redeem the bond before its maturity date"
               },
               "makewhole_call": {
                 "type": "boolean",
-                "description": "True or false if cusip has a make whole provision"
+                "description": "A boolean value indicating whether a make-whole call provision is in effect. This provision requires the issuer to compensate the bondholder for any lost interest payments if the bond is called before its maturity date."
               },
               "date_first_par_call": {
-                "type": "string"
+                "type": "string",
+                "description": "The date on which the bond can first be called at par, or its face value."
               },
               "date_current_call": {
-                "type": "string"
+                "type": "string",
+                "description": "The current call date of the bond, or the earliest date at which the issuer can call back the bon"
               }
             }
           },
           "details": {
             "type": "object",
+            "description": "Detailed information about an individual bond",
             "properties": {
-              "issuer_type": {
+              "amount_outstanding": {
                 "type": "string",
-                "description": "Description of the security issuer "
+                "x-stoplight": {
+                  "id": "1kd2rsgzzqi8w"
+                },
+                "description": "The total amount of the bond outstanding"
               },
               "asset_type": {
                 "type": "string",
-                "description": "Description of the actual instrument: high yield bond, corporate bond, government bond, certificate of deposit, etc"
+                "description": "The type of asset"
               },
-              "sic_code": {
+              "convertable": {
+                "type": "boolean",
+                "description": "A boolean value indicating whether the bond is convertible or not."
+              },
+              "country": {
                 "type": "string",
-                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
+                "description": "The country of the issuer"
+              },
+              "currency": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "3h14bys5ycdxq"
+                },
+                "description": "The currency in which the bond is denominated"
+              },
+              "date_maturity": {
+                "type": "string",
+                "description": "The maturity date of the bond, represented as a string in YYYYMMDD format."
+              },
+              "description": {
+                "type": "string",
+                "description": "Issuer Name"
+              },
+              "issuer_type": {
+                "type": "string",
+                "description": "The type of issuer"
               },
               "naics_code": {
                 "type": "string",
@@ -845,29 +873,45 @@
                   }
                 }
               },
-              "description": {
+              "payment_frequency": {
                 "type": "string",
-                "description": "Issuer Name"
+                "description": "The frequency of interest payments for the bond."
               },
-              "country": {
+              "regs": {
                 "type": "string",
-                "description": "Issuer country"
+                "x-stoplight": {
+                  "id": "iyof8vt9ljkcs"
+                },
+                "description": "A boolean value indicating whether the issue is registered with the SEC."
               },
               "rate": {
                 "type": "string",
                 "description": "Annual interest rate paid on a the face value of security"
               },
-              "date_maturity": {
+              "rule_144A": {
                 "type": "string",
-                "description": "Date security matures"
+                "x-stoplight": {
+                  "id": "n42q2ks9ajexn"
+                },
+                "description": " Indicates whether the issue is trading under Rule 144A or not"
               },
-              "payment_frequency": {
+              "security_type": {
                 "type": "string",
-                "description": "Frequency of interest payments"
+                "x-stoplight": {
+                  "id": "r4ia1l1qd7h6c"
+                },
+                "description": "The type of security"
               },
-              "convertable": {
-                "type": "boolean",
-                "description": "True or false if bond is a convertible bond"
+              "sic_code": {
+                "type": "string",
+                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
+              },
+              "state_inc": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "5owyadevu3h2n"
+                },
+                "description": "The state of incorporation of the issuer, if applicable"
               }
             }
           },
@@ -876,15 +920,15 @@
             "properties": {
               "issue_date": {
                 "type": "string",
-                "description": "Date bond was issued"
+                "description": "The date on which the bond was issued"
               },
               "issue_size": {
                 "type": "string",
-                "description": "Total amount of debt raise by issuance"
+                "description": "The total size of the bond issue"
               },
               "issue_price": {
                 "type": "string",
-                "description": "Price security issued"
+                "description": "The issue price of the bond"
               },
               "nominal_value": {
                 "type": "string",
@@ -893,11 +937,83 @@
               "coupon_type": {
                 "type": "string",
                 "description": "Type of coupon payment: fixed, floating, etc"
+              },
+              "coupon_type_other": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "jh0m5xig06hgl"
+                },
+                "description": "A more detailed description of the bond's coupon type"
+              },
+              "dated_date": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "dlucqlz489yra"
+                },
+                "description": "The date from which interest on the bond begins to accrue"
+              },
+              "debt_ranking": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "bcajceuf8nqtt"
+                },
+                "description": "The debt ranking of the bond"
+              },
+              "issuer_type": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "6bckfni2vqtdz"
+                },
+                "description": "The type of issuer"
               }
             }
           },
           "err": {
             "$ref": "#/components/schemas/err"
+          },
+          "status": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "m32d6yilbv66r"
+            },
+            "description": "Provides information about a bond's current state, which can include \"Expired,\" \"Matured,\" \"Fully Called,\" \"Converted,\" \"Exchanged,\"  \"Liquidated\" and more"
+          },
+          "reference": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "wgs4p4t5ym2tx"
+            },
+            "description": "Other identifiers related to this bond",
+            "properties": {
+              "cusip": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "qrvzagszkrnz8"
+                },
+                "description": "The unique eight-character identifier assigned to the bond by CUSIP Global Services"
+              },
+              "cusip_check": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "af1rsmrxibell"
+                },
+                "description": "CUSIP, plus the last digit of the CUSIP identifier, used as a check digit to validate the identifier."
+              },
+              "isin": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "yxyzav9uw2qk9"
+                },
+                "description": "The International Securities Identification Number assigned to the bond"
+              },
+              "ticker": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "otib52416y3bc"
+                },
+                "description": "The stock ticker symbol associated with the bond, if available"
+              }
+            }
           }
         }
       },
