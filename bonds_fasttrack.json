@@ -769,37 +769,12 @@
             "type": "string",
             "description": "8 digit cusip of requested security\n"
           },
-          "ratings": {
-            "type": "object",
-            "properties": {
-              "moodys": {
-                "type": "string"
-              },
-              "sandp": {
-                "type": "string"
-              }
-            }
-          },
-          "redemptive_items": {
-            "type": "object",
-            "properties": {
-              "callable": {
-                "type": "boolean",
-                "description": "A boolean value indicating whether the bond is callable or not. If it is callable, the issuer has the right to redeem the bond before its maturity date"
-              },
-              "makewhole_call": {
-                "type": "boolean",
-                "description": "A boolean value indicating whether a make-whole call provision is in effect. This provision requires the issuer to compensate the bondholder for any lost interest payments if the bond is called before its maturity date."
-              },
-              "date_first_par_call": {
-                "type": "string",
-                "description": "The date on which the bond can first be called at par, or its face value."
-              },
-              "date_current_call": {
-                "type": "string",
-                "description": "The current call date of the bond, or the earliest date at which the issuer can call back the bon"
-              }
-            }
+          "status": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "m32d6yilbv66r"
+            },
+            "description": "Provides information about a bond's current state, which can include \"Expired,\" \"Matured,\" \"Fully Called,\" \"Converted,\" \"Exchanged,\"  \"Liquidated\" and more"
           },
           "details": {
             "type": "object",
@@ -968,15 +943,37 @@
               }
             }
           },
-          "err": {
-            "$ref": "#/components/schemas/err"
+          "ratings": {
+            "type": "object",
+            "properties": {
+              "moodys": {
+                "type": "string"
+              },
+              "sandp": {
+                "type": "string"
+              }
+            }
           },
-          "status": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "m32d6yilbv66r"
-            },
-            "description": "Provides information about a bond's current state, which can include \"Expired,\" \"Matured,\" \"Fully Called,\" \"Converted,\" \"Exchanged,\"  \"Liquidated\" and more"
+          "redemptive_items": {
+            "type": "object",
+            "properties": {
+              "callable": {
+                "type": "boolean",
+                "description": "A boolean value indicating whether the bond is callable or not. If it is callable, the issuer has the right to redeem the bond before its maturity date"
+              },
+              "date_first_par_call": {
+                "type": "string",
+                "description": "The date on which the bond can first be called at par, or its face value."
+              },
+              "date_current_call": {
+                "type": "string",
+                "description": "The current call date of the bond, or the earliest date at which the issuer can call back the bon"
+              },
+              "makewhole_call": {
+                "type": "boolean",
+                "description": "A boolean value indicating whether a make-whole call provision is in effect. This provision requires the issuer to compensate the bondholder for any lost interest payments if the bond is called before its maturity date."
+              }
+            }
           },
           "reference": {
             "type": "object",
@@ -1014,6 +1011,9 @@
                 "description": "The stock ticker symbol associated with the bond, if available"
               }
             }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
           }
         }
       },
