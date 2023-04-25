@@ -5808,10 +5808,13 @@
             "type": "number",
             "description": "annual percent interest on borrowed money. All interest is accrued quarterly."
           },
-          "seed": {
+          "seedvalue": {
             "type": "number",
             "description": "value of portfolio on the first day of trading",
-            "default": 100000
+            "default": 100000,
+            "x-stoplight": {
+              "id": "48y1benc166o2"
+            }
           },
           "model": {
             "type": "array",
