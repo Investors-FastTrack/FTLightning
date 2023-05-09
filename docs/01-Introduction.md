@@ -4,7 +4,7 @@
 FastTrack Market Data API is Investors FastTrack's data REST API. All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
 
 <!-- theme: danger -->
->### *Technical Documentation*
+>### *Technical Documentation* 
 >This documentation is **intended for computer programmers and developers**. 
 
 <!-- theme: none -->
