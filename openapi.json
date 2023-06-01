@@ -4494,11 +4494,14 @@
           "err": {
             "$ref": "#/components/schemas/err"
           },
-          "volumes": {
+          "vols": {
             "type": "array",
             "description": "Array of daily volumes. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
             "items": {
-              "type": "number"
+              "type": "number",
+              "x-stoplight": {
+                "id": "ubnvhs2b2zlg9"
+              }
             }
           },
           "opens": {
@@ -4522,8 +4525,7 @@
               "type": "number"
             }
           }
-        },
-        "title": ""
+        }
       },
       "FTDataList": {
         "type": "object",
