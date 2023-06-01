@@ -341,17 +341,7 @@
     "/v1/stats/{ticker}/{stat}": {
       "parameters": [
         {
-          "name": "ticker",
-          "in": "path",
-          "description": "ticker symbol",
-          "style": "simple",
-          "explode": false,
-          "schema": {
-            "type": "string",
-            "example": "JPM"
-          },
-          "example": "JPM",
-          "required": true
+          "$ref": "#/components/parameters/ticker"
         },
         {
           "schema": {
@@ -372,7 +362,8 @@
               "sd_month",
               "alpha",
               "alpha_month",
-              "market_cap_month"
+              "market_cap_month",
+              "vwap"
             ]
           },
           "name": "stat",
