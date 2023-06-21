@@ -3132,6 +3132,19 @@
             "in": "query",
             "name": "format",
             "description": "Return CSV or JSON format. CSV is default result."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1",
+                "0"
+              ],
+              "default": "0"
+            },
+            "in": "query",
+            "name": "name",
+            "description": "Option to include name in results. 1 = include. 0 = omit"
           }
         ],
         "tags": [
