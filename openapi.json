@@ -1911,7 +1911,7 @@
           }
         },
         "operationId": "get-info-tickeR-details",
-        "description": "Returns category and expense ratio of ticker \\*\\***Must use https://FTL.fasttrack.net/v1 server** \\*\\*",
+        "description": "Returns category, expense ratio, sector, industry, share classes and more for ETFs, mutual funds, and stocks. Some fields are security type specific.",
         "parameters": [
           {
             "$ref": "#/components/parameters/appid"
@@ -5739,6 +5739,19 @@
           "shareclass": {
             "type": "string",
             "description": "Funds Only - Security Share Class"
+          },
+          "xtype": {
+            "x-stoplight": {
+              "id": "aizz0nhopuyve"
+            },
+            "description": "Returns the type of the security. Values can be Equity, FixedIncome, Allocation, Stock, or Index",
+            "enum": [
+              "Equity",
+              "Stock",
+              "FixedIncome",
+              "Index",
+              "Allocation"
+            ]
           }
         }
       },
