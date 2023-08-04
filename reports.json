@@ -1,0 +1,660 @@
+{
+  "openapi": "3.1.0",
+  "x-stoplight": {
+    "id": "xrh6lmhpy1meg"
+  },
+  "info": {
+    "title": "reports",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://reports.fasttrack.net/beta"
+    }
+  ],
+  "paths": {
+    "/build": {
+      "post": {
+        "summary": "Create New User",
+        "operationId": "post-user",
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/report"
+                },
+                "examples": {
+                  "New User Bob Fellow": {
+                    "value": {
+                      "id": 12,
+                      "firstName": "Bob",
+                      "lastName": "Fellow",
+                      "email": "bob.fellow@gmail.com",
+                      "dateOfBirth": "1996-08-24",
+                      "emailVerified": false,
+                      "createDate": "2020-11-18"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Required Information"
+          },
+          "": {
+            "description": ""
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "Create User Bob Fellow": {
+                  "value": {
+                    "firstName": "Bob",
+                    "lastName": "Fellow",
+                    "email": "bob.fellow@gmail.com",
+                    "dateOfBirth": "1996-08-24"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Post the necessary fields for the API to create a new user."
+        },
+        "description": "Create a new user.",
+        "x-stoplight": {
+          "id": "n7mq1pjsb7bgn"
+        }
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {
+      "report": {
+        "type": "object",
+        "x-stoplight": {
+          "id": "338dda6a68ca1"
+        },
+        "x-examples": {
+          "Example 1": {
+            "tickers": [
+              "IGV",
+              "IGM"
+            ],
+            "defaultOptions": {
+              "fontSize": 16,
+              "benchmark": "SP-DA"
+            },
+            "items": [
+              {
+                "item": "text",
+                "options": {
+                  "tag": "h2",
+                  "style": "height:100px;"
+                }
+              },
+              {
+                "item": "bar_spacer"
+              },
+              {
+                "item": "text",
+                "items": [
+                  [
+                    "data_stats.describe.name"
+                  ]
+                ],
+                "options": {
+                  "tag": "h2",
+                  "join": " vs "
+                }
+              },
+              {
+                "item": "text",
+                "options": {
+                  "tag": "h2",
+                  "style": "height:400px;"
+                }
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "text",
+                "items": [
+                  [
+                    "data_stats.describe.name"
+                  ]
+                ],
+                "options": {
+                  "tag": "h2"
+                }
+              },
+              {
+                "item": "chart",
+                "options": {
+                  "width": 300,
+                  "header": "Performance",
+                  "benchmark": 1
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "columntable",
+                "items": [
+                  [
+                    "data_description.text",
+                    "Description"
+                  ],
+                  [
+                    "data_details.category",
+                    "Category"
+                  ],
+                  [
+                    "data_details.objective",
+                    "Objective"
+                  ],
+                  [
+                    "data_stats.describe.startdate.strdate.replace(/-/g, \"/\")",
+                    "Family"
+                  ],
+                  [
+                    "data_portfolio.turnover",
+                    "Turnover",
+                    "percent"
+                  ],
+                  [
+                    "data_details.expenseratio",
+                    "Expense Ratio",
+                    "percent"
+                  ],
+                  [
+                    "data_stats.describe.marketcap",
+                    "AUM",
+                    "money"
+                  ],
+                  [
+                    "data_portfolio.index.prospectus.name",
+                    "Prospectus Index"
+                  ]
+                ],
+                "options": {
+                  "header": "Key Info",
+                  "addImage": 0,
+                  "addCircle": 0,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "table",
+                "items": [
+                  [
+                    "data_stats.describe.name",
+                    "Name"
+                  ],
+                  [
+                    "data_stats.returns.total.ytd",
+                    "YTD"
+                  ],
+                  [
+                    "data_stats.returns.total.onemonth",
+                    "1M"
+                  ],
+                  [
+                    "data_stats.returns.total.threemonths",
+                    "3M"
+                  ],
+                  [
+                    "data_stats.returns.total.one",
+                    "1Y"
+                  ],
+                  [
+                    "data_stats.returns.annualized.three",
+                    "3Y"
+                  ],
+                  [
+                    "data_stats.returns.annualized.five",
+                    "5Y"
+                  ],
+                  [
+                    "data_stats.returns.annualized.ten",
+                    "10Y"
+                  ],
+                  [
+                    "data_stats.returns.annualized.inception",
+                    "Inception"
+                  ]
+                ],
+                "options": {
+                  "header": "Performance",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "benchmark": 1
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "table",
+                "items": [
+                  [
+                    "data_stats.describe.name",
+                    "Name"
+                  ],
+                  [
+                    "data_stats.returns.years[34].returns",
+                    "2023"
+                  ],
+                  [
+                    "data_stats.returns.years[33].returns",
+                    "2022"
+                  ],
+                  [
+                    "data_stats.returns.years[32].returns",
+                    "2021"
+                  ],
+                  [
+                    "data_stats.returns.years[31].returns",
+                    "2020"
+                  ],
+                  [
+                    "data_stats.returns.years[30].returns",
+                    "2019"
+                  ],
+                  [
+                    "data_stats.returns.years[29].returns",
+                    "2018"
+                  ],
+                  [
+                    "data_stats.returns.years[28].returns",
+                    "2017"
+                  ],
+                  [
+                    "data_stats.returns.years[27].returns",
+                    "2016"
+                  ],
+                  [
+                    "data_stats.returns.years[26].returns",
+                    "2015"
+                  ],
+                  [
+                    "data_stats.returns.years[25].returns",
+                    "2014"
+                  ]
+                ],
+                "options": {
+                  "header": "Annual Returns",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "benchmark": 1
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "table_yields",
+                "options": {
+                  "header": "Yield",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "portfolio_table",
+                "type": "topten",
+                "options": {
+                  "header": "Top 10 Holdings",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "portfolio_table",
+                "type": "assetclass",
+                "options": {
+                  "header": "Asset Allocation",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "portfolio_table",
+                "type": "marketcap",
+                "options": {
+                  "header": "Market Capitalization Exposure",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "portfolio_table",
+                "type": "region",
+                "options": {
+                  "header": "Region Allocation",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "portfolio_table",
+                "type": "countries",
+                "options": {
+                  "header": "Country Allocation",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "bartable",
+                "type": "sector",
+                "options": {
+                  "header": "Equity Sectors",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1,
+                  "width": 220,
+                  "height": 150
+                }
+              },
+              {
+                "item": "spacer"
+              },
+              {
+                "item": "portfolio_table",
+                "type": "sectorBond",
+                "options": {
+                  "header": "Bond Sectors",
+                  "addImage": 1,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              },
+              {
+                "item": "pagebreak"
+              },
+              {
+                "item": "columntable",
+                "items": [
+                  [
+                    "data_stats.risk.sd",
+                    "1Y SD"
+                  ],
+                  [
+                    "data_stats_three_years.risk.sd",
+                    "3Y SD"
+                  ],
+                  [
+                    "data_stats_five_years.risk.sd",
+                    "5Y SD"
+                  ],
+                  [
+                    "data_stats.risk.sharpe",
+                    "1Y Sharpe Ratio"
+                  ],
+                  [
+                    "data_stats_three_years.risk.sharpe",
+                    "3Y Sharpe Ratio"
+                  ],
+                  [
+                    "data_stats_five_years.risk.sharpe",
+                    "5Y Sharpe Ratio"
+                  ]
+                ],
+                "options": {
+                  "header": "Risk",
+                  "addImage": 0,
+                  "addCircle": 1,
+                  "addName": 1
+                }
+              }
+            ]
+          }
+        },
+        "title": "Report",
+        "properties": {
+          "tickers": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "defaultOptions": {
+            "$ref": "#/components/schemas/reportOptions"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "x-stoplight": {
+                "id": "6hzu5jacvfofy"
+              },
+              "type": "object",
+              "properties": {
+                "item": {
+                  "x-stoplight": {
+                    "id": "ge3qh06nikxhr"
+                  },
+                  "enum": [
+                    "text",
+                    "columntable",
+                    "bartable",
+                    "pagebreak",
+                    "spacer",
+                    "bar_spacer",
+                    "chart",
+                    "table",
+                    "table_yields",
+                    "portfolio_table",
+                    "column"
+                  ]
+                },
+                "options": {
+                  "$ref": "#/components/schemas/reportOptions",
+                  "x-stoplight": {
+                    "id": "i1gpwyhtn4fd2"
+                  }
+                },
+                "items": {
+                  "type": "array",
+                  "x-stoplight": {
+                    "id": "fa0ke70whnmgq"
+                  },
+                  "items": {
+                    "x-stoplight": {
+                      "id": "3gm3x5x9w5ip5"
+                    },
+                    "type": "object",
+                    "properties": {
+                      "path": {
+                        "type": "string",
+                        "x-stoplight": {
+                          "id": "w6m8vmwt0b13p"
+                        }
+                      },
+                      "header": {
+                        "type": "string",
+                        "x-stoplight": {
+                          "id": "7h034a95ukgm3"
+                        }
+                      },
+                      "format": {
+                        "type": "string",
+                        "x-stoplight": {
+                          "id": "dxvlweeho4e9a"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "reportOptions": {
+        "type": "object",
+        "x-examples": {
+          "Example 1": {
+            "options": {
+              "tag": "h2",
+              "style": "height:100px;"
+            }
+          }
+        },
+        "properties": {
+          "tag": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "hvn8emf31a3tq"
+            }
+          },
+          "style": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "xaf528tonecbz"
+            }
+          },
+          "join": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "rrqy4rtday8n8"
+            }
+          },
+          "header": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "sijh76tcsiu0a"
+            }
+          },
+          "width": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "yumm69o184guh"
+            }
+          },
+          "benchmark": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "4fyg3ft07poyw"
+            }
+          },
+          "addCircle": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "5gndhfdr1rose"
+            }
+          },
+          "addName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ce0t6ooppd7i7"
+            }
+          },
+          "addImage": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "fxuwuko1y7vl8"
+            }
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "report": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "defaultOptions": {
+                  "type": "object",
+                  "x-stoplight": {
+                    "id": "m3eidkkl5ejgp"
+                  },
+                  "properties": {
+                    "fontSize": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "24x7fhyyzkzjz"
+                      }
+                    },
+                    "benchmark": {
+                      "type": "string",
+                      "x-stoplight": {
+                        "id": "6q9se6f0sx0p9"
+                      }
+                    }
+                  }
+                },
+                "items": {
+                  "type": "array",
+                  "x-stoplight": {
+                    "id": "3uq8gr5kxqii0"
+                  },
+                  "items": {
+                    "x-stoplight": {
+                      "id": "j09dfejfre1z8"
+                    },
+                    "type": "object"
+                  }
+                },
+                "tickers": {
+                  "type": "array",
+                  "x-stoplight": {
+                    "id": "rg6kuzubbgezz"
+                  },
+                  "items": {
+                    "x-stoplight": {
+                      "id": "j0i3bu6in7zmt"
+                    },
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
