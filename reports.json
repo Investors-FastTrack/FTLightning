@@ -97,15 +97,18 @@
         "properties": {
           "tickers": {
             "type": "array",
+            "description": "List of tickers to include in the report. ",
             "items": {
               "type": "string"
             }
           },
           "defaultOptions": {
-            "$ref": "#/components/schemas/reportOptions"
+            "$ref": "#/components/schemas/reportOptions",
+            "description": "General options to use when no specific options are included in *items*"
           },
           "items": {
             "type": "array",
+            "description": "List of report object to include in the report. Items are printed in the same order they are listed.",
             "items": {
               "x-stoplight": {
                 "id": "6hzu5jacvfofy"
@@ -130,19 +133,22 @@
                     "table_yields",
                     "text",
                     "scatterchart"
-                  ]
+                  ],
+                  "description": "Type of object to include in the report"
                 },
                 "options": {
                   "$ref": "#/components/schemas/reportOptions",
                   "x-stoplight": {
                     "id": "i1gpwyhtn4fd2"
-                  }
+                  },
+                  "description": "Specific options to use on this item"
                 },
                 "data": {
                   "type": "array",
                   "x-stoplight": {
                     "id": "fa0ke70whnmgq"
                   },
+                  "description": "Data points to include in the object when using columntable, comparable,table, or text",
                   "items": {
                     "x-stoplight": {
                       "id": "3gm3x5x9w5ip5"
@@ -153,19 +159,26 @@
                         "type": "string",
                         "x-stoplight": {
                           "id": "w6m8vmwt0b13p"
-                        }
+                        },
+                        "description": "Data point's JSON path"
                       },
                       "header": {
                         "type": "string",
                         "x-stoplight": {
                           "id": "7h034a95ukgm3"
-                        }
+                        },
+                        "description": "Header to use for this data point"
                       },
                       "format": {
-                        "type": "string",
                         "x-stoplight": {
                           "id": "dxvlweeho4e9a"
-                        }
+                        },
+                        "description": "Format for the data",
+                        "enum": [
+                          "money",
+                          "number",
+                          "percent"
+                        ]
                       }
                     },
                     "required": [
@@ -181,10 +194,15 @@
             }
           },
           "report": {
-            "type": "string",
             "x-stoplight": {
               "id": "2fdyt287xyf1n"
-            }
+            },
+            "enum": [
+              "ft_tear_fund_equity",
+              "ft_tear_fund_bond",
+              "ft_tear_stock",
+              "ft_compare_fund_1"
+            ]
           }
         },
         "required": [
@@ -206,13 +224,15 @@
             "type": "string",
             "x-stoplight": {
               "id": "5gndhfdr1rose"
-            }
+            },
+            "description": "Add colored circle next to the item in the first column"
           },
           "addImage": {
             "type": "string",
             "x-stoplight": {
               "id": "fxuwuko1y7vl8"
-            }
+            },
+            "description": "Add image to the top of the table"
           },
           "addName": {
             "type": "string",
@@ -230,37 +250,43 @@
             "type": "string",
             "x-stoplight": {
               "id": "sijh76tcsiu0a"
-            }
+            },
+            "description": "Add a header in bold text to the top of the report object."
           },
           "height": {
             "type": "string",
             "x-stoplight": {
               "id": "sijh76tcsiu0a"
-            }
+            },
+            "description": "Height of image, if item is image"
           },
           "join": {
             "type": "string",
             "x-stoplight": {
               "id": "rrqy4rtday8n8"
-            }
+            },
+            "description": "When using *text* and API values are specified, how to join the text"
           },
           "style": {
             "type": "string",
             "x-stoplight": {
               "id": "xaf528tonecbz"
-            }
+            },
+            "description": "CSS style to use when *text* item is used"
           },
           "tag": {
             "type": "string",
             "x-stoplight": {
               "id": "hvn8emf31a3tq"
-            }
+            },
+            "description": "HTML Tag to use when *text* item is used"
           },
           "width": {
             "type": "string",
             "x-stoplight": {
               "id": "yumm69o184guh"
-            }
+            },
+            "description": "Width of image, if item is image"
           }
         }
       }
