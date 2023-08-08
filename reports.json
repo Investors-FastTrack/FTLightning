@@ -21,27 +21,14 @@
           "200": {
             "description": "User Created",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/report"
-                },
-                "examples": {
-                  "New User Bob Fellow": {
-                    "value": {
-                      "id": 12,
-                      "firstName": "Bob",
-                      "lastName": "Fellow",
-                      "email": "bob.fellow@gmail.com",
-                      "dateOfBirth": "1996-08-24",
-                      "emailVerified": false,
-                      "createDate": "2020-11-18"
-                    }
-                  }
-                }
-              },
               "application/pdf": {
                 "schema": {
                   "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/report"
                 }
               }
             }
@@ -60,7 +47,14 @@
                 "$ref": "#/components/schemas/report"
               },
               "examples": {
-                "Create User Bob Fellow": {}
+                "Example 1": {
+                  "value": {
+                    "tickers": [
+                      "JPM"
+                    ],
+                    "report": "ft_tear_stock"
+                  }
+                }
               }
             }
           },
@@ -84,7 +78,7 @@
               "type": "string"
             },
             "in": "header",
-            "name": "Content-Type",
+            "name": "Accept",
             "required": true
           }
         ]
