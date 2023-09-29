@@ -227,6 +227,9 @@
           },
           {
             "$ref": "#/components/parameters/ma"
+          },
+          {
+            "$ref": "#/components/parameters/vol"
           }
         ],
         "responses": {
@@ -306,6 +309,9 @@
           },
           {
             "$ref": "#/components/parameters/ma"
+          },
+          {
+            "$ref": "#/components/parameters/vol"
           }
         ],
         "responses": {
@@ -4914,6 +4920,81 @@
           "aux": {
             "type": "integer",
             "description": "describes the order which tickers were received."
+          },
+          "volumes": {
+            "type": "object",
+            "x-stoplight": {
+              "id": "xnn3ik6n718ja"
+            },
+            "description": "Average volume and volume data for stocks and ETFs.",
+            "properties": {
+              "average_30": {
+                "type": "object",
+                "x-stoplight": {
+                  "id": "jx5xklg4iqpyr"
+                },
+                "description": "30 day simple average of volume traded looking back from the end date",
+                "properties": {
+                  "dteend": {
+                    "$ref": "#/components/schemas/FTDate"
+                  },
+                  "dtestart": {
+                    "$ref": "#/components/schemas/FTDate"
+                  },
+                  "value": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "pfq2wn8pemffw"
+                    },
+                    "description": "Volume value"
+                  }
+                }
+              },
+              "average_90": {
+                "type": "object",
+                "x-stoplight": {
+                  "id": "auvebvz8el4il"
+                },
+                "description": "90 day simple average of volume traded looking back from the end date",
+                "properties": {
+                  "dteend": {
+                    "$ref": "#/components/schemas/FTDate"
+                  },
+                  "dtestart": {
+                    "$ref": "#/components/schemas/FTDate"
+                  },
+                  "value": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "5vrj1na7x54a4"
+                    },
+                    "description": "Volume value"
+                  }
+                }
+              },
+              "end_date": {
+                "type": "object",
+                "x-stoplight": {
+                  "id": "aib9y6ggto1wq"
+                },
+                "description": "Volume traded on the end date",
+                "properties": {
+                  "dteend": {
+                    "$ref": "#/components/schemas/FTDate"
+                  },
+                  "dtestart": {
+                    "$ref": "#/components/schemas/FTDate"
+                  },
+                  "value": {
+                    "type": "string",
+                    "x-stoplight": {
+                      "id": "h7w67j03cdbxi"
+                    },
+                    "description": "Volume value"
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -7328,6 +7409,20 @@
           "example": "10, 50,100"
         },
         "description": "Comma separated list of moving average lengths"
+      },
+      "vol": {
+        "name": "vol",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": [
+            "0",
+            "1"
+          ],
+          "default": "0"
+        },
+        "description": "Toggle to include or exclue volume data"
       }
     },
     "requestBodies": {},
