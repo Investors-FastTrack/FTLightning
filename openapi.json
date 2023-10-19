@@ -6408,60 +6408,38 @@
         "description": "Descriptive data about the security such as rate, maturity, sector, industry, etc",
         "type": "object",
         "x-examples": {},
-        "title": "",
+        "x-internal": true,
         "properties": {
           "cusip": {
             "type": "string",
             "description": "8 digit cusip of requested security\n"
           },
-          "ratings": {
-            "type": "object",
-            "properties": {
-              "moodys": {
-                "type": "string"
-              },
-              "sandp": {
-                "type": "string"
-              }
-            }
-          },
-          "redemptive_items": {
-            "type": "object",
-            "properties": {
-              "callable": {
-                "type": "boolean",
-                "description": "True or false if bond is callable"
-              },
-              "makewhole_call": {
-                "type": "boolean",
-                "description": "True or false if cusip has a make whole provision"
-              },
-              "date_first_par_call": {
-                "type": "string"
-              },
-              "date_current_call": {
-                "type": "string"
-              }
-            }
-          },
           "details": {
             "type": "object",
             "properties": {
-              "issuer_type": {
-                "type": "string",
-                "description": "Description of the security issuer "
-              },
               "asset_type": {
                 "type": "string",
                 "description": "Description of the actual instrument: high yield bond, corporate bond, government bond, certificate of deposit, etc"
               },
-              "sic_code": {
-                "type": "string",
-                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
+              "convertable": {
+                "type": "boolean",
+                "description": "True or false if bond is a convertible bond"
               },
-              "naics_code": {
+              "country": {
                 "type": "string",
-                "description": "NAICS code description classifying businesses based on the primary type of work the business performs"
+                "description": "Issuer country"
+              },
+              "date_maturity": {
+                "type": "string",
+                "description": "Date security matures"
+              },
+              "description": {
+                "type": "string",
+                "description": "Issuer Name"
+              },
+              "issuer_type": {
+                "type": "string",
+                "description": "Description of the security issuer "
               },
               "naics": {
                 "description": "***Avaialble only in filter results*** Sector, sub-sector, and industiry information derived from NAICS codes",
@@ -6489,62 +6467,104 @@
                   }
                 }
               },
-              "description": {
+              "naics_code": {
                 "type": "string",
-                "description": "Issuer Name"
-              },
-              "country": {
-                "type": "string",
-                "description": "Issuer country"
-              },
-              "rate": {
-                "type": "string",
-                "description": "Annual interest rate paid on a the face value of security"
-              },
-              "date_maturity": {
-                "type": "string",
-                "description": "Date security matures"
+                "description": "NAICS code description classifying businesses based on the primary type of work the business performs"
               },
               "payment_frequency": {
                 "type": "string",
                 "description": "Frequency of interest payments"
               },
-              "convertable": {
+              "rate": {
+                "type": "string",
+                "description": "Annual interest rate paid on a the face value of security"
+              },
+              "sic_code": {
+                "type": "string",
+                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
+              },
+              "sinking_fund": {
                 "type": "boolean",
-                "description": "True or false if bond is a convertible bond"
+                "x-stoplight": {
+                  "id": "49tss4ja00lk4"
+                },
+                "description": "Indicates whether a bond has a sinking fund provision or not."
               }
             }
           },
           "issuer": {
             "type": "object",
             "properties": {
+              "coupon_day_count": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "y3joc2i1rfq4y"
+                },
+                "description": "Represents the day count convention used to \r\ncalculate the accrued interest of the bond.\r\nCommon day count conventions include \"30/360\", \"Actual/Actual\", \"Actual/365\", and \"Actual/360\"."
+              },
+              "coupon_first": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "mcvp83mk14e42"
+                },
+                "description": "Indicates the date of the first coupon payment for the bond. "
+              },
+              "coupon_type": {
+                "type": "string",
+                "description": "Type of coupon payment: fixed, floating, etc"
+              },
               "issue_date": {
                 "type": "string",
                 "description": "Date bond was issued"
-              },
-              "issue_size": {
-                "type": "string",
-                "description": "Total amount of debt raise by issuance"
               },
               "issue_price": {
                 "type": "string",
                 "description": "Price security issued"
               },
+              "issue_size": {
+                "type": "string",
+                "description": "Total amount of debt raise by issuance"
+              },
               "nominal_value": {
                 "type": "string",
                 "description": "Face value of bond"
+              }
+            }
+          },
+          "ratings": {
+            "type": "object",
+            "properties": {
+              "moodys": {
+                "type": "string"
               },
-              "coupon_type": {
-                "type": "string",
-                "description": "Type of coupon payment: fixed, floating, etc"
+              "sandp": {
+                "type": "string"
+              }
+            }
+          },
+          "redemptive_items": {
+            "type": "object",
+            "properties": {
+              "callable": {
+                "type": "boolean",
+                "description": "True or false if bond is callable"
+              },
+              "date_first_par_call": {
+                "type": "string"
+              },
+              "date_current_call": {
+                "type": "string"
+              },
+              "makewhole_call": {
+                "type": "boolean",
+                "description": "True or false if cusip has a make whole provision"
               }
             }
           },
           "err": {
             "$ref": "#/components/schemas/err"
           }
-        },
-        "x-internal": true
+        }
       },
       "FTMovingAverage": {
         "description": "List of moving averages requested in the ma= query string",

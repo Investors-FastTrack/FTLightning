@@ -880,6 +880,13 @@
                 "type": "string",
                 "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
               },
+              "sinking_fund": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "oqhjilg0cvh59"
+                },
+                "description": "Indicates whether a bond has a sinking fund provision or not."
+              },
               "state_inc": {
                 "type": "string",
                 "x-stoplight": {
@@ -892,25 +899,23 @@
           "issuer": {
             "type": "object",
             "properties": {
-              "issue_date": {
+              "coupon_first": {
                 "type": "string",
-                "description": "The date on which the bond was issued"
-              },
-              "issue_size": {
-                "type": "string",
-                "description": "The total size of the bond issue"
-              },
-              "issue_price": {
-                "type": "string",
-                "description": "The issue price of the bond"
-              },
-              "nominal_value": {
-                "type": "string",
-                "description": "Face value of bond"
+                "x-stoplight": {
+                  "id": "h6il8yv63svny"
+                },
+                "description": "indicates the date of the first coupon payment for the bond."
               },
               "coupon_type": {
                 "type": "string",
                 "description": "Type of coupon payment: fixed, floating, etc"
+              },
+              "coupon_day_count": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "tjpb96gg5fwwz"
+                },
+                "description": "Represents the day count convention used to calculate the accrued interest of the bond.\r\nCommon day count conventions include \"30/360\", \"Actual/Actual\", \"Actual/365\", and \"Actual/360\""
               },
               "coupon_type_other": {
                 "type": "string",
@@ -933,12 +938,28 @@
                 },
                 "description": "The debt ranking of the bond"
               },
+              "issue_date": {
+                "type": "string",
+                "description": "The date on which the bond was issued"
+              },
+              "issue_price": {
+                "type": "string",
+                "description": "The issue price of the bond"
+              },
+              "issue_size": {
+                "type": "string",
+                "description": "The total size of the bond issue"
+              },
               "issuer_type": {
                 "type": "string",
                 "x-stoplight": {
                   "id": "6bckfni2vqtdz"
                 },
                 "description": "The type of issuer"
+              },
+              "nominal_value": {
+                "type": "string",
+                "description": "Face value of bond"
               }
             }
           },
