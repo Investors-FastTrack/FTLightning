@@ -1037,6 +1037,195 @@
           }
         }
       },
+      "FTBondFilterDescribe": {
+        "description": "A subset of FTBondDescribe that is returned in the bond filter result.",
+        "x-stoplight": {
+          "id": "9de11dc38621e"
+        },
+        "type": "object",
+        "x-examples": {},
+        "properties": {
+          "cusip": {
+            "type": "string",
+            "description": "8 digit cusip of requested security\n"
+          },
+          "status": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "m32d6yilbv66r"
+            },
+            "description": "Provides information about a bond's current state, which can include \"Expired,\" \"Matured,\" \"Fully Called,\" \"Converted,\" \"Exchanged,\"  \"Liquidated\" and more"
+          },
+          "details": {
+            "type": "object",
+            "description": "Detailed information about an individual bond",
+            "properties": {
+              "amount_outstanding": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "1kd2rsgzzqi8w"
+                },
+                "description": "The total amount of the bond outstanding"
+              },
+              "asset_type": {
+                "type": "string",
+                "description": "The type of asset"
+              },
+              "country": {
+                "type": "string",
+                "description": "The country of the issuer"
+              },
+              "currency": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "3h14bys5ycdxq"
+                },
+                "description": "The currency in which the bond is denominated"
+              },
+              "date_maturity": {
+                "type": "string",
+                "description": "The maturity date of the bond, represented as a string in YYYYMMDD format."
+              },
+              "description": {
+                "type": "string",
+                "description": "Issuer Name"
+              },
+              "issuer_type": {
+                "type": "string",
+                "description": "The type of issuer"
+              },
+              "naics": {
+                "description": "***Avaialble only in filter results*** Sector, sub-sector, and industiry information derived from NAICS codes",
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string",
+                    "description": "Full 6 digit NAICS code for issuer"
+                  },
+                  "code2txt": {
+                    "type": "string",
+                    "description": "Sector - 2 digit NAICS code "
+                  },
+                  "code3txt": {
+                    "type": "string",
+                    "description": "Sub Sector - 3 digit NAICS code"
+                  },
+                  "code4txt": {
+                    "type": "string",
+                    "description": "Industry Group - 4 digit NAICS code"
+                  },
+                  "code6txt": {
+                    "type": "string",
+                    "description": "National Industry - 6 digit NACIS code"
+                  }
+                }
+              },
+              "payment_frequency": {
+                "type": "string",
+                "description": "The frequency of interest payments for the bond."
+              },
+              "rate": {
+                "type": "string",
+                "description": "Annual interest rate paid on a the face value of security"
+              },
+              "security_type": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "r4ia1l1qd7h6c"
+                },
+                "description": "The type of security"
+              },
+              "sic_code": {
+                "type": "string",
+                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
+              }
+            }
+          },
+          "issuer": {
+            "type": "object",
+            "properties": {
+              "coupon_type": {
+                "type": "string",
+                "description": "Type of coupon payment: fixed, floating, etc"
+              },
+              "currency": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "bcajceuf8nqtt"
+                },
+                "description": "The debt ranking of the bond"
+              },
+              "dated_date": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "dlucqlz489yra"
+                },
+                "description": "The date from which interest on the bond begins to accrue"
+              },
+              "issue_date": {
+                "type": "string",
+                "description": "The date on which the bond was issued"
+              },
+              "issue_price": {
+                "type": "string",
+                "description": "The issue price of the bond"
+              },
+              "issue_size": {
+                "type": "string",
+                "description": "The total size of the bond issue"
+              },
+              "issuer_type": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "6bckfni2vqtdz"
+                },
+                "description": "The type of issuer"
+              },
+              "nominal_value": {
+                "type": "string",
+                "description": "Face value of bond"
+              }
+            }
+          },
+          "ratings": {
+            "type": "object",
+            "properties": {
+              "moodys": {
+                "type": "string"
+              },
+              "sandp": {
+                "type": "string"
+              }
+            }
+          },
+          "redemptive_items": {
+            "type": "object",
+            "properties": {
+              "callable": {
+                "type": "boolean",
+                "description": "A boolean value indicating whether the bond is callable or not. If it is callable, the issuer has the right to redeem the bond before its maturity date"
+              },
+              "call_timing": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "zxvakdgxgw5ey"
+                },
+                "description": "Specifies the time frame or periods during which the\r\nbond issuer may exercise their right to repurchase\r\nand retire the bond before its maturity date.\r\n"
+              },
+              "putable": {
+                "type": "string",
+                "x-stoplight": {
+                  "id": "b0c5lyddyyodn"
+                },
+                "description": "Indicates if the bond is putable. If true, bondholders have the right to sell the bond back to the issuer at a predetermined price on specified dates."
+              }
+            }
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
+          }
+        }
+      },
       "FTBondFilterRequest": {
         "title": "FTBondFilterRequest",
         "x-stoplight": {
@@ -1599,7 +1788,7 @@
         "type": "object",
         "properties": {
           "describe": {
-            "$ref": "#/components/schemas/FTBondDescription"
+            "$ref": "#/components/schemas/FTBondFilterDescribe"
           },
           "prices": {
             "$ref": "#/components/schemas/FTBondPrice"
