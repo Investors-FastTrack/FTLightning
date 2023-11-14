@@ -5833,6 +5833,12 @@
               "Index",
               "Allocation"
             ]
+          },
+          "family": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "zbt6c25eluw0q"
+            }
           }
         }
       },
