@@ -5792,6 +5792,17 @@
             "type": "string",
             "description": "FUNDS/ETFS ONLY - Investment objective classification"
           },
+          "family": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "zbt6c25eluw0q"
+            },
+            "description": "Fund sponsor"
+          },
+          "shareclass": {
+            "type": "string",
+            "description": "Funds Only - Security Share Class"
+          },
           "sector": {
             "type": "string",
             "description": "STOCKS ONLY - sectory of security"
@@ -5817,10 +5828,6 @@
               "Stock"
             ]
           },
-          "shareclass": {
-            "type": "string",
-            "description": "Funds Only - Security Share Class"
-          },
           "xtype": {
             "x-stoplight": {
               "id": "aizz0nhopuyve"
@@ -5833,12 +5840,6 @@
               "Index",
               "Allocation"
             ]
-          },
-          "family": {
-            "type": "string",
-            "x-stoplight": {
-              "id": "zbt6c25eluw0q"
-            }
           }
         }
       },
