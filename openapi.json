@@ -2861,7 +2861,7 @@
         ]
       }
     },
-    "/v1/family/": {
+    "/v1/family/search": {
       "get": {
         "summary": "Family Search",
         "parameters": [
@@ -2905,7 +2905,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FTFamily"
+                  "$ref": "#/components/schemas/FTFamilySearchResults"
                 }
               }
             }
@@ -2917,8 +2917,13 @@
         "description": "A \"family\" is a group of ticker symbols created by FastTrack. This function searches all FastTrack families by family name, family partial name, and family members (tickers).",
         "tags": [
           "Families"
-        ]
-      }
+        ],
+        "operationId": "",
+        "x-stoplight": {
+          "id": "yz7mvzraji1ir"
+        }
+      },
+      "parameters": []
     },
     "/v1/family/{strFamily}": {
       "get": {
@@ -4691,15 +4696,65 @@
         "properties": {
           "name": {
             "type": "string",
-            "description": "Name of family"
+            "description": "Name of family",
+            "x-stoplight": {
+              "id": "tynkqvpg9g6sl"
+            }
           },
           "tickers": {
             "type": "string",
-            "description": "String of comma \",\" separated ticker that make up family."
+            "description": "String of comma \",\" separated ticker that make up family.",
+            "x-stoplight": {
+              "id": "ctrrdq5fj4p2i"
+            }
           },
           "count": {
-            "type": "integer",
+            "type": "string",
+            "x-stoplight": {
+              "id": "lym8zc494jwpa"
+            },
             "description": "Number of tickers in family"
+          },
+          "err": {
+            "$ref": "#/components/schemas/err"
+          }
+        }
+      },
+      "FTFamilySearchResults": {
+        "type": "object",
+        "x-stoplight": {
+          "id": "5woffwt5jk5z3"
+        },
+        "title": "FTFamilySearchResutls",
+        "properties": {
+          "searchresults": {
+            "type": "array",
+            "x-stoplight": {
+              "id": "hhyhb82vc60do"
+            },
+            "description": "List of all families that match the search query",
+            "items": {
+              "x-stoplight": {
+                "id": "4rvo4epiraq2y"
+              },
+              "type": "object",
+              "properties": {
+                "family_name": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "0zhrrsr7ljr3f"
+                  },
+                  "description": "Name of familiy matching search query"
+                },
+                "ticker_count": {
+                  "type": "string",
+                  "x-stoplight": {
+                    "id": "04nuihod5fyxd"
+                  },
+                  "description": "Number of tickers in the family "
+                }
+              }
+            }
           },
           "err": {
             "$ref": "#/components/schemas/err"
