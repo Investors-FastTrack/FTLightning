@@ -4425,7 +4425,9 @@
       ],
       "get": {
         "summary": "ETF Description",
-        "tags": [],
+        "tags": [
+          "Reference Data"
+        ],
         "responses": {
           "200": {
             "description": "OK",
