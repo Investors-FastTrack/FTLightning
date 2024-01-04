@@ -4416,6 +4416,62 @@
           }
         ]
       }
+    },
+    "/v1/ref/{ticker}/description": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/ticker"
+        }
+      ],
+      "get": {
+        "summary": "ETF Description",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "x-examples": {
+                    "Example 1": {
+                      "description": "The Fund seeks to track the performance of the IBD Breakout Stocks Index, which seeks to provide opportunistic investment exposure to stocks with the potential to break out, or experience a period of sustained price growth beyond the stock's recent resistance level, with consideration for various market conditions.",
+                      "ticker": "BOUT",
+                      "err": null
+                    }
+                  },
+                  "properties": {
+                    "description": {
+                      "type": "string",
+                      "description": "Summary of ETF's prospectus investment strategy."
+                    },
+                    "ticker": {
+                      "type": "string",
+                      "description": "Ticker symbol"
+                    },
+                    "err": {
+                      "$ref": "#/components/schemas/err"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-ref-ticker-description",
+        "x-stoplight": {
+          "id": "52d1dgd56q335"
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          }
+        ],
+        "description": "\r\nThis API endpoint offers a concise summary of an ETF's investment strategy as outlined in its prospectus, providing key insights into its investment approach and objectives in a clear, accessible format."
+      }
     }
   },
   "components": {
