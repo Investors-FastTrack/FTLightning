@@ -36,6 +36,11 @@
       "uri": "/docs/Portfolio-Modeling.md"
     },
     {
+      "type":"item",
+      "title":"Rate Limits",
+      "uri":"/docs/ratelimits.md"
+    },
+    {
       "type":"divider",
       "title":"Code Examples"
     },

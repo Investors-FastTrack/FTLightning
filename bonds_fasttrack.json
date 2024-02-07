@@ -43,6 +43,12 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden. Token and/or App ID is incorrect."
+          },
+          "429": {
+            "description": "Too Many Requests. Limit requests to 5 concurrent request and 5 requests per second. "
           }
         },
         "operationId": "get-v1-bonds-cusip-desciption",
@@ -87,6 +93,12 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden. Token and/or App ID is incorrect."
+          },
+          "429": {
+            "description": "Too Many Requests. Limit requests to 5 concurrent request and 5 requests per second. "
           }
         },
         "requestBody": {
@@ -150,6 +162,12 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden. Token and/or App ID is incorrect."
+          },
+          "429": {
+            "description": "Too Many Requests. Limit requests to 5 concurrent request and 5 requests per second. "
           }
         },
         "operationId": "get-v1-bonds-cusip-data",
@@ -212,6 +230,12 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden. Token and/or App ID is incorrect."
+          },
+          "429": {
+            "description": "Too Many Requests. Limit requests to 5 concurrent request and 5 requests per second. "
           }
         },
         "description": "Retrieve bond prices for more than one cusip over a specific date range",
@@ -258,6 +282,9 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "Forbidden. Token and/or App ID is incorrect."
           }
         },
         "requestBody": {

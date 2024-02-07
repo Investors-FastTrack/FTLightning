@@ -4536,7 +4536,7 @@
           },
           "unadjprices": {
             "type": "array",
-            "description": "Array of unadjusted closing prices in same format as 'prices' object. Requests must use 'unadj' paramter to specifically request this data and it is limited to the trailing 3 years of data. Subscriptions for complete date range are available.",
+            "description": "Array of unadjusted closing prices in same format as 'prices' object. Requests must use 'unadj' paramter to specifically request this data.\r\n<br>\r\n*Limited to the trailing 3 years of data. Subscriptions for complete date range are available.*",
             "example": [
               10.01,
               11.04,
@@ -4670,6 +4670,7 @@
       },
       "FTPrice": {
         "type": "object",
+        "description": "Various pricing pricing data points for a single day",
         "properties": {
           "date": {
             "$ref": "#/components/schemas/FTDate"
@@ -4680,7 +4681,7 @@
           },
           "unadjprice": {
             "type": "number",
-            "description": "unadjusted closing price of ticker"
+            "description": "unadjusted closing price of ticker.\r\n<br>\r\n*Limited to the trailing 3 years of data. Subscriptions for complete date range are available.*"
           },
           "open": {
             "type": "number",
@@ -4698,8 +4699,7 @@
             "type": "number",
             "description": "adjusted daily volume of ticker"
           }
-        },
-        "description": "Various pricing pricing data points for a single day"
+        }
       },
       "FTDates": {
         "type": "object",
