@@ -1,62 +1,63 @@
-# Introduction
+# Welcome to FastTrack Market Data API
 
-## FastTrack Market Data API
-FastTrack Market Data API is Investors FastTrack's data REST API. All requests should be made over SSL. All request and response bodies, including errors, are encoded in JSON.
+## Unleash the Power of Financial Data
+
+### Your Gateway to Professional-Grade Market Intelligence
+FastTrack Market Data API offers unparalleled access to a wealth of financial data, directly at your fingertips. Designed with developers and tech-savvy professionals in mind, our REST API ensures secure, efficient, and real-time data retrieval to power your applications with accuracy and reliability.
 
 <!-- theme: danger -->
 >### *Technical Documentation* 
->This documentation is **intended for computer programmers and developers**. 
+>This guide is crafted for developers, programmers, and data scientists. Dive into our comprehensive API documentation for a seamless integration experience. 
+
+
+For those seeking intuitive financial tools without the coding, discover our suite of software products at [FastTrack's main site](http://www.fasttrack.net).
+
+
+## Quick Start with Our API
+
+### Base URL
+Connect with the core of our data universe. All API endpoints spring from: 
 
 <!-- theme: none -->
-FastTrack offers other software products that do not require technical or coding knowledge. 
-Visit http://www.fasttrack.net for information on our non technical software and data products.
-
-
-## Base URL
-This is the root of the API URL, and all endpoints of FastTrack Market Data API start with this URL. 
-
 >https://ftl.fasttrack.net/v1/
 
-## Free Trial 
-Free Trials have access to a select group of ETF, Fund, and stock tickers, as well as approximately 20 Corporate, High Yield, and Treasury CUSIPs. 
+## Dive into Data with a Free Trial
+Begin your journey with access to a curated selection of ETFs, Funds, Stocks, and Bonds. No credit card required for a glimpse into the potential of FastTrack data.
 
-Sign up for a free trial here: https://fasttrack.net/free-trial
+[Start Your Free Trial](https://fasttrack.net/free-trial)
 
-### Making Requests
-Make any GET request using these trial tickers and CUSIPs. POST requests require a paid subscription.
+#### Explore with Ease
 
+**Sample Assets**: Access 21 Sector SPDR ETFs, 13 Large Cap Stocks, and 20 select Bond CUSIPs.
 
-### ETF, Fund, and Stocks 
-21 Sector SPRD ETFs and 13 Large Cap Stocks are available in the free trial. 
+**Trial Acces**s: Utilize GET requests for a hands-on experience. POST operations are unlocked with a subscription.
 
-See the full list of tickers here: https://ftl.fasttrack.net/v3/api/freetickers
-
-### Bond CUSIPs
-20 Corporate, High Yield, and Treasury CUSIPs are available.
-See the full list of tickers here: https://ftl.fasttrack.net/v3/api/freecusips
-
-## FastTrack Database
-FastTrack's database includes all US listed Mutual Fund, ETF, and Stocks (approx 30k securities). We additionally provide over 1200+ global indexes.
-
-Search and chart our database here: https://ftcloud.fasttrack.net/web/search
-
-[Click to Read More about our Data here](./02a-DataInfo.md)
-
-### Available Data
-Continue to the API documentation portion of this web site or visit our sales site https://fasttrack.net/api/ to discover the data points available in the FastTrack API.
+#### Full Trial Asset Lists
+- ETFs, Funds, Stocks: [View Available Tickers](https://ftl.fasttrack.net/v3/api/freetickers)
+- Bond CUSIPs: [Explore Bond Data](https://ftl.fasttrack.net/v3/api/freecusips)
 
 
-An easy to read, but non comprehensive page listing the most popular data points is here:
-[Launch End Point Data List](https://ftcloud.fasttrack.net/web/iframe/apidatapoints.html)
+## The FastTrack Data Universe
+### Comprehensive Coverage
+Our database is your resource for over 30,000 US-listed Mutual Funds, ETFs, Stocks, and more than 1,200 global indexes.
 
+Discover and Chart: [Search Our Database](https://ftcloud.fasttrack.net/web/search)
+
+
+### Discover What's Available
+Curious about the data points FastTrack API delivers? Our documentation and [sales site](https://fasttrack.net/api) provides a detailed look into the extensive range of data available. 
+
+API Data Points: [Explore Popular Data Points](https://ftcloud.fasttrack.net/web/iframe/apidatapoints.html)
+
+
+
+### Embark on a Data Discovery Journey
+FastTrack’s Free API Trial: Experience the depth of FastTrack’s index database with full access to our comprehensive index data. Begin your exploration without any commitment.
+
+[Sign Up for the Free Trial](https://subscribe.fasttrack.net/landing/api/apilanding.html)
 
 ---
-
-### Free Trial
-FastTrack offers a free API trial. No credit card is necessary. 
-
-The trial allows full access to our index database, covering over 1,200 stock, bond, commodities, and other global indexes. 
-
-#### [Click here to Sign for a Trial](https://subscribe.fasttrack.net/landing/api/apilanding.html)
+### Elevate Your Applications with FastTrack Market Data API
+At FastTrack, we're dedicated to providing the financial data backbone that powers your investment analysis, market research, and innovative financial applications. Start with our free trial and discover how FastTrack can revolutionize your data-driven strategies.
 
 
