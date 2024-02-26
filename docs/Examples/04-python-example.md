@@ -16,47 +16,54 @@ password = "********"
 appid = "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
 
 # Build auth url
-authurl = "https://ftl.fasttrack.net/v1/auth/login?account=" + account + "&pass=" + password + "&appid=" + appid 
+authurl = f"https://ftl.fasttrack.net/v1/auth/login?account={account}&pass={password}&appid={appid}"
 
 # make authentication request
-authresponse = requests.request("GET", authurl)
+authresponse = requests.get(authurl)
 
 # parse result and extract token
-a = json.loads(authresponse.text)
-
-token = a['token']
+token = authresponse.json()['token']
 
 ```
 
 ### Get Expense ratio data
-The code below requests data for multiple tickers from the /v1/ref/xmulti/details endpoint.
-This data is parsed and printed to a CSV format. 
+The code below requests data for multiple tickers. We are using the /v1/ref/{ticker}/details GET request in a loop. This data is parsed, collected, and then printed to a CSV format. 
+
+**Trial accounts can only access GET requests. For paid accounts, use the POST request for more efficient data retrieval**
+
+
 
 ```python
 
-# build url to access expense ratio details
-url = "https://ftl.fasttrack.net/v1/ref/xmulti/details"
+tickers = ["SPAB", "SPBO", "SPDW", "SPEM", "SPEU", "SPGM", "SPHY", "SPIB", "SPIP", "SPLB", "SPLG", "SPMB", "SPMD", "SPSB", "SPSM", "SPTI", "SPTL", "SPTM", "SPTS", "SPYD", "SPYG", "SPYV"]
 
-# request date for all "free" tickers in the FT Data API Trial
-payload = "[\"SPAB\",\"SPBO\",\"SPDW\",\"SPEM\",\"SPEU\",\"SPGM\",\"SPHY\",\"SPIB\",\"SPIP\",\"SPLB\",\"SPLG\",\"SPMB\",\"SPMD\",\"SPSB\",\"SPSM\",\"SPTI\",\"SPTL\",\"SPTM\",\"SPTS\",\"SPYD\",\"SPYG\",\"SPYV\"]"
-
-## construct a header object containing your credentials. 
-# You will send this with the POST  request to authenticate
+# construct a header object containing your credentials. 
 headers = {
     'appid': appid,
-    'token': token,
-    'Content-Type': "application/json"
-    }
+    'token': token
+}
 
-# request date
-response = requests.request("POST", url, data=payload, headers=headers)
+# Initialize an empty list to hold all details
+all_details = []
 
-# parse data
-y = json.loads(response.text)
+for ticker in tickers:
+    # Build URL for each ticker
+    url = f"https://ftl.fasttrack.net/v1/ref/{ticker}/details"
 
-# print data in CSV format
+    # Make GET request for each ticker
+    response = requests.get(url, headers=headers)
+
+    # Check if the response is successful
+    if response.status_code == 200:
+        detail = response.json()
+        # Append the detail to the all_details list
+        all_details.append(detail)
+    else:
+        print(f"Failed to get data for ticker: {ticker}")
+
+# Print all items in all_details
 print("Ticker, Expense, Objective, Security Type")
-for detail in y['datalist']:
+for detail in all_details:
     print(
         detail['ticker'],
         ",",

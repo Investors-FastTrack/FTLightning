@@ -4474,6 +4474,99 @@
         ],
         "description": "\r\nThis API endpoint offers a concise summary of an ETF's investment strategy as outlined in its prospectus, providing key insights into its investment approach and objectives in a clear, accessible format."
       }
+    },
+    "/v1/usage/api": {
+      "parameters": [],
+      "get": {
+        "summary": "API Usage",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total_tickers": {
+                      "type": "string",
+                      "description": "total cusips accessed in the month"
+                    },
+                    "usage_list": {
+                      "type": "array",
+                      "description": "list of all cusips accessed in month",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "cusip": {
+                            "type": "string",
+                            "description": "cusip accessed"
+                          },
+                          "last_access": {
+                            "type": "string",
+                            "description": "date last accessed cusip"
+                          }
+                        }
+                      }
+                    },
+                    "account": {
+                      "type": "string",
+                      "description": "usage account number "
+                    },
+                    "report_date": {
+                      "type": "object",
+                      "description": "month of report",
+                      "properties": {
+                        "year": {
+                          "type": "string",
+                          "description": "year of report"
+                        },
+                        "month": {
+                          "type": "string",
+                          "description": "month of report"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-usage-account-bonds",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "year",
+            "description": "year of report (yyyy)",
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "month",
+            "description": "month of report (MM)",
+            "required": true
+          }
+        ],
+        "description": "Total number and list of tickers used in a month ",
+        "tags": [
+          "Status"
+        ],
+        "x-stoplight": {
+          "id": "rogr0g64sf47t"
+        }
+      }
     }
   },
   "components": {
