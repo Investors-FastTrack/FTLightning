@@ -1485,12 +1485,12 @@
                     "seed": 100000,
                     "model": [
                       {
-                        "ticker": "SPY",
-                        "weight": "50"
+                        "ticker": "MSFT",
+                        "weight": "75"
                       },
                       {
-                        "ticker": "TLT",
-                        "weight": "50"
+                        "ticker": "AAPL",
+                        "weight": "25"
                       }
                     ],
                     "name": "Example Model"
@@ -1578,12 +1578,12 @@
                     {
                       "model": [
                         {
-                          "ticker": "SPY",
-                          "weight": "50"
+                          "ticker": "MSFT",
+                          "weight": "75"
                         },
                         {
-                          "ticker": "TLT",
-                          "weight": "50"
+                          "ticker": "AAPL",
+                          "weight": "25"
                         }
                       ],
                       "start": "12/31/2000",
@@ -1593,11 +1593,11 @@
                     {
                       "model": [
                         {
-                          "ticker": "SPY",
+                          "ticker": "SPAB",
                           "weight": "60"
                         },
                         {
-                          "ticker": "TLT",
+                          "ticker": "MSFT",
                           "weight": "40"
                         }
                       ],
@@ -1755,11 +1755,11 @@
                         "start": "12/31/2020",
                         "model": [
                           {
-                            "ticker": "SPY",
+                            "ticker": "MSFT",
                             "weight": "50"
                           },
                           {
-                            "ticker": "TLT",
+                            "ticker": "AAPL",
                             "weight": "50"
                           }
                         ]
@@ -1809,10 +1809,10 @@
                     "rebalanceperiod": "quarter",
                     "model": {
                       "universe": [
-                        "JPM",
-                        "BAC",
-                        "GS",
-                        "MS"
+                        "WMT",
+                        "AAPL",
+                        "MSFT",
+                        "SPAB"
                       ],
                       "number_holdings": "1",
                       "basis": "SP-DA",
@@ -1899,17 +1899,7 @@
     "/v1/ref/{ticker}/details": {
       "parameters": [
         {
-          "name": "ticker",
-          "in": "path",
-          "description": "ticker symbol",
-          "style": "simple",
-          "explode": false,
-          "schema": {
-            "type": "string",
-            "example": "JPM"
-          },
-          "example": "JPM",
-          "required": true
+          "$ref": "#/components/parameters/ticker"
         }
       ],
       "get": {
@@ -2043,11 +2033,11 @@
                     "seed": 100000,
                     "model": [
                       {
-                        "ticker": "SPY",
+                        "ticker": "MSFT",
                         "weight": "50"
                       },
                       {
-                        "ticker": "TLT",
+                        "ticker": "AAPL",
                         "weight": "50"
                       }
                     ],
@@ -5591,7 +5581,7 @@
         },
         "x-examples": {
           "Position Example": {
-            "ticker": "JPM",
+            "ticker": "AAPL",
             "weight": 50
           }
         },
