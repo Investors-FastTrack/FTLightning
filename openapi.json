@@ -2065,10 +2065,17 @@
       },
       "parameters": []
     },
-    "/v1/ref/{ticker}/shareclasses": {
+    "/v1/ref/shareclasses/{ticker}": {
       "parameters": [
         {
-          "$ref": "#/components/parameters/ticker"
+          "schema": {
+            "type": "string",
+            "example": "MDISX"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true,
+          "description": "ticker symbol"
         }
       ],
       "get": {
@@ -2211,7 +2218,10 @@
           {
             "$ref": "#/components/parameters/token"
           }
-        ]
+        ],
+        "x-stoplight": {
+          "id": "wwcm3romrsd6k"
+        }
       }
     },
     "/v1/bonds/{cusip}/description": {
@@ -3089,7 +3099,7 @@
         {
           "schema": {
             "type": "string",
-            "example": "JPM,BAC,C,GS"
+            "example": "MSFT,AAPL,SPAB"
           },
           "name": "TickerList",
           "in": "path",
@@ -5933,16 +5943,17 @@
         "title": "TickerArray",
         "type": "array",
         "description": "list of requested tickers ",
-        "items": {
-          "type": "string"
-        },
         "x-examples": {
           "Ticker Array": [
-            "JPM",
-            "TLT",
-            "SPY",
-            "SP-DA"
+            "SPAB",
+            "SPBO",
+            "AAPL",
+            "MSFT"
           ]
+        },
+        "items": {
+          "type": "string",
+          "example": "AAPL"
         }
       },
       "CUSIPArray": {
@@ -6099,11 +6110,11 @@
           "Static Model Example": {
             "model": [
               {
-                "ticker": "SPY",
+                "ticker": "AAPL",
                 "weight": "50"
               },
               {
-                "ticker": "TLT",
+                "ticker": "MSFT",
                 "weight": "50"
               }
             ],
@@ -6386,8 +6397,8 @@
             "value": {
               "model": {
                 "universe": [
-                  "JPM",
-                  "BAC"
+                  "MSFT",
+                  "AAPL"
                 ],
                 "number_holdings": "1",
                 "basis": "SP-DA",
