@@ -73,7 +73,7 @@
         "x-internal": true
       }
     },
-    "/v1/data/range": {
+    "/v1/data/{ticker}/range": {
       "get": {
         "summary": "One Ticker",
         "parameters": [
@@ -127,7 +127,17 @@
       },
       "parameters": [
         {
-          "$ref": "#/components/parameters/ticker"
+          "name": "ticker",
+          "in": "path",
+          "description": "ticker symbol",
+          "style": "simple",
+          "explode": false,
+          "schema": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "example": "AAPL",
+          "required": true
         }
       ]
     },
