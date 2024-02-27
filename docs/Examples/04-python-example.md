@@ -1,7 +1,7 @@
 # Python Example
 
 ### Authenticate to web service
-Import the necesary libraries, then make a request to the v1/auth/login end point with your account, password and appid
+Import the necesary libraries, then make a request to the `/v1/auth/login` end point with your account, password and appid
 
 Be sure to save the token in the auth result. The token must be included in the header of all other calls to access data. 
 
@@ -27,7 +27,7 @@ token = authresponse.json()['token']
 ```
 
 ### Get Expense ratio data
-The code below requests data for multiple tickers. We are using the /v1/ref/{ticker}/details GET request in a loop. This data is parsed, collected, and then printed to a CSV format. 
+The code below requests data for multiple tickers. We are using the `/v1/ref/{ticker}/details` GET request in a loop. This data is parsed, collected, and then printed to a CSV format. 
 
 **Trial accounts can only access GET requests. For paid accounts, use the POST request for more efficient data retrieval**
 

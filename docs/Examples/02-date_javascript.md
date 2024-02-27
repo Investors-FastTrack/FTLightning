@@ -1,62 +1,51 @@
-# Javascript - Bulk Data
+# Javascript - Working with Bulk Data in FT Market Data API
 
 <!--
 title: "My code snippet"
 lineNumbers: true
 -->
 
-FT Market Data API include 2 end points that return timeseries data for ALL dates since 9/1/1988. We refer to these as "bulk data" endpoints
+The FT Market Data API provides access to comprehensive timeseries data for all trading dates since September 1, 1988. These "bulk data" endpoints are essential for applications requiring extensive historical market data.
 
-- `GET /data/{ticker}`
-- `POST /data/xmulti`
+## Bulk Data Endpoints
+The API includes two endpoints for accessing bulk data:
 
-
-### Data Format
-The timeseries data is returned as an array of numbers. The array is sorted first day in the database to last day in the database. 
-
-### Market Days
-
-The index of the data array is called the "market day", and data is retrieve from the array by referencing the market day.
-
-For example, a request to `/data/JPM/divadjprices` will return an `FTData.prices` array.
-
-Data for market day #1 is retrieved by referencing `FTData.prices[1]`
-
-Data for market day #2 is retrieved by referencing `FTData.prices[2]`
-
-Data for market day #2000 is retrieved by referencing `FTData.prices[2000]`
+- `GET /data/{ticker}`:  Retrieves timeseries data for a specific ticker.
+- `POST /data/xmulti`:  Allows for multiple tickers' data retrieval in a single request.
 
 
+## Understanding Data Format
+The timeseries data is delivered as an array of numerical values, organized from the earliest to the most recent trading day in the database.
 
-### Array Size
-These data arrays are always sized to the total number of market days in the FastTrack database from 9/1/88 to present. 
+## Market Days Concept
+Each index in the data array corresponds to a "market day," enabling data retrieval by referencing specific market days.
 
-Each market day close, the data array gets 1 index larger.
-
-
-### First Day
-The FastTrack database starts on 9/1/88. 
-
-
-### Data Date Translation
-The [/data/dates/] endpoint returns a complete list of market days in the database. This array of dates is critical to translating the bulk data arrays indexes to date and vice versa.
+For instance, a request to `/data/JPM/divadjprices` returns an array `FTData.prices`, where:
+- `FTData.prices[1]` accesses data for the first market day.
+- `FTData.prices[2]` for the second, and so on.
 
 
-<!-- theme: warning -->
->### Important ! ! ! !
->Bulk data endpoints return an array of data values. The array's indexes are in order from the first date in the database to the most recent. 
->- Index 0 is the same value of index 1. 
->- Index 1 is the 9/1/88
->- Index 2 is 9/2/88
->- Index 3 is 9/6/1988
->- etc
+## Array Characteristics
+- **Size**: The length of the data arrays matches the total number of market days in the FastTrack database, starting from September 1, 1988. With each market day's close, the array grows by one index.
+- **First Day of Data**: The database begins on September 1, 1988.
 
 
-### Request Dates
+## Date Translation
+Utilizing the `/data/dates/` endpoint is crucial for translating bulk data array indexes to actual calendar dates and vice versa.
 
-Before requesting any bulk data, you need to download the [v1/data/dates] array and store locally. This dates object contains all dates in the FastTrack database ordered from first to last day. You will pair this date array with the [v1/data/{ticker}] result to find the price on a given day. This date data is critical to translating the bulk data arrays.
+
+## Important Considerations
+The bulk data arrays' indexing starts with the database's first date, leading to specific behaviors:
+
+- Index 0 is a placeholder, with the actual data starting from index 1, corresponding to September 1, 1988.
+- Subsequent indexes follow the chronological order of market days.
 
 
+## Preparing for Data Requests
+
+Prior to requesting bulk data, it's recommended to download and locally store the array from `[`v1/data/dates`]`. This array, containing all database dates from the earliest to the latest, is vital for accurately matching date indexes with ticker data.
+
+### Fetching Date Array
 ```javascript
 var token = 'XXXXX-XXXX-XXXXx';
 var appid = 'XXXXX-XXXX-XXXXX';
@@ -81,13 +70,9 @@ function downloadDates() {
 ```
 
 
-### Request Adjusted Closing Prices
-
-Request the bulk data array for the ticker. The data array will be sized the same length as the [v1/data/dates] array. You will find the date you want in the [v1/data/date] result, then use that index to reference the index in the [v1/data/{ticker}] result.
+### Requesting Adjusted Closing Prices
 
 ```javascript
-var token = 'XXXXX-XXXX-XXXXx';
-var appid = 'XXXXX-XXXX-XXXXX';
 var ftdata;
 
 function downloadData() {
@@ -110,8 +95,8 @@ function downloadData() {
 ```
 
 
-### Get Price Value
-Loop through the [v1/data/dates] object to find the date you want to display. Save the index or marketdate value of that date, then use that as the index in the [v1/data/{ticker}] result to get the date's closing price.
+### Retrieving Specific Price Values
+To find a specific date's closing price, iterate through the `v1/data/dates` object, match the desired date, and use the corresponding index to fetch the price from the bulk data array.
 ```javascript
 function getDate(dte) {
 
@@ -138,3 +123,5 @@ function getDate(dte) {
 }
 
 ```
+
+By following these guidelines, developers can efficiently work with bulk data from the FT Market Data API, enabling the construction of rich, data-driven financial applications.
