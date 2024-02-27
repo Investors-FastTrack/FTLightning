@@ -1,75 +1,66 @@
 
-# Dates
+# Mastering Dates with FastTrack Data API
 
-Dates are important when calculating market stats! Read on to ensure you're getting the calculations you expect.
+Understanding dates is crucial for accurate market analysis. FastTrack's Data API offers flexible date handling to ensure your market statistics and time series analyses are precisely aligned with your expectations.
 
-## Date Parameters
-Many endpoints in the FastTrack Data API take **start=** and/or **end=** query strings as parameters. These parameters determine the date range used to calculate various stats and time series.
-
+## Tailored Date Parameters
+The FastTrack Data API provides **start=** and **end=** query parameters to define the date range for your calculations, accommodating a range of formats for your convenience:
 FastTrack's API accepts a variety of date formats:
 
-Format |
--|-
-yyyy-MM-dd|
-yyyyMMdd| 
-MM/dd/yyyy|
-yyyy-MM (converts to yyyy-MM-01)|
+**Accepted Date Formats:**
+- **yyyy-MM-dd**: Standard ISO format for clarity and consistency.
+- **yyyyMMdd**: Compact format for easy parsing.
+- **MM/dd/yyyy**: U.S. standard format for familiarity.
+- **yyyy-MM**: Specifies a month (automatically assumes the first day of the month as the start date).
 
-You may also send the desired [marketdate](./Examples/02-date_javascript.md#market-days) as an integer. 
+**Advanced Market Date Handling:**
+Convert market dates into integers for direct reference, simplifying date calculations in financial analyses.
 
----
-## Non Market Days
-Any non market day (Saturday, Sunday or Market Holliday) sent as a **start=** or **end=** parameter will automatically convert to the prior valid market day. 
 
-#### Example:
-Date | Conversion|Notes 
------|-----|-----
-August 8, 2020| August 7, 2020 |a Saturday converts to the prior Friday
-January 1, 2020|December 31, 2019|a Market holiday converts to prior valid market day
-February 1, 2030|last day in the database|a date in the future converts to last day of database
-March 31, 1970|August 1, 1988|a date before the first date in the FastTrack database converts to the first day of the FastTrack database
+## Intelligent Non-Market Day Adjustments
+FastTrack seamlessly navigates non-market days, ensuring your date parameters always align with valid trading days:
+**Conversion Logic:**
+- **Weekends and Holidays**: Inputs falling on non-market days adjust to the nearest preceding market day.
+- **Future Dates**: Automatically align with the most recent data available.
+- **Pre-Database Dates**: Adjust to the earliest date in FastTrack's repository for historical consistency.
 
----
-## Date Defaults
-#### end=
-If no end date is provided, the default is the last market day in the database
-#### start=
-If not start date is provided, the default is 12 months prior to the end date. 
 
-#### Examples
-End|Start|Result Date Range
--|-|-
-2021-03-31| 2021-03-31| 2020-03-31 to 2021-03-31 
-2021-03-31| null| 2020-03-31 to 2021-03-31 
-null| 2020-03-31| 2020-03-31 to \[Last Market Day\]
-null|null| \[Last market Day\]  to \[last market day - 12 months\]
+#### Example Conversions:
+- **August 8, 2020 (Saturday)** converts to August 7, 2020 (Friday).
+- **January 1, 2020 (Market Holiday)** shifts to December 31, 2019.
+- **Dates beyond our latest records** default to the last available market day.
+- **Pre-database dates** are set to the inception date of FastTrack's dataset.
 
 ---
-## Date Rules
-* Start cannot be after end
-* Dates greater than \[last market day\] convert to \[last market day\]
-* Start cannot be before 9/1/88, the first day of the FastTrack database
+## Simplified Date Defaults
+When parameters are unspecified, FastTrack's intelligent defaults ensure you're still equipped with a meaningful date range:
+
+- **End Date**: Defaults to the last available market day.
+- **Start Date**: Set to 12 months prior to the specified or defaulted end date, offering a comprehensive yearly overview.
+
+#### Default Examples:
+- **Specified End Date Only**: Analyzes the year leading up to the specified end date.
+- **Specified Start Date Only**: Ranges from the specified start to the last available market day.
+- **No Date Specified**: Provides the last 12 months of data.
 
 ---
-## General FastTrack Date Formats
+## Date Parameter Rules for Precision
+To maintain the integrity of your data queries:
 
-FastTrack has three date types: 
-
-#### strdate
-This is a traditional caledar date formatted date. yyyy-MM-dd
-
-#### marketdate
-This is an integer representing the number of market days since 9/1/1988, the first day in the FastTrack database.
-
-#### juliandate
-This is a Microsoft date standard used in Excel. This value coresponds to the excel function =DATEVALUE(\[date value\])
-
+- **Chronological Order**: Start dates must precede end dates.
+- **Database Boundaries**: Dates are automatically adjusted to fit within FastTrack's historical records.
 
 ---
-## How to use MarketDates
+## FastTrack Date Formats Explained
+FastTrack utilizes three date formats for versatility:
 
-[Jump to examples and description of market days with "bulk data"](./Examples/02-date_javascript.md#market-days)
-
+- **strdate**: The standard calendar date format (yyyy-MM-dd).
+- **marketdate**: An integer count of market days since FastTrack's inception, ideal for sequential market analysis.
+- **juliandate**: Compatible with Excel's DATEVALUE, facilitating easy integration with spreadsheets.
 
 ---
-## [Jump to Date Defaults](./02a-DataInfo.md)
+## Navigating Market Dates
+Discover how to leverage market dates for bulk data analysis and enhance your financial models with our intuitive examples:
+
+[Market Days Examples and Usage](https://docs.fasttrack.net/docs/ftlightning/5108ce6297e7a-javascript-bulk-data#market-days)
+
