@@ -2,76 +2,63 @@
 stoplight-id: rbosu9gmxd4tv
 ---
 
-# Overview
+# Comprehensive Portfolio Backtesting API
 
-Use this API to backtest investment portfolios.
+Unlock the power of precision backtesting for your investment strategies with our API. Designed for financial professionals, our tool calculates intricate portfolio stats, holdings, values, and more, enabling you to refine and validate your investment models with unparalleled ease and accuracy.
 
-You supply the investment portfolio weightings and rebalance, FastTrack calculate stats, holdings, values, and more.
+## Portfolio Modeling 
+**Embrace Flexibility and Precision**
 
-## Model Types
+Our API stands out by offering three robust portfolio modeling types, allowing you to simulate and analyze investment performance across different scenarios and time frames.
 
-The API offers two portfolio modeling types:
+### Static Models 
 
+*Simplify and Strategize*
 
-### Static Models
-A static model is a list of investment securities and their weights, plus a rebalance schedule. 
+Static models serve as the foundation of portfolio construction, allowing you to set and maintain a consistent investment strategy over a specified period.
 
-At the start date you input, the API will allocate $100,000 according to the model weights, then rebalance to the model weights at the instructed interval.
+- **Example**: Initiate with a $100,000 investment, distributing funds between SPY (50%) and TLT (50%), with monthly rebalancing to adhere to these proportions.
+This model is ideal for evaluating the resilience and performance of fixed allocation strategies over time.
 
-```
-SPY : 50%
-TLT : 50%
-Rebalance Monthly
-```
+### Dynamic Models
 
-Above is an example of a 50%-50% portfolio of stocks and bonds rebalanced every month.
+*Adapt and Evolve*
 
+Dynamic models introduce flexibility and adaptability, allowing for the evolution of your portfolio strategy in response to changing market conditions or investment goals.
 
-### Dynamic Model
-A Dynamic model is multiple static models, stitched together at certain dates.
+- **Example**: Navigate through time with a portfolio that starts with a 50-50 split between SPY and TLT in 2010, shifts to IVV and BND with quarterly rebalances in 2011, and finally transitions to a GS-BAC blend with monthly rebalances through 2021.
 
+This approach is perfect for testing strategies that require adjustments based on predefined conditions or performance triggers.
 
-```
-Portfolio 1
-Jan 1, 2010 - Dec 31, 2010
-SPY : 50%
-TLT : 50%
-Rebalance Monthly
+### Momentum Models
 
-Portfolio 2
-Jan 1, 2011 - Dec 31, 2011
-IVV : 50%
-BND : 50%
-Rebalance Quarterly
+*Harness Market Trends*
 
-Portfolio 3
-Jan 1, 2012 - Dec 31, 2021
-GS : 50%
-BAC : 50%
-Rebalance Monthly
-```
+Momentum models capitalize on the tendency of securities to continue moving in the same direction for some time. By focusing on investments that have shown strong recent performance, these models aim to leverage the continuation of existing market trends for potential gains.
 
-The above Dynamic model will trade Portfolio 1 in 2010, switch to portfolio 2 in 2011, then trade portfolio 3 from 2012 through 2021.
+- **Example**: Implement a strategy that evaluates the performance of assets over the last three months, reallocating monthly to favor those with the highest returns. This could involve shifting from a balanced mix to a more aggressive stance in high-performing sectors or assets as they begin to gain momentum.
+
+**Key Characteristics of Momentum Models:**
+
+- **Trend-Based Allocation**: Investments are selected based on their recent performance trends, with a preference for those showing upward momentum.
+- **Dynamic Rebalancing**: The portfolio is rebalanced regularly, often monthly, to ensure it remains aligned with the latest market movements and momentum trends.
+- **Risk Management**: Incorporates strategies such as stop-loss orders and volatility assessments to mitigate potential downturns associated with high-momentum investments.
 
 
-## Result Types
+## Diverse Result Types for Comprehensive Analysis
 
-### Calculate
-Calcualte end points return calcualted statistics and daily closing values for the models. 
+### Calculate: Deep Dive into Performance Metrics
+Our 'Calculate' functionality provides a comprehensive suite of performance metrics, from total and yearly returns to risk assessments and drawdowns, alongside daily closing values. This is your go-to for quantitative insights into your portfolio's behavior over time.
 
+### Reference: Beyond the Numbers
+For a broader perspective, our 'Reference' endpoints offer qualitative insights into your portfolio's composition. Explore sector, region, and asset class weightings, along with blended expense ratios, to fully understand the makeup and cost-efficiency of your investment strategy.
 
-* Total return
-* Yearly Return
-* Risk
-* Drawdown
-* Historical Holdings
-* Historical change of price
+## Why Choose Our API for Portfolio Backtesting?
+- **Flexibility**: Tailor your investment strategies with static or dynamic models to meet your specific objectives and risk tolerance.
+- **Precision**: Access detailed, accurate calculations and analytics to assess performance and make informed decisions.
+- **Comprehensive Insights**: From statistical data to non-statistical model attributes, gain a holistic view of your investment portfolio's potential.
 
+### Empower Your Investment Analysis:
 
-### Reference
-Reference end points return non statistical data about the model. This includes
-* Sector weightings
-* Region weightings
-* Asset Class weightings
-* Blended expense ratio
-* And more
+Leverage our API to backtest and refine your investment portfolios, ensuring they are robust, adaptive, and aligned with your financial goals. With our tool, you're not just analyzing past performance; you're crafting a roadmap for future success.
+
