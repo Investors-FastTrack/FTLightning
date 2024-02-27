@@ -1,62 +1,48 @@
-# Data Information
-This section describes FastTrack's data collection process, update schedule and data formatting.
+# Data Excellence at FastTrack
+FastTrack prides itself on delivering precise, timely, and comprehensive financial data to empower your investment decisions. Our rigorous data collection process, frequent updates, and user-focused data formatting ensure you have the insights needed to excel in the dynamic financial landscape.
 
-## Data Update Schedule
+## Unparalleled Data Update Schedule
 
-FastTrack updates our database 3 times daily:
+We understand the importance of having the latest information at your fingertips. That's why FastTrack updates our database three times daily, offering one of the industry's most frequent update schedules:
 
-#### Publish 1 - 6:40 PM EST
+### Daily Update Cycle:
+- **Publish 1** - 6:40 PM EST: The first update of the evening brings you the day's prices and dividends for a vast array of assets. This includes all stocks, ETFs, COFs, and a significant portion of open-end funds and indexes.
 
-Publish 1 includes updated prices and dividends for all stocks, ETFs, COF, approximately 90% of open end funds, and approx 50% of indexes. 
+- **Publish 2** - 8:25 PM EST: Our second update finalizes the day's data, incorporating any late-reporting assets not covered in Publish 1.
 
-Liquid Alts, smaller funds, some international funds commonly report delayed NAVs and get updated in Publish 2.
+- **Publish 3** - 9:00 PM EST: A specialized update focusing on ~100 bond index values, ensuring bond market participants have the latest data.
 
-#### Publish 2 - 8:25 PM EST
-Publish 2 includes any changes made to Publish 1 and all remaining open-end funds and indexes not reported in Publish 1.
+- **Publish 4** - 7:25 AM EST: Before the market opens, we provide overnight updates and dividends, ensuring you start the day with the most current data.
 
-#### Publish 3 - 9:00 PM EST
-Publish 3 is a quick update pulling ~100 bond index values. Funds, ETFs, and stocks are not updated in Publish 3.
-
-#### Publish 4 - 7:25 AM EST
-Publish 4 is released the following morning and includes any updates and dividends processed overnight and early morning.
-
-Check data update status with the [/v1/status](https://fasttrack.stoplight.io/docs/ftlightning/ad1cc0b0b84ef-data-update-status) end point
-
----
-
-## Missing Prices
-
-**Closing prices** - any missing closing price in the FastTrack dataset will report value of the priod market day
+Stay informed on data updates through our [/v1/status](https://fasttrack.stoplight.io/docs/ftlightning/ad1cc0b0b84ef-data-update-status) endpoint.
 
 
-*Example:*
 
-ETF "XYZ" priced at $10.00 on 8/3/2020, `no price on 8/4/2020`, and $11.00 on 8/5/2020.
- 
-The closing price data will report 10 for 8/3/2020, `10 for 8/4/2020`, and 11 for 8/5/2020. (The 8/3/2020 price of 10 is repeated for 8/4/2020)
+### Ensuring Data Continuity:
+- **Missing Prices:** We employ sophisticated methods to maintain continuity in our datasets. For any missing closing price, we default to the previous market day's value, ensuring no gaps in your analysis.
 
-**OLHV data** - any missing open, high, low, or volume data will return "-1"
+- **OLHV Data:** In the rare instance of missing open, high, low, or volume data, we mark these with "-1" to signify the absence, allowing for seamless data processing.
+
+## Dividend Adjusted Prices for Accurate Analysis
+At FastTrack, "price" means more than just a number. Our adjusted price data accounts for dividends, providing a true reflection of a security's value and ensuring your total return calculations are accurate. Unadjusted prices are also available, offering flexibility in analysis.
+
+## Optimized Defaults for Efficient Data Access
+Our API endpoints are designed with intelligent defaults, simplifying access while allowing for customized queries:
+
+- **End Date**: Defaults to the latest data in our database, ensuring you're always working with current information.
+- **Start Date**: Set to one year before the latest data, offering a comprehensive historical view.
+- **Basis and Length**: Defaults such as SP-DA and 21 market days optimize for common analytical needs.
+- **Count**: A default of 1000, balancing comprehensiveness and performance.
+- **Risk-Free Rate**: The Vanguard money market fund (VMMXX) is our standard, reflecting a widely accepted benchmark.
 
 ---
-## Dividend Adjusted Prices
+## Why Choose FastTrack?
+- **Timeliness**: With three daily updates, your decisions are powered by some of the freshest data available.
+- **Reliability**: Our handling of missing data ensures consistency and reliability in your analyses.
+- **Insight**: Dividend-adjusted prices provide deeper insights for more accurate investment strategies.
+- **Ease of Use**: Intelligent defaults and comprehensive documentation make our API user-friendly and accessible.
 
-"price" in this documentation and in FastTrack universally reffers to the "adjusted price" of a security. 
-
-All statistics and total return is calculated on the dividend adjusted data. 
-
-Unadjusted prices are noted as such."
-
----
-
-## Default Parameter Values
-API end points have various parameters and when not specified, default values are used:
-
-* `end` - Any time "end" is not specified, the last day in the FastTrack database is used
-* `start` - 1 year minus the last day in the database
-* `basis` - SP-DA, the total return S&P 500 index 
-* `len` - 21 market days
-* `count` - 1000
-* `riskfree` = VMMXX, Vanguard money market funds
+FastTrack is committed to delivering not just data, but a competitive edge. Explore our offerings and see why leading professionals trust FastTrack for their financial data needs.
 
 
 
