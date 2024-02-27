@@ -46,7 +46,7 @@ Upon signing up for the FastTrack Market Data API, you'll receive your **account
 <!-- theme: success -->
 >Dive deeper into our API with a [Login Code Example](https://docs.fasttrack.net/docs/ftlightning/ZG9jOjMwNzY4OQ) that showcases a practical implementation of our authentication process.
 
----
+
 
 ### Your Next Steps
 Unlock the power of financial data with your FastTrack account. [Sign up now](https://subscribe.fasttrack.net/landing/api/apilanding.html)
