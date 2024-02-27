@@ -3,7 +3,7 @@
 ## Unleash the Power of Financial Data
 
 ### Your Gateway to Professional-Grade Market Intelligence
-FastTrack Market Data API offers unparalleled access to a wealth of financial data, directly at your fingertips. Designed with developers and tech-savvy professionals in mind, our REST API ensures secure, efficient, and real-time data retrieval to power your applications with accuracy and reliability.
+FastTrack Market Data API offers unparalleled access to a wealth of financial data, directly at your fingertips. Designed with developers and tech-savvy professionals in mind, our REST API ensures secure, efficient data retrieval to power your applications with accuracy and reliability.
 
 <!-- theme: danger -->
 >### *Technical Documentation* 
