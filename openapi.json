@@ -2055,7 +2055,7 @@
       },
       "parameters": []
     },
-    "/v1/ref/shareclasses/{ticker}": {
+    "/v1/ref/{ticker}/shareclasses": {
       "parameters": [
         {
           "schema": {
