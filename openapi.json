@@ -432,7 +432,8 @@
           }
         },
         "x-stoplight": {
-          "id": "euh6lxnydis43"
+          "id": "euh6lxnydis43",
+          "summary": "One Ticker"
         }
       }
     },
