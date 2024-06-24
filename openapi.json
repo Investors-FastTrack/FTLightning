@@ -409,7 +409,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FTStatsList"
+                  "$ref": "#/components/schemas/FTStats"
                 }
               }
             }
@@ -426,10 +426,28 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TickerArray"
+                "type": "object",
+                "x-examples": {
+                  "Example 1": {
+                    "prices": [
+                      1.2,
+                      2.1
+                    ]
+                  }
+                },
+                "properties": {
+                  "prices": {
+                    "type": "array",
+                    "description": "Array of closing prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
               }
             }
-          }
+          },
+          "description": "Array of price values. Users must ensure that the size of the array matches the maxnumdays value from /v1/data/dates."
         },
         "x-stoplight": {
           "id": "euh6lxnydis43"
@@ -6010,21 +6028,7 @@
         }
       },
       "TickerArray": {
-        "title": "TickerArray",
-        "type": "array",
-        "description": "list of requested tickers ",
-        "x-examples": {
-          "Ticker Array": [
-            "SPAB",
-            "SPBO",
-            "AAPL",
-            "MSFT"
-          ]
-        },
-        "items": {
-          "type": "string",
-          "example": "AAPL"
-        }
+        "$ref": "#/components/schemas/FTData"
       },
       "CUSIPArray": {
         "title": "CUSIPArray",
