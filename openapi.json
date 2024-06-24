@@ -200,7 +200,7 @@
     },
     "/v1/stats/{ticker}": {
       "get": {
-        "summary": "Statistics & Returns for Specific Ticker",
+        "summary": "One Ticker",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
@@ -286,7 +286,7 @@
     "/v1/stats/xmulti": {
       "post": {
         "operationId": "asd123sad",
-        "summary": "Statistics & Returns for Multiple Tickers",
+        "summary": "Multiple Tickers",
         "parameters": [
           {
             "$ref": "#/components/parameters/start"
@@ -361,7 +361,7 @@
     "/v1/stats": {
       "post": {
         "operationId": "asd123sad1",
-        "summary": "Statistics & Returns from Custom Price Data",
+        "summary": "Custom Price Data",
         "parameters": [
           {
             "$ref": "#/components/parameters/start"
@@ -432,8 +432,7 @@
           }
         },
         "x-stoplight": {
-          "id": "euh6lxnydis43",
-          "summary": "One Ticker"
+          "id": "euh6lxnydis43"
         }
       }
     },
