@@ -200,7 +200,7 @@
     },
     "/v1/stats/{ticker}": {
       "get": {
-        "summary": "One Ticker",
+        "summary": "Statistics & Returns for Specific Ticker",
         "parameters": [
           {
             "$ref": "#/components/parameters/ticker"
@@ -272,7 +272,7 @@
             }
           }
         },
-        "description": "Returns calulated statistics on a single ticker over the date range",
+        "description": "This endpoint retrieves a comprehensive set of calculated financial statistics for a specified stock market ticker over a customizable date range. It provides key metrics such as returns, volatility, drawdowns, and correlations that help analyze the historical performance of the ticker. \r\n\r\nUsers need to specify the ticker symbol in the URL to fetch its corresponding data.",
         "tags": [
           "Statistics & Returns"
         ]
@@ -285,7 +285,8 @@
     },
     "/v1/stats/xmulti": {
       "post": {
-        "summary": "Multiple Tickers",
+        "operationId": "asd123sad",
+        "summary": "Statistics & Returns for Multiple Tickers",
         "parameters": [
           {
             "$ref": "#/components/parameters/start"
@@ -342,7 +343,7 @@
             "description": "bad input parameter"
           }
         },
-        "description": "Returns calulated statistics on multiple ticker over the date range",
+        "description": "This endpoint allows users to retrieve statistical data for an array of ticker symbols simultaneously. By posting a list of tickers, users can receive a detailed breakdown of financial statistics for each, making it ideal for comparative analysis or portfolio review. \r\n\r\nThis endpoint simplifies obtaining metrics across multiple stocks, enhancing decision-making and market insight.",
         "tags": [
           "Statistics & Returns"
         ],
@@ -354,6 +355,84 @@
               }
             }
           }
+        }
+      }
+    },
+    "/v1/stats": {
+      "post": {
+        "operationId": "asd123sad1",
+        "summary": "Statistics & Returns from Custom Price Data",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/start"
+          },
+          {
+            "$ref": "#/components/parameters/end"
+          },
+          {
+            "$ref": "#/components/parameters/basis"
+          },
+          {
+            "$ref": "#/components/parameters/len"
+          },
+          {
+            "$ref": "#/components/parameters/maxdraw"
+          },
+          {
+            "$ref": "#/components/parameters/chart"
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "$ref": "#/components/parameters/monthend"
+          },
+          {
+            "$ref": "#/components/parameters/riskfree"
+          },
+          {
+            "$ref": "#/components/parameters/appid"
+          },
+          {
+            "$ref": "#/components/parameters/token"
+          },
+          {
+            "$ref": "#/components/parameters/ma"
+          },
+          {
+            "$ref": "#/components/parameters/vol"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "data points associated with ticker",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FTStatsList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        },
+        "description": "This endpoint provides the capability to calculate financial statistics from a user-provided array of price values. Users must ensure that the size of the array matches the [maxnumdays value in /v1/data/dates](https://docs.fasttrack.net/docs/ftlightning/c7a1db4158fd7-all-dates).\r\n\r\nThis function is particularly useful for analyzing custom data sets or hypothetical scenarios, allowing for flexibility in statistical evaluation without relying on predefined market data.",
+        "tags": [
+          "Statistics & Returns"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerArray"
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "euh6lxnydis43"
         }
       }
     },
@@ -2931,7 +3010,7 @@
         "tags": [
           "Families"
         ],
-        "operationId": "",
+        "operationId": "456546546",
         "x-stoplight": {
           "id": "yz7mvzraji1ir"
         }
@@ -4546,7 +4625,7 @@
             }
           }
         },
-        "operationId": "get-v1-usage-account-bonds",
+        "operationId": "get-v1-usage-account-bonds4",
         "parameters": [
           {
             "schema": {
