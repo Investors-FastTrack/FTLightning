@@ -6028,7 +6028,21 @@
         }
       },
       "TickerArray": {
-        "$ref": "#/components/schemas/FTData"
+        "title": "TickerArray",
+        "type": "array",
+        "description": "list of requested tickers ",
+        "x-examples": {
+          "Ticker Array": [
+            "SPAB",
+            "SPBO",
+            "AAPL",
+            "MSFT"
+          ]
+        },
+        "items": {
+          "type": "string",
+          "example": "AAPL"
+        }
       },
       "CUSIPArray": {
         "title": "CUSIPArray",
