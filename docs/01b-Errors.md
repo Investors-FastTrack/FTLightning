@@ -1,7 +1,7 @@
-# Handling Error Codes in FT Market Data API
+# Handling Error Codes in FastTrack Market Data API
 
-### Handling Error Codes in FT Market Data API
-Understanding and efficiently handling error responses is crucial for maintaining the robustness of applications using the FT Market Data API. Our system employs a straightforward approach to error reporting, ensuring you can quickly identify and rectify issues.
+
+Understanding and efficiently handling error responses is crucial for maintaining the robustness of applications using the FastTrack Market Data API. Our system employs a straightforward approach to error reporting, ensuring you can quickly identify and rectify issues.
 
 ## Error Response Strategy
 ### HTTP Status Codes
@@ -19,9 +19,23 @@ Every response includes an err object. A null value signifies a successful opera
 
 ```
 
-### Best Practices
-- **Null Check:** Always verify if the `err` object is `null` to determine the success of your request.
-- **Error Handling:** Use the provided error codes and messages within the `err` object to implement appropriate error handling in your application.
+### Error Magic Numbers
+When querying the API, a single error in data computation does not affect the entire data set's integrity. To maintain efficiency and ensure clear error signaling, FastTrack utilizes specifically defined, extremely low negative numbers to represent errors or uncomputable values.
+
+#### Example Usage:
+If a request is made for a 3-year standard deviation for a security that has only 1 year of data available, the API will return a value of -999.99.
+
+#### Best Practices:
+It is advisable for clients to check for values less than -999 as part of their error handling routine. This approach helps in identifying and segregating erroneous or uncomputable data points efficiently.
+
+This practice allows for quick identification of errors during automated processes and reduces the chances of misinterpretations or incorrect data analysis due to unexpected error values.
+
+## Best Practices
+- **Null Check**: Before processing the results, confirm that the err object is not null. A null err object typically indicates that your request was processed successfully without errors.
+
+- **Magic Number Check**: Routinely check for extremely negative values in your data. Values significantly below zero, such as less than -999, are used to flag uncomputable or invalid data points.
+
+- **Error Handling**: Utilize the error codes and messages provided in the err object to develop robust error handling mechanisms within your application. These details will guide you in managing errors effectively and ensure that your application responds appropriately to various data anomalies.
 
 ## Common Error Codes and Solutions
 
