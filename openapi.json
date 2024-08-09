@@ -6001,6 +6001,24 @@
               "$ref": "#/components/schemas/FTDividend"
             }
           },
+          "metadata": {
+            "type": "object",
+            "description": "Additional metadata about the response, including lookback restrictions",
+            "properties": {
+              "note": {
+                "type": "string",
+                "description": "Descriptive note about the data limitations or other important information"
+              },
+              "historicalAccessRange": {
+                "type": "string",
+                "description": "Specifies the lookback period in months from the last market date"
+              },
+              "validFromDate": {
+                "type": "string",
+                "description": "Earliest date from which data is accessible based on the lookback period"
+              }
+            }
+          },
           "err": {
             "$ref": "#/components/schemas/err"
           }
