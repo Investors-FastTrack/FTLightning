@@ -3294,7 +3294,7 @@
           }
         },
         "operationId": "get-v1-data-ticker-dividends",
-        "description": "Retrieve all dividends for a specific ticker",
+        "description": "This endpoint retrieves dividend data for specified stock, ETF, or mutual fund tickers, including dates, types, and values. Users can filter results by providing start and end dates. \r\n\r\n*Access to this endpoint requires a specialized subscription beyond standard FastTrack API packages. To set up access or inquire about subscription options, please contact api@fasttrack.net. This subscription enables access to extensive historical dividend data, essential for in-depth financial analysis.*",
         "parameters": [
           {
             "$ref": "#/components/parameters/start"
