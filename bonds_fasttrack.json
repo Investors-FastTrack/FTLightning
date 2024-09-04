@@ -1893,5 +1893,6 @@
     {
       "name": "Status"
     }
-  ]
+  ],
+  "x-internal": true
 }
