@@ -684,7 +684,13 @@
         }
       }
     },
-    "securitySchemes": {},
+    "securitySchemes": {
+      "token": {
+        "name": "token",
+        "type": "apiKey",
+        "in": "query"
+      }
+    },
     "parameters": {
       "appid": {
         "name": "appid",
@@ -711,5 +717,6 @@
         "example": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
       }
     }
-  }
+  },
+  "x-internal": true
 }

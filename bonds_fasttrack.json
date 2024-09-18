@@ -5,6 +5,10 @@
   },
   "info": {
     "title": "FastTrack Bond Data API",
+    "license": {
+      "name": "",
+      "url": "https://fasttrack.net"
+    },
     "description": "FastTrack Bonds API provides REST access to FastTrack's bond database. We cover 30k+ bond cusips spanning corporates, junk, treasuries, and more. Pricing data goes back to 1988. \n\nVisit https://apitrial.fasttrack.net for a trial account. ",
     "contact": {
       "email": "api@fasttrack.net",
@@ -23,6 +27,7 @@
     "/v1/bonds/{cusip}/description": {
       "parameters": [
         {
+          "description": "CUSIP of security",
           "schema": {
             "type": "string"
           },
@@ -69,6 +74,7 @@
     "/v1/bonds/xmulti/description": {
       "parameters": [],
       "post": {
+        "description": "Get descriptions for multiple CUSIPs",
         "summary": "Description - Multi",
         "operationId": "post-v1-bonds-xmulti-description",
         "responses": {
@@ -127,6 +133,7 @@
     "/v1/bonds/{cusip}/data": {
       "parameters": [
         {
+          "description": "CUSIP",
           "schema": {
             "type": "string"
           },
@@ -296,7 +303,7 @@
               "examples": {
                 "AAA Filter": {
                   "value": {
-                    "date": 20220101,
+                    "date": "20220101",
                     "timetomaturity": {
                       "min": 0,
                       "max": 100
@@ -1261,12 +1268,11 @@
         "type": "object",
         "properties": {
           "date": {
-            "type": "integer",
+            "type": "string",
             "description": "Historical date to run filter as YYYMMDD formatted date. Any issue offered AFTER this date is excluded. ",
-            "format": "int32",
-            "example": 20220901,
-            "minimum": 19880901,
+            "example": "20220901",
             "default": "[current date]",
+            "format": "YYYYMMDD",
             "nullable": true
           },
           "timetomaturity": {
@@ -1550,8 +1556,7 @@
             "default": null,
             "nullable": true,
             "items": {
-              "type": "string",
-              "default": null
+              "type": "string"
             }
           }
         }
@@ -1879,19 +1884,24 @@
   },
   "tags": [
     {
-      "name": "Authentication"
+      "name": "Authentication",
+      "description": "Securely log into the API to access bond data and services."
     },
     {
-      "name": "Description"
+      "name": "Data & Calculations",
+      "description": "Access bond pricing, yield, and analytics for informed financial decisions."
     },
     {
-      "name": "Data & Calculations"
+      "name": "Description",
+      "description": "Retrieve detailed information and attributes about specific bonds."
     },
     {
-      "name": "Filtering"
+      "name": "Filtering",
+      "description": "Efficiently sort and filter through a vast library of bonds based on your criteria."
     },
     {
-      "name": "Status"
+      "name": "Status",
+      "description": "Monitor the real-time status and health of the API for smooth operation."
     }
   ],
   "x-internal": false

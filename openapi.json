@@ -1,8 +1,12 @@
 {
   "openapi": "3.0.0",
   "info": {
+    "license": {
+      "name": "",
+      "url": "https://fasttrack.net"
+    },
     "title": "Funds, ETFs, Stocks, and Index API",
-    "description": "Use this API to retrieve raw OHLCV data, calcualted returns, and calcualted statistics.\n\nAdditionally, retrieve security categories, sectors, portfolio holdings, share classes information, indexes and more.",
+    "description": "Use this API to retrieve raw OHLCV data, calculated returns, and calculated statistics.\n\nAdditionally, retrieve security categories, sectors, portfolio holdings, share classes information, indexes and more.",
     "contact": {
       "email": "api@fasttrack.net",
       "name": "FT Market Data API Support",
@@ -18,6 +22,7 @@
   "paths": {
     "/v1/auth/login": {
       "get": {
+        "operationId": "getLogin",
         "summary": "Login",
         "parameters": [
           {
@@ -75,6 +80,7 @@
     },
     "/v1/data/{ticker}/range": {
       "get": {
+        "operationId": "getRangeData",
         "summary": "One Ticker",
         "parameters": [
           {
@@ -183,7 +189,7 @@
           }
         },
         "description": "Retrieve multiple ticker's adjusted and unadjusted closing, open, high low, and volume data over the data range",
-        "operationId": "",
+        "operationId": "postRangeData",
         "tags": [
           "Market Data"
         ],
@@ -275,7 +281,8 @@
         "description": "This endpoint retrieves a comprehensive set of calculated financial statistics for a specified stock market ticker over a customizable date range. It provides key metrics such as returns, volatility, drawdowns, and correlations that help analyze the historical performance of the ticker. \r\n\r\nUsers need to specify the ticker symbol in the URL to fetch its corresponding data.",
         "tags": [
           "Statistics & Returns"
-        ]
+        ],
+        "operationId": "getStats"
       },
       "parameters": [
         {
@@ -1504,11 +1511,12 @@
             "$ref": "#/components/parameters/token"
           }
         ],
-        "description": "Retrieve a time series of statisics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
+        "description": "Retrieve a time series of statistics. ie Monthly SD, Monthly Sharpe Ratio, Monthly total returns, etc"
       }
     },
     "/v1/portfolios/staticmodel": {
       "post": {
+        "operationId": "postStaticModel",
         "summary": "Static Model",
         "parameters": [
           {
@@ -1563,7 +1571,7 @@
             "description": "bad input parameter"
           }
         },
-        "description": "Calculates the specified portfolio over the specifed rebalance period",
+        "description": "Calculates the specified portfolio over the specified rebalance period",
         "tags": [
           "Portfolio Modeling"
         ],
@@ -1656,7 +1664,7 @@
             "description": "bad input parameter"
           }
         },
-        "description": "Calculates the specified portfolios over the specifed rebalance period",
+        "description": "Calculates the specified portfolios over the specified rebalance period",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1779,7 +1787,7 @@
             }
           }
         },
-        "description": "String together multiple static models to get the results of an acticely traded portfolio. Returns performance, charting, and position.",
+        "description": "String together multiple static models to get the results of an actively traded portfolio. Returns performance, charting, and position.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1926,7 +1934,7 @@
           "description": ""
         },
         "x-internal": false,
-        "description": "",
+        "description": "Get stats and historical performance on momentum portfolios with ease. Define a family of securities, set an algorithm and trading frequency, and dynamically rebalance your portfolio by selecting top-performing securities from the family based on the algorithm.",
         "parameters": [
           {
             "$ref": "#/components/parameters/appid"
@@ -2314,6 +2322,7 @@
     "/v1/bonds/{cusip}/description": {
       "parameters": [
         {
+          "description": " ",
           "schema": {
             "type": "string"
           },
@@ -2346,15 +2355,13 @@
             "$ref": "#/components/parameters/token"
           }
         ],
-        "tags": [
-          "Other Data"
-        ],
         "x-internal": true
       }
     },
     "/v1/bonds/xmulti/description": {
       "parameters": [],
       "post": {
+        "description": " ",
         "summary": "Bond Descriptions",
         "operationId": "post-v1-bonds-xmulti-description",
         "responses": {
@@ -2398,9 +2405,6 @@
           {
             "$ref": "#/components/parameters/token"
           }
-        ],
-        "tags": [
-          "Bond Data"
         ],
         "x-internal": true
       }
@@ -2470,9 +2474,6 @@
             }
           }
         },
-        "tags": [
-          "Bond Data"
-        ],
         "x-internal": true
       },
       "parameters": []
@@ -2480,6 +2481,7 @@
     "/v1/bonds/{cusip}/data": {
       "parameters": [
         {
+          "description": "CUSIP of security",
           "schema": {
             "type": "string"
           },
@@ -2533,9 +2535,6 @@
             "$ref": "#/components/parameters/end"
           }
         ],
-        "tags": [
-          "Other Data"
-        ],
         "x-internal": true
       }
     },
@@ -2567,9 +2566,6 @@
           {
             "$ref": "#/components/parameters/token"
           }
-        ],
-        "tags": [
-          "Bond Data"
         ],
         "x-internal": true
       },
@@ -2621,7 +2617,7 @@
               "examples": {
                 "AAA Filter": {
                   "value": {
-                    "date": 20220101,
+                    "date": "20220101",
                     "timetomaturity": {
                       "min": 0,
                       "max": 100
@@ -2694,9 +2690,6 @@
             "description": "Flag to include summary data and values of spreads and yield values.",
             "allowEmptyValue": true
           }
-        ],
-        "tags": [
-          "Bond Data"
         ],
         "x-internal": true
       },
@@ -2910,7 +2903,7 @@
                       "properties": {
                         "family": {
                           "type": "string",
-                          "description": "A predefined list of securites created by FastTrack"
+                          "description": "A predefined list of securities created by FastTrack"
                         },
                         "operation": {
                           "type": "string",
@@ -2922,9 +2915,7 @@
                           ]
                         },
                         "rank": {
-                          "type": [
-                            "string"
-                          ],
+                          "type": "string",
                           "x-stoplight": {
                             "id": "cnggouea6mcvf"
                           },
@@ -3037,9 +3028,11 @@
     },
     "/v1/family/{strFamily}": {
       "get": {
+        "operationId": "getFamilyByName",
         "summary": "Family",
         "parameters": [
           {
+            "description": "Family name",
             "name": "strFamily",
             "in": "path",
             "required": true,
@@ -3079,6 +3072,7 @@
     },
     "/v1/export/{ticker}": {
       "get": {
+        "operationId": "getTickerExport",
         "summary": "Export CSV",
         "parameters": [
           {
@@ -3102,7 +3096,7 @@
             },
             "in": "query",
             "name": "appid",
-            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+            "description": "36 character GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
             "required": true
           },
           {
@@ -3223,7 +3217,7 @@
             },
             "in": "query",
             "name": "token",
-            "description": "36 characher GUID received from the auth/login end point",
+            "description": "36 character GUID received from the auth/login end point",
             "required": true
           },
           {
@@ -3232,7 +3226,7 @@
             },
             "in": "query",
             "name": "appid",
-            "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+            "description": "36 character GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
             "required": true
           },
           {
@@ -3323,7 +3317,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "curor position of search results. ie index of first result to return. Use this to page through results"
+            "description": "cursor position of search results. ie index of first result to return. Use this to page through results"
           },
           {
             "name": "fq",
@@ -3418,7 +3412,7 @@
           }
         },
         "operationId": "get-v1-search",
-        "description": "Search the fasttrack database accross ticker, name, and cusip",
+        "description": "Search the fasttrack database across ticker, name, and cusip",
         "summary": "Search Database",
         "tags": [
           "Other"
@@ -3427,6 +3421,7 @@
     },
     "/v1/data/xmulti": {
       "post": {
+        "operationId": "postTickerData",
         "summary": "All Data - Multiple",
         "parameters": [
           {
@@ -3477,11 +3472,10 @@
     },
     "/v1/data/xmulti/divadjprices": {
       "post": {
+        "operationId": "postDivAdjPrices",
         "summary": "Adjusted Closing Prices - Multi",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
+
           {
             "$ref": "#/components/parameters/appid"
           },
@@ -3521,11 +3515,10 @@
     },
     "/v1/data/xmulti/symname": {
       "post": {
+        "operationId": "postSymName",
         "summary": "Symbol Name - Multi",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
+
           {
             "$ref": "#/components/parameters/appid"
           },
@@ -3607,11 +3600,10 @@
     },
     "/v1/data/xmulti/unadjprices": {
       "post": {
+        "operationId": "postUnadPrices",
         "summary": "Unadjusted Closing Prices - Multi",
         "parameters": [
-          {
-            "$ref": "#/components/parameters/ticker"
-          },
+ 
           {
             "$ref": "#/components/parameters/appid"
           },
@@ -3651,6 +3643,7 @@
     },
     "/v1/data/{ticker}": {
       "get": {
+        "operationId": "getDataTicker",
         "summary": "OHLCV Data",
         "parameters": [
           {
@@ -3696,6 +3689,7 @@
     },
     "/v1/data/{ticker}/unadjprices": {
       "get": {
+        "operationId": "getTickerUnadjPrices",
         "summary": "Closing Prices - Unadjusted",
         "parameters": [
           {
@@ -3769,6 +3763,7 @@
     },
     "/v1/data/{ticker}/symname": {
       "get": {
+        "operationId": "getTickerName",
         "summary": "Symbol Name",
         "parameters": [
           {
@@ -3806,6 +3801,7 @@
     },
     "/v1/data/{ticker}/divadjprices": {
       "get": {
+        "operationId": "getDivAdjPrices",
         "summary": "Closing Prices - Adjusted",
         "parameters": [
           {
@@ -4123,6 +4119,7 @@
     "/beta/ref/{ticker}/eps": {
       "parameters": [
         {
+          "description": "Ticker of security",
           "schema": {
             "type": "string"
           },
@@ -4173,15 +4170,15 @@
                     },
                     "dilluted_eps": {
                       "type": "object",
-                      "description": "Trailing 12 months dilluted EPS",
+                      "description": "Trailing 12 months diluted EPS",
                       "properties": {
                         "value": {
                           "type": "string",
-                          "description": "Dilluted EPS value"
+                          "description": "diluted EPS value"
                         },
                         "date": {
                           "type": "string",
-                          "description": "Dilluted EPS date"
+                          "description": "diluted EPS date"
                         }
                       }
                     },
@@ -4204,9 +4201,6 @@
           }
         ],
         "description": "Returns the current Trailing 12 months EPS for security",
-        "tags": [
-          "13. Beta Endpoints"
-        ],
         "x-internal": true
       }
     },
@@ -4386,9 +4380,6 @@
         ],
         "security": [],
         "description": "Embed custom FastTrack charts on your webpage with an iframe.",
-        "tags": [
-          "7. iFrame Chart"
-        ],
         "deprecated": true,
         "x-internal": true
       },
@@ -4397,9 +4388,6 @@
     "/v1/precalc/winlose": {
       "get": {
         "summary": "Winners and Losers",
-        "tags": [
-          "10. Pre Calculated Data"
-        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -4740,7 +4728,7 @@
           },
           "unadjprices": {
             "type": "array",
-            "description": "Array of unadjusted closing prices in same format as 'prices' object. Requests must use 'unadj' paramter to specifically request this data.\r\n<br>\r\n*Limited to the trailing 3 years of data. Subscriptions for complete date range are available.*",
+            "description": "Array of unadjusted closing prices in same format as 'prices' object. Requests must use 'unadj' parameter to specifically request this data.\r\n<br>\r\n*Limited to the trailing 3 years of data. Subscriptions for complete date range are available.*",
             "example": [
               10.01,
               11.04,
@@ -4790,7 +4778,7 @@
           },
           "lows": {
             "type": "array",
-            "description": "Array of dialy low prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
+            "description": "Array of daily low prices. Array is always length of FTDates. Index 1 is ticker's closing price of first market day in FastTrack database (9/1/1988), Index 2 is the second market day (9/2/1988), index 3 is third market day in FastTrack database (9/6/88)",
             "items": {
               "type": "number"
             }
@@ -4881,7 +4869,7 @@
           },
           "price": {
             "type": "number",
-            "description": "Adjusted closing priceicker"
+            "description": "Adjusted closing price ticker"
           },
           "unadjprice": {
             "type": "number",
@@ -4920,7 +4908,7 @@
           },
           "dtes": {
             "type": "array",
-            "description": "Array of FTDate objects for every day in the database. Every market day in the database is included in the array. Index 0 is a repeate of index 1.",
+            "description": "Array of FTDate objects for every day in the database. Every market day in the database is included in the array. Index 0 is a repeat of index 1.",
             "items": {
               "$ref": "#/components/schemas/FTDate"
             }
@@ -4937,7 +4925,7 @@
         "properties": {
           "marketdate": {
             "type": "integer",
-            "description": "market days ellapsed since the first day in the database (9/1/88)"
+            "description": "market days elapsed since the first day in the database (9/1/88)"
           },
           "juliandate": {
             "type": "integer",
@@ -5006,7 +4994,7 @@
                   "x-stoplight": {
                     "id": "0zhrrsr7ljr3f"
                   },
-                  "description": "Name of familiy matching search query"
+                  "description": "Name of family matching search query"
                 },
                 "ticker_count": {
                   "type": "string",
@@ -5074,11 +5062,11 @@
           },
           "beta": {
             "type": "string",
-            "description": "beta against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
+            "description": "beta against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation length is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
           },
           "corr": {
             "type": "string",
-            "description": "correlation against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation lenth is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
+            "description": "correlation against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default. Correlation length is set via the \"len\" parameter or defaulted to 21 market days (approximately 1 month)"
           },
           "ftalpha": {
             "type": "string",
@@ -5090,7 +5078,7 @@
           },
           "sharpe": {
             "type": "string",
-            "description": "sharpe ration against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
+            "description": "sharpe ratio against the ticker defined in the basis parameter, or Dividend Adjusted S&P500 data as a default"
           },
           "ui": {
             "type": "string",
@@ -5208,7 +5196,7 @@
           },
           "name": {
             "type": "string",
-            "description": "Name of securioty"
+            "description": "Name of security"
           },
           "dtestart": {
             "$ref": "#/components/schemas/FTDate"
@@ -5381,7 +5369,7 @@
           },
           "recoverylength": {
             "type": "string",
-            "description": "lenth of time, in months, of time to reach a new peak after reaching draw down bottom"
+            "description": "length of time, in months, of time to reach a new peak after reaching draw down bottom"
           },
           "peakdate": {
             "type": "string",
@@ -6116,7 +6104,7 @@
               },
               "redemption": {
                 "type": "string",
-                "description": "Redeption fee ratio  "
+                "description": "Redemption fee ratio  "
               },
               "expense_prospectus": {
                 "type": "string",
@@ -6141,7 +6129,7 @@
           },
           "sector": {
             "type": "string",
-            "description": "STOCKS ONLY - sectory of security"
+            "description": "STOCKS ONLY - sector of security"
           },
           "country": {
             "type": "string",
@@ -6661,7 +6649,7 @@
           },
           "spreads": {
             "type": "object",
-            "description": "The spreads conatined describe the difference between the bond's yield and the current spread basis yield",
+            "description": "The spreads contained describe the difference between the bond's yield and the current spread basis yield",
             "properties": {
               "oas_libor": {
                 "type": "object",
@@ -6764,7 +6752,7 @@
                 "type": "string",
                 "description": "Description of the actual instrument: high yield bond, corporate bond, government bond, certificate of deposit, etc"
               },
-              "convertable": {
+              "convertible": {
                 "type": "boolean",
                 "description": "True or false if bond is a convertible bond"
               },
@@ -6785,7 +6773,7 @@
                 "description": "Description of the security issuer "
               },
               "naics": {
-                "description": "***Avaialble only in filter results*** Sector, sub-sector, and industiry information derived from NAICS codes",
+                "description": "***Available only in filter results*** Sector, sub-sector, and industry information derived from NAICS codes",
                 "type": "object",
                 "properties": {
                   "code": {
@@ -6824,7 +6812,7 @@
               },
               "sic_code": {
                 "type": "string",
-                "description": "Standard Industrial Classification (SIC) describing the industriy a companiy belong to based on their business activities"
+                "description": "Standard Industrial Classification (SIC) describing the industry a company belong to based on their business activities"
               },
               "sinking_fund": {
                 "type": "boolean",
@@ -6973,14 +6961,14 @@
           "id": "r2t0ojjky50rz"
         },
         "type": "object",
+        "x-internal": true,
         "properties": {
           "date": {
-            "type": "integer",
+            "type": "string",
             "description": "Historical date to run filter as YYYMMDD formatted date. Any issue offered AFTER this date is excluded. ",
-            "format": "int32",
-            "example": 20220901,
-            "minimum": 19880901,
+            "example": "20220901",
             "default": "[current date]",
+            "format": "YYYYMMDD",
             "nullable": true
           },
           "timetomaturity": {
@@ -7009,7 +6997,7 @@
           },
           "coupon": {
             "type": "object",
-            "description": "Filter based on coupon value. Measued as percentage between 0.0 and 100.0",
+            "description": "Filter based on coupon value. Measured as percentage between 0.0 and 100.0",
             "default": null,
             "nullable": true,
             "properties": {
@@ -7260,16 +7248,14 @@
           },
           "naics": {
             "type": "array",
-            "description": "Array of 2, 3, and 4 digit NAICS codes. ***Results will include securities that match ANY of the codes in the list.*** 2 digit codes represent Sector, three digitis represent sub-sector, and 4 digits represent industiry. All filters are derived from the securities 6 digit NAICS codes.",
+            "description": "Array of 2, 3, and 4 digit NAICS codes. ***Results will include securities that match ANY of the codes in the list.*** 2 digit codes represent Sector, three digits represent sub-sector, and 4 digits represent industry. All filters are derived from the securities 6 digit NAICS codes.",
             "default": null,
             "nullable": true,
             "items": {
-              "type": "string",
-              "default": null
+              "type": "string"
             }
           }
-        },
-        "x-internal": true
+        }
       },
       "FTBondFilterResults": {
         "type": "object",
@@ -7438,7 +7424,7 @@
           }
         },
         "title": "",
-        "description": "Bonds that meet all critera of the filter",
+        "description": "Bonds that meet all criteria of the filter",
         "properties": {
           "datalist": {
             "type": "array",
@@ -7549,7 +7535,7 @@
       "appid": {
         "name": "appid",
         "in": "header",
-        "description": "36 characher GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
+        "description": "36 character GUID received from welcome email. Sign up for trial at http://apitrial.fasttrack.net",
         "required": true,
         "style": "simple",
         "explode": false,
@@ -7561,7 +7547,7 @@
       "token": {
         "name": "token",
         "in": "header",
-        "description": "36 characher GUID received from the auth/login end point",
+        "description": "36 character GUID received from the auth/login end point",
         "required": true,
         "style": "simple",
         "explode": false,
@@ -7681,7 +7667,7 @@
       "maxdraw": {
         "name": "maxdraw",
         "in": "query",
-        "description": "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so ommit when not necessary to improve performance",
+        "description": "Includes or exclude max draw data data in result. Max draw is a HEAVY calculation, so omit when not necessary to improve performance",
         "required": false,
         "style": "form",
         "schema": {
@@ -7696,7 +7682,7 @@
       "chart": {
         "name": "chart",
         "in": "query",
-        "description": "Include or exclude chart data in result. Chart data is substantually larger than other data and substantually increase the size of the result. Only request if necessary.",
+        "description": "Include or exclude chart data in result. Chart data is substantially larger than other data and substantially increase the size of the result. Only request if necessary.",
         "required": false,
         "style": "form",
         "schema": {
@@ -7785,7 +7771,7 @@
           ],
           "default": "0"
         },
-        "description": "Toggle to include or exclue volume data"
+        "description": "Toggle to include or exclude volume data"
       }
     },
     "requestBodies": {},
@@ -7793,34 +7779,44 @@
   },
   "tags": [
     {
-      "name": "Authentication"
+      "name": "Authentication",
+      "description": "Securely log into the API to access Funds, ETF, Stock, and Index data and services."
     },
     {
-      "name": "Market Data"
+      "name": "Bulk Data",
+      "description": "Efficiently request bulk historical prices and OHLC data from 9/1/88 onwards."
     },
     {
-      "name": "Statistics & Returns"
+      "name": "Documents",
+      "description": " "
     },
     {
-      "name": "Portfolio Modeling"
+      "name": "Families",
+      "description": "Retrieve pre-batched groups of securities by sector, such as tech funds or banking stocks."
     },
     {
-      "name": "Reference Data"
+      "name": "Market Data",
+      "description": "Access current and historical security prices over various date ranges."
     },
     {
-      "name": "Bulk Data"
+      "name": "Other",
+      "description": "Explore miscellaneous API calls for building powerful apps and products."
     },
     {
-      "name": "Families"
+      "name": "Portfolio Modeling",
+      "description": "View historical data for your custom portfolios and investment models."
     },
     {
-      "name": "Documents"
+      "name": "Reference Data",
+      "description": "Access sector analysis, share class details, expense ratios, and more."
     },
     {
-      "name": "Other"
+      "name": "Statistics & Returns",
+      "description": "Retrieve statistics for tickers, including returns, yields, volatility, and correlations."
     },
     {
-      "name": "Status"
+      "name": "Status",
+      "description": "Monitor the real-time status and health of the API for smooth operation."
     }
   ]
 }
