@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "license": {
-      "name": "",
+      "name": " ",
       "url": "https://fasttrack.net"
     },
     "title": "Funds, ETFs, Stocks, and Index API",
