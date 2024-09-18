@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.0",
+  "openapi": "3.1.0",
   "x-stoplight": {
     "id": "i05umd9ssdbfa"
   },
@@ -312,8 +312,8 @@
                       "min": 0,
                       "max": 2
                     },
-                    "putable": false,
-                    "callable": false,
+                    "putable": "false",
+                    "callable": "false",
                     "countries": [
                       "United States"
                     ],
@@ -337,8 +337,8 @@
                     ],
                     "ratings": {
                       "moodys": {
-                        "min": "Aaa",
-                        "max": null
+                        "min": "Aa3",
+                        "max": "Aaa"
                       },
                       "sp": null
                     },
@@ -1322,25 +1322,24 @@
             }
           },
           "putable": {
-            "type": "boolean",
+            "type": "string",
             "description": "Filter based on put option. True, False, or Null",
             "enum": [
-              null,
-              true,
-              false
+              "true",
+              "false"
             ],
-            "default": null,
+            
             "nullable": true
           },
           "callable": {
-            "type": "boolean",
+            "type": "string",
             "description": "Filter based on call option, True, False, or Null",
             "enum": [
-              null,
-              true,
-              false
+              
+              "true",
+              "false"
             ],
-            "default": null,
+
             "nullable": true
           },
           "countries": {
@@ -1420,10 +1419,10 @@
                 "properties": {
                   "min": {
                     "type": "string",
-                    "default": null,
+                    
                     "description": "Only show values greater than or equal",
                     "enum": [
-                      null,
+                      
                       "AAA",
                       "AA+",
                       "AA",
@@ -1450,7 +1449,7 @@
                   },
                   "max": {
                     "type": "string",
-                    "default": null,
+                    
                     "description": "Only show values less than or equal",
                     "enum": [
                       "AAA",
@@ -1473,8 +1472,7 @@
                       "CCC",
                       "CCC-",
                       "CC",
-                      "C",
-                      null
+                      "C"
                     ],
                     "nullable": true
                   }
@@ -1488,10 +1486,10 @@
                 "properties": {
                   "min": {
                     "type": "string",
-                    "default": null,
+                    
                     "description": "Only show values greater than or equal",
                     "enum": [
-                      null,
+                     
                       "Aaa",
                       "Aa1",
                       "AA",
@@ -1518,10 +1516,10 @@
                   },
                   "max": {
                     "type": "string",
-                    "default": null,
+                    
                     "description": "Only show values less than or equal",
                     "enum": [
-                      null,
+                      
                       "Aaa",
                       "Aa1",
                       "AA",
