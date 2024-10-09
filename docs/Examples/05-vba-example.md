@@ -14,7 +14,7 @@ Sub Test_FastTrack_Request(tickers As String, startdate As String, enddate As St
     
   '--- URL to request
   Dim strUrl As String
-  strUrl = "https://ftl.fasttrack.net/v1/export/xmulti/" + tickers + "?token=" + token + "& appid=" + appid + "&start=" + startdate + "&end=" + enddate
+  strUrl = "https://ftl.fasttrack.net/v1/export/xmulti/" + tickers + "?token=" + token + "&appid=" + appid + "&start=" + startdate + "&end=" + enddate
 
   '--- Response from http request
   Dim strResponse As String
