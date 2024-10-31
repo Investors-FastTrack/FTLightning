@@ -1328,18 +1328,15 @@
               "true",
               "false"
             ],
-            
             "nullable": true
           },
           "callable": {
             "type": "string",
             "description": "Filter based on call option, True, False, or Null",
             "enum": [
-              
               "true",
               "false"
             ],
-
             "nullable": true
           },
           "countries": {
@@ -1419,10 +1416,8 @@
                 "properties": {
                   "min": {
                     "type": "string",
-                    
                     "description": "Only show values greater than or equal",
                     "enum": [
-                      
                       "AAA",
                       "AA+",
                       "AA",
@@ -1449,7 +1444,6 @@
                   },
                   "max": {
                     "type": "string",
-                    
                     "description": "Only show values less than or equal",
                     "enum": [
                       "AAA",
@@ -1486,10 +1480,8 @@
                 "properties": {
                   "min": {
                     "type": "string",
-                    
                     "description": "Only show values greater than or equal",
                     "enum": [
-                     
                       "Aaa",
                       "Aa1",
                       "AA",
@@ -1516,10 +1508,8 @@
                   },
                   "max": {
                     "type": "string",
-                    
                     "description": "Only show values less than or equal",
                     "enum": [
-                      
                       "Aaa",
                       "Aa1",
                       "AA",
@@ -1902,5 +1892,5 @@
       "description": "Monitor the real-time status and health of the API for smooth operation."
     }
   ],
-  "x-internal": false
+  "x-internal": true
 }
