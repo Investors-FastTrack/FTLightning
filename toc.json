@@ -90,11 +90,6 @@
       "type": "item",
       "title": "Funds, ETFs, Stocks, & Indexes",
       "uri": "/openapi.json"
-    },
-    {
-      "type": "item",
-      "title": "Bond (CUSIP)",
-      "uri": "/bonds_fasttrack.json"
     }
   ]
 }

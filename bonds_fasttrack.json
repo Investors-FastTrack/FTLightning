@@ -1892,5 +1892,5 @@
       "description": "Monitor the real-time status and health of the API for smooth operation."
     }
   ],
-  "x-internal": true
+  "x-internal": false
 }
