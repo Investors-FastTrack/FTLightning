@@ -4510,7 +4510,7 @@
             "$ref": "#/components/parameters/token"
           }
         ],
-        "x-internal": false
+        "x-internal": true
       }
     },
     "/v1/ref/{ticker}/description": {
@@ -7102,12 +7102,9 @@
                 "nullable": true,
                 "properties": {
                   "min": {
-                    
                     "type": "string",
-                    
                     "description": "Only show values greater than or equal",
                     "enum": [
-                      
                       "AAA",
                       "AA+",
                       "AA",
@@ -7134,7 +7131,6 @@
                   },
                   "max": {
                     "type": "string",
-                    
                     "description": "Only show values less than or equal",
                     "enum": [
                       "AAA",
@@ -7171,10 +7167,8 @@
                 "properties": {
                   "min": {
                     "type": "string",
-                    
                     "description": "Only show values greater than or equal",
                     "enum": [
-                      
                       "Aaa",
                       "Aa1",
                       "AA",
@@ -7201,10 +7195,8 @@
                   },
                   "max": {
                     "type": "string",
-                    
                     "description": "Only show values less than or equal",
                     "enum": [
-                     
                       "Aaa",
                       "Aa1",
                       "AA",
