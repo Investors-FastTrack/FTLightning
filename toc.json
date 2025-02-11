@@ -66,8 +66,13 @@
     },
     {
       "type": "item",
-      "title": "Python - Example",
+      "title": "Python Example",
       "uri": "/docs/Examples/04-python-example.md"
+    },
+    {
+      "type": "item",
+      "title": "Python with Pandas",
+      "uri": "/docs/Examples/07-python-pandas.md"
     },
     {
       "type": "item",
