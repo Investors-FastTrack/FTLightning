@@ -1,62 +1,136 @@
-# VBA Code Example
-## For Microsoft Excel or Access
+# VBA Integration Example
 
+## Overview
 
-FastTrack's Market Data API can integrate into many differnt systems, including traditional Microsoft Office applications like Excel and Access.
+FastTrack's Market Data API can be integrated with Microsoft Excel to retrieve and display historical financial data for a list of tickers. This guide includes step-by-step instructions and VBA code to:
 
+- Make an API request using `WinHttp.WinHttpRequest.5.1`
+- Parse CSV-like response data
+- Write the results into an Excel worksheet
+- Trigger the request using a Form Button
 
+---
 
-## HTTP GET Request Sub
-The code below builds a `WinHttp.WinHttpRequest.5.1` request object to make a HTTP GET request to the **/v1/export/xmulti/{tickerlist}** end point
-```csharp
+## Prerequisites
 
-Sub Test_FastTrack_Request(tickers As String, startdate As String, enddate As String, token As String, appid as String)  
-    
-  '--- URL to request
-  Dim strUrl As String
-  strUrl = "https://ftl.fasttrack.net/v1/export/xmulti/" + tickers + "?token=" + token + "&appid=" + appid + "&start=" + startdate + "&end=" + enddate
+- Microsoft Excel with macro support enabled
+- A valid **FastTrack API Token** and **App ID**
+- Internet access
+- Reference to `WinHttp.WinHttpRequest.5.1` (typically available by default)
 
-  '--- Response from http request
-  Dim strResponse As String
+---
 
-  '--- create windows http request object to make HTTP request
-  Dim objRequest As Object
-  Set objRequest = CreateObject("WinHttp.WinHttpRequest.5.1")
+## Endpoint: `GET /v1/export/xmulti/{tickerlist}`
 
-  '--- build request object
-  With objRequest
-    .Open "GET", strUrl, False, "XXXX", "XXXX"
-    .SetRequestHeader "Content-Type", "application/json"
-    .Send body
-    strResponseHeaders = .StatusText
-    strResponse = .ResponseText
-    allResponseHeader = .GetAllResponseHeaders
-  End With
+**Base URL:**  
+`https://ftl.fasttrack.net/v1/export/xmulti/`
 
-  '--- write http response to debug window
-  Debug.Print strResponse
+**Query Parameters:**
+- `token` – *Your API token*
+- `appid` – *Your application ID*
+- `start` – *Start date in YYYY-MM-DD format*
+- `end` – *End date in YYYY-MM-DD format*
+
+---
+
+## VBA Code – Output CSV Response to Worksheet
+
+The API response is a CSV-formatted string, which we can parse and write to an Excel sheet:
+
+```vba
+Sub Test_FastTrack_Request(tickers As String, startDate As String, endDate As String, token As String, appId As String)
+
+    Dim strUrl As String
+    strUrl = "https://ftl.fasttrack.net/v1/export/xmulti/" & tickers & _
+             "?token=" & token & "&appid=" & appId & "&start=" & startDate & "&end=" & endDate
+
+    Dim objRequest As Object
+    Set objRequest = CreateObject("WinHttp.WinHttpRequest.5.1")
+
+    With objRequest
+        .Open "GET", strUrl, False
+        .SetRequestHeader "Content-Type", "application/json"
+        .Send
+    End With
+
+    Dim responseText As String
+    responseText = objRequest.ResponseText
+
+    ' Split response into lines
+    Dim lines() As String
+    lines = Split(responseText, vbLf)
+
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("Sheet1")
+    ws.Cells.ClearContents
+
+    Dim i As Long, j As Long
+    Dim values() As String
+
+    ' Write line by line into worksheet
+    For i = 0 To UBound(lines)
+        If Trim(lines(i)) <> "" Then
+            values = Split(lines(i), ",")
+            For j = 0 To UBound(values)
+                ws.Cells(i + 1, j + 1).Value = Trim(values(j))
+            Next j
+        End If
+    Next i
 
 End Sub
-
 ```
 
-## Add Action to call GET Sub
-Add a button or action item to your Excel/Access Application to trigger the download. 
+---
 
-Of course, update the ticker list, appid, token, and dates to meet your project's needs.
+## Adding a Button in Excel
 
-```csharp
-Private Sub CommandButton1_Click()
+To let users trigger the macro with a button:
 
-Dim token As String
-token = "" ''' add your token here
+1. Open Excel.
+2. Go to the **Developer** tab. (If it's hidden, enable it via File > Options > Customize Ribbon > check *Developer*)
+3. Click **Insert** > choose a **Form Control Button**.
+4. Draw the button on the worksheet.
+5. When prompted, assign the macro: `CommandButton1_Click`
 
-Dim appid As String
-appid = "" ''' add your appid here
+---
 
+## Macro to Trigger API Request
 
-Test_FastTrack_Request "JPM,BAC,GS,MS", "2022-01-01", "2022-01-23", token, appid
+```vba
+Sub CommandButton1_Click()
 
+    Dim token As String: token = "your_token_here"
+    Dim appId As String: appId = "your_appid_here"
+
+    Dim tickers As String: tickers = "JPM,BAC"
+    Dim startDate As String: startDate = "2025-04-09"
+    Dim endDate As String: endDate = "2025-05-09"
+
+    Call Test_FastTrack_Request(tickers, startDate, endDate, token, appId)
 
 End Sub
+```
+
+---
+
+## Notes
+
+- Ensure that `"Sheet1"` exists or change the sheet name in the code.
+- The CSV header includes: `ticker, date, adjusted price, unadjusted price, open, low, high, volume`.
+- Adjust column formatting (e.g., date or number formats) as needed.
+- You do **not** need a JSON parser for this example since the response is plain CSV.
+
+---
+
+## Optional: Add Basic Error Handling
+
+```vba
+On Error GoTo ErrHandler
+
+' ... request code ...
+
+Exit Sub
+
+ErrHandler:
+    MsgBox "An error occurred: " & Err.Description, vbCritical
 ```
