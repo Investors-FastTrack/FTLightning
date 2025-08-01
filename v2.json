@@ -1,0 +1,1498 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "StatsV2 API",
+    "description": "Financial statistics calculation API supporting multiple asset types and time periods",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/stats2": {
+      "post": {
+        "summary": "Calculate financial statistics (snapshot)",
+        "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods",
+        "operationId": "calculateStatsSnapshot",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatsV2Request"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful calculation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsV2Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats2/historical": {
+      "post": {
+        "summary": "Calculate historical financial statistics",
+        "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly)",
+        "operationId": "calculateStatsHistorical",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatsV2HistoricalRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful calculation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsV2HistoricalResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "appId": [],
+      "token": []
+    }
+  ],
+  "components": {
+    "schemas": {
+      "StatsV2Request": {
+        "type": "object",
+        "required": [
+          "assets"
+        ],
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple ticker symbol",
+                  "example": "AAPL"
+                },
+                {
+                  "$ref": "#/components/schemas/StaticModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DynamicModel"
+                },
+                {
+                  "$ref": "#/components/schemas/MomentumModel"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomData"
+                }
+              ]
+            }
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker for risk calculations",
+            "default": "SPY",
+            "example": "SPY"
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "description": "As-of date for calculations (YYYY-MM-DD)",
+            "example": "2024-07-29"
+          },
+          "time_periods": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "enum": [
+                    "1d",
+                    "5d",
+                    "1m",
+                    "3m",
+                    "6m",
+                    "1y",
+                    "3y",
+                    "5y",
+                    "10y",
+                    "inception",
+                    "yearly"
+                  ]
+                },
+                {
+                  "$ref": "#/components/schemas/CustomPeriod"
+                }
+              ]
+            },
+            "description": "Time periods to calculate",
+            "default": [
+              "1m",
+              "3m",
+              "1y",
+              "3y"
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "drawdown_analysis",
+                "moving_averages",
+                "volume_data",
+                "position_details",
+                "security_info"
+              ]
+            },
+            "description": "Optional data to include"
+          },
+          "advanced": {
+            "$ref": "#/components/schemas/AdvancedSettings"
+          }
+        }
+      },
+      "StatsV2HistoricalRequest": {
+        "type": "object",
+        "required": [
+          "assets"
+        ],
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple ticker symbol",
+                  "example": "AAPL"
+                },
+                {
+                  "$ref": "#/components/schemas/StaticModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DynamicModel"
+                },
+                {
+                  "$ref": "#/components/schemas/MomentumModel"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomData"
+                }
+              ]
+            }
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker for risk calculations",
+            "default": "SPY",
+            "example": "SPY"
+          },
+          "rollups": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "yearly",
+                "quarterly",
+                "monthly"
+              ]
+            },
+            "description": "Time period rollups to calculate",
+            "default": [
+              "yearly"
+            ]
+          },
+          "years": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9]{4}$"
+            },
+            "description": "Years to include in calculations",
+            "example": [
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+              "2024"
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "drawdown_analysis",
+                "moving_averages",
+                "volume_data",
+                "security_info"
+              ]
+            },
+            "description": "Optional data to include"
+          },
+          "advanced": {
+            "$ref": "#/components/schemas/AdvancedSettings"
+          }
+        }
+      },
+      "CustomPeriod": {
+        "type": "object",
+        "required": [
+          "custom"
+        ],
+        "properties": {
+          "custom": {
+            "type": "object",
+            "required": [
+              "label",
+              "from"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "example": "covid_crash"
+              },
+              "from": {
+                "type": "string",
+                "format": "date",
+                "example": "2020-02-01"
+              },
+              "to": {
+                "type": "string",
+                "format": "date",
+                "description": "End date (defaults to as_of date if not specified)",
+                "example": "2020-04-01"
+              }
+            }
+          }
+        }
+      },
+      "StaticModel": {
+        "type": "object",
+        "required": [
+          "type",
+          "holdings"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "static"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name for the portfolio strategy"
+          },
+          "ticker": {
+            "type": "string",
+            "description": "Unique identifier for this model"
+          },
+          "holdings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Holding"
+            },
+            "description": "Portfolio holdings with weights. Weights should sum to 100 (representing percentages).",
+            "minItems": 1
+          },
+          "rebalance": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "quarterly",
+              "annually"
+            ],
+            "default": "monthly",
+            "description": "How often to rebalance the portfolio to target weights"
+          },
+          "start": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date for backtesting this model"
+          },
+          "seed": {
+            "type": "number",
+            "description": "Initial investment amount in dollars",
+            "default": 100000
+          }
+        },
+        "x-examples": {
+          "Conservative Portfolio": {
+            "type": "static",
+            "name": "Conservative 60/40",
+            "ticker": "CONS_6040",
+            "holdings": [
+              {
+                "ticker": "VTI",
+                "weight": 60
+              },
+              {
+                "ticker": "BND",
+                "weight": 40
+              }
+            ],
+            "rebalance": "quarterly",
+            "start": "2020-01-01",
+            "seed": 50000
+          },
+          "Aggressive Growth": {
+            "type": "static",
+            "name": "Tech Heavy",
+            "ticker": "TECH_GROWTH",
+            "holdings": [
+              {
+                "ticker": "QQQ",
+                "weight": 70
+              },
+              {
+                "ticker": "VTI",
+                "weight": 20
+              },
+              {
+                "ticker": "BND",
+                "weight": 10
+              }
+            ],
+            "rebalance": "monthly",
+            "start": "2021-01-01",
+            "seed": 100000
+          }
+        }
+      },
+      "DynamicModel": {
+        "type": "object",
+        "required": [
+          "type",
+          "models"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "dynamic"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name for the dynamic strategy"
+          },
+          "ticker": {
+            "type": "string",
+            "description": "Unique identifier for this dynamic model"
+          },
+          "seed": {
+            "type": "number",
+            "description": "Initial investment amount in dollars",
+            "default": 100000
+          },
+          "models": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "start",
+                "holdings"
+              ],
+              "properties": {
+                "start": {
+                  "type": "string",
+                  "format": "date",
+                  "description": "Date when this allocation becomes active"
+                },
+                "rebalance": {
+                  "type": "string",
+                  "enum": [
+                    "daily",
+                    "weekly",
+                    "monthly",
+                    "quarterly",
+                    "annually"
+                  ],
+                  "description": "Rebalancing frequency for this period"
+                },
+                "holdings": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Holding"
+                  },
+                  "description": "Portfolio allocation for this time period"
+                }
+              }
+            },
+            "description": "Array of portfolio allocations that activate on specific dates. Models are applied chronologically based on start dates.",
+            "minItems": 1
+          }
+        },
+        "x-examples": {
+          "Tactical Allocation": {
+            "type": "dynamic",
+            "name": "Risk On/Off Strategy",
+            "ticker": "RISK_TACTICAL",
+            "seed": 75000,
+            "models": [
+              {
+                "start": "2020-01-01",
+                "rebalance": "monthly",
+                "holdings": [
+                  {
+                    "ticker": "QQQ",
+                    "weight": 80
+                  },
+                  {
+                    "ticker": "TLT",
+                    "weight": 20
+                  }
+                ]
+              },
+              {
+                "start": "2022-01-01",
+                "rebalance": "quarterly",
+                "holdings": [
+                  {
+                    "ticker": "VTI",
+                    "weight": 50
+                  },
+                  {
+                    "ticker": "BND",
+                    "weight": 30
+                  },
+                  {
+                    "ticker": "GLD",
+                    "weight": 20
+                  }
+                ]
+              },
+              {
+                "start": "2024-01-01",
+                "rebalance": "monthly",
+                "holdings": [
+                  {
+                    "ticker": "SPY",
+                    "weight": 70
+                  },
+                  {
+                    "ticker": "IEF",
+                    "weight": 30
+                  }
+                ]
+              }
+            ]
+          },
+          "Life Cycle Fund": {
+            "type": "dynamic",
+            "name": "Age-Based Allocation",
+            "ticker": "LIFECYCLE_2050",
+            "seed": 100000,
+            "models": [
+              {
+                "start": "2020-01-01",
+                "rebalance": "quarterly",
+                "holdings": [
+                  {
+                    "ticker": "VTI",
+                    "weight": 90
+                  },
+                  {
+                    "ticker": "BND",
+                    "weight": 10
+                  }
+                ]
+              },
+              {
+                "start": "2025-01-01",
+                "rebalance": "quarterly",
+                "holdings": [
+                  {
+                    "ticker": "VTI",
+                    "weight": 80
+                  },
+                  {
+                    "ticker": "VXUS",
+                    "weight": 10
+                  },
+                  {
+                    "ticker": "BND",
+                    "weight": 10
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "MomentumModel": {
+        "type": "object",
+        "x-examples": {
+          "Tech Momentum": {
+            "type": "momentum",
+            "name": "Top 5 Tech Momentum",
+            "ticker": "TECH_MOM_5",
+            "seed": 50000,
+            "start": "2021-01-01",
+            "rebalance": "month",
+            "model": {
+              "universe": [
+                "AAPL",
+                "MSFT",
+                "GOOGL",
+                "AMZN",
+                "TSLA",
+                "NVDA",
+                "META",
+                "NFLX",
+                "AMD",
+                "CRM"
+              ],
+              "number_holdings": "5",
+              "ranking_system": {
+                "type": "return",
+                "parameters": {
+                  "lookback_period": "month"
+                }
+              }
+            }
+          },
+          "Sector Rotation": {
+            "type": "momentum",
+            "name": "Best Sector ETFs",
+            "ticker": "SECTOR_MOM",
+            "seed": 100000,
+            "start": "2020-01-01",
+            "rebalance": "quarterly",
+            "model": {
+              "universe": [
+                "XLK",
+                "XLF",
+                "XLE",
+                "XLV",
+                "XLI",
+                "XLY",
+                "XLP",
+                "XLB",
+                "XLU",
+                "XLRE",
+                "XLC"
+              ],
+              "number_holdings": "3",
+             "ranking_system": {
+  "type": "return",
+  "parameters": {
+    "lookback_period": "quarter"
+  }
+}
+            }
+          },
+          "Low Vol Strategy": {
+            "type": "momentum",
+            "name": "Defensive Selection",
+            "ticker": "LOW_VOL_DEF",
+            "seed": 25000,
+            "start": "2022-01-01",
+            "rebalance": "monthly",
+            "model": {
+              "universe": [
+                "JNJ",
+                "PG",
+                "KO",
+                "PFE",
+                "WMT",
+                "VZ",
+                "T",
+                "MCD",
+                "IBM",
+                "MMM"
+              ],
+              "number_holdings": "7",
+             "ranking_system": {
+  "type": "ma",
+  "parameters": {
+    "short": 10,
+    "long": 30,
+    "lookback_period": 60
+  }
+}
+            }
+          }
+        },
+        "required": [
+          "type",
+          "model"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "momentum"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name for the momentum strategy"
+          },
+          "ticker": {
+            "type": "string",
+            "description": "Unique identifier for this momentum model"
+          },
+          "seed": {
+            "type": "number",
+            "description": "Initial investment amount in dollars",
+            "default": 100000
+          },
+          "start": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date for backtesting this momentum strategy"
+          },
+          "rebalance": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "quarterly",
+              "annually"
+            ],
+            "description": "How often to rerank securities and rebalance the portfolio"
+          },
+          "model": {
+            "type": "object",
+            "required": [
+              "universe",
+              "number_holdings",
+              "ranking_system"
+            ],
+            "properties": {
+              "universe": {
+                "type": "array",
+                "description": "Pool of securities to select from. The strategy will rank these and hold the top performers.",
+                "minItems": 2,
+                "items": {
+                  "type": "string"
+                }
+              },
+              "number_holdings": {
+                "type": "string",
+                "description": "Number of securities to hold from the ranked universe (e.g., '5' holds top 5 performers)"
+              },
+              "ranking_system": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/MARankingSystem"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StandardRankingSystem"
+                  }
+                ]
+              }              
+            }
+          }
+        }
+      },
+      "CustomData": {
+        "type": "object",
+        "required": [
+          "type",
+          "data"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "fnu"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "example": "Custom Strategy"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "ticker": {
+                "type": "string",
+                "example": "CUSTOM_001"
+              },
+              "prices": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "example": [
+                  100,
+                  102,
+                  98,
+                  105,
+                  110
+                ]
+              }
+            }
+          }
+        }
+      },
+      "Holding": {
+        "type": "object",
+        "required": [
+          "ticker",
+          "weight"
+        ],
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "VTI"
+          },
+          "weight": {
+            "type": "number",
+            "description": "Weight as percentage (0-100)",
+            "example": 60
+          }
+        }
+      },
+      "AdvancedSettings": {
+        "type": "object",
+        "properties": {
+          "correlation_period": {
+            "type": "integer",
+            "description": "Number of days for correlation calculations",
+            "default": 21
+          },
+          "use_month_end_returns": {
+            "type": "boolean",
+            "description": "Use month-end dates for calculations",
+            "default": false
+          },
+          "moving_average_periods": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "Moving average periods in days",
+            "default": [
+              50,
+              200
+            ]
+          }
+        }
+      },
+      "StatsV2Response": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatsV2Result"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/StatsV2Metadata"
+          }
+        }
+      },
+      "StatsV2HistoricalResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StatsV2HistoricalResult"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/StatsV2HistoricalMetadata"
+          }
+        }
+      },
+      "StatsV2Result": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "type": {
+            "type": "string",
+            "example": "Stock"
+          },
+          "error": {
+            "$ref": "#/components/schemas/StatsV2Error"
+          },
+          "info": {
+            "$ref": "#/components/schemas/StatsV2Info"
+          },
+          "shared_data": {
+            "$ref": "#/components/schemas/StatsV2SharedData"
+          },
+          "periods": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2Period"
+            },
+            "description": "Period-specific statistics keyed by period name"
+          },
+          "yearly": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2Period"
+            },
+            "description": "Yearly statistics when yearly periods are requested"
+          },
+          "moving_averages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MovingAverage"
+            }
+          },
+          "volume_data": {
+            "$ref": "#/components/schemas/VolumeData"
+          }
+        }
+      },
+      "StatsV2HistoricalResult": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "type": {
+            "type": "string",
+            "example": "Stock"
+          },
+          "error": {
+            "$ref": "#/components/schemas/StatsV2Error"
+          },
+          "info": {
+            "$ref": "#/components/schemas/StatsV2Info"
+          },
+          "yearly": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
+            },
+            "description": "Yearly statistics (e.g., '2023', '2024')"
+          },
+          "quarterly": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
+            },
+            "description": "Quarterly statistics (e.g., '2023-Q1', '2023-Q2')"
+          },
+          "monthly": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
+            },
+            "description": "Monthly statistics (e.g., '2023-01', '2023-02')"
+          },
+          "moving_averages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MovingAverage"
+            }
+          },
+          "volume_data": {
+            "$ref": "#/components/schemas/VolumeData"
+          }
+        }
+      },
+      "StatsV2Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "INVALID_TICKER",
+              "CALCULATION_ERROR",
+              "INSUFFICIENT_DATA"
+            ],
+            "example": "INVALID_TICKER"
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid or unknown ticker: INVALID123"
+          }
+        }
+      },
+      "StatsV2Info": {
+        "type": "object",
+        "description": "Static security information that doesn't change based on as_of date",
+        "properties": {
+          "shares_outstanding": {
+            "type": "integer",
+            "example": 15550061000,
+            "description": "Number of shares outstanding"
+          },
+          "security_type": {
+            "type": "string",
+            "enum": [
+              "Stock",
+              "Exchange Traded Fund",
+              "Mutual Fund",
+              "Index",
+              "Static Model",
+              "Dynamic Model",
+              "Momentum Model",
+              "FNU"
+            ],
+            "example": "Stock"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "example": "1980-12-12",
+            "description": "First available date in data"
+          }
+        }
+      },
+      "StatsV2SharedData": {
+        "type": "object",
+        "description": "Pricing and yield data shared across all periods (snapshot mode only)",
+        "properties": {
+          "pricing": {
+            "$ref": "#/components/schemas/StatsV2Pricing"
+          },
+          "yield": {
+            "$ref": "#/components/schemas/StatsV2Yield"
+          }
+        }
+      },
+      "StatsV2Pricing": {
+        "type": "object",
+        "properties": {
+          "current_price": {
+            "type": "number",
+            "example": 195.23,
+            "description": "Current price (or -1 if calculation error)"
+          },
+          "previous_price": {
+            "type": "number",
+            "example": 193.45,
+            "description": "Previous close price (or -1 if calculation error)"
+          },
+          "price_change": {
+            "type": "number",
+            "example": 1.78,
+            "description": "Price change in currency units (or -1 if calculation error)"
+          },
+          "price_change_percent": {
+            "type": "number",
+            "example": 0.0092,
+            "description": "Price change as decimal (0.0092 = 0.92%, or -99 if calculation error)"
+          },
+          "high_52": {
+            "type": "number",
+            "example": 199.62,
+            "description": "52-week high (or -1 if calculation error)"
+          },
+          "low_52": {
+            "type": "number",
+            "example": 164.08,
+            "description": "52-week low (or -1 if calculation error)"
+          },
+          "market_cap": {
+            "type": "number",
+            "example": 3037000000000,
+            "description": "Market capitalization (or -1 if calculation error)"
+          }
+        }
+      },
+      "StatsV2Yield": {
+        "type": "object",
+        "properties": {
+          "yield_income": {
+            "type": "number",
+            "example": 0.0055,
+            "description": "Income yield as decimal (0.0055 = 0.55%, or -99 if calculation error)"
+          },
+          "yield_short": {
+            "type": "number",
+            "example": 0.0032,
+            "description": "Short-term yield as decimal (or -99 if calculation error)"
+          },
+          "yield_long": {
+            "type": "number",
+            "example": 0.0078,
+            "description": "Long-term yield as decimal (or -99 if calculation error)"
+          },
+          "yield_all": {
+            "type": "number",
+            "example": 0.0055,
+            "description": "Total yield as decimal (or -99 if calculation error)"
+          }
+        }
+      },
+      "StatsV2Period": {
+        "type": "object",
+        "properties": {
+          "returns": {
+            "$ref": "#/components/schemas/Returns"
+          },
+          "risk": {
+            "$ref": "#/components/schemas/Risk"
+          },
+          "maxdraw": {
+            "$ref": "#/components/schemas/MaxDrawdown"
+          }
+        }
+      },
+      "StatsV2HistoricalPeriod": {
+        "type": "object",
+        "properties": {
+          "returns": {
+            "$ref": "#/components/schemas/Returns"
+          },
+          "risk": {
+            "$ref": "#/components/schemas/Risk"
+          },
+          "maxdraw": {
+            "$ref": "#/components/schemas/MaxDrawdown"
+          },
+          "pricing": {
+            "$ref": "#/components/schemas/StatsV2Pricing"
+          },
+          "yield": {
+            "$ref": "#/components/schemas/StatsV2Yield"
+          }
+        }
+      },
+      "Returns": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Total return as decimal (0.307 = 30.7%, or -99 if calculation error)",
+            "example": 0.307
+          },
+          "annualized": {
+            "type": "number",
+            "description": "Annualized return as decimal (0.3074 = 30.74%, or -99 if calculation error)",
+            "example": 0.3074
+          }
+        }
+      },
+      "Risk": {
+        "type": "object",
+        "description": "Comprehensive risk analysis organized by category",
+        "properties": {
+          "volatility": {
+            "$ref": "#/components/schemas/Volatility"
+          },
+          "market_risk": {
+            "$ref": "#/components/schemas/MarketRisk"
+          },
+          "risk_adjusted_performance": {
+            "$ref": "#/components/schemas/RiskAdjustedPerformance"
+          }
+        }
+      },
+      "Volatility": {
+        "type": "object",
+        "description": "Price volatility and variability metrics",
+        "properties": {
+          "downside_deviation": {
+            "type": "number",
+            "description": "Downside deviation focusing only on negative returns",
+            "example": 0.042
+          },
+          "sd_annualized": {
+            "type": "number",
+            "description": "Annualized standard deviation",
+            "example": 0.185
+          },
+          "sd_monthly": {
+            "type": "number", 
+            "description": "Monthly standard deviation",
+            "example": 0.053
+          },
+          "ulcer_index": {
+            "type": "number",
+            "description": "Ulcer Index measuring the depth and duration of drawdowns",
+            "example": 5.03
+          }
+        }
+      },
+      "MarketRisk": {
+        "type": "object", 
+        "description": "Risk metrics relative to benchmark and market exposure",
+        "properties": {
+          "alpha": {
+            "type": "number",
+            "description": "Jensen's alpha measuring excess return vs benchmark",
+            "example": 0.021
+          },
+          "beta": {
+            "type": "number",
+            "description": "Beta coefficient measuring systematic risk relative to benchmark",
+            "example": 1.08
+          },
+          "correlation": {
+            "type": "number",
+            "description": "Pearson correlation with benchmark",
+            "example": 0.89
+          },
+          "r_squared": {
+            "type": "number", 
+            "description": "R-squared coefficient of determination",
+            "example": 0.79
+          }
+        }
+      },
+      "RiskAdjustedPerformance": {
+        "type": "object",
+        "description": "Return-per-unit-of-risk performance ratios",
+        "properties": {          
+          "ftalpha": {
+            "type": "number",
+            "description": "FastTrack Alpha proprietary risk-adjusted performance metric",
+            "example": 2790.49
+          },
+          "sharpe_ratio": {
+            "type": "number",
+            "description": "Sharpe ratio measuring excess return per unit of total risk",
+            "example": 1.25
+          },
+          "sortino_ratio": {
+            "type": "number",
+            "description": "Sortino ratio measuring excess return per unit of downside risk",
+            "example": 2.76
+          },
+          "treynor_ratio": {
+            "type": "number", 
+            "description": "Treynor ratio measuring excess return per unit of systematic risk",
+            "example": 702.96
+          },          
+          "ulcer_performance_index": {
+            "type": "number",
+            "description": "Ulcer Performance Index measuring return per unit of ulcer index",
+            "example": 1.89
+          }
+        }
+      },
+      "MaxDrawdown": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "Maximum drawdown as decimal (-0.152 = -15.2%, or -99 if calculation error)",
+            "example": -0.152
+          },
+          "peak_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of drawdown peak",
+            "example": "2024-03-15"
+          },
+          "valley_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of drawdown valley",
+            "example": "2024-06-22"
+          },
+          "duration_days": {
+            "type": "integer",
+            "description": "Duration of drawdown in days",
+            "example": 99
+          },
+          "recovery_days": {
+            "type": "integer",
+            "description": "Days to recover from drawdown (-1 if not recovered)",
+            "example": 82
+          }
+        }
+      },
+      "MovingAverage": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "type": "integer",
+            "example": 50
+          },
+          "value": {
+            "type": "number",
+            "description": "Moving average value (or -1 if calculation error)",
+            "example": 172.45
+          }
+        }
+      },
+      "VolumeData": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "integer",
+            "description": "Current volume (or -1 if calculation error)",
+            "example": 45123000
+          },
+          "average_30d": {
+            "type": "integer",
+            "description": "30-day average volume (or -1 if calculation error)",
+            "example": 52341000
+          },
+          "average_90d": {
+            "type": "integer",
+            "description": "90-day average volume (or -1 if calculation error)",
+            "example": 48567000
+          }
+        }
+      },
+      "StatsV2Metadata": {
+        "type": "object",
+        "properties": {
+          "total_securities": {
+            "type": "integer",
+            "description": "Number of securities processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Calculation time in milliseconds",
+            "example": 1250
+          },
+          "as_of_date": {
+            "type": "string",
+            "format": "date",
+            "description": "As-of date used for calculations",
+            "example": "2024-07-29"
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker used",
+            "example": "SPY"
+          },
+          "date_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for each period"
+          },
+          "yearly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for yearly periods (when requested)"
+          }
+        }
+      },
+      "StatsV2HistoricalMetadata": {
+        "type": "object",
+        "properties": {
+          "total_securities": {
+            "type": "integer",
+            "description": "Number of securities processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Calculation time in milliseconds",
+            "example": 1250
+          },
+          "as_of_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Current date",
+            "example": "2024-07-29"
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker used",
+            "example": "SPY"
+          },
+          "yearly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for yearly periods"
+          },
+          "quarterly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for quarterly periods"
+          },
+          "monthly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for monthly periods"
+          }
+        }
+      },
+      "DateRange": {
+        "type": "object",
+        "properties": {
+          "start": {
+            "type": "string",
+            "format": "date",
+            "example": "2023-07-31"
+          },
+          "end": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-07-29"
+          },
+          "trading_days": {
+            "type": "integer",
+            "example": 252
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid request format"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-07-29T14:30:00.000Z"
+          }
+        }
+      },
+       "MARankingSystem": {
+      "type": "object",
+      "required": ["type", "parameters"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["ma"]
+        },
+        "parameters": {
+          "type": "object",
+          "required": ["short", "long"],
+          "properties": {
+            "short": {
+              "type": "integer",
+              "description": "Short moving average period in days",
+              "minimum": 1,
+              "example": 20
+            },
+            "long": {
+              "type": "integer",
+              "description": "Long moving average period in days", 
+              "minimum": 1,
+              "example": 50
+            },
+            "lookback_period": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "description": "Lookback period in days"
+                },
+                {
+                  "type": "string",
+                  "enum": ["month", "quarter", "year"], 
+                  "description": "Lookback period as time unit"
+                }
+              ],
+              "description": "Lookback period for MA calculations (days as integer or 'month'/'quarter'/'year')",
+              "default": 90
+            }
+          }
+        }
+      }
+    },
+    "StandardRankingSystem": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["return", "sharpe", "upi", "ftalpha"]
+        },
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "lookback_period": {
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "description": "Lookback period in days"
+                },
+                {
+                  "type": "string", 
+                  "enum": ["month", "quarter", "year"],
+                  "description": "Lookback period as time unit"
+                }
+              ],
+              "description": "Lookback period for calculations (days as integer or 'month'/'quarter'/'year')",
+              "default": 90
+            }
+          }
+        }
+      }
+    }
+    },
+    "securitySchemes": {
+      "appId": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "appid",
+        "description": "Application ID - 36 character GUID (e.g., 550e8400-e29b-41d4-a716-446655440000)",
+        "x-example": "123"
+      },
+      "token": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "token",
+        "description": "Authentication token - 36 character GUID (e.g., 123e4567-e89b-12d3-a456-426614174000)"
+      }
+    }
+  }
+}
