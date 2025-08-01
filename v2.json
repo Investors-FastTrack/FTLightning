@@ -613,12 +613,12 @@
                 "XLC"
               ],
               "number_holdings": "3",
-             "ranking_system": {
-  "type": "return",
-  "parameters": {
-    "lookback_period": "quarter"
-  }
-}
+              "ranking_system": {
+                "type": "return",
+                "parameters": {
+                  "lookback_period": "quarter"
+                }
+              }
             }
           },
           "Low Vol Strategy": {
@@ -642,14 +642,14 @@
                 "MMM"
               ],
               "number_holdings": "7",
-             "ranking_system": {
-  "type": "ma",
-  "parameters": {
-    "short": 10,
-    "long": 30,
-    "lookback_period": 60
-  }
-}
+              "ranking_system": {
+                "type": "ma",
+                "parameters": {
+                  "short": 10,
+                  "long": 30,
+                  "lookback_period": 60
+                }
+              }
             }
           }
         },
@@ -722,47 +722,6 @@
                     "$ref": "#/components/schemas/StandardRankingSystem"
                   }
                 ]
-              }              
-            }
-          }
-        }
-      },
-      "CustomData": {
-        "type": "object",
-        "required": [
-          "type",
-          "data"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "fnu"
-            ]
-          },
-          "name": {
-            "type": "string",
-            "example": "Custom Strategy"
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "ticker": {
-                "type": "string",
-                "example": "CUSTOM_001"
-              },
-              "prices": {
-                "type": "array",
-                "items": {
-                  "type": "number"
-                },
-                "example": [
-                  100,
-                  102,
-                  98,
-                  105,
-                  110
-                ]
               }
             }
           }
@@ -786,6 +745,47 @@
           }
         }
       },
+      "CustomData": {
+        "type": "object",
+        "required": [
+          "data",
+          "type"
+        ],
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "prices": {
+                "type": "array",
+                "example": [
+                  100,
+                  102,
+                  98,
+                  105,
+                  110
+                ],
+                "items": {
+                  "type": "number"
+                }
+              },
+              "ticker": {
+                "type": "string",
+                "example": "CUSTOM_001"
+              }
+            }
+          },
+          "name": {
+            "type": "string",
+            "example": "Custom Strategy"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "fnu"
+            ]
+          }
+        }
+      },
       "AdvancedSettings": {
         "type": "object",
         "properties": {
@@ -794,21 +794,21 @@
             "description": "Number of days for correlation calculations",
             "default": 21
           },
-          "use_month_end_returns": {
-            "type": "boolean",
-            "description": "Use month-end dates for calculations",
-            "default": false
-          },
           "moving_average_periods": {
             "type": "array",
-            "items": {
-              "type": "integer"
-            },
             "description": "Moving average periods in days",
             "default": [
               50,
               200
-            ]
+            ],
+            "items": {
+              "type": "integer"
+            }
+          },
+          "use_month_end_returns": {
+            "type": "boolean",
+            "description": "Use month-end dates for calculations",
+            "default": false
           }
         }
       },
@@ -843,40 +843,8 @@
       "StatsV2Result": {
         "type": "object",
         "properties": {
-          "ticker": {
-            "type": "string",
-            "example": "AAPL"
-          },
-          "name": {
-            "type": "string",
-            "example": "Apple Inc"
-          },
-          "type": {
-            "type": "string",
-            "example": "Stock"
-          },
-          "error": {
-            "$ref": "#/components/schemas/StatsV2Error"
-          },
           "info": {
             "$ref": "#/components/schemas/StatsV2Info"
-          },
-          "shared_data": {
-            "$ref": "#/components/schemas/StatsV2SharedData"
-          },
-          "periods": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StatsV2Period"
-            },
-            "description": "Period-specific statistics keyed by period name"
-          },
-          "yearly": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StatsV2Period"
-            },
-            "description": "Yearly statistics when yearly periods are requested"
           },
           "moving_averages": {
             "type": "array",
@@ -884,52 +852,51 @@
               "$ref": "#/components/schemas/MovingAverage"
             }
           },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "periods": {
+            "type": "object",
+            "description": "Period-specific statistics keyed by period name",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2Period"
+            }
+          },
+          "shared_data": {
+            "$ref": "#/components/schemas/StatsV2SharedData"
+          },
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "yearly": {
+            "type": "object",
+            "description": "Yearly statistics when yearly periods are requested",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2Period"
+            }
+          },
           "volume_data": {
             "$ref": "#/components/schemas/VolumeData"
+          },
+          "error": {
+            "$ref": "#/components/schemas/StatsV2Error"
           }
         }
       },
       "StatsV2HistoricalResult": {
         "type": "object",
         "properties": {
-          "ticker": {
-            "type": "string",
-            "example": "AAPL"
-          },
-          "name": {
-            "type": "string",
-            "example": "Apple Inc"
-          },
-          "type": {
-            "type": "string",
-            "example": "Stock"
-          },
-          "error": {
-            "$ref": "#/components/schemas/StatsV2Error"
-          },
           "info": {
             "$ref": "#/components/schemas/StatsV2Info"
           },
-          "yearly": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
-            },
-            "description": "Yearly statistics (e.g., '2023', '2024')"
-          },
-          "quarterly": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
-            },
-            "description": "Quarterly statistics (e.g., '2023-Q1', '2023-Q2')"
-          },
           "monthly": {
             "type": "object",
+            "description": "Monthly statistics (e.g., '2023-01', '2023-02')",
             "additionalProperties": {
               "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
-            },
-            "description": "Monthly statistics (e.g., '2023-01', '2023-02')"
+            }
           },
           "moving_averages": {
             "type": "array",
@@ -937,8 +904,33 @@
               "$ref": "#/components/schemas/MovingAverage"
             }
           },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "quarterly": {
+            "type": "object",
+            "description": "Quarterly statistics (e.g., '2023-Q1', '2023-Q2')",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
+            }
+          },
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "yearly": {
+            "type": "object",
+            "description": "Yearly statistics (e.g., '2023', '2024')",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2HistoricalPeriod"
+            }
+          },
           "volume_data": {
             "$ref": "#/components/schemas/VolumeData"
+          },
+          "error": {
+            "$ref": "#/components/schemas/StatsV2Error"
           }
         }
       },
@@ -1006,12 +998,12 @@
       "StatsV2Pricing": {
         "type": "object",
         "properties": {
-          "current_price": {
+          "current_close_price": {
             "type": "number",
             "example": 195.23,
-            "description": "Current price (or -1 if calculation error)"
+            "description": "Current close price (or -1 if calculation error)"
           },
-          "previous_price": {
+          "previous_close_price": {
             "type": "number",
             "example": 193.45,
             "description": "Previous close price (or -1 if calculation error)"
@@ -1106,20 +1098,20 @@
         "type": "object",
         "properties": {
           "total": {
-  "type": "number",
-  "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years).",
-  "example": 0.307
-},
+            "type": "number",
+            "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years).",
+            "example": 0.307
+          },
           "annualized_market": {
-  "type": "number",
-  "description": "Annualized return adjusted by market days (252.25 / trading_days).",
-  "example": 0.2616
-},
-"annualized_calendar": {
-  "type": "number",
-  "description": "Annualized return adjusted by calendar days (365.25 / calendar_days).",
-  "example": 0.25931
-}
+            "type": "number",
+            "description": "Annualized return adjusted by market days (252.25 / trading_days).",
+            "example": 0.2616
+          },
+          "annualized_calendar": {
+            "type": "number",
+            "description": "Annualized return adjusted by calendar days (365.25 / calendar_days).",
+            "example": 0.25931
+          }
         }
       },
       "Risk": {
@@ -1152,7 +1144,7 @@
             "example": 0.185
           },
           "sd_monthly": {
-            "type": "number", 
+            "type": "number",
             "description": "Monthly standard deviation",
             "example": 0.053
           },
@@ -1164,7 +1156,7 @@
         }
       },
       "MarketRisk": {
-        "type": "object", 
+        "type": "object",
         "description": "Risk metrics relative to benchmark and market exposure",
         "properties": {
           "alpha": {
@@ -1183,7 +1175,7 @@
             "example": 0.89
           },
           "r_squared": {
-            "type": "number", 
+            "type": "number",
             "description": "R-squared coefficient of determination",
             "example": 0.79
           }
@@ -1192,7 +1184,7 @@
       "RiskAdjustedPerformance": {
         "type": "object",
         "description": "Return-per-unit-of-risk performance ratios",
-        "properties": {          
+        "properties": {
           "ftalpha": {
             "type": "number",
             "description": "FastTrack Alpha proprietary risk-adjusted performance metric",
@@ -1209,10 +1201,10 @@
             "example": 2.76
           },
           "treynor_ratio": {
-            "type": "number", 
+            "type": "number",
             "description": "Treynor ratio measuring excess return per unit of systematic risk",
             "example": 702.96
-          },          
+          },
           "ulcer_performance_index": {
             "type": "number",
             "description": "Ulcer Performance Index measuring return per unit of ulcer index",
@@ -1270,17 +1262,17 @@
         "type": "object",
         "properties": {
           "current": {
-            "type": "integer",
+            "type": "number",
             "description": "Current volume (or -1 if calculation error)",
             "example": 45123000
           },
           "average_30d": {
-            "type": "integer",
+            "type": "number",
             "description": "30-day average volume (or -1 if calculation error)",
             "example": 52341000
           },
           "average_90d": {
-            "type": "integer",
+            "type": "number",
             "description": "90-day average volume (or -1 if calculation error)",
             "example": 48567000
           }
@@ -1410,79 +1402,102 @@
           }
         }
       },
-       "MARankingSystem": {
-      "type": "object",
-      "required": ["type", "parameters"],
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": ["ma"]
-        },
-        "parameters": {
-          "type": "object",
-          "required": ["short", "long"],
-          "properties": {
-            "short": {
-              "type": "integer",
-              "description": "Short moving average period in days",
-              "minimum": 1,
-              "example": 20
-            },
-            "long": {
-              "type": "integer",
-              "description": "Long moving average period in days", 
-              "minimum": 1,
-              "example": 50
-            },
-            "lookback_period": {
-              "oneOf": [
-                {
-                  "type": "integer",
-                  "description": "Lookback period in days"
-                },
-                {
-                  "type": "string",
-                  "enum": ["month", "quarter", "year"], 
-                  "description": "Lookback period as time unit"
-                }
-              ],
-              "description": "Lookback period for MA calculations (days as integer or 'month'/'quarter'/'year')",
-              "default": 90
+      "MARankingSystem": {
+        "type": "object",
+        "required": [
+          "type",
+          "parameters"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "ma"
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "required": [
+              "short",
+              "long"
+            ],
+            "properties": {
+              "short": {
+                "type": "integer",
+                "description": "Short moving average period in days",
+                "minimum": 1,
+                "example": 20
+              },
+              "long": {
+                "type": "integer",
+                "description": "Long moving average period in days",
+                "minimum": 1,
+                "example": 50
+              },
+              "lookback_period": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "description": "Lookback period in days"
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "year"
+                    ],
+                    "description": "Lookback period as time unit"
+                  }
+                ],
+                "description": "Lookback period for MA calculations (days as integer or 'month'/'quarter'/'year')",
+                "default": 90
+              }
+            }
+          }
+        }
+      },
+      "StandardRankingSystem": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "return",
+              "sharpe",
+              "upi",
+              "ftalpha"
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "lookback_period": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "description": "Lookback period in days"
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "year"
+                    ],
+                    "description": "Lookback period as time unit"
+                  }
+                ],
+                "description": "Lookback period for calculations (days as integer or 'month'/'quarter'/'year')",
+                "default": 90
+              }
             }
           }
         }
       }
-    },
-    "StandardRankingSystem": {
-      "type": "object",
-      "required": ["type"],
-      "properties": {
-        "type": {
-          "type": "string",
-          "enum": ["return", "sharpe", "upi", "ftalpha"]
-        },
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "lookback_period": {
-              "oneOf": [
-                {
-                  "type": "integer",
-                  "description": "Lookback period in days"
-                },
-                {
-                  "type": "string", 
-                  "enum": ["month", "quarter", "year"],
-                  "description": "Lookback period as time unit"
-                }
-              ],
-              "description": "Lookback period for calculations (days as integer or 'month'/'quarter'/'year')",
-              "default": 90
-            }
-          }
-        }
-      }
-    }
     },
     "securitySchemes": {
       "appId": {
