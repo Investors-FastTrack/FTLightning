@@ -870,13 +870,6 @@
             "type": "string",
             "example": "AAPL"
           },
-          "yearly": {
-            "type": "object",
-            "description": "Yearly statistics when yearly periods are requested",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StatsV2Period"
-            }
-          },
           "volume_data": {
             "$ref": "#/components/schemas/VolumeData"
           },
