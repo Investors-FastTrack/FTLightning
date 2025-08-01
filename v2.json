@@ -17,6 +17,214 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StatsV2Request"
+              },
+              "examples": {
+                " Simple Tickers": {
+                  "value": {
+                    "assets": [
+                      "AAPL",
+                      "MSFT",
+                      "VTI"
+                    ],
+                    "time_periods": [
+                      "1m",
+                      "3m",
+                      "1y",
+                      "3y"
+                    ],
+                    "include": [
+                      "security_info"
+                    ]
+                  }
+                },
+                "Static Portfolio": {
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "static",
+                        "name": "Conservative 60/40",
+                        "ticker": "CONS_6040",
+                        "holdings": [
+                          {
+                            "ticker": "VTI",
+                            "weight": 60
+                          },
+                          {
+                            "ticker": "BND",
+                            "weight": 40
+                          }
+                        ],
+                        "rebalance": "quarterly",
+                        "start": "2020-01-01",
+                        "seed": 100000
+                      }
+                    ],
+                    "time_periods": [
+                      "1y",
+                      "3y",
+                      "5y"
+                    ],
+                    "include": [
+                      "drawdown_analysis",
+                      "security_info"
+                    ]
+                  }
+                },
+                "Dynamic Portfolio": {
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "dynamic",
+                        "name": "Risk On/Off Strategy",
+                        "ticker": "RISK_TACTICAL",
+                        "seed": 75000,
+                        "models": [
+                          {
+                            "start": "2020-01-01",
+                            "rebalance": "monthly",
+                            "holdings": [
+                              {
+                                "ticker": "QQQ",
+                                "weight": 80
+                              },
+                              {
+                                "ticker": "TLT",
+                                "weight": 20
+                              }
+                            ]
+                          },
+                          {
+                            "start": "2022-01-01",
+                            "rebalance": "quarterly",
+                            "holdings": [
+                              {
+                                "ticker": "VTI",
+                                "weight": 60
+                              },
+                              {
+                                "ticker": "BND",
+                                "weight": 30
+                              },
+                              {
+                                "ticker": "GLD",
+                                "weight": 10
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "time_periods": [
+                      "3y",
+                      "5y"
+                    ],
+                    "include": [
+                      "drawdown_analysis",
+                      "position_details"
+                    ]
+                  }
+                },
+                "Momentum Strategy": {
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "momentum",
+                        "name": "Top 5 Tech Momentum",
+                        "ticker": "TECH_MOM_5",
+                        "seed": 50000,
+                        "start": "2021-01-01",
+                        "rebalance": "monthly",
+                        "model": {
+                          "universe": [
+                            "AAPL",
+                            "MSFT",
+                            "GOOGL",
+                            "AMZN",
+                            "TSLA"
+                          ],
+                          "number_holdings": "5",
+                          "ranking_system": {
+                            "type": "return",
+                            "parameters": {
+                              "lookback_period": "quarter"
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "time_periods": [
+                      "1y",
+                      "3y"
+                    ],
+                    "include": [
+                      "drawdown_analysis",
+                      "position_details"
+                    ]
+                  }
+                },
+                "Custom Data": {
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "fnu",
+                        "name": "Custom Strategy",
+                        "data": {
+                          "ticker": "CUSTOM_001",
+                          "prices": [
+                            100,
+                            102,
+                            98,
+                            105,
+                            110,
+                            108,
+                            115,
+                            112,
+                            118,
+                            120
+                          ]
+                        }
+                      }
+                    ],
+                    "time_periods": [
+                      "inception"
+                    ],
+                    "include": [
+                      "security_info"
+                    ]
+                  }
+                },
+                "Mixed Types": {
+                  "value": {
+                    "assets": [
+                      "AAPL",
+                      {
+                        "type": "static",
+                        "name": "60/40 Portfolio",
+                        "holdings": [
+                          {
+                            "ticker": "VTI",
+                            "weight": 60
+                          },
+                          {
+                            "ticker": "BND",
+                            "weight": 40
+                          }
+                        ],
+                        "rebalance": "quarterly"
+                      }
+                    ],
+                    "time_periods": [
+                      "1m",
+                      "3m",
+                      "1y"
+                    ],
+                    "benchmark": "SPY",
+                    "include": [
+                      "drawdown_analysis",
+                      "security_info"
+                    ]
+                  }
+                }
               }
             }
           }
@@ -95,16 +303,19 @@
     "schemas": {
       "StatsV2Request": {
         "type": "object",
+        "description": "Calculate financial statistics for multiple assets. Supports simple ticker symbols or complex portfolio models including static allocations, dynamic strategies, and momentum-based selection.",
         "required": [
           "assets"
         ],
         "properties": {
           "assets": {
             "type": "array",
+            "description": "List of assets to analyze. Can be:\r\n        - Simple ticker symbols (e.g., \"AAPL\", \"MSFT\") \r\n        - Static portfolio models with fixed allocations\r\n        - Dynamic portfolios that change over time\r\n        - Momentum strategies that rank and select securities\r\n        - Custom price data",
             "items": {
               "oneOf": [
                 {
                   "type": "string",
+                  "title": "Ticker Symbol",
                   "description": "Simple ticker symbol",
                   "example": "AAPL"
                 },
@@ -137,39 +348,27 @@
           },
           "time_periods": {
             "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "1d",
-                    "5d",
-                    "1m",
-                    "3m",
-                    "6m",
-                    "1y",
-                    "3y",
-                    "5y",
-                    "10y",
-                    "inception",
-                    "yearly"
-                  ]
-                },
-                {
-                  "$ref": "#/components/schemas/CustomPeriod"
-                }
-              ]
-            },
             "description": "Time periods to calculate",
             "default": [
               "1m",
               "3m",
               "1y",
               "3y"
-            ]
+            ],
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/PredefinedPeriod"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomPeriod"
+                }
+              ]
+            }
           },
           "include": {
             "type": "array",
+            "description": "Optional data to include",
             "items": {
               "type": "string",
               "enum": [
@@ -179,13 +378,29 @@
                 "position_details",
                 "security_info"
               ]
-            },
-            "description": "Optional data to include"
+            }
           },
           "advanced": {
             "$ref": "#/components/schemas/AdvancedSettings"
           }
         }
+      },
+      "PredefinedPeriod": {
+        "type": "string",
+        "enum": [
+          "1d",
+          "5d",
+          "1m",
+          "3m",
+          "6m",
+          "1y",
+          "3y",
+          "5y",
+          "10y",
+          "inception"
+        ],
+        "description": "**Allowed:**  `1d`, `5d`, `1m`, `3m`, `6m`, `1y`, `3y`, `5y`, `10y`, `inception` ",
+        "title": ""
       },
       "StatsV2HistoricalRequest": {
         "type": "object",
@@ -396,7 +611,9 @@
             "start": "2021-01-01",
             "seed": 100000
           }
-        }
+        },
+        "title": "Static Portfolios",
+        "description": "Fixed allocation portfolio that rebalances to target weights"
       },
       "DynamicModel": {
         "type": "object",
@@ -557,7 +774,9 @@
               }
             ]
           }
-        }
+        },
+        "description": "Portfolio that changes allocation over time",
+        "title": "Dynamic Portfolio"
       },
       "MomentumModel": {
         "type": "object",
@@ -725,7 +944,9 @@
               }
             }
           }
-        }
+        },
+        "title": "Momentum Strategy",
+        "description": "Strategy that ranks securities and holds top performers"
       },
       "Holding": {
         "type": "object",
@@ -784,7 +1005,9 @@
               "fnu"
             ]
           }
-        }
+        },
+        "title": "Custom Data",
+        "description": "User-provided price data"
       },
       "AdvancedSettings": {
         "type": "object",
