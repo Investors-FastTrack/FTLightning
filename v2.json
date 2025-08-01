@@ -6,7 +6,7 @@
     "version": "2.0.0"
   },
   "paths": {
-    "v2/stats": {
+    "/v2/stats": {
       "post": {
         "summary": "Calculate financial statistics (snapshot)",
         "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods",
@@ -256,7 +256,7 @@
         }
       }
     },
-    "v2/stats/historical": {
+    "/v2/stats/historical": {
       "post": {
         "summary": "Calculate historical financial statistics",
         "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly)",
