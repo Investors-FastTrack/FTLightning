@@ -1106,15 +1106,20 @@
         "type": "object",
         "properties": {
           "total": {
-            "type": "number",
-            "description": "Total return as decimal (0.307 = 30.7%, or -99 if calculation error)",
-            "example": 0.307
-          },
-          "annualized": {
-            "type": "number",
-            "description": "Annualized return as decimal (0.3074 = 30.74%, or -99 if calculation error)",
-            "example": 0.3074
-          }
+  "type": "number",
+  "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years).",
+  "example": 0.307
+},
+          "annualized_market": {
+  "type": "number",
+  "description": "Annualized return adjusted by market days (252.25 / trading_days).",
+  "example": 0.2616
+},
+"annualized_calendar": {
+  "type": "number",
+  "description": "Annualized return adjusted by calendar days (365.25 / calendar_days).",
+  "example": 0.25931
+}
         }
       },
       "Risk": {
