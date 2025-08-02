@@ -6,7 +6,7 @@
     "version": "2.0.0"
   },
   "paths": {
-    "/v2/stats": {
+    "/stats/stats2": {
       "post": {
         "summary": "Calculate financial statistics (snapshot)",
         "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods",
@@ -254,9 +254,10 @@
         "x-stoplight": {
           "id": "y2doii4obdzxf"
         }
-      }
+      },
+      "parameters": []
     },
-    "/v2/stats/historical": {
+    "/stats/stats2/historical": {
       "post": {
         "summary": "Calculate historical financial statistics",
         "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly)",
@@ -296,7 +297,8 @@
         "x-stoplight": {
           "id": "2ljqkj76ccadf"
         }
-      }
+      },
+      "parameters": []
     },
     "/data/data2": {
       "post": {
@@ -402,51 +404,7 @@
       },
       "parameters": []
     },
-    "/v2/prices": {
-      "post": {
-        "summary": "Get price data (convenience endpoint)",
-        "description": "Extract price data for multiple assets. Accepts simple ticker array or full request format.",
-        "operationId": "getPriceData",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "example": [
-                      "AAPL",
-                      "MSFT",
-                      "GOOGL"
-                    ]
-                  },
-                  {
-                    "$ref": "#/components/schemas/DataV2Request"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Price data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DataV2Response"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v2/range": {
+    "/data/range2": {
       "post": {
         "summary": "Get data for date range",
         "description": "Extract financial data with date range specified via query parameters",
@@ -552,10 +510,14 @@
               }
             }
           }
+        },
+        "x-stoplight": {
+          "id": "64btolg1bcsdv"
         }
-      }
+      },
+      "parameters": []
     },
-    "/v2/{ticker}/data": {
+    "/data/{ticker}": {
       "get": {
         "summary": "Get data for single ticker",
         "description": "Extract financial data for a single ticker with query parameter options",
@@ -666,8 +628,21 @@
               }
             }
           }
+        },
+        "x-stoplight": {
+          "id": "2x5wevq0dptew"
         }
-      }
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "security": [
