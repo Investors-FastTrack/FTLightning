@@ -54,7 +54,7 @@
                             "weight": 40
                           }
                         ],
-                        "rebalance": "quarterly",
+                        "rebalance": "quarter",
                         "start": "2020-01-01",
                         "seed": 100000
                       }
@@ -81,7 +81,7 @@
                         "models": [
                           {
                             "start": "2020-01-01",
-                            "rebalance": "monthly",
+                            "rebalance": "month",
                             "holdings": [
                               {
                                 "ticker": "QQQ",
@@ -95,7 +95,7 @@
                           },
                           {
                             "start": "2022-01-01",
-                            "rebalance": "quarterly",
+                            "rebalance": "quarter",
                             "holdings": [
                               {
                                 "ticker": "VTI",
@@ -133,7 +133,7 @@
                         "ticker": "TECH_MOM_5",
                         "seed": 50000,
                         "start": "2021-01-01",
-                        "rebalance": "monthly",
+                        "rebalance": "month",
                         "model": {
                           "universe": [
                             "AAPL",
@@ -210,7 +210,7 @@
                             "weight": 40
                           }
                         ],
-                        "rebalance": "quarterly"
+                        "rebalance": "quarter"
                       }
                     ],
                     "time_periods": [
@@ -295,6 +295,377 @@
         },
         "x-stoplight": {
           "id": "2ljqkj76ccadf"
+        }
+      }
+    },
+    "/data/data2": {
+      "post": {
+        "summary": "Get raw financial data",
+        "description": "Extract raw financial data (prices, volumes, OHLV, dividends) for multiple assets with date range support",
+        "operationId": "getFinancialData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataV2Request"
+              },
+              "examples": {
+                "Simple Prices": {
+                  "value": {
+                    "assets": [
+                      "AAPL",
+                      "MSFT",
+                      "GOOGL"
+                    ],
+                    "include": [
+                      "prices"
+                    ],
+                    "start_date": "2024-01-01",
+                    "end_date": "2024-07-29"
+                  }
+                },
+                "OHLV Data": {
+                  "value": {
+                    "assets": [
+                      "AAPL"
+                    ],
+                    "include": [
+                      "prices",
+                      "ohlv",
+                      "volumes"
+                    ],
+                    "start_date": "2024-06-01",
+                    "end_date": "2024-07-29",
+                    "options": {
+                      "unadjusted": true,
+                      "semi_adjusted": true
+                    }
+                  }
+                },
+                "Portfolio Data": {
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "static",
+                        "name": "60/40 Portfolio",
+                        "holdings": [
+                          {
+                            "ticker": "VTI",
+                            "weight": 60
+                          },
+                          {
+                            "ticker": "BND",
+                            "weight": 40
+                          }
+                        ],
+                        "rebalance": "quarter"
+                      }
+                    ],
+                    "include": [
+                      "prices",
+                      "dividends",
+                      "info"
+                    ],
+                    "start_date": "2024-01-01"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful data extraction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataV2Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "2j2jqora839a0"
+        }
+      },
+      "parameters": []
+    },
+    "/v2/prices": {
+      "post": {
+        "summary": "Get price data (convenience endpoint)",
+        "description": "Extract price data for multiple assets. Accepts simple ticker array or full request format.",
+        "operationId": "getPriceData",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "example": [
+                      "AAPL",
+                      "MSFT",
+                      "GOOGL"
+                    ]
+                  },
+                  {
+                    "$ref": "#/components/schemas/DataV2Request"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Price data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataV2Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/range": {
+      "post": {
+        "summary": "Get data for date range",
+        "description": "Extract financial data with date range specified via query parameters",
+        "operationId": "getDataRange",
+        "parameters": [
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date (YYYY-MM-DD)"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date (YYYY-MM-DD)"
+          },
+          {
+            "name": "d",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Single date (sets both start and end)"
+          },
+          {
+            "name": "ohlv",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include OHLV data"
+          },
+          {
+            "name": "dividends",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include dividend data"
+          },
+          {
+            "name": "unadj",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include unadjusted prices"
+          },
+          {
+            "name": "semiadj",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include semi-adjusted prices"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "example": [
+                  "AAPL",
+                  "MSFT"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Range data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataV2Response"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v2/{ticker}/data": {
+      "get": {
+        "summary": "Get data for single ticker",
+        "description": "Extract financial data for a single ticker with query parameter options",
+        "operationId": "getSingleTickerData",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "AAPL"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Start date"
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "End date"
+          },
+          {
+            "name": "volumes",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include volume data"
+          },
+          {
+            "name": "ohlv",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include OHLV data"
+          },
+          {
+            "name": "dividends",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include dividend data"
+          },
+          {
+            "name": "yield",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include yield data"
+          },
+          {
+            "name": "unadj",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include unadjusted prices"
+          },
+          {
+            "name": "semiadj",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            },
+            "description": "Include semi-adjusted prices"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticker data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DataV2Response"
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -449,14 +820,14 @@
             "items": {
               "type": "string",
               "enum": [
-                "yearly",
-                "quarterly",
-                "monthly"
+                "year",
+                "quarter",
+                "month"
               ]
             },
             "description": "Time period rollups to calculate",
             "default": [
-              "yearly"
+              "year"
             ]
           },
           "years": {
@@ -556,13 +927,13 @@
           "rebalance": {
             "type": "string",
             "enum": [
-              "daily",
-              "weekly",
-              "monthly",
-              "quarterly",
-              "annually"
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "annual"
             ],
-            "default": "monthly",
+            "default": "month",
             "description": "How often to rebalance the portfolio to target weights"
           },
           "start": {
@@ -591,7 +962,7 @@
                 "weight": 40
               }
             ],
-            "rebalance": "quarterly",
+            "rebalance": "quarter",
             "start": "2020-01-01",
             "seed": 50000
           },
@@ -613,7 +984,7 @@
                 "weight": 10
               }
             ],
-            "rebalance": "monthly",
+            "rebalance": "month",
             "start": "2021-01-01",
             "seed": 100000
           }
@@ -664,11 +1035,11 @@
                 "rebalance": {
                   "type": "string",
                   "enum": [
-                    "daily",
-                    "weekly",
-                    "monthly",
-                    "quarterly",
-                    "annually"
+                    "day",
+                    "week",
+                    "month",
+                    "quarter",
+                    "annual"
                   ],
                   "description": "Rebalancing frequency for this period"
                 },
@@ -694,7 +1065,7 @@
             "models": [
               {
                 "start": "2020-01-01",
-                "rebalance": "monthly",
+                "rebalance": "month",
                 "holdings": [
                   {
                     "ticker": "QQQ",
@@ -708,7 +1079,7 @@
               },
               {
                 "start": "2022-01-01",
-                "rebalance": "quarterly",
+                "rebalance": "quarter",
                 "holdings": [
                   {
                     "ticker": "VTI",
@@ -726,7 +1097,7 @@
               },
               {
                 "start": "2024-01-01",
-                "rebalance": "monthly",
+                "rebalance": "month",
                 "holdings": [
                   {
                     "ticker": "SPY",
@@ -748,7 +1119,7 @@
             "models": [
               {
                 "start": "2020-01-01",
-                "rebalance": "quarterly",
+                "rebalance": "quarter",
                 "holdings": [
                   {
                     "ticker": "VTI",
@@ -762,7 +1133,7 @@
               },
               {
                 "start": "2025-01-01",
-                "rebalance": "quarterly",
+                "rebalance": "quarter",
                 "holdings": [
                   {
                     "ticker": "VTI",
@@ -822,7 +1193,7 @@
             "ticker": "SECTOR_MOM",
             "seed": 100000,
             "start": "2020-01-01",
-            "rebalance": "quarterly",
+            "rebalance": "quarter",
             "model": {
               "universe": [
                 "XLK",
@@ -852,7 +1223,7 @@
             "ticker": "LOW_VOL_DEF",
             "seed": 25000,
             "start": "2022-01-01",
-            "rebalance": "monthly",
+            "rebalance": "month",
             "model": {
               "universe": [
                 "JNJ",
@@ -872,7 +1243,7 @@
                 "parameters": {
                   "short": 10,
                   "long": 30,
-                  "lookback_period": 60
+                  "lookback_period": "quarter"
                 }
               }
             }
@@ -910,11 +1281,11 @@
           "rebalance": {
             "type": "string",
             "enum": [
-              "daily",
-              "weekly",
-              "monthly",
-              "quarterly",
-              "annually"
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "annual"
             ],
             "description": "How often to rerank securities and rebalance the portfolio"
           },
@@ -1051,7 +1422,7 @@
             }
           },
           "metadata": {
-            "$ref": "#/components/schemas/StatsV2Metadata"
+            "$ref": "#/components/schemas/Metadata"
           }
         }
       },
@@ -1073,13 +1444,15 @@
         "type": "object",
         "properties": {
           "info": {
-            "$ref": "#/components/schemas/StatsV2Info"
+            "$ref": "#/components/schemas/AssetInfo"
           },
           "moving_averages": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/MovingAverage"
-            }
+              "$ref": "#/components/schemas/MovingAverage",
+              "nullable": true
+            },
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -1093,17 +1466,19 @@
             }
           },
           "shared_data": {
-            "$ref": "#/components/schemas/StatsV2SharedData"
+            "$ref": "#/components/schemas/StatsV2SharedData",
+            "nullable": true
           },
           "ticker": {
             "type": "string",
             "example": "AAPL"
           },
           "volume_data": {
-            "$ref": "#/components/schemas/VolumeData"
+            "$ref": "#/components/schemas/VolumeData",
+            "nullable": true
           },
           "error": {
-            "$ref": "#/components/schemas/StatsV2Error"
+            "$ref": "#/components/schemas/ApiError"
           }
         }
       },
@@ -1111,7 +1486,7 @@
         "type": "object",
         "properties": {
           "info": {
-            "$ref": "#/components/schemas/StatsV2Info"
+            "$ref": "#/components/schemas/AssetInfo"
           },
           "monthly": {
             "type": "object",
@@ -1124,7 +1499,8 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/MovingAverage"
-            }
+            },
+            "nullable": true
           },
           "name": {
             "type": "string",
@@ -1149,15 +1525,20 @@
             }
           },
           "volume_data": {
-            "$ref": "#/components/schemas/VolumeData"
+            "$ref": "#/components/schemas/VolumeData",
+            "nullable": true
           },
           "error": {
-            "$ref": "#/components/schemas/StatsV2Error"
+            "$ref": "#/components/schemas/ApiError",
+            "nullable": true
           }
         }
       },
-      "StatsV2Error": {
+      "ApiError": {
         "type": "object",
+        "x-stoplight": {
+          "id": "691e085f4adb4"
+        },
         "properties": {
           "code": {
             "type": "string",
@@ -1174,8 +1555,11 @@
           }
         }
       },
-      "StatsV2Info": {
+      "AssetInfo": {
         "type": "object",
+        "x-stoplight": {
+          "id": "198548cddfe25"
+        },
         "description": "Static security information that doesn't change based on as_of date",
         "properties": {
           "shares_outstanding": {
@@ -1486,22 +1870,28 @@
           "current": {
             "type": "number",
             "description": "Current volume (or -1 if calculation error)",
-            "example": 45123000
+            "example": 45123000,
+            "nullable": true
           },
           "average_30d": {
             "type": "number",
             "description": "30-day average volume (or -1 if calculation error)",
-            "example": 52341000
+            "example": 52341000,
+            "nullable": true
           },
           "average_90d": {
             "type": "number",
             "description": "90-day average volume (or -1 if calculation error)",
-            "example": 48567000
+            "example": 48567000,
+            "nullable": true
           }
         }
       },
-      "StatsV2Metadata": {
+      "Metadata": {
         "type": "object",
+        "x-stoplight": {
+          "id": "1665b08c16a5e"
+        },
         "properties": {
           "total_securities": {
             "type": "integer",
@@ -1673,7 +2063,7 @@
                   }
                 ],
                 "description": "Lookback period for MA calculations (days as integer or 'month'/'quarter'/'year')",
-                "default": 90
+                "default": "quarter"
               }
             }
           }
@@ -1714,9 +2104,253 @@
                   }
                 ],
                 "description": "Lookback period for calculations (days as integer or 'month'/'quarter'/'year')",
-                "default": 90
+                "default": "quarter"
               }
             }
+          }
+        }
+      },
+      "DataV2Request": {
+        "type": "object",
+        "required": [
+          "assets"
+        ],
+        "properties": {
+          "assets": {
+            "type": "array",
+            "description": "List of assets to extract data for. Same format as StatsV2 assets.",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple ticker symbol"
+                },
+                {
+                  "$ref": "#/components/schemas/StaticModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DynamicModel"
+                },
+                {
+                  "$ref": "#/components/schemas/MomentumModel"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomData"
+                }
+              ]
+            }
+          },
+          "include": {
+            "type": "array",
+            "description": "Data types to include in response",
+            "default": [
+              "prices"
+            ],
+            "items": {
+              "type": "string",
+              "enum": [
+                "prices",
+                "volumes",
+                "ohlv",
+                "dividends",
+                "info",
+                "yield"
+              ]
+            }
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "description": "As-of date for data extraction",
+            "example": "2024-07-29"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date for time series data",
+            "example": "2024-01-01"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "End date for time series data",
+            "example": "2024-07-29"
+          },
+          "options": {
+            "$ref": "#/components/schemas/DataV2Options"
+          }
+        }
+      },
+      "DataV2Options": {
+        "type": "object",
+        "properties": {
+          "unadjusted": {
+            "type": "boolean",
+            "description": "Include unadjusted price data",
+            "default": false
+          },
+          "semi_adjusted": {
+            "type": "boolean",
+            "description": "Include semi-adjusted price data",
+            "default": false
+          }
+        }
+      },
+      "DataV2Response": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataV2Result"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/Metadata"
+          }
+        }
+      },
+      "DataV2Result": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "prices": {
+            "$ref": "#/components/schemas/DataV2Prices"
+          },
+          "volumes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Volume data time series"
+          },
+          "ohlv": {
+            "$ref": "#/components/schemas/DataV2OHLV"
+          },
+          "dividends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataV2Dividend"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/AssetInfo"
+          },
+          "yield_data": {
+            "$ref": "#/components/schemas/StatsV2Yield"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          }
+        }
+      },
+      "DataV2Prices": {
+        "type": "object",
+        "properties": {
+          "adjusted": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Adjusted price time series"
+          },
+          "unadjusted": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Unadjusted price time series"
+          },
+          "semi_adjusted": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Semi-adjusted price time series"
+          }
+        }
+      },
+      "DataV2OHLV": {
+        "type": "object",
+        "description": "Open, High, Low, Volume data",
+        "properties": {
+          "opens": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Opening price time series"
+          },
+          "highs": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "High price time series"
+          },
+          "lows": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Low price time series"
+          },
+          "volumes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Volume time series"
+          }
+        }
+      },
+      "DataV2Dividend": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-02-15"
+          },
+          "amount": {
+            "type": "number",
+            "example": 0.24
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "Income",
+              "Short Term",
+              "Long Term",
+              "Split",
+              "Other"
+            ],
+            "example": "Income"
+          },
+          "type_code": {
+            "type": "string",
+            "enum": [
+              "D",
+              "G",
+              "C",
+              "Z"
+            ],
+            "example": "D"
           }
         }
       }
@@ -1736,5 +2370,11 @@
         "description": "Authentication token - 36 character GUID (e.g., 123e4567-e89b-12d3-a456-426614174000)"
       }
     }
-  }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:55829/",
+      "description": ""
+    }
+  ]
 }
