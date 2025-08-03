@@ -404,7 +404,7 @@
       },
       "parameters": []
     },
-    "/data/{ticker}": {
+    "/data/data2/{ticker}": {
       "get": {
         "summary": "Get data for single ticker",
         "description": "Extract financial data for a single ticker with query parameter options",
@@ -502,6 +502,17 @@
               ]
             },
             "description": "Include semi-adjusted prices"
+          },
+          {
+            "name": "frequency",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": ["daily", "weekly", "monthly", "quarterly"],
+              "default": "daily"
+            },
+            "description": "Data frequency: daily, weekly (Fridays), monthly (month-end), or quarterly (quarter-end)",
+            "example": "monthly"
           }
         ],
         "responses": {
@@ -1750,109 +1761,128 @@
         }
       },
       "DataV2Metadata": {
-    "type": "object",
-    "properties": {
-      "total_securities": {
-        "type": "integer",
-        "description": "Number of securities processed",
-        "example": 3
-      },
-      "calculation_time_ms": {
-        "type": "integer", 
-        "description": "Processing time in milliseconds",
-        "example": 450
-      },
-      "dates": {
-        "type": "array",
-        "items": {
-          "type": "string",
-          "format": "date"
-        },
-        "description": "Date array corresponding to all time series data points",
-        "example": ["2024-01-01", "2024-01-02", "2024-01-03"]
-      },
-      "start_date": {
-        "type": "string",
-        "format": "date", 
-        "description": "Start date of data range",
-        "example": "2024-01-01"
-      },
-      "end_date": {
-        "type": "string",
-        "format": "date",
-        "description": "End date of data range", 
-        "example": "2024-07-29"
-      },
-      "total_trading_days": {
-        "type": "integer",
-        "description": "Number of trading days in the date range",
-        "example": 152
-      }
-    }
-  },
-  "StatsV2Metadata": {
-    "type": "object", 
-    "properties": {
-      "total_securities": {
-        "type": "integer",
-        "description": "Number of securities processed",
-        "example": 3
-      },
-      "calculation_time_ms": {
-        "type": "integer",
-        "description": "Calculation time in milliseconds", 
-        "example": 1250
-      },
-      "as_of_date": {
-        "type": "string",
-        "format": "date",
-        "description": "As-of date used for calculations",
-        "example": "2024-07-29"
-      },
-      "benchmark": {
-        "type": "string",
-        "description": "Benchmark ticker used",
-        "example": "SPY"
-      },
-      "dates": {
-        "type": "array",
-        "items": {
-          "type": "string", 
-          "format": "date"
-        },
-        "description": "Date array for time series data (when applicable)",
-        "example": ["2024-01-01", "2024-01-02", "2024-01-03"]
-      },
-      "date_ranges": {
         "type": "object",
-        "additionalProperties": {
-          "$ref": "#/components/schemas/DateRange"
-        },
-        "description": "Date ranges for each period"
+        "properties": {
+          "total_securities": {
+            "type": "integer",
+            "description": "Number of securities processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Processing time in milliseconds",
+            "example": 450
+          },
+          "dates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date array corresponding to all time series data points",
+            "example": [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03"
+            ]
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date of data range",
+            "example": "2024-01-01"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "End date of data range",
+            "example": "2024-07-29"
+          },
+          "total_trading_days": {
+            "type": "integer",
+            "description": "Number of trading days in the date range",
+            "example": 152
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "quarterly"
+            ],
+            "description": "Data frequency used for this response",
+            "example": "monthly"
+          }
+        }
       },
-      "yearly_ranges": {
-        "type": "object", 
-        "additionalProperties": {
-          "$ref": "#/components/schemas/DateRange"
-        },
-        "description": "Date ranges for yearly periods"
-      },
-      "quarterly_ranges": {
+      "StatsV2Metadata": {
         "type": "object",
-        "additionalProperties": {
-          "$ref": "#/components/schemas/DateRange"
-        },
-        "description": "Date ranges for quarterly periods"
+        "properties": {
+          "total_securities": {
+            "type": "integer",
+            "description": "Number of securities processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Calculation time in milliseconds",
+            "example": 1250
+          },
+          "as_of_date": {
+            "type": "string",
+            "format": "date",
+            "description": "As-of date used for calculations",
+            "example": "2024-07-29"
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker used",
+            "example": "SPY"
+          },
+          "dates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date array for time series data (when applicable)",
+            "example": [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03"
+            ]
+          },
+          "date_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for each period"
+          },
+          "yearly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for yearly periods"
+          },
+          "quarterly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for quarterly periods"
+          },
+          "monthly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for monthly periods"
+          }
+        }
       },
-      "monthly_ranges": {
-        "type": "object",
-        "additionalProperties": {
-          "$ref": "#/components/schemas/DateRange"
-        }, 
-        "description": "Date ranges for monthly periods"
-      }
-    }
-  },
       "StatsV2HistoricalMetadata": {
         "type": "object",
         "properties": {
@@ -2098,6 +2128,18 @@
             "format": "date",
             "description": "End date for time series data",
             "example": "2024-07-29"
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "quarterly"
+            ],
+            "default": "daily",
+            "description": "Data frequency: daily returns all trading days, weekly returns Friday closes, monthly returns month-end values, quarterly returns quarter-end values",
+            "example": "monthly"
           },
           "options": {
             "$ref": "#/components/schemas/DataV2Options"
