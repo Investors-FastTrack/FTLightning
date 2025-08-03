@@ -404,119 +404,6 @@
       },
       "parameters": []
     },
-    "/data/range2": {
-      "post": {
-        "summary": "Get data for date range",
-        "description": "Extract financial data with date range specified via query parameters",
-        "operationId": "getDataRange",
-        "parameters": [
-          {
-            "name": "start",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "Start date (YYYY-MM-DD)"
-          },
-          {
-            "name": "end",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "End date (YYYY-MM-DD)"
-          },
-          {
-            "name": "d",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "Single date (sets both start and end)"
-          },
-          {
-            "name": "ohlv",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "1"
-              ]
-            },
-            "description": "Include OHLV data"
-          },
-          {
-            "name": "dividends",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "1"
-              ]
-            },
-            "description": "Include dividend data"
-          },
-          {
-            "name": "unadj",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "1"
-              ]
-            },
-            "description": "Include unadjusted prices"
-          },
-          {
-            "name": "semiadj",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "enum": [
-                "1"
-              ]
-            },
-            "description": "Include semi-adjusted prices"
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "example": [
-                  "AAPL",
-                  "MSFT"
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Range data",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DataV2Response"
-                }
-              }
-            }
-          }
-        },
-        "x-stoplight": {
-          "id": "64btolg1bcsdv"
-        }
-      },
-      "parameters": []
-    },
     "/data/{ticker}": {
       "get": {
         "summary": "Get data for single ticker",
@@ -1397,7 +1284,7 @@
             }
           },
           "metadata": {
-            "$ref": "#/components/schemas/Metadata"
+            "$ref": "#/components/schemas/StatsV2Metadata"
           }
         }
       },
@@ -1862,49 +1749,110 @@
           }
         }
       },
-      "Metadata": {
-        "type": "object",
-        "x-stoplight": {
-          "id": "1665b08c16a5e"
-        },
-        "properties": {
-          "total_securities": {
-            "type": "integer",
-            "description": "Number of securities processed",
-            "example": 3
-          },
-          "calculation_time_ms": {
-            "type": "integer",
-            "description": "Calculation time in milliseconds",
-            "example": 1250
-          },
-          "as_of_date": {
-            "type": "string",
-            "format": "date",
-            "description": "As-of date used for calculations",
-            "example": "2024-07-29"
-          },
-          "benchmark": {
-            "type": "string",
-            "description": "Benchmark ticker used",
-            "example": "SPY"
-          },
-          "date_ranges": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/DateRange"
-            },
-            "description": "Date ranges for each period"
-          },
-          "yearly_ranges": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/DateRange"
-            },
-            "description": "Date ranges for yearly periods (when requested)"
-          }
-        }
+      "DataV2Metadata": {
+    "type": "object",
+    "properties": {
+      "total_securities": {
+        "type": "integer",
+        "description": "Number of securities processed",
+        "example": 3
       },
+      "calculation_time_ms": {
+        "type": "integer", 
+        "description": "Processing time in milliseconds",
+        "example": 450
+      },
+      "dates": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Date array corresponding to all time series data points",
+        "example": ["2024-01-01", "2024-01-02", "2024-01-03"]
+      },
+      "start_date": {
+        "type": "string",
+        "format": "date", 
+        "description": "Start date of data range",
+        "example": "2024-01-01"
+      },
+      "end_date": {
+        "type": "string",
+        "format": "date",
+        "description": "End date of data range", 
+        "example": "2024-07-29"
+      },
+      "total_trading_days": {
+        "type": "integer",
+        "description": "Number of trading days in the date range",
+        "example": 152
+      }
+    }
+  },
+  "StatsV2Metadata": {
+    "type": "object", 
+    "properties": {
+      "total_securities": {
+        "type": "integer",
+        "description": "Number of securities processed",
+        "example": 3
+      },
+      "calculation_time_ms": {
+        "type": "integer",
+        "description": "Calculation time in milliseconds", 
+        "example": 1250
+      },
+      "as_of_date": {
+        "type": "string",
+        "format": "date",
+        "description": "As-of date used for calculations",
+        "example": "2024-07-29"
+      },
+      "benchmark": {
+        "type": "string",
+        "description": "Benchmark ticker used",
+        "example": "SPY"
+      },
+      "dates": {
+        "type": "array",
+        "items": {
+          "type": "string", 
+          "format": "date"
+        },
+        "description": "Date array for time series data (when applicable)",
+        "example": ["2024-01-01", "2024-01-02", "2024-01-03"]
+      },
+      "date_ranges": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/DateRange"
+        },
+        "description": "Date ranges for each period"
+      },
+      "yearly_ranges": {
+        "type": "object", 
+        "additionalProperties": {
+          "$ref": "#/components/schemas/DateRange"
+        },
+        "description": "Date ranges for yearly periods"
+      },
+      "quarterly_ranges": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/DateRange"
+        },
+        "description": "Date ranges for quarterly periods"
+      },
+      "monthly_ranges": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/DateRange"
+        }, 
+        "description": "Date ranges for monthly periods"
+      }
+    }
+  },
       "StatsV2HistoricalMetadata": {
         "type": "object",
         "properties": {
@@ -2181,7 +2129,7 @@
             }
           },
           "metadata": {
-            "$ref": "#/components/schemas/Metadata"
+            "$ref": "#/components/schemas/DataV2Metadata"
           }
         }
       },
