@@ -508,7 +508,12 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "enum": ["daily", "weekly", "monthly", "quarterly"],
+              "enum": [
+                "daily",
+                "weekly",
+                "monthly",
+                "quarterly"
+              ],
               "default": "daily"
             },
             "description": "Data frequency: daily, weekly (Fridays), monthly (month-end), or quarterly (quarter-end)",
@@ -1775,16 +1780,16 @@
           },
           "dates": {
             "type": "array",
-            "items": {
-              "type": "string",
-              "format": "date"
-            },
             "description": "Date array corresponding to all time series data points",
             "example": [
               "2024-01-01",
               "2024-01-02",
               "2024-01-03"
-            ]
+            ],
+            "items": {
+              "type": "string",
+              "format": "date"
+            }
           },
           "start_date": {
             "type": "string",
@@ -1804,15 +1809,7 @@
             "example": 152
           },
           "frequency": {
-            "type": "string",
-            "enum": [
-              "daily",
-              "weekly",
-              "monthly",
-              "quarterly"
-            ],
-            "description": "Data frequency used for this response",
-            "example": "monthly"
+            "$ref": "#/components/schemas/DataFrequency"
           }
         }
       },
@@ -2094,23 +2091,14 @@
             }
           },
           "include": {
-            "type": "array",
-            "description": "Data types to include in response",
-            "default": [
-              "prices"
-            ],
-            "items": {
-              "type": "string",
-              "enum": [
-                "prices",
-                "volumes",
-                "ohlv",
-                "dividends",
-                "info",
-                "yield"
-              ]
-            }
-          },
+  "type": "array",
+  "description": "Data types to include in response. See [Asset Type Compatibility](/docs/ReferenceGuide.md#asset-type-compatibility) for data availability by asset type.",
+  "default": ["prices"],
+  "items": {
+    "type": "string",
+    "enum": ["prices", "volumes", "ohlv", "dividends", "info", "yield"]
+  }
+},
           "as_of": {
             "type": "string",
             "format": "date",
@@ -2118,28 +2106,19 @@
             "example": "2024-07-29"
           },
           "start_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Start date for time series data",
-            "example": "2024-01-01"
-          },
-          "end_date": {
-            "type": "string",
-            "format": "date",
-            "description": "End date for time series data",
-            "example": "2024-07-29"
-          },
+  "type": "string",
+  "format": "date",
+  "description": "Start date for time series data. If not provided, defaults to 1 year before the as_of date (or current date if as_of is also not specified).",
+  "example": "2024-01-01"
+},
+"end_date": {
+  "type": "string",
+  "format": "date",
+  "description": "End date for time series data. If not provided, defaults to the as_of date (or current date if as_of is also not specified).",
+  "example": "2024-07-29"
+},
           "frequency": {
-            "type": "string",
-            "enum": [
-              "daily",
-              "weekly",
-              "monthly",
-              "quarterly"
-            ],
-            "default": "daily",
-            "description": "Data frequency: daily returns all trading days, weekly returns Friday closes, monthly returns month-end values, quarterly returns quarter-end values",
-            "example": "monthly"
+            "$ref": "#/components/schemas/DataFrequency"
           },
           "options": {
             "$ref": "#/components/schemas/DataV2Options"
@@ -2318,7 +2297,14 @@
             "example": "D"
           }
         }
-      }
+      },
+      "DataFrequency": {
+  "type": "string",
+  "enum": ["daily", "weekly", "monthly", "quarterly"],
+  "default": "daily",
+  "description": "Data frequency that determines which dates are included in the response. See [Data Frequency Guide](/docs/ReferenceGuide.md#data-frequency) for detailed behavior and examples.",
+  "example": "monthly"
+}
     },
     "securitySchemes": {
       "appId": {
