@@ -1689,30 +1689,30 @@
         }
       },
       "StatsV2Yield": {
-        "type": "object",
-        "properties": {
-          "yield_income": {
-            "type": "number",
-            "example": 0.0055,
-            "description": "Income yield as decimal (0.0055 = 0.55%, or -99 if calculation error)"
-          },
-          "yield_short": {
-            "type": "number",
-            "example": 0.0032,
-            "description": "Short-term yield as decimal (or -99 if calculation error)"
-          },
-          "yield_long": {
-            "type": "number",
-            "example": 0.0078,
-            "description": "Long-term yield as decimal (or -99 if calculation error)"
-          },
-          "yield_all": {
-            "type": "number",
-            "example": 0.0055,
-            "description": "Total yield as decimal (or -99 if calculation error)"
-          }
-        }
-      },
+  "type": "object",
+  "properties": {
+    "yield_income": {
+      "type": "number",
+      "example": 0.0055,
+      "description": "Income yield as decimal (0.0055 = 0.55%, or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
+    },
+    "yield_short": {
+      "type": "number",
+      "example": 0.0032,
+      "description": "Short-term yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
+    },
+    "yield_long": {
+      "type": "number",
+      "example": 0.0078,
+      "description": "Long-term yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
+    },
+    "yield_all": {
+      "type": "number",
+      "example": 0.0055,
+      "description": "Total yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
+    }
+  }
+},
       "StatsV2Period": {
         "type": "object",
         "properties": {
@@ -1748,25 +1748,25 @@
         }
       },
       "Returns": {
-        "type": "object",
-        "properties": {
-          "total": {
-            "type": "number",
-            "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years).",
-            "example": 0.307
-          },
-          "annualized_market": {
-            "type": "number",
-            "description": "Annualized return adjusted by market days (252.25 / trading_days).",
-            "example": 0.2616
-          },
-          "annualized_calendar": {
-            "type": "number",
-            "description": "Annualized return adjusted by calendar days (365.25 / calendar_days).",
-            "example": 0.25931
-          }
-        }
-      },
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "number",
+      "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#total-return).",
+      "example": 0.307
+    },
+    "annualized_market": {
+      "type": "number", 
+      "description": "Annualized return adjusted by market days (252.25 / trading_days). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#annualized-market-return).",
+      "example": 0.2616
+    },
+    "annualized_calendar": {
+      "type": "number",
+      "description": "Annualized return adjusted by calendar days (365.25 / calendar_days). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#annualized-calendar-return).",
+      "example": 0.25931
+    }
+  }
+},
       "Risk": {
         "type": "object",
         "description": "Comprehensive risk analysis organized by category",
@@ -1783,134 +1783,135 @@
         }
       },
       "Volatility": {
-        "type": "object",
-        "description": "Price volatility and variability metrics",
-        "properties": {
-          "downside_deviation": {
-            "type": "number",
-            "description": "Downside deviation focusing only on negative returns",
-            "example": 0.042
-          },
-          "sd_annualized": {
-            "type": "number",
-            "description": "Annualized standard deviation",
-            "example": 0.185
-          },
-          "sd_monthly": {
-            "type": "number",
-            "description": "Monthly standard deviation",
-            "example": 0.053
-          },
-          "ulcer_index": {
-            "type": "number",
-            "description": "Ulcer Index measuring the depth and duration of drawdowns",
-            "example": 5.03
-          }
-        }
-      },
+  "type": "object",
+  "description": "Price volatility and variability metrics",
+  "properties": {
+    "downside_deviation": {
+      "type": "number",
+      "description": "Downside deviation focusing only on negative returns. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#downside-deviation).",
+      "example": 0.042
+    },
+    "sd_annualized": {
+      "type": "number",
+      "description": "Annualized standard deviation. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#standard-deviation-annualized).",
+      "example": 0.185
+    },
+    "sd_monthly": {
+      "type": "number", 
+      "description": "Monthly standard deviation. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#standard-deviation-monthly).",
+      "example": 0.053
+    },
+    "ulcer_index": {
+      "type": "number",
+      "description": "Ulcer Index measuring the depth and duration of drawdowns. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ulcer-index).",
+      "example": 5.03
+    }
+  }
+},
       "MarketRisk": {
-        "type": "object",
-        "description": "Risk metrics relative to benchmark and market exposure",
-        "properties": {
-          "alpha": {
-            "type": "number",
-            "description": "Jensen's alpha measuring excess return vs benchmark",
-            "example": 0.021
-          },
-          "beta": {
-            "type": "number",
-            "description": "Beta coefficient measuring systematic risk relative to benchmark",
-            "example": 1.08
-          },
-          "correlation": {
-            "type": "number",
-            "description": "Pearson correlation with benchmark",
-            "example": 0.89
-          },
-          "r_squared": {
-            "type": "number",
-            "description": "R-squared coefficient of determination",
-            "example": 0.79
-          }
-        }
-      },
+  "type": "object",
+  "description": "Risk metrics relative to benchmark and market exposure",
+  "properties": {
+    "alpha": {
+      "type": "number",
+      "description": "Jensen's alpha measuring excess return vs benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#alpha).",
+      "example": 0.021
+    },
+    "beta": {
+      "type": "number",
+      "description": "Beta coefficient measuring systematic risk relative to benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#beta).",
+      "example": 1.08
+    },
+    "correlation": {
+      "type": "number", 
+      "description": "Pearson correlation with benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#correlation).",
+      "example": 0.89
+    },
+    "r_squared": {
+      "type": "number",
+      "description": "R-squared coefficient of determination. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#r-squared).",
+      "example": 0.79
+    }
+  }
+},
       "RiskAdjustedPerformance": {
-        "type": "object",
-        "description": "Return-per-unit-of-risk performance ratios",
-        "properties": {
-          "ftalpha": {
-            "type": "number",
-            "description": "FastTrack Alpha proprietary risk-adjusted performance metric",
-            "example": 2790.49
-          },
-          "sharpe_ratio": {
-            "type": "number",
-            "description": "Sharpe ratio measuring excess return per unit of total risk",
-            "example": 1.25
-          },
-          "sortino_ratio": {
-            "type": "number",
-            "description": "Sortino ratio measuring excess return per unit of downside risk",
-            "example": 2.76
-          },
-          "treynor_ratio": {
-            "type": "number",
-            "description": "Treynor ratio measuring excess return per unit of systematic risk",
-            "example": 702.96
-          },
-          "ulcer_performance_index": {
-            "type": "number",
-            "description": "Ulcer Performance Index measuring return per unit of ulcer index",
-            "example": 1.89
-          }
-        }
-      },
+  "type": "object",
+  "description": "Return-per-unit-of-risk performance ratios",
+  "properties": {
+    "ftalpha": {
+      "type": "number",
+      "description": "FastTrack Alpha proprietary risk-adjusted performance metric. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ftalpha).",
+      "example": 2790.49
+    },
+    "sharpe_ratio": {
+      "type": "number",
+      "description": "Sharpe ratio measuring excess return per unit of total risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#sharpe-ratio).",
+      "example": 1.25
+    },
+    "sortino_ratio": {
+      "type": "number",
+      "description": "Sortino ratio measuring excess return per unit of downside risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#sortino-ratio).",
+      "example": 2.76
+    },
+    "treynor_ratio": {
+      "type": "number",
+      "description": "Treynor ratio measuring excess return per unit of systematic risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#treynor-ratio).",
+      "example": 702.96
+    },
+    "ulcer_performance_index": {
+      "type": "number",
+      "description": "Ulcer Performance Index measuring return per unit of ulcer index. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ulcer-performance-index).",
+      "example": 1.89
+    }
+  }
+},
       "MaxDrawdown": {
-        "type": "object",
-        "properties": {
-          "value": {
-            "type": "number",
-            "description": "Maximum drawdown as decimal (-0.152 = -15.2%, or -99 if calculation error)",
-            "example": -0.152
-          },
-          "peak_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Date of drawdown peak",
-            "example": "2024-03-15"
-          },
-          "valley_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Date of drawdown valley",
-            "example": "2024-06-22"
-          },
-          "duration_days": {
-            "type": "integer",
-            "description": "Duration of drawdown in days",
-            "example": 99
-          },
-          "recovery_days": {
-            "type": "integer",
-            "description": "Days to recover from drawdown (-1 if not recovered)",
-            "example": 82
-          }
-        }
-      },
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "number",
+      "description": "Maximum drawdown as decimal (-0.152 = -15.2%). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#maximum-drawdown-value).",
+      "example": -0.152
+    },
+    "peak_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of drawdown peak. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#peak-date).",
+      "example": "2024-03-15"
+    },
+    "valley_date": {
+      "type": "string", 
+      "format": "date",
+      "description": "Date of drawdown valley. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#valley-date).",
+      "example": "2024-06-22"
+    },
+    "duration_days": {
+      "type": "integer",
+      "description": "Duration of drawdown in days. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#duration-days).",
+      "example": 99
+    },
+    "recovery_days": {
+      "type": "integer",
+      "description": "Days to recover from drawdown (-1 if not recovered). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#recovery-days).",
+      "example": 82
+    }
+  }
+},
       "MovingAverage": {
-        "type": "object",
-        "properties": {
-          "period": {
-            "type": "integer",
-            "example": 50
-          },
-          "value": {
-            "type": "number",
-            "description": "Moving average value (or -1 if calculation error)",
-            "example": 172.45
-          }
-        }
-      },
+  "type": "object",
+  "properties": {
+    "period": {
+      "type": "integer",
+       "description": "Length of the moving average in days. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#moving-averages).",
+      "example": 50
+    },
+    "value": {
+      "type": "number",
+      "description": "Moving average value (or -1 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#moving-averages).",
+      "example": 172.45
+    }
+  }
+},
       "VolumeData": {
         "type": "object",
         "properties": {
