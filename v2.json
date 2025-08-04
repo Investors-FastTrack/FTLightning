@@ -724,191 +724,129 @@
   ],
   "components": {
     "schemas": {
-      "StatsV2Request": {
+      "AdvancedSettings": {
         "type": "object",
-        "description": "Calculate financial statistics for multiple assets. Supports simple ticker symbols or complex portfolio models including static allocations, dynamic strategies, and momentum-based selection.",
-        "required": [
-          "assets"
-        ],
         "properties": {
-          "assets": {
+          "correlation_period": {
+            "type": "integer",
+            "description": "Number of days for correlation calculations",
+            "default": 21
+          },
+          "moving_average_periods": {
             "type": "array",
-            "description": "List of assets to analyze. Can be:\r\n        - Simple ticker symbols (e.g., \"AAPL\", \"MSFT\") \r\n        - Static portfolio models with fixed allocations\r\n        - Dynamic portfolios that change over time\r\n        - Momentum strategies that rank and select securities\r\n        - Custom price data",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string",
-                  "title": "Ticker Symbol",
-                  "description": "Simple ticker symbol",
-                  "example": "AAPL"
-                },
-                {
-                  "$ref": "#/components/schemas/StaticModel"
-                },
-                {
-                  "$ref": "#/components/schemas/DynamicModel"
-                },
-                {
-                  "$ref": "#/components/schemas/MomentumModel"
-                },
-                {
-                  "$ref": "#/components/schemas/CustomData"
-                }
-              ]
-            }
-          },
-          "as_of": {
-            "type": "string",
-            "format": "date",
-            "description": "As-of date for calculations (YYYY-MM-DD). If not provided, defaults to current date.",
-            "example": "2024-07-29"
-          },
-          "benchmark": {
-            "type": "string",
-            "description": "Benchmark ticker for risk calculations (beta, alpha, correlation, Sharpe ratio). Must be a valid ticker symbol.",
-            "default": "SPY",
-            "example": "SPY"
-          },
-          "time_periods": {
-            "type": "array",
-            "description": "Time periods to calculate statistics for. If not provided, defaults to [\"1m\", \"3m\", \"1y\", \"3y\"]. See [Period Calculation Behavior](/docs/ReferenceGuide.md#period-calculation-behavior) for details on which statistics are calculated for different period lengths.",
+            "description": "Moving average periods in days",
             "default": [
-              "1m",
-              "3m",
-              "1y",
-              "3y"
+              50,
+              200
             ],
             "items": {
-              "oneOf": [
-                {
-                  "$ref": "#/components/schemas/PredefinedPeriod"
-                },
-                {
-                  "$ref": "#/components/schemas/CustomPeriod"
-                }
-              ]
+              "type": "integer"
             }
           },
-          "include": {
-            "type": "array",
-            "description": "Optional data to include in the response. See [Include Options Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#include-options-behavior) for detailed behavior and asset type compatibility.",
-            "items": {
-              "type": "string",
-              "enum": [
-                "drawdown_analysis",
-                "moving_averages",
-                "volume_data", 
-                "position_details",
-                "security_info"
-              ]
-            }
-          },
-          "advanced": {
-            "$ref": "#/components/schemas/AdvancedSettings"
+          "use_month_end_returns": {
+            "type": "boolean",
+            "description": "Use month-end dates for calculations",
+            "default": false
           }
         }
       },
-      "PredefinedPeriod": {
-        "type": "string",
-        "enum": [
-          "1d",
-          "5d",
-          "1m",
-          "3m",
-          "6m",
-          "1y",
-          "3y",
-          "5y",
-          "10y",
-          "inception"
-        ],
-        "description": "**Allowed:**  `1d`, `5d`, `1m`, `3m`, `6m`, `1y`, `3y`, `5y`, `10y`, `inception` ",
-        "title": ""
+      "ApiError": {
+        "type": "object",
+        "x-stoplight": {
+          "id": "691e085f4adb4"
+        },
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "INVALID_TICKER",
+              "CALCULATION_ERROR",
+              "INSUFFICIENT_DATA"
+            ],
+            "example": "INVALID_TICKER"
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid or unknown ticker: INVALID123"
+          }
+        }
       },
-      "StatsV2HistoricalRequest": {
+      "AssetInfo": {
+        "type": "object",
+        "x-stoplight": {
+          "id": "198548cddfe25"
+        },
+        "description": "Static security information that doesn't change based on as_of date",
+        "properties": {
+          "shares_outstanding": {
+            "type": "integer",
+            "example": 15550061000,
+            "description": "Number of shares outstanding"
+          },
+          "security_type": {
+            "type": "string",
+            "enum": [
+              "Stock",
+              "Exchange Traded Fund",
+              "Mutual Fund",
+              "Index",
+              "Static Model",
+              "Dynamic Model",
+              "Momentum Model",
+              "FNU"
+            ],
+            "example": "Stock"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "example": "1980-12-12",
+            "description": "First available date in data"
+          }
+        }
+      },
+      "CustomData": {
         "type": "object",
         "required": [
-          "assets"
+          "data",
+          "type"
         ],
         "properties": {
-          "assets": {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string",
-                  "description": "Simple ticker symbol",
-                  "example": "AAPL"
-                },
-                {
-                  "$ref": "#/components/schemas/StaticModel"
-                },
-                {
-                  "$ref": "#/components/schemas/DynamicModel"
-                },
-                {
-                  "$ref": "#/components/schemas/MomentumModel"
-                },
-                {
-                  "$ref": "#/components/schemas/CustomData"
+          "data": {
+            "type": "object",
+            "properties": {
+              "prices": {
+                "type": "array",
+                "example": [
+                  100,
+                  102,
+                  98,
+                  105,
+                  110
+                ],
+                "items": {
+                  "type": "number"
                 }
-              ]
+              },
+              "ticker": {
+                "type": "string",
+                "example": "CUSTOM_001"
+              }
             }
           },
-          "benchmark": {
+          "name": {
             "type": "string",
-            "description": "Benchmark ticker for risk calculations",
-            "default": "SPY",
-            "example": "SPY"
+            "example": "Custom Strategy"
           },
-          "rollups": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "year",
-                "quarter",
-                "month"
-              ]
-            },
-            "description": "Time period rollups to calculate",
-            "default": [
-              "year"
+          "type": {
+            "type": "string",
+            "enum": [
+              "fnu"
             ]
-          },
-          "years": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[0-9]{4}$"
-            },
-            "description": "Years to include in calculations",
-            "example": [
-              "2020",
-              "2021",
-              "2022",
-              "2023",
-              "2024"
-            ]
-          },
-          "include": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": [
-                "drawdown_analysis",
-                "moving_averages",
-                "volume_data",
-                "security_info"
-              ]
-            },
-            "description": "Optional data to include"
-          },
-          "advanced": {
-            "$ref": "#/components/schemas/AdvancedSettings"
           }
         },
-        "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly). Returns statistics organized by calendar periods (e.g., '2023', '2023-Q1') with period-specific pricing data. See [Response Structure Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#response-structure-differences) for details."
+        "title": "Custom Data",
+        "description": "User-provided price data"
       },
       "CustomPeriod": {
         "type": "object",
@@ -942,102 +880,332 @@
           }
         }
       },
-      "StaticModel": {
-        "type": "object",
-        "required": [
-          "type",
-          "holdings"
+      "DataFrequency": {
+        "type": "string",
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly",
+          "quarterly"
         ],
+        "default": "daily",
+        "description": "Data frequency that determines which dates are included in the response. See [Data Frequency Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#data-frequency-data-frequency) for detailed behavior and examples.",
+        "example": "monthly"
+      },
+      "DataV2Dividend": {
+        "type": "object",
+        "description": "Dividend payment information. See [Dividend Types Reference](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#dividend-types) for detailed type explanations.",
         "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Ex-dividend date",
+            "example": "2024-02-15"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Dividend amount per share in USD",
+            "example": 0.24
+          },
           "type": {
             "type": "string",
             "enum": [
-              "static"
+              "Income",
+              "Short Term",
+              "Long Term",
+              "Split",
+              "Other"
+            ],
+            "description": "Human-readable dividend type",
+            "example": "Income"
+          },
+          "type_code": {
+            "type": "string",
+            "enum": [
+              "D",
+              "G",
+              "C",
+              "Z"
+            ],
+            "description": "Single-character dividend type code",
+            "example": "D"
+          }
+        }
+      },
+      "DataV2Metadata": {
+        "type": "object",
+        "properties": {
+          "total_securities": {
+            "type": "integer",
+            "description": "Number of securities processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Processing time in milliseconds",
+            "example": 450
+          },
+          "dates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "date"
+            },
+            "description": "Date array corresponding to all time series data points (included when date range is specified)",
+            "example": [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03"
             ]
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Actual start date of data range (first date in dates array)",
+            "example": "2024-01-01"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Actual end date of data range (last date in dates array)",
+            "example": "2024-07-29"
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/DataFrequency"
+          }
+        }
+      },
+      "DataV2OHLV": {
+        "type": "object",
+        "description": "Open, High, Low, Volume data",
+        "properties": {
+          "opens": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Opening price time series"
+          },
+          "highs": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "High price time series"
+          },
+          "lows": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Low price time series"
+          },
+          "volumes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Volume time series"
+          }
+        }
+      },
+      "DataV2Options": {
+        "type": "object",
+        "description": "Optional price adjustment settings. See [Price Adjustment Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#price-adjustments) for detailed explanations and use cases.",
+        "properties": {
+          "unadjusted": {
+            "type": "boolean",
+            "description": "Include unadjusted (raw) price data in addition to adjusted prices. Useful for analyzing actual trading prices or calculating custom adjustments.",
+            "default": false
+          },
+          "semi_adjusted": {
+            "type": "boolean",
+            "description": "Include semi-adjusted price data (split-adjusted but not dividend-adjusted) in addition to adjusted prices. Useful for certain technical analysis calculations.",
+            "default": false
+          }
+        }
+      },
+      "DataV2Prices": {
+        "type": "object",
+        "properties": {
+          "adjusted": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Fully adjusted closing prices accounting for splits, dividends, and other corporate actions. This is the default price series used for calculations."
+          },
+          "unadjusted": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Raw closing prices as traded, without any adjustments for splits or dividends. Only available when options.unadjusted = true."
+          },
+          "semi_adjusted": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "Prices adjusted for stock splits but not dividends. Only available when options.semi_adjusted = true."
+          }
+        }
+      },
+      "DataV2Request": {
+        "type": "object",
+        "required": [
+          "assets"
+        ],
+        "properties": {
+          "assets": {
+            "type": "array",
+            "description": "List of assets to extract data for. Supports simple ticker symbols and complex portfolio models. See [Supported Asset Types](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#supported-asset-types) for examples and limitations.",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple ticker symbol (e.g., 'AAPL', 'SPY')"
+                },
+                {
+                  "$ref": "#/components/schemas/StaticModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DynamicModel"
+                },
+                {
+                  "$ref": "#/components/schemas/MomentumModel"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomData"
+                }
+              ]
+            }
+          },
+          "include": {
+            "type": "array",
+            "description": "Data types to include in response. See [Asset Type Compatibility](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#asset-type-compatibility-asset-type-compatibility) for data availability by asset type.",
+            "default": [
+              "prices"
+            ],
+            "items": {
+              "type": "string",
+              "enum": [
+                "prices",
+                "volumes",
+                "ohlv",
+                "dividends",
+                "info",
+                "yield"
+              ]
+            }
+          },
+          "as_of": {
+            "type": "string",
+            "format": "date",
+            "description": "As-of date for data extraction",
+            "example": "2024-07-29"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date for time series data. If not provided, defaults to 1 year before the as_of date (or current date if as_of is also not specified).",
+            "example": "2024-01-01"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "End date for time series data. If not provided, defaults to the as_of date (or current date if as_of is also not specified).",
+            "example": "2024-07-29"
+          },
+          "frequency": {
+            "$ref": "#/components/schemas/DataFrequency"
+          },
+          "options": {
+            "$ref": "#/components/schemas/DataV2Options"
+          }
+        }
+      },
+      "DataV2Response": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataV2Result"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/DataV2Metadata"
+          }
+        }
+      },
+      "DataV2Result": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
           },
           "name": {
             "type": "string",
-            "description": "Display name for the portfolio strategy"
+            "example": "Apple Inc"
           },
-          "ticker": {
-            "type": "string",
-            "description": "Unique identifier for this model"
+          "prices": {
+            "$ref": "#/components/schemas/DataV2Prices"
           },
-          "holdings": {
+          "volumes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Holding"
+              "type": "number",
+              "nullable": true
             },
-            "description": "Portfolio holdings with weights. Weights should sum to 100 (representing percentages).",
-            "minItems": 1
+            "description": "Volume data time series"
           },
-          "rebalance": {
-            "type": "string",
-            "enum": [
-              "day",
-              "week",
-              "month",
-              "quarter",
-              "annual"
-            ],
-            "default": "month",
-            "description": "How often to rebalance the portfolio to target weights"
+          "ohlv": {
+            "$ref": "#/components/schemas/DataV2OHLV"
           },
+          "dividends": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DataV2Dividend"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/AssetInfo"
+          },
+          "yield_data": {
+            "$ref": "#/components/schemas/StatsV2Yield"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          }
+        }
+      },
+      "DateRange": {
+        "type": "object",
+        "properties": {
           "start": {
             "type": "string",
             "format": "date",
-            "description": "Start date for backtesting this model"
+            "example": "2023-07-31"
           },
-          "seed": {
-            "type": "number",
-            "description": "Initial investment amount in dollars",
-            "default": 100000
-          }
-        },
-        "x-examples": {
-          "Conservative Portfolio": {
-            "type": "static",
-            "name": "Conservative 60/40",
-            "ticker": "CONS_6040",
-            "holdings": [
-              {
-                "ticker": "VTI",
-                "weight": 60
-              },
-              {
-                "ticker": "BND",
-                "weight": 40
-              }
-            ],
-            "rebalance": "quarter",
-            "start": "2020-01-01",
-            "seed": 50000
+          "end": {
+            "type": "string",
+            "format": "date",
+            "example": "2024-07-29"
           },
-          "Aggressive Growth": {
-            "type": "static",
-            "name": "Tech Heavy",
-            "ticker": "TECH_GROWTH",
-            "holdings": [
-              {
-                "ticker": "QQQ",
-                "weight": 70
-              },
-              {
-                "ticker": "VTI",
-                "weight": 20
-              },
-              {
-                "ticker": "BND",
-                "weight": 10
-              }
-            ],
-            "rebalance": "month",
-            "start": "2021-01-01",
-            "seed": 100000
+          "trading_days": {
+            "type": "integer",
+            "example": 252
           }
-        },
-        "title": "Static Portfolios",
-        "description": "Fixed allocation portfolio that rebalances to target weights"
+        }
       },
       "DynamicModel": {
         "type": "object",
@@ -1201,6 +1369,155 @@
         },
         "description": "Portfolio that changes allocation over time",
         "title": "Dynamic Portfolio"
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Invalid request format"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2024-07-29T14:30:00.000Z"
+          }
+        }
+      },
+      "Holding": {
+        "type": "object",
+        "required": [
+          "ticker",
+          "weight"
+        ],
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "VTI"
+          },
+          "weight": {
+            "type": "number",
+            "description": "Weight as percentage (0-100)",
+            "example": 60
+          }
+        }
+      },
+      "MARankingSystem": {
+        "type": "object",
+        "required": [
+          "type",
+          "parameters"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "ma"
+            ]
+          },
+          "parameters": {
+            "type": "object",
+            "required": [
+              "short",
+              "long"
+            ],
+            "properties": {
+              "short": {
+                "type": "integer",
+                "description": "Short moving average period in days",
+                "minimum": 1,
+                "example": 20
+              },
+              "long": {
+                "type": "integer",
+                "description": "Long moving average period in days",
+                "minimum": 1,
+                "example": 50
+              },
+              "lookback_period": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "description": "Lookback period in days"
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "year"
+                    ],
+                    "description": "Lookback period as time unit"
+                  }
+                ],
+                "description": "Lookback period for MA calculations (days as integer or 'month'/'quarter'/'year')",
+                "default": "quarter"
+              }
+            }
+          }
+        }
+      },
+      "MarketRisk": {
+        "type": "object",
+        "description": "Risk metrics relative to benchmark and market exposure",
+        "properties": {
+          "alpha": {
+            "type": "number",
+            "description": "Jensen's alpha measuring excess return vs benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#alpha).",
+            "example": 0.021
+          },
+          "beta": {
+            "type": "number",
+            "description": "Beta coefficient measuring systematic risk relative to benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#beta).",
+            "example": 1.08
+          },
+          "correlation": {
+            "type": "number",
+            "description": "Pearson correlation with benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#correlation).",
+            "example": 0.89
+          },
+          "r_squared": {
+            "type": "number",
+            "description": "R-squared coefficient of determination. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#r-squared).",
+            "example": 0.79
+          }
+        }
+      },
+      "MaxDrawdown": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "Maximum drawdown as decimal (-0.152 = -15.2%). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#maximum-drawdown-value).",
+            "example": -0.152
+          },
+          "peak_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of drawdown peak. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#peak-date).",
+            "example": "2024-03-15"
+          },
+          "valley_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Date of drawdown valley. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#valley-date).",
+            "example": "2024-06-22"
+          },
+          "duration_days": {
+            "type": "integer",
+            "description": "Duration of drawdown in days. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#duration-days).",
+            "example": 99
+          },
+          "recovery_days": {
+            "type": "integer",
+            "description": "Days to recover from drawdown (-1 if not recovered). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#recovery-days).",
+            "example": 82
+          }
+        }
       },
       "MomentumModel": {
         "type": "object",
@@ -1372,106 +1689,393 @@
         "title": "Momentum Strategy",
         "description": "Strategy that ranks securities and holds top performers"
       },
-      "Holding": {
+      "MovingAverage": {
         "type": "object",
-        "required": [
-          "ticker",
-          "weight"
-        ],
         "properties": {
-          "ticker": {
-            "type": "string",
-            "example": "VTI"
+          "period": {
+            "type": "integer",
+            "description": "Length of the moving average in days. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#moving-averages).",
+            "example": 50
           },
-          "weight": {
+          "value": {
             "type": "number",
-            "description": "Weight as percentage (0-100)",
-            "example": 60
+            "description": "Moving average value (or -1 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#moving-averages).",
+            "example": 172.45
           }
         }
       },
-      "CustomData": {
+      "PredefinedPeriod": {
+        "type": "string",
+        "enum": [
+          "1d",
+          "5d",
+          "1m",
+          "3m",
+          "6m",
+          "1y",
+          "3y",
+          "5y",
+          "10y",
+          "inception"
+        ],
+        "description": "**Allowed:**  `1d`, `5d`, `1m`, `3m`, `6m`, `1y`, `3y`, `5y`, `10y`, `inception` ",
+        "title": ""
+      },
+      "Returns": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "number",
+            "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#total-return).",
+            "example": 0.307
+          },
+          "annualized_market": {
+            "type": "number",
+            "description": "Annualized return adjusted by market days (252.25 / trading_days). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#annualized-market-return).",
+            "example": 0.2616
+          },
+          "annualized_calendar": {
+            "type": "number",
+            "description": "Annualized return adjusted by calendar days (365.25 / calendar_days). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#annualized-calendar-return).",
+            "example": 0.25931
+          }
+        }
+      },
+      "Risk": {
+        "type": "object",
+        "description": "Comprehensive risk analysis organized by category",
+        "properties": {
+          "volatility": {
+            "$ref": "#/components/schemas/Volatility"
+          },
+          "market_risk": {
+            "$ref": "#/components/schemas/MarketRisk"
+          },
+          "risk_adjusted_performance": {
+            "$ref": "#/components/schemas/RiskAdjustedPerformance"
+          }
+        }
+      },
+      "RiskAdjustedPerformance": {
+        "type": "object",
+        "description": "Return-per-unit-of-risk performance ratios",
+        "properties": {
+          "ftalpha": {
+            "type": "number",
+            "description": "FastTrack Alpha proprietary risk-adjusted performance metric. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ftalpha).",
+            "example": 2790.49
+          },
+          "sharpe_ratio": {
+            "type": "number",
+            "description": "Sharpe ratio measuring excess return per unit of total risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#sharpe-ratio).",
+            "example": 1.25
+          },
+          "sortino_ratio": {
+            "type": "number",
+            "description": "Sortino ratio measuring excess return per unit of downside risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#sortino-ratio).",
+            "example": 2.76
+          },
+          "treynor_ratio": {
+            "type": "number",
+            "description": "Treynor ratio measuring excess return per unit of systematic risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#treynor-ratio).",
+            "example": 702.96
+          },
+          "ulcer_performance_index": {
+            "type": "number",
+            "description": "Ulcer Performance Index measuring return per unit of ulcer index. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ulcer-performance-index).",
+            "example": 1.89
+          }
+        }
+      },
+      "StandardRankingSystem": {
         "type": "object",
         "required": [
-          "data",
           "type"
         ],
         "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "prices": {
-                "type": "array",
-                "example": [
-                  100,
-                  102,
-                  98,
-                  105,
-                  110
-                ],
-                "items": {
-                  "type": "number"
-                }
-              },
-              "ticker": {
-                "type": "string",
-                "example": "CUSTOM_001"
-              }
-            }
-          },
-          "name": {
-            "type": "string",
-            "example": "Custom Strategy"
-          },
           "type": {
             "type": "string",
             "enum": [
-              "fnu"
+              "return",
+              "sharpe",
+              "upi",
+              "ftalpha"
             ]
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "lookback_period": {
+                "oneOf": [
+                  {
+                    "type": "integer",
+                    "description": "Lookback period in days"
+                  },
+                  {
+                    "type": "string",
+                    "enum": [
+                      "month",
+                      "quarter",
+                      "year"
+                    ],
+                    "description": "Lookback period as time unit"
+                  }
+                ],
+                "description": "Lookback period for calculations (days as integer or 'month'/'quarter'/'year')",
+                "default": "quarter"
+              }
+            }
+          }
+        }
+      },
+      "StaticModel": {
+        "type": "object",
+        "required": [
+          "type",
+          "holdings"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "static"
+            ]
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name for the portfolio strategy"
+          },
+          "ticker": {
+            "type": "string",
+            "description": "Unique identifier for this model"
+          },
+          "holdings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Holding"
+            },
+            "description": "Portfolio holdings with weights. Weights should sum to 100 (representing percentages).",
+            "minItems": 1
+          },
+          "rebalance": {
+            "type": "string",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "annual"
+            ],
+            "default": "month",
+            "description": "How often to rebalance the portfolio to target weights"
+          },
+          "start": {
+            "type": "string",
+            "format": "date",
+            "description": "Start date for backtesting this model"
+          },
+          "seed": {
+            "type": "number",
+            "description": "Initial investment amount in dollars",
+            "default": 100000
           }
         },
-        "title": "Custom Data",
-        "description": "User-provided price data"
-      },
-      "AdvancedSettings": {
-        "type": "object",
-        "properties": {
-          "correlation_period": {
-            "type": "integer",
-            "description": "Number of days for correlation calculations",
-            "default": 21
-          },
-          "moving_average_periods": {
-            "type": "array",
-            "description": "Moving average periods in days",
-            "default": [
-              50,
-              200
+        "x-examples": {
+          "Conservative Portfolio": {
+            "type": "static",
+            "name": "Conservative 60/40",
+            "ticker": "CONS_6040",
+            "holdings": [
+              {
+                "ticker": "VTI",
+                "weight": 60
+              },
+              {
+                "ticker": "BND",
+                "weight": 40
+              }
             ],
-            "items": {
-              "type": "integer"
-            }
+            "rebalance": "quarter",
+            "start": "2020-01-01",
+            "seed": 50000
           },
-          "use_month_end_returns": {
-            "type": "boolean",
-            "description": "Use month-end dates for calculations",
-            "default": false
+          "Aggressive Growth": {
+            "type": "static",
+            "name": "Tech Heavy",
+            "ticker": "TECH_GROWTH",
+            "holdings": [
+              {
+                "ticker": "QQQ",
+                "weight": 70
+              },
+              {
+                "ticker": "VTI",
+                "weight": 20
+              },
+              {
+                "ticker": "BND",
+                "weight": 10
+              }
+            ],
+            "rebalance": "month",
+            "start": "2021-01-01",
+            "seed": 100000
+          }
+        },
+        "title": "Static Portfolios",
+        "description": "Fixed allocation portfolio that rebalances to target weights"
+      },
+      "StatsV2HistoricalMetadata": {
+        "type": "object",
+        "properties": {
+          "total_securities": {
+            "type": "integer",
+            "description": "Number of securities processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Calculation time in milliseconds",
+            "example": 1250
+          },
+          "as_of_date": {
+            "type": "string",
+            "format": "date",
+            "description": "Current date",
+            "example": "2024-07-29"
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker used",
+            "example": "SPY"
+          },
+          "yearly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for yearly periods"
+          },
+          "quarterly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for quarterly periods"
+          },
+          "monthly_ranges": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/DateRange"
+            },
+            "description": "Date ranges for monthly periods"
           }
         }
       },
-      "StatsV2Response": {
+      "StatsV2HistoricalPeriod": {
         "type": "object",
         "properties": {
-          "results": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/StatsV2Result"
-            }
+          "returns": {
+            "$ref": "#/components/schemas/Returns"
           },
-          "metadata": {
-            "$ref": "#/components/schemas/StatsV2Metadata"
+          "risk": {
+            "$ref": "#/components/schemas/Risk"
+          },
+          "maxdraw": {
+            "$ref": "#/components/schemas/MaxDrawdown"
+          },
+          "pricing": {
+            "$ref": "#/components/schemas/StatsV2Pricing"
+          },
+          "yield": {
+            "$ref": "#/components/schemas/StatsV2Yield"
           }
         }
+      },
+      "StatsV2HistoricalRequest": {
+        "type": "object",
+        "required": [
+          "assets"
+        ],
+        "properties": {
+          "assets": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple ticker symbol",
+                  "example": "AAPL"
+                },
+                {
+                  "$ref": "#/components/schemas/StaticModel"
+                },
+                {
+                  "$ref": "#/components/schemas/DynamicModel"
+                },
+                {
+                  "$ref": "#/components/schemas/MomentumModel"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomData"
+                }
+              ]
+            }
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker for risk calculations",
+            "default": "SPY",
+            "example": "SPY"
+          },
+          "rollups": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "year",
+                "quarter",
+                "month"
+              ]
+            },
+            "description": "Time period rollups to calculate",
+            "default": [
+              "year"
+            ]
+          },
+          "years": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[0-9]{4}$"
+            },
+            "description": "Years to include in calculations",
+            "example": [
+              "2020",
+              "2021",
+              "2022",
+              "2023",
+              "2024"
+            ]
+          },
+          "include": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "drawdown_analysis",
+                "moving_averages",
+                "volume_data",
+                "security_info"
+              ]
+            },
+            "description": "Optional data to include"
+          },
+          "advanced": {
+            "$ref": "#/components/schemas/AdvancedSettings"
+          }
+        },
+        "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly). Returns statistics organized by calendar periods (e.g., '2023', '2023-Q1') with period-specific pricing data. See [Response Structure Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#response-structure-differences) for details."
       },
       "StatsV2HistoricalResponse": {
         "type": "object",
@@ -1484,48 +2088,6 @@
           },
           "metadata": {
             "$ref": "#/components/schemas/StatsV2HistoricalMetadata"
-          }
-        }
-      },
-      "StatsV2Result": {
-        "type": "object",
-        "properties": {
-          "info": {
-            "$ref": "#/components/schemas/AssetInfo"
-          },
-          "moving_averages": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MovingAverage",
-              "nullable": true
-            },
-            "nullable": true
-          },
-          "name": {
-            "type": "string",
-            "example": "Apple Inc"
-          },
-          "periods": {
-            "type": "object",
-            "description": "Period-specific statistics keyed by period name",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StatsV2Period"
-            }
-          },
-          "shared_data": {
-            "$ref": "#/components/schemas/StatsV2SharedData",
-            "nullable": true
-          },
-          "ticker": {
-            "type": "string",
-            "example": "AAPL"
-          },
-          "volume_data": {
-            "$ref": "#/components/schemas/VolumeData",
-            "nullable": true
-          },
-          "error": {
-            "$ref": "#/components/schemas/ApiError"
           }
         }
       },
@@ -1578,403 +2140,6 @@
           "error": {
             "$ref": "#/components/schemas/ApiError",
             "nullable": true
-          }
-        }
-      },
-      "ApiError": {
-        "type": "object",
-        "x-stoplight": {
-          "id": "691e085f4adb4"
-        },
-        "properties": {
-          "code": {
-            "type": "string",
-            "enum": [
-              "INVALID_TICKER",
-              "CALCULATION_ERROR",
-              "INSUFFICIENT_DATA"
-            ],
-            "example": "INVALID_TICKER"
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid or unknown ticker: INVALID123"
-          }
-        }
-      },
-      "AssetInfo": {
-        "type": "object",
-        "x-stoplight": {
-          "id": "198548cddfe25"
-        },
-        "description": "Static security information that doesn't change based on as_of date",
-        "properties": {
-          "shares_outstanding": {
-            "type": "integer",
-            "example": 15550061000,
-            "description": "Number of shares outstanding"
-          },
-          "security_type": {
-            "type": "string",
-            "enum": [
-              "Stock",
-              "Exchange Traded Fund",
-              "Mutual Fund",
-              "Index",
-              "Static Model",
-              "Dynamic Model",
-              "Momentum Model",
-              "FNU"
-            ],
-            "example": "Stock"
-          },
-          "start_date": {
-            "type": "string",
-            "format": "date",
-            "example": "1980-12-12",
-            "description": "First available date in data"
-          }
-        }
-      },
-      "StatsV2SharedData": {
-        "type": "object",
-        "description": "Pricing and yield data shared across all periods (snapshot mode only)",
-        "properties": {
-          "pricing": {
-            "$ref": "#/components/schemas/StatsV2Pricing"
-          },
-          "yield": {
-            "$ref": "#/components/schemas/StatsV2Yield"
-          }
-        }
-      },
-      "StatsV2Pricing": {
-        "type": "object",
-        "properties": {
-          "current_close_price": {
-            "type": "number",
-            "example": 195.23,
-            "description": "Current close price (or -1 if calculation error)"
-          },
-          "previous_close_price": {
-            "type": "number",
-            "example": 193.45,
-            "description": "Previous close price (or -1 if calculation error)"
-          },
-          "price_change": {
-            "type": "number",
-            "example": 1.78,
-            "description": "Price change in currency units (or -1 if calculation error)"
-          },
-          "price_change_percent": {
-            "type": "number",
-            "example": 0.0092,
-            "description": "Price change as decimal (0.0092 = 0.92%, or -99 if calculation error)"
-          },
-          "high_52": {
-            "type": "number",
-            "example": 199.62,
-            "description": "52-week high (or -1 if calculation error)"
-          },
-          "low_52": {
-            "type": "number",
-            "example": 164.08,
-            "description": "52-week low (or -1 if calculation error)"
-          },
-          "market_cap": {
-            "type": "number",
-            "example": 3037000000000,
-            "description": "Market capitalization (or -1 if calculation error)"
-          }
-        }
-      },
-      "StatsV2Yield": {
-  "type": "object",
-  "properties": {
-    "yield_income": {
-      "type": "number",
-      "example": 0.0055,
-      "description": "Income yield as decimal (0.0055 = 0.55%, or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
-    },
-    "yield_short": {
-      "type": "number",
-      "example": 0.0032,
-      "description": "Short-term yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
-    },
-    "yield_long": {
-      "type": "number",
-      "example": 0.0078,
-      "description": "Long-term yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
-    },
-    "yield_all": {
-      "type": "number",
-      "example": 0.0055,
-      "description": "Total yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
-    }
-  }
-},
-      "StatsV2Period": {
-        "type": "object",
-        "properties": {
-          "returns": {
-            "$ref": "#/components/schemas/Returns"
-          },
-          "risk": {
-            "$ref": "#/components/schemas/Risk"
-          },
-          "maxdraw": {
-            "$ref": "#/components/schemas/MaxDrawdown"
-          }
-        }
-      },
-      "StatsV2HistoricalPeriod": {
-        "type": "object",
-        "properties": {
-          "returns": {
-            "$ref": "#/components/schemas/Returns"
-          },
-          "risk": {
-            "$ref": "#/components/schemas/Risk"
-          },
-          "maxdraw": {
-            "$ref": "#/components/schemas/MaxDrawdown"
-          },
-          "pricing": {
-            "$ref": "#/components/schemas/StatsV2Pricing"
-          },
-          "yield": {
-            "$ref": "#/components/schemas/StatsV2Yield"
-          }
-        }
-      },
-      "Returns": {
-  "type": "object",
-  "properties": {
-    "total": {
-      "type": "number",
-      "description": "Total cumulative return over the full period, unadjusted for time (e.g., 0.25 = 25% return over 3 years). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#total-return).",
-      "example": 0.307
-    },
-    "annualized_market": {
-      "type": "number", 
-      "description": "Annualized return adjusted by market days (252.25 / trading_days). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#annualized-market-return).",
-      "example": 0.2616
-    },
-    "annualized_calendar": {
-      "type": "number",
-      "description": "Annualized return adjusted by calendar days (365.25 / calendar_days). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#annualized-calendar-return).",
-      "example": 0.25931
-    }
-  }
-},
-      "Risk": {
-        "type": "object",
-        "description": "Comprehensive risk analysis organized by category",
-        "properties": {
-          "volatility": {
-            "$ref": "#/components/schemas/Volatility"
-          },
-          "market_risk": {
-            "$ref": "#/components/schemas/MarketRisk"
-          },
-          "risk_adjusted_performance": {
-            "$ref": "#/components/schemas/RiskAdjustedPerformance"
-          }
-        }
-      },
-      "Volatility": {
-  "type": "object",
-  "description": "Price volatility and variability metrics",
-  "properties": {
-    "downside_deviation": {
-      "type": "number",
-      "description": "Downside deviation focusing only on negative returns. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#downside-deviation).",
-      "example": 0.042
-    },
-    "sd_annualized": {
-      "type": "number",
-      "description": "Annualized standard deviation. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#standard-deviation-annualized).",
-      "example": 0.185
-    },
-    "sd_monthly": {
-      "type": "number", 
-      "description": "Monthly standard deviation. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#standard-deviation-monthly).",
-      "example": 0.053
-    },
-    "ulcer_index": {
-      "type": "number",
-      "description": "Ulcer Index measuring the depth and duration of drawdowns. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ulcer-index).",
-      "example": 5.03
-    }
-  }
-},
-      "MarketRisk": {
-  "type": "object",
-  "description": "Risk metrics relative to benchmark and market exposure",
-  "properties": {
-    "alpha": {
-      "type": "number",
-      "description": "Jensen's alpha measuring excess return vs benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#alpha).",
-      "example": 0.021
-    },
-    "beta": {
-      "type": "number",
-      "description": "Beta coefficient measuring systematic risk relative to benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#beta).",
-      "example": 1.08
-    },
-    "correlation": {
-      "type": "number", 
-      "description": "Pearson correlation with benchmark. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#correlation).",
-      "example": 0.89
-    },
-    "r_squared": {
-      "type": "number",
-      "description": "R-squared coefficient of determination. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#r-squared).",
-      "example": 0.79
-    }
-  }
-},
-      "RiskAdjustedPerformance": {
-  "type": "object",
-  "description": "Return-per-unit-of-risk performance ratios",
-  "properties": {
-    "ftalpha": {
-      "type": "number",
-      "description": "FastTrack Alpha proprietary risk-adjusted performance metric. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ftalpha).",
-      "example": 2790.49
-    },
-    "sharpe_ratio": {
-      "type": "number",
-      "description": "Sharpe ratio measuring excess return per unit of total risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#sharpe-ratio).",
-      "example": 1.25
-    },
-    "sortino_ratio": {
-      "type": "number",
-      "description": "Sortino ratio measuring excess return per unit of downside risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#sortino-ratio).",
-      "example": 2.76
-    },
-    "treynor_ratio": {
-      "type": "number",
-      "description": "Treynor ratio measuring excess return per unit of systematic risk. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#treynor-ratio).",
-      "example": 702.96
-    },
-    "ulcer_performance_index": {
-      "type": "number",
-      "description": "Ulcer Performance Index measuring return per unit of ulcer index. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ulcer-performance-index).",
-      "example": 1.89
-    }
-  }
-},
-      "MaxDrawdown": {
-  "type": "object",
-  "properties": {
-    "value": {
-      "type": "number",
-      "description": "Maximum drawdown as decimal (-0.152 = -15.2%). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#maximum-drawdown-value).",
-      "example": -0.152
-    },
-    "peak_date": {
-      "type": "string",
-      "format": "date",
-      "description": "Date of drawdown peak. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#peak-date).",
-      "example": "2024-03-15"
-    },
-    "valley_date": {
-      "type": "string", 
-      "format": "date",
-      "description": "Date of drawdown valley. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#valley-date).",
-      "example": "2024-06-22"
-    },
-    "duration_days": {
-      "type": "integer",
-      "description": "Duration of drawdown in days. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#duration-days).",
-      "example": 99
-    },
-    "recovery_days": {
-      "type": "integer",
-      "description": "Days to recover from drawdown (-1 if not recovered). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#recovery-days).",
-      "example": 82
-    }
-  }
-},
-      "MovingAverage": {
-  "type": "object",
-  "properties": {
-    "period": {
-      "type": "integer",
-       "description": "Length of the moving average in days. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#moving-averages).",
-      "example": 50
-    },
-    "value": {
-      "type": "number",
-      "description": "Moving average value (or -1 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#moving-averages).",
-      "example": 172.45
-    }
-  }
-},
-      "VolumeData": {
-        "type": "object",
-        "properties": {
-          "current": {
-            "type": "number",
-            "description": "Current volume (or -1 if calculation error)",
-            "example": 45123000,
-            "nullable": true
-          },
-          "average_30d": {
-            "type": "number",
-            "description": "30-day average volume (or -1 if calculation error)",
-            "example": 52341000,
-            "nullable": true
-          },
-          "average_90d": {
-            "type": "number",
-            "description": "90-day average volume (or -1 if calculation error)",
-            "example": 48567000,
-            "nullable": true
-          }
-        }
-      },
-      "DataV2Metadata": {
-        "type": "object",
-        "properties": {
-          "total_securities": {
-            "type": "integer",
-            "description": "Number of securities processed",
-            "example": 3
-          },
-          "calculation_time_ms": {
-            "type": "integer",
-            "description": "Processing time in milliseconds",
-            "example": 450
-          },
-          "dates": {
-            "type": "array",
-            "items": {
-              "type": "string",
-              "format": "date"
-            },
-            "description": "Date array corresponding to all time series data points (included when date range is specified)",
-            "example": [
-              "2024-01-01",
-              "2024-01-02",
-              "2024-01-03"
-            ]
-          },
-          "start_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Actual start date of data range (first date in dates array)",
-            "example": "2024-01-01"
-          },
-          "end_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Actual end date of data range (last date in dates array)",
-            "example": "2024-07-29"
-          },
-          "frequency": {
-            "$ref": "#/components/schemas/DataFrequency"
           }
         }
       },
@@ -2045,200 +2210,77 @@
           }
         }
       },
-      "StatsV2HistoricalMetadata": {
+      "StatsV2Period": {
         "type": "object",
         "properties": {
-          "total_securities": {
-            "type": "integer",
-            "description": "Number of securities processed",
-            "example": 3
+          "returns": {
+            "$ref": "#/components/schemas/Returns"
           },
-          "calculation_time_ms": {
-            "type": "integer",
-            "description": "Calculation time in milliseconds",
-            "example": 1250
+          "risk": {
+            "$ref": "#/components/schemas/Risk"
           },
-          "as_of_date": {
-            "type": "string",
-            "format": "date",
-            "description": "Current date",
-            "example": "2024-07-29"
-          },
-          "benchmark": {
-            "type": "string",
-            "description": "Benchmark ticker used",
-            "example": "SPY"
-          },
-          "yearly_ranges": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/DateRange"
-            },
-            "description": "Date ranges for yearly periods"
-          },
-          "quarterly_ranges": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/DateRange"
-            },
-            "description": "Date ranges for quarterly periods"
-          },
-          "monthly_ranges": {
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/DateRange"
-            },
-            "description": "Date ranges for monthly periods"
+          "maxdraw": {
+            "$ref": "#/components/schemas/MaxDrawdown"
           }
         }
       },
-      "DateRange": {
+      "StatsV2Pricing": {
         "type": "object",
         "properties": {
-          "start": {
-            "type": "string",
-            "format": "date",
-            "example": "2023-07-31"
+          "current_close_price": {
+            "type": "number",
+            "example": 195.23,
+            "description": "Current close price (or -1 if calculation error)"
           },
-          "end": {
-            "type": "string",
-            "format": "date",
-            "example": "2024-07-29"
+          "previous_close_price": {
+            "type": "number",
+            "example": 193.45,
+            "description": "Previous close price (or -1 if calculation error)"
           },
-          "trading_days": {
-            "type": "integer",
-            "example": 252
+          "price_change": {
+            "type": "number",
+            "example": 1.78,
+            "description": "Price change in currency units (or -1 if calculation error)"
+          },
+          "price_change_percent": {
+            "type": "number",
+            "example": 0.0092,
+            "description": "Price change as decimal (0.0092 = 0.92%, or -99 if calculation error)"
+          },
+          "high_52": {
+            "type": "number",
+            "example": 199.62,
+            "description": "52-week high (or -1 if calculation error)"
+          },
+          "low_52": {
+            "type": "number",
+            "example": 164.08,
+            "description": "52-week low (or -1 if calculation error)"
+          },
+          "market_cap": {
+            "type": "number",
+            "example": 3037000000000,
+            "description": "Market capitalization (or -1 if calculation error)"
           }
         }
       },
-      "ErrorResponse": {
+      "StatsV2Request": {
         "type": "object",
-        "properties": {
-          "error": {
-            "type": "boolean",
-            "example": true
-          },
-          "message": {
-            "type": "string",
-            "example": "Invalid request format"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time",
-            "example": "2024-07-29T14:30:00.000Z"
-          }
-        }
-      },
-      "MARankingSystem": {
-        "type": "object",
-        "required": [
-          "type",
-          "parameters"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "ma"
-            ]
-          },
-          "parameters": {
-            "type": "object",
-            "required": [
-              "short",
-              "long"
-            ],
-            "properties": {
-              "short": {
-                "type": "integer",
-                "description": "Short moving average period in days",
-                "minimum": 1,
-                "example": 20
-              },
-              "long": {
-                "type": "integer",
-                "description": "Long moving average period in days",
-                "minimum": 1,
-                "example": 50
-              },
-              "lookback_period": {
-                "oneOf": [
-                  {
-                    "type": "integer",
-                    "description": "Lookback period in days"
-                  },
-                  {
-                    "type": "string",
-                    "enum": [
-                      "month",
-                      "quarter",
-                      "year"
-                    ],
-                    "description": "Lookback period as time unit"
-                  }
-                ],
-                "description": "Lookback period for MA calculations (days as integer or 'month'/'quarter'/'year')",
-                "default": "quarter"
-              }
-            }
-          }
-        }
-      },
-      "StandardRankingSystem": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "return",
-              "sharpe",
-              "upi",
-              "ftalpha"
-            ]
-          },
-          "parameters": {
-            "type": "object",
-            "properties": {
-              "lookback_period": {
-                "oneOf": [
-                  {
-                    "type": "integer",
-                    "description": "Lookback period in days"
-                  },
-                  {
-                    "type": "string",
-                    "enum": [
-                      "month",
-                      "quarter",
-                      "year"
-                    ],
-                    "description": "Lookback period as time unit"
-                  }
-                ],
-                "description": "Lookback period for calculations (days as integer or 'month'/'quarter'/'year')",
-                "default": "quarter"
-              }
-            }
-          }
-        }
-      },
-      "DataV2Request": {
-        "type": "object",
+        "description": "Calculate financial statistics for multiple assets. Supports simple ticker symbols or complex portfolio models including static allocations, dynamic strategies, and momentum-based selection.",
         "required": [
           "assets"
         ],
         "properties": {
           "assets": {
             "type": "array",
-            "description": "List of assets to extract data for. Supports simple ticker symbols and complex portfolio models. See [Supported Asset Types](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#supported-asset-types) for examples and limitations.",
+            "description": "List of assets to analyze. Can be:\r\n        - Simple ticker symbols (e.g., \"AAPL\", \"MSFT\") \r\n        - Static portfolio models with fixed allocations\r\n        - Dynamic portfolios that change over time\r\n        - Momentum strategies that rank and select securities\r\n        - Custom price data",
             "items": {
               "oneOf": [
                 {
                   "type": "string",
-                  "description": "Simple ticker symbol (e.g., 'AAPL', 'SPY')"
+                  "title": "Ticker Symbol",
+                  "description": "Simple ticker symbol",
+                  "example": "AAPL"
                 },
                 {
                   "$ref": "#/components/schemas/StaticModel"
@@ -2255,240 +2297,198 @@
               ]
             }
           },
-          "include": {
-            "type": "array",
-            "description": "Data types to include in response. See [Asset Type Compatibility](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#asset-type-compatibility-asset-type-compatibility) for data availability by asset type.",
-            "default": [
-              "prices"
-            ],
-            "items": {
-              "type": "string",
-              "enum": [
-                "prices",
-                "volumes",
-                "ohlv",
-                "dividends",
-                "info",
-                "yield"
-              ]
-            }
-          },
           "as_of": {
             "type": "string",
             "format": "date",
-            "description": "As-of date for data extraction",
+            "description": "As-of date for calculations (YYYY-MM-DD). If not provided, defaults to current date.",
             "example": "2024-07-29"
           },
-          "start_date": {
+          "benchmark": {
             "type": "string",
-            "format": "date",
-            "description": "Start date for time series data. If not provided, defaults to 1 year before the as_of date (or current date if as_of is also not specified).",
-            "example": "2024-01-01"
+            "description": "Benchmark ticker for risk calculations (beta, alpha, correlation, Sharpe ratio). Must be a valid ticker symbol.",
+            "default": "SPY",
+            "example": "SPY"
           },
-          "end_date": {
-            "type": "string",
-            "format": "date",
-            "description": "End date for time series data. If not provided, defaults to the as_of date (or current date if as_of is also not specified).",
-            "example": "2024-07-29"
+          "time_periods": {
+            "type": "array",
+            "description": "Time periods to calculate statistics for. If not provided, defaults to [\"1m\", \"3m\", \"1y\", \"3y\"]. See [Period Calculation Behavior](/docs/ReferenceGuide.md#period-calculation-behavior) for details on which statistics are calculated for different period lengths.",
+            "default": [
+              "1m",
+              "3m",
+              "1y",
+              "3y"
+            ],
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/PredefinedPeriod"
+                },
+                {
+                  "$ref": "#/components/schemas/CustomPeriod"
+                }
+              ]
+            }
           },
-          "frequency": {
-            "$ref": "#/components/schemas/DataFrequency"
+          "include": {
+            "type": "array",
+            "description": "Optional data to include in the response. See [Include Options Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#include-options-behavior) for detailed behavior and asset type compatibility.",
+            "items": {
+              "type": "string",
+              "enum": [
+                "drawdown_analysis",
+                "moving_averages",
+                "volume_data",
+                "position_details",
+                "security_info"
+              ]
+            }
           },
-          "options": {
-            "$ref": "#/components/schemas/DataV2Options"
+          "advanced": {
+            "$ref": "#/components/schemas/AdvancedSettings"
           }
         }
       },
-      "DataV2Options": {
-        "type": "object",
-        "description": "Optional price adjustment settings. See [Price Adjustment Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#price-adjustments) for detailed explanations and use cases.",
-        "properties": {
-          "unadjusted": {
-            "type": "boolean",
-            "description": "Include unadjusted (raw) price data in addition to adjusted prices. Useful for analyzing actual trading prices or calculating custom adjustments.",
-            "default": false
-          },
-          "semi_adjusted": {
-            "type": "boolean",
-            "description": "Include semi-adjusted price data (split-adjusted but not dividend-adjusted) in addition to adjusted prices. Useful for certain technical analysis calculations.",
-            "default": false
-          }
-        }
-      },
-      "DataV2Response": {
+      "StatsV2Response": {
         "type": "object",
         "properties": {
           "results": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DataV2Result"
+              "$ref": "#/components/schemas/StatsV2Result"
             }
           },
           "metadata": {
-            "$ref": "#/components/schemas/DataV2Metadata"
+            "$ref": "#/components/schemas/StatsV2Metadata"
           }
         }
       },
-      "DataV2Result": {
+      "StatsV2Result": {
         "type": "object",
         "properties": {
-          "ticker": {
-            "type": "string",
-            "example": "AAPL"
+          "info": {
+            "$ref": "#/components/schemas/AssetInfo"
+          },
+          "moving_averages": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MovingAverage",
+              "nullable": true
+            },
+            "nullable": true
           },
           "name": {
             "type": "string",
             "example": "Apple Inc"
           },
-          "prices": {
-            "$ref": "#/components/schemas/DataV2Prices"
-          },
-          "volumes": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Volume data time series"
-          },
-          "ohlv": {
-            "$ref": "#/components/schemas/DataV2OHLV"
-          },
-          "dividends": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DataV2Dividend"
+          "periods": {
+            "type": "object",
+            "description": "Period-specific statistics keyed by period name",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StatsV2Period"
             }
           },
-          "metadata": {
-            "$ref": "#/components/schemas/AssetInfo"
+          "shared_data": {
+            "$ref": "#/components/schemas/StatsV2SharedData",
+            "nullable": true
           },
-          "yield_data": {
-            "$ref": "#/components/schemas/StatsV2Yield"
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "volume_data": {
+            "$ref": "#/components/schemas/VolumeData",
+            "nullable": true
           },
           "error": {
             "$ref": "#/components/schemas/ApiError"
           }
         }
       },
-      "DataV2Prices": {
+      "StatsV2SharedData": {
         "type": "object",
+        "description": "Pricing and yield data shared across all periods (snapshot mode only)",
         "properties": {
-          "adjusted": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Fully adjusted closing prices accounting for splits, dividends, and other corporate actions. This is the default price series used for calculations."
+          "pricing": {
+            "$ref": "#/components/schemas/StatsV2Pricing"
           },
-          "unadjusted": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Raw closing prices as traded, without any adjustments for splits or dividends. Only available when options.unadjusted = true."
-          },
-          "semi_adjusted": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Prices adjusted for stock splits but not dividends. Only available when options.semi_adjusted = true."
+          "yield": {
+            "$ref": "#/components/schemas/StatsV2Yield"
           }
         }
       },
-      "DataV2OHLV": {
+      "StatsV2Yield": {
         "type": "object",
-        "description": "Open, High, Low, Volume data",
         "properties": {
-          "opens": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Opening price time series"
-          },
-          "highs": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "High price time series"
-          },
-          "lows": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Low price time series"
-          },
-          "volumes": {
-            "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Volume time series"
-          }
-        }
-      },
-      "DataV2Dividend": {
-        "type": "object",
-        "description": "Dividend payment information. See [Dividend Types Reference](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#dividend-types) for detailed type explanations.",
-        "properties": {
-          "date": {
-            "type": "string",
-            "format": "date",
-            "description": "Ex-dividend date",
-            "example": "2024-02-15"
-          },
-          "amount": {
+          "yield_income": {
             "type": "number",
-            "description": "Dividend amount per share in USD",
-            "example": 0.24
+            "example": 0.0055,
+            "description": "Income yield as decimal (0.0055 = 0.55%, or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "Income",
-              "Short Term",
-              "Long Term",
-              "Split",
-              "Other"
-            ],
-            "description": "Human-readable dividend type",
-            "example": "Income"
+          "yield_short": {
+            "type": "number",
+            "example": 0.0032,
+            "description": "Short-term yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
           },
-          "type_code": {
-            "type": "string",
-            "enum": [
-              "D",
-              "G",
-              "C",
-              "Z"
-            ],
-            "description": "Single-character dividend type code",
-            "example": "D"
+          "yield_long": {
+            "type": "number",
+            "example": 0.0078,
+            "description": "Long-term yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
+          },
+          "yield_all": {
+            "type": "number",
+            "example": 0.0055,
+            "description": "Total yield as decimal (or -99 if calculation error). See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#yield-calculations)."
           }
         }
       },
-      "DataFrequency": {
-        "type": "string",
-        "enum": [
-          "daily",
-          "weekly",
-          "monthly",
-          "quarterly"
-        ],
-        "default": "daily",
-        "description": "Data frequency that determines which dates are included in the response. See [Data Frequency Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#data-frequency-data-frequency) for detailed behavior and examples.",
-        "example": "monthly"
+      "Volatility": {
+        "type": "object",
+        "description": "Price volatility and variability metrics",
+        "properties": {
+          "downside_deviation": {
+            "type": "number",
+            "description": "Downside deviation focusing only on negative returns. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#downside-deviation).",
+            "example": 0.042
+          },
+          "sd_annualized": {
+            "type": "number",
+            "description": "Annualized standard deviation. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#standard-deviation-annualized).",
+            "example": 0.185
+          },
+          "sd_monthly": {
+            "type": "number",
+            "description": "Monthly standard deviation. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#standard-deviation-monthly).",
+            "example": 0.053
+          },
+          "ulcer_index": {
+            "type": "number",
+            "description": "Ulcer Index measuring the depth and duration of drawdowns. See [methodology](/docs/ftlightning/xvigwkviktlog-v2-stats-reference#ulcer-index).",
+            "example": 5.03
+          }
+        }
+      },
+      "VolumeData": {
+        "type": "object",
+        "properties": {
+          "current": {
+            "type": "number",
+            "description": "Current volume (or -1 if calculation error)",
+            "example": 45123000,
+            "nullable": true
+          },
+          "average_30d": {
+            "type": "number",
+            "description": "30-day average volume (or -1 if calculation error)",
+            "example": 52341000,
+            "nullable": true
+          },
+          "average_90d": {
+            "type": "number",
+            "description": "90-day average volume (or -1 if calculation error)",
+            "example": 48567000,
+            "nullable": true
+          }
+        }
       }
     },
     "securitySchemes": {
