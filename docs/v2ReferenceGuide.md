@@ -212,3 +212,747 @@ For a 2-for-1 stock split on a stock trading at $200:
 - **Default behavior**: Only adjusted prices are returned unless specifically requested
 - **Additional cost**: Requesting unadjusted/semi-adjusted prices requires additional data retrieval
 - **Asset limitations**: Only available for individual securities (not portfolio models or custom data)
+
+## Supported Asset Types {#supported-asset-types}
+
+The Data API supports the same asset types as the Stats API, allowing you to extract raw data from complex portfolio models:
+
+### Simple Tickers
+
+The most common asset type - individual securities:
+
+```json
+{
+  "assets": ["AAPL", "MSFT", "VTI"]
+}
+```
+
+**Available data**: All data types (prices, volumes, OHLV, dividends, yield, info)
+
+### Static Portfolio Models
+
+Fixed allocation portfolios that rebalance to target weights:
+
+```json
+{
+  "assets": [{
+    "type": "static",
+    "name": "Conservative 60/40",
+    "ticker": "CONS_6040",
+    "holdings": [
+      {"ticker": "VTI", "weight": 60},
+      {"ticker": "BND", "weight": 40}
+    ],
+    "rebalance": "quarter",
+    "start": "2020-01-01",
+    "seed": 100000
+  }]
+}
+```
+
+**Available data**: prices, info (no volumes, OHLV, dividends, or yield)
+
+### Dynamic Portfolio Models  
+
+Portfolios that change allocation over time:
+
+```json
+{
+  "assets": [{
+    "type": "dynamic",
+    "name": "Risk On/Off Strategy",
+    "ticker": "RISK_TACTICAL",
+    "seed": 75000,
+    "models": [
+      {
+        "start": "2020-01-01",
+        "rebalance": "month",
+        "holdings": [
+          {"ticker": "QQQ", "weight": 80},
+          {"ticker": "TLT", "weight": 20}
+        ]
+      },
+      {
+        "start": "2022-01-01", 
+        "rebalance": "quarter",
+        "holdings": [
+          {"ticker": "VTI", "weight": 60},
+          {"ticker": "BND", "weight": 40}
+        ]
+      }
+    ]
+  }]
+}
+```
+
+**Available data**: prices, info (no volumes, OHLV, dividends, or yield)
+
+### Momentum Models
+
+Strategies that rank securities and hold top performers:
+
+```json
+{
+  "assets": [{
+    "type": "momentum",
+    "name": "Top 3 Tech Momentum",
+    "ticker": "TECH_MOM_3",
+    "seed": 50000,
+    "start": "2021-01-01",
+    "rebalance": "month",
+    "model": {
+      "universe": ["AAPL", "MSFT", "GOOGL", "AMZN", "TSLA"],
+      "number_holdings": "3",
+      "ranking_system": {
+        "type": "return",
+        "parameters": {
+          "lookback_period": "quarter"
+        }
+      }
+    }
+  }]
+}
+```
+
+**Available data**: prices, info (no volumes, OHLV, dividends, or yield)
+
+### Custom Data
+
+User-provided price series:
+
+```json
+{
+  "assets": [{
+    "type": "fnu",
+    "name": "Custom Strategy",
+    "data": {
+      "ticker": "CUSTOM_001",
+      "prices": [100, 102, 98, 105, 110, 108, 115]
+    }
+  }]
+}
+```
+
+**Available data**: prices, info (no other data types)
+
+### Data Extraction Considerations
+
+#### Portfolio Model Pricing
+- Portfolio models return **calculated portfolio values** over time
+- Prices reflect the combined performance of underlying holdings
+- Rebalancing frequency affects how often allocations are adjusted
+- Start date determines when the portfolio begins tracking
+
+#### Mixed Asset Requests
+You can mix different asset types in a single request:
+
+```json
+{
+  "assets": [
+    "AAPL",
+    {
+      "type": "static",
+      "name": "60/40 Portfolio", 
+      "holdings": [
+        {"ticker": "VTI", "weight": 60},
+        {"ticker": "BND", "weight": 40}
+      ]
+    }
+  ]
+}
+```
+
+#### Performance Notes
+- **Simple tickers**: Fastest data retrieval
+- **Portfolio models**: Require calculation, slower response times
+- **Large universes**: Momentum models with many securities take longer to process
+
+## Performance Considerations {#performance-considerations}
+
+Understanding API performance characteristics helps you optimize request patterns and set appropriate expectations for response times.
+
+### Response Time Expectations
+
+| Request Type | Typical Response Time | Factors Affecting Speed |
+|--------------|----------------------|------------------------|
+| **Single ticker, daily data** | 50-200ms | Data range length, include options |
+| **Multiple tickers (5-10)** | 200-800ms | Number of securities, data types requested |
+| **Static portfolio model** | 300-1000ms | Portfolio complexity, date range, rebalancing frequency |
+| **Dynamic portfolio model** | 500-2000ms | Number of model changes, underlying securities |
+| **Momentum model** | 1000-5000ms | Universe size, ranking calculations, rebalancing frequency |
+
+### Performance Optimization Tips
+
+#### Choose Appropriate Frequency
+```json
+// Faster - cached dates
+{"frequency": "monthly"}  // Pre-calculated month-ends
+
+// Slower - full processing  
+{"frequency": "daily"}    // All trading days calculated
+```
+
+**Monthly/Quarterly/Weekly frequencies use cached date calculations for 3-5x faster response times.**
+
+#### Limit Data Types
+```json
+// Faster - minimal data
+{"include": ["prices"]}
+
+// Slower - comprehensive data
+{"include": ["prices", "volumes", "ohlv", "dividends", "yield", "info"]}
+```
+
+**Each additional data type requires separate database queries and processing.**
+
+#### Optimize Date Ranges
+```json
+// Faster - shorter periods
+{"start_date": "2024-01-01", "end_date": "2024-03-31"}
+
+// Slower - longer periods  
+{"start_date": "2020-01-01", "end_date": "2024-07-29"}
+```
+
+**Shorter date ranges reduce data processing and transfer time.**
+
+#### Batch Related Requests
+```json
+// Efficient - single request
+{"assets": ["AAPL", "MSFT", "GOOGL"]}
+
+// Less efficient - multiple requests
+// Three separate API calls for individual tickers
+```
+
+**Batch requests share processing overhead and reduce total response time.**
+
+### Portfolio Model Performance
+
+#### Static Models
+- **Fast**: Simple allocations with few holdings
+- **Moderate**: Monthly/quarterly rebalancing
+- **Slower**: Daily rebalancing with many holdings
+
+#### Dynamic Models  
+- **Performance scales with**: Number of model transitions, underlying securities
+- **Optimization**: Fewer model changes = faster processing
+
+#### Momentum Models
+- **Most resource-intensive**: Require ranking calculations at each rebalance
+- **Major factors**: Universe size, rebalancing frequency, ranking complexity
+- **Tip**: Use quarterly rebalancing vs. daily for 10x speed improvement
+
+### Caching and Data Freshness
+
+#### Frequency Caches
+- **Weekly/Monthly/Quarterly**: Pre-calculated date arrays cached for years 2000-present
+- **Cache refresh**: Updated daily with new market data
+- **Performance boost**: 3-5x faster than daily frequency requests
+
+#### Market Data Updates
+- **Intraday**: Data updated throughout trading day
+- **End-of-day**: Final data available ~1 hour after market close
+- **Historical**: Data older than 1 year is heavily cached
+
+### Request Size Limits
+
+#### Practical Limits
+- **Assets per request**: 50+ assets supported, but response time increases linearly
+- **Date range**: 10+ years supported, but consider pagination for very large datasets
+- **Data volume**: Large requests may timeout - consider breaking into smaller chunks
+
+#### Best Practices
+- **Large portfolios**: Break into multiple requests by asset type or date range
+- **Historical analysis**: Use appropriate frequency (monthly vs daily) for the analysis timeframe
+- **Real-time needs**: Use minimal include options for fastest response
+
+### Error Handling and Timeouts
+
+#### Timeout Behavior
+- **Typical timeout**: 30 seconds for complex portfolio calculations
+- **Fallback strategy**: Retry with smaller date ranges or fewer assets
+- **Partial success**: API returns available data with error details for failed assets
+
+#### Optimization for Reliability
+- **Conservative requests**: Start with smaller requests and scale up
+- **Error monitoring**: Check metadata.calculation_time_ms to track performance trends
+- **Retry logic**: Implement exponential backoff for failed requests
+
+## Period Calculation Behavior {#period-calculation-behavior}
+
+Different statistical calculations are available depending on the time period length. This ensures statistical validity and prevents misleading metrics for very short time frames.
+
+### Calculation Matrix by Period Length
+
+| Period | Returns | Risk Metrics | Drawdown Analysis | Notes |
+|--------|---------|--------------|-------------------|--------|
+| **1d, 5d** | ✅ Available | ❌ Not Available | ❌ Not Available | Too short for meaningful risk statistics |
+| **1m+** | ✅ Available | ✅ Available | ✅ Available | Full statistical analysis |
+| **Custom Periods** | ✅ Available | ✅ Available* | ✅ Available* | *Depends on actual date range length |
+| **Historical Periods** | ✅ Available | ✅ Available | ✅ Available | Full analysis for all rollup periods |
+
+### What's Always Calculated
+
+**Returns Data** (available for all periods):
+- `total`: Cumulative return over the period
+- `annualized_market`: Return annualized using market days (252.25/year)
+- `annualized_calendar`: Return annualized using calendar days (365.25/year)
+
+### What Requires Longer Periods
+
+**Risk Metrics** (excluded for 1d, 5d periods):
+- **Volatility**: Standard deviation, downside deviation, ulcer index
+- **Market Risk**: Beta, alpha, correlation, R-squared vs benchmark
+- **Risk-Adjusted Performance**: Sharpe ratio, Sortino ratio, Treynor ratio, etc.
+
+**Drawdown Analysis** (excluded for 1d, 5d periods):
+- Maximum drawdown value and dates
+- Peak-to-valley analysis
+- Recovery time calculations
+
+### Why Short Periods Are Limited
+
+**Statistical Validity**: 
+- Risk metrics require sufficient data points for meaningful calculation
+- Single-day or 5-day periods don't provide enough variation to calculate reliable volatility or correlation
+
+**Benchmark Comparison**:
+- Risk-adjusted metrics (Sharpe, alpha, beta) need adequate time to show relationship with benchmark
+- Short periods can show extreme or misleading ratios
+
+**Drawdown Analysis**:
+- Meaningful drawdown analysis requires time for market cycles
+- Very short periods may not capture significant price movements
+
+### Custom Period Behavior
+
+Custom periods are evaluated based on their actual date range:
+
+```json
+{
+  "time_periods": [
+    {
+      "custom": {
+        "label": "short_test",
+        "from": "2024-07-25",  
+        "to": "2024-07-29"     // 4 days - gets limited calculations
+      }
+    },
+    {
+      "custom": {
+        "label": "covid_crash",
+        "from": "2020-02-01",
+        "to": "2020-04-01"     // 2 months - gets full calculations
+      }
+    }
+  ]
+}
+```
+
+### Response Structure Differences
+
+**Limited Calculations** (1d, 5d periods):
+```json
+{
+  "periods": {
+    "1d": {
+      "returns": { /* returns data only */ }
+      // No risk or maxdraw objects
+    }
+  }
+}
+```
+
+**Full Calculations** (1m+ periods):
+```json
+{
+  "periods": {
+    "1y": {
+      "returns": { /* returns data */ },
+      "risk": { /* complete risk analysis */ },
+      "maxdraw": { /* drawdown analysis */ }
+    }
+  }
+}
+```
+
+### Recommendations
+
+- **Use 1m or longer periods** for comprehensive statistical analysis
+- **Short periods (1d, 5d)** are useful for recent performance checking only
+- **Custom periods should span at least 30 days** for meaningful risk metrics
+- **Historical analysis** automatically uses appropriate period lengths
+
+## Response Structure Differences {#response-structure-differences}
+
+The Stats API has two endpoints that return fundamentally different response structures. Understanding these differences is crucial for proper integration.
+
+### Snapshot Mode (`/stats/stats2`)
+
+**Data Organization**: Statistics organized by **lookback periods** from a single as-of date
+**Use Case**: Current analysis with various lookback periods
+
+#### Response Structure
+```json
+{
+  "results": [{
+    "ticker": "AAPL",
+    "name": "Apple Inc",
+    "periods": {
+      "1m": { /* 1-month lookback stats */ },
+      "3m": { /* 3-month lookback stats */ },
+      "1y": { /* 1-year lookback stats */ }
+    },
+    "shared_data": {
+      "pricing": { /* current pricing info */ },
+      "yield": { /* current yield data */ }
+    }
+  }]
+}
+```
+
+#### Key Characteristics
+- **`periods` object**: Contains lookback periods (`1m`, `3m`, `1y`, etc.)
+- **`shared_data`**: Current pricing and yield data shared across all periods
+- **Single point-in-time**: All calculations are as of the specified `as_of` date
+- **Lookback logic**: Each period looks back from the as-of date
+
+### Historical Mode (`/stats/stats2/historical`)
+
+**Data Organization**: Statistics organized by **calendar periods** across multiple time ranges
+**Use Case**: Time-series analysis and historical trend analysis
+
+#### Response Structure
+```json
+{
+  "results": [{
+    "ticker": "AAPL", 
+    "name": "Apple Inc",
+    "yearly": {
+      "2022": { 
+        "returns": { /* 2022 full-year stats */ },
+        "pricing": { /* end-of-2022 pricing */ },
+        "yield": { /* end-of-2022 yield */ }
+      },
+      "2023": { /* 2023 full-year stats */ }
+    },
+    "quarterly": {
+      "2023-Q1": { /* Q1 2023 stats */ },
+      "2023-Q2": { /* Q2 2023 stats */ }
+    },
+    "monthly": {
+      "2023-01": { /* January 2023 stats */ },
+      "2023-02": { /* February 2023 stats */ }
+    }
+  }]
+}
+```
+
+#### Key Characteristics
+- **`yearly/quarterly/monthly` objects**: Contains discrete calendar periods
+- **Period-specific data**: Each period includes its own pricing and yield data
+- **Multiple time points**: Each period represents a complete discrete time range
+- **No shared data**: All data is specific to each calendar period
+
+### Comparison Examples
+
+#### Same Asset, Different Structures
+
+**Snapshot Request**:
+```json
+{
+  "assets": ["AAPL"],
+  "time_periods": ["1y", "3y"],
+  "as_of": "2024-07-29"
+}
+```
+
+**Snapshot Response Structure**:
+```json
+{
+  "results": [{
+    "periods": {
+      "1y": { /* July 2023 → July 2024 */ },
+      "3y": { /* July 2021 → July 2024 */ }
+    },
+    "shared_data": {
+      "pricing": { /* July 29, 2024 pricing */ }
+    }
+  }]
+}
+```
+
+**Historical Request**:
+```json
+{
+  "assets": ["AAPL"],
+  "rollups": ["year"],
+  "years": ["2022", "2023", "2024"]
+}
+```
+
+**Historical Response Structure**:
+```json
+{
+  "results": [{
+    "yearly": {
+      "2022": { 
+        "returns": { /* Jan 1 → Dec 31, 2022 */ },
+        "pricing": { /* Dec 31, 2022 pricing */ }
+      },
+      "2023": { 
+        "returns": { /* Jan 1 → Dec 31, 2023 */ },
+        "pricing": { /* Dec 31, 2023 pricing */ }
+      },
+      "2024": { 
+        "returns": { /* Jan 1 → Current date */ },
+        "pricing": { /* Current pricing */ }
+      }
+    }
+  }]
+}
+```
+
+### When to Use Each Mode
+
+#### Snapshot Mode Best For:
+- **Current performance analysis**: "How has this stock performed over various recent periods?"
+- **Comparative analysis**: Comparing 1-month vs 1-year performance as of today
+- **Risk assessment**: Current risk metrics over different lookback periods
+- **Portfolio review**: Regular portfolio performance checking
+
+#### Historical Mode Best For:
+- **Trend analysis**: "How did performance change year over year?"
+- **Seasonal analysis**: Quarterly or monthly performance patterns
+- **Historical comparison**: Comparing specific calendar periods
+- **Time-series charting**: Building historical performance charts
+- **Backtesting**: Analyzing how strategies would have performed in specific periods
+
+### Data Availability Differences
+
+| Feature | Snapshot Mode | Historical Mode |
+|---------|---------------|-----------------|
+| **Pricing Data** | Current (in shared_data) | Period-specific (in each period) |
+| **Yield Data** | Current (in shared_data) | Period-specific (in each period) |
+| **Risk Metrics** | Lookback-based calculations | Period-specific calculations |
+| **Custom Periods** | ✅ Supported | ❌ Not supported |
+| **Multiple Rollups** | ❌ Single as-of date | ✅ Multiple rollup types |
+
+### Integration Tips
+
+#### For Snapshot Mode:
+- Access period data via `result.periods["1y"]`
+- Use `shared_data` for current pricing information
+- All periods share the same end date (as_of)
+
+#### For Historical Mode:
+- Access data via `result.yearly["2023"]`, `result.quarterly["2023-Q1"]`, etc.
+- Each period contains its own pricing/yield data
+- Periods represent complete calendar ranges
+
+#### Error Handling:
+Both modes use the same error structure in `result.error` when issues occur.
+
+## Include Options Behavior {#include-options-behavior}
+
+The `include` parameter controls which optional data is calculated and returned. Each option has specific requirements and behaviors depending on asset type and request settings.
+
+### Include Options Matrix
+
+| Option | Individual Stocks | ETFs/Mutual Funds | Portfolio Models | Period Requirements | Notes |
+|--------|-------------------|-------------------|------------------|---------------------|--------|
+| `drawdown_analysis` | ✅ Available | ✅ Available | ✅ Available | 1m+ periods only | Excluded from 1d, 5d periods |
+| `moving_averages` | ✅ Available | ✅ Available | ✅ Available | Any period | Uses current as-of date |
+| `volume_data` | ✅ Available | ❌ Not Available | ❌ Not Available | Any period | Individual stocks only |
+| `position_details` | ❌ Not Applicable | ❌ Not Applicable | ✅ Available | Any period | Portfolio models only |
+| `security_info` | ✅ Available | ✅ Available | ✅ Available | Any period | Always recommended |
+
+### Detailed Option Behavior
+
+#### `drawdown_analysis`
+**What it does**: Calculates maximum drawdown analysis for each time period
+**Adds to response**: `maxdraw` object in each period with peak/valley dates and recovery analysis
+
+```json
+{
+  "periods": {
+    "1y": {
+      "maxdraw": {
+        "value": -0.152,
+        "peak_date": "2024-03-15",
+        "valley_date": "2024-06-22", 
+        "duration_days": 99,
+        "recovery_days": 82
+      }
+    }
+  }
+}
+```
+
+**Requirements**:
+- **Period length**: Only calculated for periods 1m and longer
+- **Asset types**: All asset types supported
+- **Performance impact**: Moderate - requires additional peak/valley calculations
+
+#### `moving_averages`
+**What it does**: Calculates moving averages as of the current date
+**Adds to response**: `moving_averages` array at result level
+
+```json
+{
+  "moving_averages": [
+    {"period": 50, "value": 172.45},
+    {"period": 200, "value": 168.32}
+  ]
+}
+```
+
+**Configuration**:
+- **Default periods**: 50-day and 200-day moving averages
+- **Custom periods**: Set via `advanced.moving_average_periods`
+- **Date basis**: Always calculated as of the `as_of` date
+- **Performance impact**: Low - simple price averaging
+
+#### `volume_data`
+**What it does**: Calculates current and historical volume statistics
+**Adds to response**: `volume_data` object at result level
+
+```json
+{
+  "volume_data": {
+    "current": 45123000,
+    "average_30d": 52341000,
+    "average_90d": 48567000
+  }
+}
+```
+
+**Restrictions**:
+- **Individual stocks only**: ETFs, mutual funds, and portfolio models don't have meaningful volume data
+- **Current data**: Reflects volume as of the `as_of` date
+- **Performance impact**: Low - simple volume calculations
+
+#### `position_details`
+**What it does**: Provides detailed holdings information for portfolio models
+**Adds to response**: Position details embedded in portfolio model results
+
+```json
+{
+  "info": {
+    "positions": [
+      {
+        "ticker": "VTI",
+        "weight": 60.0,
+        "value": 60000,
+        "shares": 245.5
+      }
+    ]
+  }
+}
+```
+
+**Restrictions**:
+- **Portfolio models only**: Only meaningful for static, dynamic, and momentum models
+- **Individual securities**: Not applicable to simple ticker requests
+- **Performance impact**: None - data generated during model calculation
+
+#### `security_info`
+**What it does**: Includes comprehensive security information and current pricing/yield data
+**Adds to response**: `info` object and `shared_data` (snapshot mode) or period-specific data (historical mode)
+
+**Snapshot mode**:
+```json
+{
+  "info": {
+    "security_type": "Stock",
+    "start_date": "1980-12-12",
+    "shares_outstanding": 15550061000
+  },
+  "shared_data": {
+    "pricing": {
+      "current_close_price": 195.23,
+      "market_cap": 3037000000000
+    },
+    "yield": {
+      "yield_income": 0.0055,
+      "yield_all": 0.0055
+    }
+  }
+}
+```
+
+**Historical mode**:
+```json
+{
+  "yearly": {
+    "2023": {
+      "pricing": { /* end-of-2023 pricing */ },
+      "yield": { /* end-of-2023 yield */ }
+    }
+  }
+}
+```
+
+**Always recommended**: Provides essential context for understanding the security
+
+### Default Behavior
+
+**When no includes specified**: Only basic period statistics are calculated (returns, risk, no optional data)
+
+**Automatic inclusions**: 
+- Risk calculations are included by default for periods 1m+
+- Return calculations are always included
+- Error information is always included when applicable
+
+### Performance Considerations
+
+| Option | Performance Impact | Calculation Complexity |
+|--------|-------------------|------------------------|
+| `security_info` | Low | Simple data lookup |
+| `moving_averages` | Low | Price averaging |
+| `volume_data` | Low | Volume averaging |
+| `drawdown_analysis` | Moderate | Peak/valley analysis |
+| `position_details` | None | Generated during model calculation |
+
+### Common Combinations
+
+#### **Basic Analysis**
+```json
+{
+  "include": ["security_info"]
+}
+```
+**Use case**: Simple performance review with security context
+
+#### **Comprehensive Analysis**
+```json
+{
+  "include": ["security_info", "drawdown_analysis", "moving_averages"]
+}
+```
+**Use case**: Full investment analysis with risk assessment
+
+#### **Portfolio Analysis**
+```json
+{
+  "include": ["security_info", "drawdown_analysis", "position_details"]
+}
+```
+**Use case**: Portfolio model analysis with holdings details
+
+#### **Stock-Specific Analysis**
+```json
+{
+  "include": ["security_info", "volume_data", "moving_averages", "drawdown_analysis"]
+}
+```
+**Use case**: Individual stock deep dive with volume analysis
+
+### Error Handling
+
+**Incompatible options**: If you request `volume_data` for a mutual fund, the field will be omitted from the response without generating an error
+
+**Missing data**: If underlying data is unavailable (e.g., no volume data for a date), fields may contain `null` or be omitted
+
+**Partial success**: Some include options may succeed while others fail - check each section of the response independently

@@ -2,14 +2,14 @@
   "openapi": "3.0.3",
   "info": {
     "title": "StatsV2 API",
-    "description": "Financial statistics calculation API supporting multiple asset types and time periods",
+    "description": "Financial statistics calculation API supporting multiple asset types and time periods. See [Performance Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#performance-considerations) for optimization tips and response time expectations.",
     "version": "2.0.0"
   },
   "paths": {
     "/stats/stats2": {
       "post": {
         "summary": "Calculate financial statistics (snapshot)",
-        "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods",
+        "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods. Returns statistics organized by time period (e.g., '1y', '3m') with shared current pricing data. See [Response Structure Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#response-structure-differences) for details.",
         "operationId": "calculateStatsSnapshot",
         "requestBody": {
           "required": true,
@@ -39,20 +39,33 @@
                 },
                 "Static Portfolio": {
                   "value": {
-                    "assets": [{
-                      "type": "static",
-                      "name": "Conservative 60/40",
-                      "ticker": "CONS_6040", 
-                      "holdings": [
-                        {"ticker": "VTI", "weight": 60},
-                        {"ticker": "BND", "weight": 40}
-                      ],
-                      "rebalance": "quarter",
-                      "start": "2020-01-01",
-                      "seed": 100000
-                    }],
-                    "time_periods": ["1y", "3y"],
-                    "include": ["security_info"]
+                    "assets": [
+                      {
+                        "type": "static",
+                        "name": "Conservative 60/40",
+                        "ticker": "CONS_6040",
+                        "holdings": [
+                          {
+                            "ticker": "VTI",
+                            "weight": 60
+                          },
+                          {
+                            "ticker": "BND",
+                            "weight": 40
+                          }
+                        ],
+                        "rebalance": "quarter",
+                        "start": "2020-01-01",
+                        "seed": 100000
+                      }
+                    ],
+                    "time_periods": [
+                      "1y",
+                      "3y"
+                    ],
+                    "include": [
+                      "security_info"
+                    ]
                   }
                 },
                 "Dynamic Portfolio": {
@@ -253,6 +266,105 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/StatsV2HistoricalRequest"
+              },
+              "examples": {
+                "Simple Historical": {
+                  "summary": "Basic yearly statistics",
+                  "value": {
+                    "assets": [
+                      "AAPL",
+                      "MSFT"
+                    ],
+                    "rollups": [
+                      "year"
+                    ],
+                    "years": [
+                      "2022",
+                      "2023",
+                      "2024"
+                    ]
+                  }
+                },
+                "Quarterly Analysis": {
+                  "summary": "Quarterly breakdown with drawdown analysis",
+                  "value": {
+                    "assets": [
+                      "SPY"
+                    ],
+                    "rollups": [
+                      "quarter"
+                    ],
+                    "years": [
+                      "2023",
+                      "2024"
+                    ],
+                    "include": [
+                      "drawdown_analysis",
+                      "security_info"
+                    ]
+                  }
+                },
+                "Portfolio Historical": {
+                  "summary": "Static portfolio over multiple years",
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "static",
+                        "name": "Conservative Portfolio",
+                        "holdings": [
+                          {
+                            "ticker": "VTI",
+                            "weight": 60
+                          },
+                          {
+                            "ticker": "BND",
+                            "weight": 40
+                          }
+                        ],
+                        "rebalance": "quarter",
+                        "start": "2020-01-01"
+                      }
+                    ],
+                    "rollups": [
+                      "year",
+                      "quarter"
+                    ],
+                    "years": [
+                      "2022",
+                      "2023",
+                      "2024"
+                    ],
+                    "benchmark": "SPY"
+                  }
+                },
+                "Monthly Deep Dive": {
+                  "summary": "Monthly statistics with all optional data",
+                  "value": {
+                    "assets": [
+                      "AAPL"
+                    ],
+                    "rollups": [
+                      "month"
+                    ],
+                    "years": [
+                      "2024"
+                    ],
+                    "include": [
+                      "drawdown_analysis",
+                      "moving_averages",
+                      "volume_data",
+                      "security_info"
+                    ],
+                    "advanced": {
+                      "correlation_period": 21,
+                      "moving_average_periods": [
+                        20,
+                        50,
+                        200
+                      ]
+                    }
+                  }
+                }
               }
             }
           }
@@ -360,8 +472,12 @@
                 "Frequency Examples": {
                   "summary": "Different frequency comparisons",
                   "value": {
-                    "assets": ["AAPL"],
-                    "include": ["prices"],
+                    "assets": [
+                      "AAPL"
+                    ],
+                    "include": [
+                      "prices"
+                    ],
                     "start_date": "2024-01-01",
                     "end_date": "2024-03-31",
                     "frequency": "monthly"
@@ -370,8 +486,17 @@
                 "Complete Data Extract": {
                   "summary": "All available data types",
                   "value": {
-                    "assets": ["AAPL"],
-                    "include": ["prices", "volumes", "ohlv", "dividends", "info", "yield"],
+                    "assets": [
+                      "AAPL"
+                    ],
+                    "include": [
+                      "prices",
+                      "volumes",
+                      "ohlv",
+                      "dividends",
+                      "info",
+                      "yield"
+                    ],
                     "start_date": "2024-01-01",
                     "end_date": "2024-07-29",
                     "options": {
@@ -383,21 +508,34 @@
                 "Dynamic Portfolio Data": {
                   "summary": "Time-changing portfolio allocation",
                   "value": {
-                    "assets": [{
-                      "type": "dynamic",
-                      "name": "Risk On/Off Strategy", 
-                      "ticker": "RISK_TACTICAL",
-                      "seed": 75000,
-                      "models": [{
-                        "start": "2024-01-01",
-                        "rebalance": "month",
-                        "holdings": [
-                          {"ticker": "QQQ", "weight": 80},
-                          {"ticker": "TLT", "weight": 20}
+                    "assets": [
+                      {
+                        "type": "dynamic",
+                        "name": "Risk On/Off Strategy",
+                        "ticker": "RISK_TACTICAL",
+                        "seed": 75000,
+                        "models": [
+                          {
+                            "start": "2024-01-01",
+                            "rebalance": "month",
+                            "holdings": [
+                              {
+                                "ticker": "QQQ",
+                                "weight": 80
+                              },
+                              {
+                                "ticker": "TLT",
+                                "weight": 20
+                              }
+                            ]
+                          }
                         ]
-                      }]
-                    }],
-                    "include": ["prices", "info"],
+                      }
+                    ],
+                    "include": [
+                      "prices",
+                      "info"
+                    ],
                     "start_date": "2024-01-01",
                     "end_date": "2024-02-01"
                   }
@@ -451,7 +589,7 @@
           },
           {
             "name": "start",
-            "in": "query", 
+            "in": "query",
             "schema": {
               "type": "string",
               "format": "date"
@@ -459,10 +597,10 @@
             "description": "Start date. If not provided, defaults to 1 year before end date."
           },
           {
-            "name": "end", 
+            "name": "end",
             "in": "query",
             "schema": {
-              "type": "string", 
+              "type": "string",
               "format": "date"
             },
             "description": "End date. If not provided, defaults to current date."
@@ -619,21 +757,21 @@
               ]
             }
           },
-          "benchmark": {
-            "type": "string",
-            "description": "Benchmark ticker for risk calculations",
-            "default": "SPY",
-            "example": "SPY"
-          },
           "as_of": {
             "type": "string",
             "format": "date",
-            "description": "As-of date for calculations (YYYY-MM-DD)",
+            "description": "As-of date for calculations (YYYY-MM-DD). If not provided, defaults to current date.",
             "example": "2024-07-29"
+          },
+          "benchmark": {
+            "type": "string",
+            "description": "Benchmark ticker for risk calculations (beta, alpha, correlation, Sharpe ratio). Must be a valid ticker symbol.",
+            "default": "SPY",
+            "example": "SPY"
           },
           "time_periods": {
             "type": "array",
-            "description": "Time periods to calculate",
+            "description": "Time periods to calculate statistics for. If not provided, defaults to [\"1m\", \"3m\", \"1y\", \"3y\"]. See [Period Calculation Behavior](/docs/ReferenceGuide.md#period-calculation-behavior) for details on which statistics are calculated for different period lengths.",
             "default": [
               "1m",
               "3m",
@@ -653,13 +791,13 @@
           },
           "include": {
             "type": "array",
-            "description": "Optional data to include",
+            "description": "Optional data to include in the response. See [Include Options Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#include-options-behavior) for detailed behavior and asset type compatibility.",
             "items": {
               "type": "string",
               "enum": [
                 "drawdown_analysis",
                 "moving_averages",
-                "volume_data",
+                "volume_data", 
                 "position_details",
                 "security_info"
               ]
@@ -769,7 +907,8 @@
           "advanced": {
             "$ref": "#/components/schemas/AdvancedSettings"
           }
-        }
+        },
+        "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly). Returns statistics organized by calendar periods (e.g., '2023', '2023-Q1') with period-specific pricing data. See [Response Structure Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#response-structure-differences) for details."
       },
       "CustomPeriod": {
         "type": "object",
@@ -1807,7 +1946,7 @@
             "type": "integer",
             "description": "Processing time in milliseconds",
             "example": 450
-          },          
+          },
           "dates": {
             "type": "array",
             "items": {
@@ -1815,7 +1954,11 @@
               "format": "date"
             },
             "description": "Date array corresponding to all time series data points (included when date range is specified)",
-            "example": ["2024-01-01", "2024-01-02", "2024-01-03"]
+            "example": [
+              "2024-01-01",
+              "2024-01-02",
+              "2024-01-03"
+            ]
           },
           "start_date": {
             "type": "string",
@@ -2089,12 +2232,12 @@
         "properties": {
           "assets": {
             "type": "array",
-            "description": "List of assets to extract data for. Same format as StatsV2 assets.",
+            "description": "List of assets to extract data for. Supports simple ticker symbols and complex portfolio models. See [Supported Asset Types](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#supported-asset-types) for examples and limitations.",
             "items": {
               "oneOf": [
                 {
                   "type": "string",
-                  "description": "Simple ticker symbol"
+                  "description": "Simple ticker symbol (e.g., 'AAPL', 'SPY')"
                 },
                 {
                   "$ref": "#/components/schemas/StaticModel"
@@ -2157,7 +2300,7 @@
       },
       "DataV2Options": {
         "type": "object",
-        "description": "Optional price adjustment settings. See [Price Adjustment Guide](/docs/ReferenceGuide.md#price-adjustments) for detailed explanations and use cases.",
+        "description": "Optional price adjustment settings. See [Price Adjustment Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#price-adjustments) for detailed explanations and use cases.",
         "properties": {
           "unadjusted": {
             "type": "boolean",
@@ -2232,17 +2375,26 @@
         "properties": {
           "adjusted": {
             "type": "array",
-            "items": {"type": "number", "nullable": true},
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
             "description": "Fully adjusted closing prices accounting for splits, dividends, and other corporate actions. This is the default price series used for calculations."
           },
           "unadjusted": {
             "type": "array",
-            "items": {"type": "number", "nullable": true}, 
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
             "description": "Raw closing prices as traded, without any adjustments for splits or dividends. Only available when options.unadjusted = true."
           },
           "semi_adjusted": {
             "type": "array",
-            "items": {"type": "number", "nullable": true},
+            "items": {
+              "type": "number",
+              "nullable": true
+            },
             "description": "Prices adjusted for stock splits but not dividends. Only available when options.semi_adjusted = true."
           }
         }
@@ -2286,30 +2438,41 @@
         }
       },
       "DataV2Dividend": {
-        "type": "object", 
-        "description": "Dividend payment information. See [Dividend Types Reference](/docs/ReferenceGuide.md#dividend-types) for detailed type explanations.",
+        "type": "object",
+        "description": "Dividend payment information. See [Dividend Types Reference](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#dividend-types) for detailed type explanations.",
         "properties": {
           "date": {
-            "type": "string", 
-            "format": "date", 
+            "type": "string",
+            "format": "date",
             "description": "Ex-dividend date",
             "example": "2024-02-15"
           },
           "amount": {
-            "type": "number", 
+            "type": "number",
             "description": "Dividend amount per share in USD",
             "example": 0.24
           },
           "type": {
             "type": "string",
-            "enum": ["Income", "Short Term", "Long Term", "Split", "Other"],
+            "enum": [
+              "Income",
+              "Short Term",
+              "Long Term",
+              "Split",
+              "Other"
+            ],
             "description": "Human-readable dividend type",
             "example": "Income"
           },
           "type_code": {
             "type": "string",
-            "enum": ["D", "G", "C", "Z"],
-            "description": "Single-character dividend type code", 
+            "enum": [
+              "D",
+              "G",
+              "C",
+              "Z"
+            ],
+            "description": "Single-character dividend type code",
             "example": "D"
           }
         }
