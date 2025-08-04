@@ -224,36 +224,43 @@
                   }
                 },
                 "Custom Periods Analysis": {
-  "summary": "Analyze specific market events and custom date ranges",
-  "value": {
-    "assets": ["SPY", "QQQ", "TLT"],
-    "time_periods": [
-      "1y",
-      {
-        "custom": {
-          "label": "covid_crash",
-          "from": "2020-02-19",
-          "to": "2020-03-23"
-        }
-      },
-      {
-        "custom": {
-          "label": "recovery_period", 
-          "from": "2020-03-23",
-          "to": "2020-08-18"
-        }
-      },
-      {
-        "custom": {
-          "label": "post_election",
-          "from": "2020-11-04"
-        }
-      }
-    ],
-    "include": ["drawdown_analysis", "security_info"],
-    "as_of": "2024-07-29"
-  }
-}
+                  "summary": "Analyze specific market events and custom date ranges",
+                  "value": {
+                    "assets": [
+                      "SPY",
+                      "QQQ",
+                      "TLT"
+                    ],
+                    "time_periods": [
+                      "1y",
+                      {
+                        "custom": {
+                          "label": "covid_crash",
+                          "from": "2020-02-19",
+                          "to": "2020-03-23"
+                        }
+                      },
+                      {
+                        "custom": {
+                          "label": "recovery_period",
+                          "from": "2020-03-23",
+                          "to": "2020-08-18"
+                        }
+                      },
+                      {
+                        "custom": {
+                          "label": "post_election",
+                          "from": "2020-11-04"
+                        }
+                      }
+                    ],
+                    "include": [
+                      "drawdown_analysis",
+                      "security_info"
+                    ],
+                    "as_of": "2024-07-29"
+                  }
+                }
               }
             }
           }
@@ -282,7 +289,10 @@
         },
         "x-stoplight": {
           "id": "y2doii4obdzxf"
-        }
+        },
+        "tags": [
+          "Returns & Statistics"
+        ]
       },
       "parameters": []
     },
@@ -424,7 +434,10 @@
         },
         "x-stoplight": {
           "id": "2ljqkj76ccadf"
-        }
+        },
+        "tags": [
+          "Returns & Statistics"
+        ]
       },
       "parameters": []
     },
@@ -599,7 +612,10 @@
         },
         "x-stoplight": {
           "id": "2j2jqora839a0"
-        }
+        },
+        "tags": [
+          "Market Data"
+        ]
       },
       "parameters": []
     },
@@ -733,7 +749,10 @@
         },
         "x-stoplight": {
           "id": "2x5wevq0dptew"
-        }
+        },
+        "tags": [
+          "Market Data"
+        ]
       },
       "parameters": [
         {
@@ -756,29 +775,36 @@
   "components": {
     "schemas": {
       "AdvancedSettings": {
-  "type": "object",
-  "description": "Advanced calculation parameters that affect statistical computations. See [Advanced Settings Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#advanced-settings-behavior) for detailed impact on calculations.",
-  "properties": {
-    "correlation_period": {
-      "type": "integer",
-      "description": "Number of days for correlation, beta, and alpha calculations. Affects market risk metrics.",
-      "default": 21,
-      "minimum": 5,
-      "maximum": 252
-    },
-    "moving_average_periods": {
-      "type": "array",
-      "description": "Moving average periods in days to calculate when moving_averages is included.",
-      "default": [50, 200],
-      "items": {"type": "integer", "minimum": 1, "maximum": 1000}
-    },
-    "use_month_end_returns": {
-      "type": "boolean", 
-      "description": "Use month-end dates for period calculations instead of exact date math. Affects period boundary definitions.",
-      "default": false
-    }
-  }
-},
+        "type": "object",
+        "description": "Advanced calculation parameters that affect statistical computations. See [Advanced Settings Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#advanced-settings-behavior) for detailed impact on calculations.",
+        "properties": {
+          "correlation_period": {
+            "type": "integer",
+            "description": "Number of days for correlation, beta, and alpha calculations. Affects market risk metrics.",
+            "default": 21,
+            "minimum": 5,
+            "maximum": 252
+          },
+          "moving_average_periods": {
+            "type": "array",
+            "description": "Moving average periods in days to calculate when moving_averages is included.",
+            "default": [
+              50,
+              200
+            ],
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000
+            }
+          },
+          "use_month_end_returns": {
+            "type": "boolean",
+            "description": "Use month-end dates for period calculations instead of exact date math. Affects period boundary definitions.",
+            "default": false
+          }
+        }
+      },
       "ApiError": {
         "type": "object",
         "x-stoplight": {
@@ -878,57 +904,47 @@
         "description": "User-provided price data"
       },
       "CustomPeriod": {
-  "type": "object",
-  "required": ["custom"],
-  "description": "Custom date range for analyzing specific time periods or market events",
-  "properties": {
-    "custom": {
-      "type": "object",
-      "required": ["label", "from"],
-      "properties": {
-        "label": {
-          "type": "string",
-          "description": "Unique identifier for this custom period. Used as key in response periods object.",
-          "example": "covid_crash"
+        "type": "object",
+        "required": [
+          "custom"
+        ],
+        "description": "Custom date range for analyzing specific time periods or market events",
+        "properties": {
+          "custom": {
+            "type": "object",
+            "required": [
+              "label",
+              "from"
+            ],
+            "properties": {
+              "label": {
+                "type": "string",
+                "description": "Unique identifier for this custom period. Used as key in response periods object.",
+                "example": "covid_crash"
+              },
+              "from": {
+                "type": "string",
+                "format": "date",
+                "description": "Start date of the custom period (YYYY-MM-DD format)",
+                "example": "2020-02-01"
+              },
+              "to": {
+                "type": "string",
+                "format": "date",
+                "description": "End date of the custom period. If omitted, uses the request's as_of date.",
+                "example": "2020-04-01"
+              }
+            }
+          }
         },
-        "from": {
-          "type": "string",
-          "format": "date",
-          "description": "Start date of the custom period (YYYY-MM-DD format)",
-          "example": "2020-02-01"
-        },
-        "to": {
-          "type": "string",
-          "format": "date",
-          "description": "End date of the custom period. If omitted, uses the request's as_of date.",
-          "example": "2020-04-01"
+        "example": {
+          "custom": {
+            "label": "covid_crash",
+            "from": "2020-02-19",
+            "to": "2020-03-23"
+          }
         }
-      }
-    }
-  },
-  "examples": {
-    "Market Event": {
-      "custom": {
-        "label": "covid_crash",
-        "from": "2020-02-19",
-        "to": "2020-03-23"
-      }
-    },
-    "Earnings Period": {
-      "custom": {
-        "label": "q3_earnings",
-        "from": "2024-07-01", 
-        "to": "2024-09-30"
-      }
-    },
-    "Open-Ended Period": {
-      "custom": {
-        "label": "post_election",
-        "from": "2024-11-06"
-      }
-    }
-  }
-},
+      },
       "DataFrequency": {
         "type": "string",
         "enum": [
@@ -2558,8 +2574,15 @@
   },
   "servers": [
     {
-      "url": "http://localhost:55829/",
+      "url": "http://localhost:55829",
       "description": ""
     }
-  ]
+  ],"tags": [{
+      "name": "Market Data",
+      "description": "Operations related to market data"
+    },
+    {
+      "name": "Returns & Statistics",
+      "description": "Operations related to statistic and return data"
+    }]
 }
