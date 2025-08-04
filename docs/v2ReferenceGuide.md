@@ -110,3 +110,105 @@ Time series arrays may contain `null` values in specific situations:
 ```
 
 In this example, the first date has no data available, so all arrays have `null` in position 0.
+
+## Dividend Types {#dividend-types}
+
+Dividend data includes both a human-readable type and a single-character code for each dividend payment:
+
+### Dividend Type Mapping
+
+| Type Code | Type Name | Description | Tax Treatment |
+|-----------|-----------|-------------|---------------|
+| `D` | Income | Regular dividend distributions from company earnings | Qualified dividends (lower tax rates for most investors) |
+| `G` | Short Term | Short-term capital gains distributions | Taxed as ordinary income |
+| `C` | Long Term | Long-term capital gains distributions | Taxed at capital gains rates |
+| `Z` | Split | Stock splits (not actual cash payments) | No immediate tax implications |
+| (Other) | Other | Any dividend type not covered above | Varies by specific type |
+
+### Example Dividend Data
+
+```json
+{
+  "dividends": [
+    {
+      "date": "2024-02-15",
+      "amount": 0.24,
+      "type": "Income",
+      "type_code": "D"
+    },
+    {
+      "date": "2024-01-15", 
+      "amount": 0.15,
+      "type": "Long Term",
+      "type_code": "C"
+    },
+    {
+      "date": "2023-08-01",
+      "amount": 2.0,
+      "type": "Split", 
+      "type_code": "Z"
+    }
+  ]
+}
+```
+
+### Important Notes
+
+- **Ex-dividend dates**: The `date` field represents the ex-dividend date (when the stock begins trading without the dividend)
+- **Stock splits**: When `type_code` is "Z", the `amount` represents the split ratio (e.g., 2.0 = 2-for-1 split)
+- **Tax implications**: Dividend types affect tax treatment - consult tax professionals for specific guidance
+- **Historical data**: Dividend history is available for individual stocks and ETFs, but not for portfolio models
+- **Currency**: All dividend amounts are in USD regardless of the underlying security's home currency
+
+## Price Adjustments {#price-adjustments}
+
+The API provides three types of price data, each with different adjustment methodologies:
+
+### Price Type Comparison
+
+| Price Type | Stock Splits | Dividends | Use Cases |
+|------------|--------------|-----------|-----------|
+| **Adjusted** | ✅ Adjusted | ✅ Adjusted | Performance analysis, returns calculation, backtesting |
+| **Semi-Adjusted** | ✅ Adjusted | ❌ Not Adjusted | Technical analysis, chart patterns, volume analysis |
+| **Unadjusted** | ❌ Not Adjusted | ❌ Not Adjusted | Historical trading prices, order book analysis |
+
+### When to Use Each Type
+
+#### Adjusted Prices (Default)
+- **Best for**: Performance calculations, portfolio analysis, returns comparison
+- **Why**: Provides continuous price series that reflects true economic value changes
+- **Example**: A stock trading at $100 pays a $2 dividend. Adjusted price drops to $98 on ex-dividend date to reflect the economic transfer
+
+#### Semi-Adjusted Prices
+- **Best for**: Technical analysis, chart patterns, moving averages
+- **Why**: Maintains dividend gaps that technical analysts expect to see
+- **Example**: Same $100 stock shows price drop from $100 to $98 on ex-dividend date, preserving the gap for technical analysis
+
+#### Unadjusted Prices
+- **Best for**: Historical research, order execution analysis, actual trading prices
+- **Why**: Shows exactly what prices were quoted and traded at each date
+- **Example**: Shows the actual $100 → $98 price movement without any adjustments
+
+### Stock Split Example
+
+For a 2-for-1 stock split on a stock trading at $200:
+
+```json
+{
+  "dates": ["2024-01-30", "2024-01-31", "2024-02-01"],
+  "prices": {
+    "adjusted": [100.00, 100.00, 101.00],
+    "semi_adjusted": [100.00, 100.00, 101.00], 
+    "unadjusted": [200.00, 200.00, 101.00]
+  }
+}
+```
+
+- **Adjusted & Semi-Adjusted**: Both show split-adjusted prices for continuity
+- **Unadjusted**: Shows actual trading prices ($200 before split, $101 after)
+
+### Performance Notes
+
+- **Default behavior**: Only adjusted prices are returned unless specifically requested
+- **Additional cost**: Requesting unadjusted/semi-adjusted prices requires additional data retrieval
+- **Asset limitations**: Only available for individual securities (not portfolio models or custom data)

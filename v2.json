@@ -2157,15 +2157,16 @@
       },
       "DataV2Options": {
         "type": "object",
+        "description": "Optional price adjustment settings. See [Price Adjustment Guide](/docs/ReferenceGuide.md#price-adjustments) for detailed explanations and use cases.",
         "properties": {
           "unadjusted": {
             "type": "boolean",
-            "description": "Include unadjusted price data",
+            "description": "Include unadjusted (raw) price data in addition to adjusted prices. Useful for analyzing actual trading prices or calculating custom adjustments.",
             "default": false
           },
           "semi_adjusted": {
             "type": "boolean",
-            "description": "Include semi-adjusted price data",
+            "description": "Include semi-adjusted price data (split-adjusted but not dividend-adjusted) in addition to adjusted prices. Useful for certain technical analysis calculations.",
             "default": false
           }
         }
@@ -2285,36 +2286,30 @@
         }
       },
       "DataV2Dividend": {
-        "type": "object",
+        "type": "object", 
+        "description": "Dividend payment information. See [Dividend Types Reference](/docs/ReferenceGuide.md#dividend-types) for detailed type explanations.",
         "properties": {
           "date": {
-            "type": "string",
-            "format": "date",
+            "type": "string", 
+            "format": "date", 
+            "description": "Ex-dividend date",
             "example": "2024-02-15"
           },
           "amount": {
-            "type": "number",
+            "type": "number", 
+            "description": "Dividend amount per share in USD",
             "example": 0.24
           },
           "type": {
             "type": "string",
-            "enum": [
-              "Income",
-              "Short Term",
-              "Long Term",
-              "Split",
-              "Other"
-            ],
+            "enum": ["Income", "Short Term", "Long Term", "Split", "Other"],
+            "description": "Human-readable dividend type",
             "example": "Income"
           },
           "type_code": {
             "type": "string",
-            "enum": [
-              "D",
-              "G",
-              "C",
-              "Z"
-            ],
+            "enum": ["D", "G", "C", "Z"],
+            "description": "Single-character dividend type code", 
             "example": "D"
           }
         }
