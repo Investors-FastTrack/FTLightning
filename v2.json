@@ -2091,14 +2091,23 @@
             }
           },
           "include": {
-  "type": "array",
-  "description": "Data types to include in response. See [Asset Type Compatibility](/docs/ReferenceGuide.md#asset-type-compatibility) for data availability by asset type.",
-  "default": ["prices"],
-  "items": {
-    "type": "string",
-    "enum": ["prices", "volumes", "ohlv", "dividends", "info", "yield"]
-  }
-},
+            "type": "array",
+            "description": "Data types to include in response. See [Asset Type Compatibility](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#asset-type-compatibility-asset-type-compatibility) for data availability by asset type.",
+            "default": [
+              "prices"
+            ],
+            "items": {
+              "type": "string",
+              "enum": [
+                "prices",
+                "volumes",
+                "ohlv",
+                "dividends",
+                "info",
+                "yield"
+              ]
+            }
+          },
           "as_of": {
             "type": "string",
             "format": "date",
@@ -2106,17 +2115,17 @@
             "example": "2024-07-29"
           },
           "start_date": {
-  "type": "string",
-  "format": "date",
-  "description": "Start date for time series data. If not provided, defaults to 1 year before the as_of date (or current date if as_of is also not specified).",
-  "example": "2024-01-01"
-},
-"end_date": {
-  "type": "string",
-  "format": "date",
-  "description": "End date for time series data. If not provided, defaults to the as_of date (or current date if as_of is also not specified).",
-  "example": "2024-07-29"
-},
+            "type": "string",
+            "format": "date",
+            "description": "Start date for time series data. If not provided, defaults to 1 year before the as_of date (or current date if as_of is also not specified).",
+            "example": "2024-01-01"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "description": "End date for time series data. If not provided, defaults to the as_of date (or current date if as_of is also not specified).",
+            "example": "2024-07-29"
+          },
           "frequency": {
             "$ref": "#/components/schemas/DataFrequency"
           },
@@ -2299,12 +2308,17 @@
         }
       },
       "DataFrequency": {
-  "type": "string",
-  "enum": ["daily", "weekly", "monthly", "quarterly"],
-  "default": "daily",
-  "description": "Data frequency that determines which dates are included in the response. See [Data Frequency Guide](/docs/ReferenceGuide.md#data-frequency) for detailed behavior and examples.",
-  "example": "monthly"
-}
+        "type": "string",
+        "enum": [
+          "daily",
+          "weekly",
+          "monthly",
+          "quarterly"
+        ],
+        "default": "daily",
+        "description": "Data frequency that determines which dates are included in the response. See [Data Frequency Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#data-frequency-data-frequency) for detailed behavior and examples.",
+        "example": "monthly"
+      }
     },
     "securitySchemes": {
       "appId": {
