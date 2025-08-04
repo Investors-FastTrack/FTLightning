@@ -39,35 +39,20 @@
                 },
                 "Static Portfolio": {
                   "value": {
-                    "assets": [
-                      {
-                        "type": "static",
-                        "name": "Conservative 60/40",
-                        "ticker": "CONS_6040",
-                        "holdings": [
-                          {
-                            "ticker": "VTI",
-                            "weight": 60
-                          },
-                          {
-                            "ticker": "BND",
-                            "weight": 40
-                          }
-                        ],
-                        "rebalance": "quarter",
-                        "start": "2020-01-01",
-                        "seed": 100000
-                      }
-                    ],
-                    "time_periods": [
-                      "1y",
-                      "3y",
-                      "5y"
-                    ],
-                    "include": [
-                      "drawdown_analysis",
-                      "security_info"
-                    ]
+                    "assets": [{
+                      "type": "static",
+                      "name": "Conservative 60/40",
+                      "ticker": "CONS_6040", 
+                      "holdings": [
+                        {"ticker": "VTI", "weight": 60},
+                        {"ticker": "BND", "weight": 40}
+                      ],
+                      "rebalance": "quarter",
+                      "start": "2020-01-01",
+                      "seed": 100000
+                    }],
+                    "time_periods": ["1y", "3y"],
+                    "include": ["security_info"]
                   }
                 },
                 "Dynamic Portfolio": {
@@ -452,7 +437,7 @@
     "/data/data2/{ticker}": {
       "get": {
         "summary": "Get data for single ticker",
-        "description": "Extract financial data for a single ticker with query parameter options",
+        "description": "Extract financial data for a single ticker with query parameter options. If start and end dates are not provided, defaults to 1 year of data ending on the current date.",
         "operationId": "getSingleTickerData",
         "parameters": [
           {
@@ -466,21 +451,21 @@
           },
           {
             "name": "start",
-            "in": "query",
+            "in": "query", 
             "schema": {
               "type": "string",
               "format": "date"
             },
-            "description": "Start date"
+            "description": "Start date. If not provided, defaults to 1 year before end date."
           },
           {
-            "name": "end",
+            "name": "end", 
             "in": "query",
             "schema": {
-              "type": "string",
+              "type": "string", 
               "format": "date"
             },
-            "description": "End date"
+            "description": "End date. If not provided, defaults to current date."
           },
           {
             "name": "volumes",
@@ -2246,27 +2231,18 @@
         "properties": {
           "adjusted": {
             "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Adjusted price time series"
+            "items": {"type": "number", "nullable": true},
+            "description": "Fully adjusted closing prices accounting for splits, dividends, and other corporate actions. This is the default price series used for calculations."
           },
           "unadjusted": {
             "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Unadjusted price time series"
+            "items": {"type": "number", "nullable": true}, 
+            "description": "Raw closing prices as traded, without any adjustments for splits or dividends. Only available when options.unadjusted = true."
           },
           "semi_adjusted": {
             "type": "array",
-            "items": {
-              "type": "number",
-              "nullable": true
-            },
-            "description": "Semi-adjusted price time series"
+            "items": {"type": "number", "nullable": true},
+            "description": "Prices adjusted for stock splits but not dividends. Only available when options.semi_adjusted = true."
           }
         }
       },

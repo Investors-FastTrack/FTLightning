@@ -72,3 +72,41 @@ For a request from `2024-01-01` to `2024-03-31`:
 - **Holiday Handling**: If the target day (Friday, month-end, quarter-end) falls on a market holiday, the last trading day before that date is used
 - **Performance**: Weekly, monthly, and quarterly frequencies use pre-calculated caches for faster response times
 - **Date Range**: The frequency setting affects which dates are included, but the overall date range is still controlled by `start_date` and `end_date`
+
+## Null Value Handling {#null-values}
+
+Time series arrays may contain `null` values in specific situations:
+
+### When Nulls Occur
+
+| Scenario | Behavior | Example |
+|----------|----------|---------|
+| **Before Asset Inception** | `null` for dates before the security started trading | Stock IPO'd in 2020, requesting data from 2019 |
+| **Market Holidays** | No nulls - holiday dates are excluded from results | July 4th simply won't appear in dates array |
+| **Weekends** | No nulls - weekend dates are excluded from results | Saturdays/Sundays won't appear in dates array |
+| **Data Unavailable** | `null` for that specific data point | Volume data missing for a particular day |
+| **Incompatible Asset Type** | Entire array is `null` or omitted | Requesting OHLV data for a mutual fund |
+
+### Array Consistency
+
+- **All time series arrays** (prices, volumes, OHLV) will have the same length as `metadata.dates`
+- **Null positions align** across all arrays for the same date
+- **Array indices correspond** to the same date position across all data types
+
+### Example Response with Nulls
+
+```json
+{
+  "metadata": {
+    "dates": ["2024-01-02", "2024-01-03", "2024-01-04"]
+  },
+  "results": [{
+    "prices": {
+      "adjusted": [null, 150.25, 152.10]
+    },
+    "volumes": [null, 45123000, 52341000]
+  }]
+}
+```
+
+In this example, the first date has no data available, so all arrays have `null` in position 0.
