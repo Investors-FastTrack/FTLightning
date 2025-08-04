@@ -956,3 +956,239 @@ The `include` parameter controls which optional data is calculated and returned.
 **Missing data**: If underlying data is unavailable (e.g., no volume data for a date), fields may contain `null` or be omitted
 
 **Partial success**: Some include options may succeed while others fail - check each section of the response independently
+
+## Advanced Settings Behavior {#advanced-settings-behavior}
+
+Advanced settings control the underlying calculation parameters for statistical computations. These settings can significantly impact the accuracy and relevance of risk metrics.
+
+### Correlation Period {#correlation-period}
+
+**Parameter**: `advanced.correlation_period`  
+**Default**: 21 days  
+**Range**: 5-252 days  
+**Affects**: Beta, Alpha, Correlation, R-Squared calculations
+
+#### What It Controls
+The correlation period determines the rolling window of daily returns used to calculate the relationship between an asset and its benchmark.
+
+#### Impact on Calculations
+- **Beta**: Uses this period to calculate covariance and variance
+- **Alpha**: Depends on beta calculation, so indirectly affected
+- **Correlation**: Direct calculation window
+- **R-Squared**: Derived from correlation, so directly affected
+
+#### Choosing the Right Period
+
+| Period Length | Use Case | Characteristics |
+|---------------|----------|-----------------|
+| **5-10 days** | Short-term trading analysis | Very responsive, high volatility in metrics |
+| **21 days** (default) | Standard monthly analysis | Balance of responsiveness and stability |
+| **63 days** | Quarterly analysis | More stable, slower to adapt to changes |
+| **252 days** | Annual analysis | Very stable, represents long-term relationship |
+
+#### Example Impact
+```json
+{
+  "advanced": {"correlation_period": 10}
+}
+// vs
+{
+  "advanced": {"correlation_period": 63}
+}
+```
+
+**10-day period**: Beta might be 1.2 (recent high volatility relationship)  
+**63-day period**: Beta might be 0.9 (longer-term stable relationship)
+
+#### When Correlation Period Matters Most
+- **Volatile markets**: Shorter periods capture recent regime changes
+- **Stable markets**: Longer periods provide more reliable estimates
+- **Strategy analysis**: Match period to your rebalancing frequency
+
+### Moving Average Periods {#moving-average-periods}
+
+**Parameter**: `advanced.moving_average_periods`  
+**Default**: [50, 200]  
+**Range**: 1-1000 days per period  
+**Affects**: `moving_averages` array in response when included
+
+#### What It Controls
+Specifies which moving average periods to calculate when `moving_averages` is included in the request.
+
+#### Common Configurations
+```json
+{
+  "advanced": {
+    "moving_average_periods": [20, 50, 200]  // Short, medium, long-term
+  }
+}
+```
+
+#### Standard Period Meanings
+- **20 days**: Short-term trend (1 month)
+- **50 days**: Medium-term trend (2.5 months)  
+- **200 days**: Long-term trend (10 months)
+- **252 days**: Full year trend
+
+#### Response Structure
+```json
+{
+  "moving_averages": [
+    {"period": 20, "value": 175.23},
+    {"period": 50, "value": 172.45}, 
+    {"period": 200, "value": 168.32}
+  ]
+}
+```
+
+#### Performance Considerations
+- **More periods**: Increases calculation time
+- **Longer periods**: Require more historical data
+- **Recommended**: Limit to 5 or fewer periods for optimal performance
+
+### Month-End Returns {#month-end-returns}
+
+**Parameter**: `advanced.use_month_end_returns`  
+**Default**: false  
+**Affects**: Period boundary calculations for all time periods
+
+#### What It Controls
+Changes how period start and end dates are calculated, using month-end boundaries instead of exact date arithmetic.
+
+#### Behavior Differences
+
+**Default (false) - Exact Date Math**:
+- 1-month period from July 15th looks back to June 15th
+- Uses exact trading day counts
+- More precise for custom date ranges
+
+**Month-End (true) - Month Boundary Math**:
+- 1-month period from July 15th looks back to June 30th
+- Aligns with standard financial reporting periods
+- Better for comparing with published financial data
+
+#### Example Impact
+
+**Request**: 3-month period as of July 15, 2024
+
+**use_month_end_returns: false**:
+- Period: April 15, 2024 → July 15, 2024
+- Exact 3-month lookback
+
+**use_month_end_returns: true**:
+- Period: April 30, 2024 → July 15, 2024  
+- Boundary-aligned lookback
+
+#### When to Use Month-End Returns
+- **Financial reporting alignment**: Match standard quarterly/monthly reporting
+- **Comparative analysis**: When comparing with published fund data
+- **Institutional analysis**: Many institutions use month-end calculations
+- **Benchmark comparisons**: When benchmark data uses month-end periods
+
+#### When to Use Exact Date Math (default)
+- **Precise period analysis**: When exact timeframes matter
+- **Custom date ranges**: For specific event analysis
+- **Technical analysis**: When trading day precision is important
+
+### Interaction Effects {#interaction-effects}
+
+Advanced settings can interact with each other and with other request parameters:
+
+#### Correlation Period + Time Periods
+Short correlation periods with long time periods can produce unstable metrics:
+```json
+{
+  "time_periods": ["3y"],
+  "advanced": {"correlation_period": 5}  // May be too volatile
+}
+```
+
+**Better approach**: Match correlation period to analysis timeframe
+```json
+{
+  "time_periods": ["3y"], 
+  "advanced": {"correlation_period": 63}  // More appropriate
+}
+```
+
+#### Month-End + Custom Periods
+Month-end setting affects custom period calculations:
+```json
+{
+  "time_periods": [
+    {"custom": {"label": "crash", "from": "2020-02-15", "to": "2020-04-15"}}
+  ],
+  "advanced": {"use_month_end_returns": true}
+}
+```
+May adjust the custom period boundaries to align with month-ends.
+
+### Best Practices {#best-practices}
+
+#### For Short-Term Analysis (< 6 months)
+```json
+{
+  "advanced": {
+    "correlation_period": 21,
+    "use_month_end_returns": false
+  }
+}
+```
+
+#### For Long-Term Analysis (> 1 year)  
+```json
+{
+  "advanced": {
+    "correlation_period": 63,
+    "use_month_end_returns": true
+  }
+}
+```
+
+#### For Technical Analysis
+```json
+{
+  "advanced": {
+    "correlation_period": 21,
+    "moving_average_periods": [10, 20, 50, 200],
+    "use_month_end_returns": false
+  }
+}
+```
+
+#### For Institutional Reporting
+```json
+{
+  "advanced": {
+    "correlation_period": 63,
+    "moving_average_periods": [50, 200],
+    "use_month_end_returns": true
+  }
+}
+```
+
+### Performance Impact {#performance-impact}
+
+| Setting | Performance Impact | Calculation Complexity |
+|---------|-------------------|------------------------|
+| **Short correlation period** | Faster | Less data to process |
+| **Long correlation period** | Slower | More data to process |
+| **Many MA periods** | Slower | Multiple calculations |
+| **Month-end returns** | Minimal | Slight date calculation overhead |
+
+### Validation and Limits {#validation-limits}
+
+#### Correlation Period Validation
+- **Minimum**: 5 days (statistical minimum for meaningful correlation)  
+- **Maximum**: 252 days (one full trading year)
+- **Invalid values**: Defaults to 21 days with no error
+
+#### Moving Average Validation  
+- **Minimum period**: 1 day
+- **Maximum period**: 1000 days
+- **Maximum count**: 10 periods (performance limit)
+- **Invalid periods**: Skipped with no error
+
+#### Month-End Validation
+- **Valid values**: true/false only
+- **Invalid values**: Defaults to false
