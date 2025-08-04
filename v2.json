@@ -1822,36 +1822,27 @@
             "type": "integer",
             "description": "Processing time in milliseconds",
             "example": 450
-          },
+          },          
           "dates": {
             "type": "array",
-            "description": "Date array corresponding to all time series data points",
-            "example": [
-              "2024-01-01",
-              "2024-01-02",
-              "2024-01-03"
-            ],
             "items": {
               "type": "string",
               "format": "date"
-            }
+            },
+            "description": "Date array corresponding to all time series data points (included when date range is specified)",
+            "example": ["2024-01-01", "2024-01-02", "2024-01-03"]
           },
           "start_date": {
             "type": "string",
             "format": "date",
-            "description": "Start date of data range",
+            "description": "Actual start date of data range (first date in dates array)",
             "example": "2024-01-01"
           },
           "end_date": {
             "type": "string",
             "format": "date",
-            "description": "End date of data range",
+            "description": "Actual end date of data range (last date in dates array)",
             "example": "2024-07-29"
-          },
-          "total_trading_days": {
-            "type": "integer",
-            "description": "Number of trading days in the date range",
-            "example": 152
           },
           "frequency": {
             "$ref": "#/components/schemas/DataFrequency"
