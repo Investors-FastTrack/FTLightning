@@ -19,7 +19,7 @@
                 "$ref": "#/components/schemas/StatsV2Request"
               },
               "examples": {
-                " Simple Tickers": {
+                "Simple Tickers": {
                   "value": {
                     "assets": [
                       "AAPL",
@@ -370,6 +370,51 @@
                       "info"
                     ],
                     "start_date": "2024-01-01"
+                  }
+                },
+                "Frequency Examples": {
+                  "summary": "Different frequency comparisons",
+                  "value": {
+                    "assets": ["AAPL"],
+                    "include": ["prices"],
+                    "start_date": "2024-01-01",
+                    "end_date": "2024-03-31",
+                    "frequency": "monthly"
+                  }
+                },
+                "Complete Data Extract": {
+                  "summary": "All available data types",
+                  "value": {
+                    "assets": ["AAPL"],
+                    "include": ["prices", "volumes", "ohlv", "dividends", "info", "yield"],
+                    "start_date": "2024-01-01",
+                    "end_date": "2024-07-29",
+                    "options": {
+                      "unadjusted": true,
+                      "semi_adjusted": true
+                    }
+                  }
+                },
+                "Dynamic Portfolio Data": {
+                  "summary": "Time-changing portfolio allocation",
+                  "value": {
+                    "assets": [{
+                      "type": "dynamic",
+                      "name": "Risk On/Off Strategy", 
+                      "ticker": "RISK_TACTICAL",
+                      "seed": 75000,
+                      "models": [{
+                        "start": "2024-01-01",
+                        "rebalance": "month",
+                        "holdings": [
+                          {"ticker": "QQQ", "weight": 80},
+                          {"ticker": "TLT", "weight": 20}
+                        ]
+                      }]
+                    }],
+                    "include": ["prices", "info"],
+                    "start_date": "2024-01-01",
+                    "end_date": "2024-02-01"
                   }
                 }
               }
