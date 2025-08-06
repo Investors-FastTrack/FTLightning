@@ -764,6 +764,187 @@
           "required": true
         }
       ]
+    },
+    "/reference": {
+      "post": {
+        "summary": "Get security information for multiple assets",
+        "description": "Retrieve detailed security information, portfolio breakdowns, and attribution analysis for multiple assets including individual securities and static portfolio models.",
+        "operationId": "getSecurityInfo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SecurityInfoRequest"
+              },
+              "examples": {
+                "Simple Tickers": {
+                  "summary": "Basic security details for multiple tickers",
+                  "value": {
+                    "assets": [
+                      "AAPL",
+                      "MSFT",
+                      "VTI"
+                    ],
+                    "include": [
+                      "details",
+                      "portfolio"
+                    ]
+                  }
+                },
+                "Portfolio Analysis": {
+                  "summary": "Static portfolio with detailed breakdown",
+                  "value": {
+                    "assets": [
+                      {
+                        "type": "static",
+                        "name": "Conservative 60/40",
+                        "ticker": "CONS_6040",
+                        "holdings": [
+                          {
+                            "ticker": "VTI",
+                            "weight": 60
+                          },
+                          {
+                            "ticker": "BND",
+                            "weight": 40
+                          }
+                        ]
+                      }
+                    ],
+                    "include": [
+                      "portfolio",
+                      "attribution"
+                    ],
+                    "attribution_periods": [
+                      "oneyear",
+                      "onequarter"
+                    ]
+                  }
+                },
+                "Complete Analysis": {
+                  "summary": "Full analysis with all options",
+                  "value": {
+                    "assets": [
+                      "AAPL",
+                      "VTI"
+                    ],
+                    "include": [
+                      "details",
+                      "portfolio",
+                      "shareclasses"
+                    ],
+                    "topcount": "15"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful analysis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityInfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request - invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "c5fc2b3vr9not"
+        },
+        "tags": [
+          "Reference"
+        ]
+      },
+      "parameters": []
+    },
+    "/reference/{ticker}": {
+      "get": {
+        "summary": "Get security information for single ticker",
+        "description": "Retrieve detailed security information for a single ticker using query parameters for options.",
+        "operationId": "getSingleSecurityInfo",
+        "parameters": [
+          {
+            "name": "ticker",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "AAPL"
+          },
+          {
+            "name": "include",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of data types to include (details,portfolio,shareclasses,attribution)",
+            "example": "details,portfolio"
+          },
+          {
+            "name": "topcount",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "default": "10"
+            },
+            "description": "Number of top holdings to return (or 'MAX' for all)",
+            "example": "15"
+          },
+          {
+            "name": "attribution_periods",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comma-separated list of attribution periods (oneyear,onequarter)",
+            "example": "oneyear,onequarter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Security information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SecurityInfoResponse"
+                }
+              }
+            }
+          }
+        },
+        "x-stoplight": {
+          "id": "sqwpb30kozrd3"
+        },
+        "tags": [
+          "Reference"
+        ]
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "ticker",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "security": [
@@ -2554,6 +2735,530 @@
             "nullable": true
           }
         }
+      },
+      "SecurityInfoRequest": {
+        "type": "object",
+        "required": [
+          "assets"
+        ],
+        "properties": {
+          "assets": {
+            "type": "array",
+            "description": "List of assets to analyze. Can be ticker symbols or static portfolio models.",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Simple ticker symbol",
+                  "example": "AAPL"
+                },
+                {
+                  "$ref": "#/components/schemas/StaticModel"
+                }
+              ]
+            }
+          },
+          "include": {
+            "type": "array",
+            "description": "Data types to include in response",
+            "default": [
+              "details"
+            ],
+            "items": {
+              "type": "string",
+              "enum": [
+                "details",
+                "portfolio",
+                "shareclasses",
+                "attribution"
+              ]
+            }
+          },
+          "topcount": {
+            "type": "string",
+            "description": "Number of top holdings to return for portfolio data",
+            "default": "10",
+            "example": "15"
+          },
+          "attribution_periods": {
+            "type": "array",
+            "description": "Attribution analysis periods to calculate",
+            "items": {
+              "type": "string",
+              "enum": [
+                "oneyear",
+                "onequarter"
+              ]
+            }
+          }
+        }
+      },
+      "SecurityInfoResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SecurityInfoResult"
+            }
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/SecurityInfoMetadata"
+          }
+        }
+      },
+      "SecurityInfoResult": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "description": {
+            "type": "string",
+            "description": "Asset description (for portfolio models)"
+          },
+          "details": {
+            "$ref": "#/components/schemas/SecurityDetails"
+          },
+          "portfolio": {
+            "$ref": "#/components/schemas/PortfolioBreakdown"
+          },
+          "shareclasses": {
+            "$ref": "#/components/schemas/ShareClasses"
+          },
+          "attribution": {
+            "$ref": "#/components/schemas/AttributionAnalysis"
+          },
+          "positiondata": {
+            "type": "array",
+            "description": "Individual position data for portfolio models",
+            "items": {
+              "$ref": "#/components/schemas/PositionData"
+            }
+          },
+          "model": {
+            "description": "Original model definition (for portfolio models)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Holding"
+            }
+          },
+          "total": {
+            "type": "string",
+            "description": "Total portfolio weight (for portfolio models)",
+            "example": "100.00"
+          },
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          }
+        }
+      },
+      "SecurityDetails": {
+        "type": "object",
+        "description": "Detailed security information",
+        "properties": {
+          "security_type": {
+            "type": "string",
+            "enum": [
+              "Stock",
+              "Mutual Fund",
+              "ETF",
+              "Closed End Fund",
+              "Index",
+              "Unknown"
+            ],
+            "example": "Stock"
+          },
+          "xtype": {
+            "type": "string",
+            "example": "Common Stock"
+          },
+          "sector": {
+            "type": "string",
+            "description": "Sector (stocks only)"
+          },
+          "exchange": {
+            "type": "string",
+            "description": "Exchange (stocks only)"
+          },
+          "country": {
+            "type": "string",
+            "description": "Country (stocks only)"
+          },
+          "industry": {
+            "type": "string",
+            "description": "Industry (stocks only)"
+          },
+          "expenseratio": {
+            "type": "string",
+            "description": "Expense ratio (funds only)"
+          },
+          "shareclass": {
+            "type": "string",
+            "description": "Share class (funds only)"
+          },
+          "family": {
+            "type": "string",
+            "description": "Fund family (funds only)"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category (funds only)"
+          },
+          "objective": {
+            "type": "string",
+            "description": "Investment objective (funds only)"
+          },
+          "turnover": {
+            "type": "string",
+            "description": "Turnover rate (funds only)"
+          },
+          "expense_detail": {
+            "$ref": "#/components/schemas/ExpenseDetail"
+          },
+          "money_market": {
+            "$ref": "#/components/schemas/MoneyMarketData"
+          },
+          "similar": {
+            "type": "array",
+            "description": "Similar securities",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ExpenseDetail": {
+        "type": "object",
+        "properties": {
+          "deferred": {
+            "type": "string"
+          },
+          "b12": {
+            "type": "string"
+          },
+          "frontload": {
+            "type": "string"
+          },
+          "initpurchase": {
+            "type": "string"
+          },
+          "redemption": {
+            "type": "string"
+          },
+          "expense_prospectus": {
+            "type": "string"
+          },
+          "open2new": {
+            "type": "string"
+          }
+        }
+      },
+      "MoneyMarketData": {
+        "type": "object",
+        "properties": {
+          "avg_maturity": {
+            "type": "string"
+          },
+          "ann_yield": {
+            "type": "string"
+          },
+          "current_yield": {
+            "type": "string"
+          }
+        }
+      },
+      "PortfolioBreakdown": {
+        "type": "object",
+        "description": "Portfolio composition breakdown",
+        "properties": {
+          "assetclass": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "countries": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "region": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "sector": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "sectorBond": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "topten": {
+            "$ref": "#/components/schemas/TopHoldings"
+          },
+          "marketcap": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "bondquality": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "expense": {
+            "type": "string",
+            "description": "Weighted average expense ratio"
+          }
+        }
+      },
+      "PortfolioCategory": {
+        "type": "object",
+        "properties": {
+          "datalist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PortfolioCategoryItem"
+            }
+          },
+          "total": {
+            "type": "string",
+            "description": "Total percentage"
+          },
+          "note": {
+            "type": "string",
+            "description": "Additional information about this category"
+          }
+        }
+      },
+      "PortfolioCategoryItem": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "USEquity"
+          },
+          "netweight": {
+            "type": "string",
+            "description": "Weight as percentage string",
+            "example": "65.20"
+          },
+          "longweight": {
+            "type": "string",
+            "description": "Long position weight"
+          },
+          "shortweight": {
+            "type": "string",
+            "description": "Short position weight"
+          }
+        }
+      },
+      "TopHoldings": {
+        "type": "object",
+        "properties": {
+          "datalist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopHolding"
+            }
+          },
+          "total": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "TopHolding": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "netweight": {
+            "type": "string",
+            "example": "6.75"
+          }
+        }
+      },
+      "ShareClasses": {
+        "type": "object",
+        "properties": {
+          "datalist": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ShareClass"
+            }
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      },
+      "ShareClass": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "shareclass": {
+            "type": "string"
+          },
+          "expense_ratio": {
+            "type": "string"
+          },
+          "expense_ratio_prospectus": {
+            "type": "string"
+          },
+          "expense_12b": {
+            "type": "string"
+          },
+          "expense_deferred": {
+            "type": "string"
+          },
+          "expense_front": {
+            "type": "string"
+          },
+          "initial_purchase": {
+            "type": "string"
+          }
+        }
+      },
+      "AttributionAnalysis": {
+        "type": "object",
+        "description": "Performance and risk attribution analysis",
+        "properties": {
+          "performance": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PerformanceAttribution"
+              }
+            }
+          },
+          "risk": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/RiskAttribution"
+              }
+            }
+          },
+          "error": {
+            "$ref": "#/components/schemas/ApiError"
+          }
+        }
+      },
+      "PerformanceAttribution": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "weight": {
+            "type": "string",
+            "example": "25.0"
+          },
+          "returnContribution": {
+            "type": "number",
+            "description": "Contribution to total portfolio return",
+            "example": 2.15
+          },
+          "percentReturnContribution": {
+            "type": "number",
+            "description": "Percentage of total return contribution",
+            "example": 35.8
+          }
+        }
+      },
+      "RiskAttribution": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "name": {
+            "type": "string",
+            "example": "Apple Inc"
+          },
+          "weight": {
+            "type": "string",
+            "example": "25.0"
+          },
+          "riskContribution": {
+            "type": "number",
+            "description": "Contribution to total portfolio risk",
+            "example": 0.045
+          },
+          "percentRiskContribution": {
+            "type": "number",
+            "description": "Percentage of total risk contribution",
+            "example": 28.3
+          }
+        }
+      },
+      "PositionData": {
+        "type": "object",
+        "description": "Individual position data within a portfolio model",
+        "properties": {
+          "ticker": {
+            "type": "string",
+            "example": "AAPL"
+          },
+          "weight": {
+            "type": "string",
+            "example": "25.0"
+          },
+          "expense": {
+            "type": "string",
+            "description": "Expense ratio"
+          },
+          "topten": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "assetclass": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "region": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "countries": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "sector": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          },
+          "sectorBond": {
+            "$ref": "#/components/schemas/PortfolioCategory"
+          }
+        }
+      },
+      "SecurityInfoMetadata": {
+        "type": "object",
+        "properties": {
+          "total_assets": {
+            "type": "integer",
+            "description": "Number of assets processed",
+            "example": 3
+          },
+          "calculation_time_ms": {
+            "type": "integer",
+            "description": "Processing time in milliseconds",
+            "example": 1250
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -2577,12 +3282,19 @@
       "url": "http://localhost:55829",
       "description": ""
     }
-  ],"tags": [{
+  ],
+  "tags": [
+    {
       "name": "Market Data",
       "description": "Operations related to market data"
     },
     {
       "name": "Returns & Statistics",
       "description": "Operations related to statistic and return data"
-    }]
+    },
+    {
+      "name": "Reference",
+      "description": "Operations related to statistic and return data"
+    }
+  ]
 }
