@@ -3,10 +3,153 @@
   "info": {
     "title": "StatsV2 API",
     "description": "Financial statistics calculation API supporting multiple asset types and time periods. See [Performance Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#performance-considerations) for optimization tips and response time expectations.",
-    "version": "2.0.0"
+    "version": "2.0.0",
+    "contact": {
+      "name": "Investors FastTrack",
+      "url": "https://fasttrack.net/api",
+      "email": "api@fasttrack.net"
+    },
+    "termsOfService": "https://fasttrack.net/api"
   },
   "paths": {
-    "/stats/stats2": {
+    "/auth": {
+      "post": {
+        "summary": "Exchange username/password for tokens",
+        "description": "Accepts credentials and returns an access_token, id_token, refresh_token, and metadata. Send the id_token (or access_token) as `Authorization: Bearer <token>` when calling protected APIs.",
+        "operationId": "auth_login",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "username": "user@example.com",
+                    "password": "hunter2"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tokens issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                      "id_token": "eyJraWQiOiJ...id.jwt...",
+                      "refresh_token": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIi...",
+                      "expires_in": 3600,
+                      "token_type": "Bearer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "summary": "Exchange refresh_token for new tokens",
+        "description": "Accepts a refresh_token and returns a new access_token and id_token. A new refresh_token may also be returned depending on server policy.",
+        "operationId": "auth_refresh",
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              },
+              "examples": {
+                "refresh": {
+                  "value": {
+                    "refresh_token": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIi..."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "New tokens issued",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponse"
+                },
+                "examples": {
+                  "success": {
+                    "value": {
+                      "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...",
+                      "id_token": "eyJraWQiOiJ...id.jwt...",
+                      "refresh_token": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIi...",
+                      "expires_in": 3600,
+                      "token_type": "Bearer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Expired/invalid refresh token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stats": {
       "post": {
         "summary": "Calculate financial statistics (snapshot)",
         "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods. Returns statistics organized by time period (e.g., '1y', '3m') with shared current pricing data. See [Response Structure Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#response-structure-differences) for details.",
@@ -296,7 +439,7 @@
       },
       "parameters": []
     },
-    "/stats/stats2/historical": {
+    "/stats/historical": {
       "post": {
         "summary": "Calculate historical financial statistics",
         "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly)",
@@ -441,7 +584,7 @@
       },
       "parameters": []
     },
-    "/data/data2": {
+    "/data": {
       "post": {
         "summary": "Get raw financial data",
         "description": "Extract raw financial data (prices, volumes, OHLV, dividends) for multiple assets with date range support",
@@ -619,7 +762,7 @@
       },
       "parameters": []
     },
-    "/data/data2/{ticker}": {
+    "/data/{ticker}": {
       "get": {
         "summary": "Get data for single ticker",
         "description": "Extract financial data for a single ticker with query parameter options. If start and end dates are not provided, defaults to 1 year of data ending on the current date.",
@@ -947,14 +1090,75 @@
       ]
     }
   },
-  "security": [
-    {
-      "appId": [],
-      "token": []
-    }
-  ],
   "components": {
     "schemas": {
+      "AuthRequest": {
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "properties": {
+          "username": {
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "hunter2"
+          }
+        }
+      },
+      "RefreshRequest": {
+        "type": "object",
+        "required": [
+          "refresh_token"
+        ],
+        "properties": {
+          "refresh_token": {
+            "type": "string",
+            "description": "Refresh token obtained from /auth"
+          }
+        }
+      },
+      "TokenResponse": {
+        "type": "object",
+        "required": [
+          "access_token",
+          "id_token",
+          "refresh_token",
+          "expires_in",
+          "token_type"
+        ],
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "description": "JWT used for API authorization"
+          },
+          "id_token": {
+            "type": "string",
+            "description": "JWT with user identity claims (also accepted by APIs in this system)"
+          },
+          "refresh_token": {
+            "type": "string",
+            "description": "Token to obtain new access/id tokens"
+          },
+          "expires_in": {
+            "type": "integer",
+            "description": "Lifetime of access/id token in seconds",
+            "example": 3600
+          },
+          "token_type": {
+            "type": "string",
+            "enum": [
+              "Bearer"
+            ],
+            "example": "Bearer"
+          }
+        }
+      },
       "AdvancedSettings": {
         "type": "object",
         "description": "Advanced calculation parameters that affect statistical computations. See [Advanced Settings Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#advanced-settings-behavior) for detailed impact on calculations.",
@@ -3262,24 +3466,16 @@
       }
     },
     "securitySchemes": {
-      "appId": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "appid",
-        "description": "Application ID - 36 character GUID (e.g., 550e8400-e29b-41d4-a716-446655440000)",
-        "x-example": "123"
-      },
-      "token": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "token",
-        "description": "Authentication token - 36 character GUID (e.g., 123e4567-e89b-12d3-a456-426614174000)"
+      "Authorization": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": ""
       }
     }
   },
   "servers": [
     {
-      "url": "http://localhost:55829",
+      "url": "https://api.fasttrack.net/v2",
       "description": ""
     }
   ],
@@ -3289,12 +3485,17 @@
       "description": "Operations related to market data"
     },
     {
-      "name": "Returns & Statistics",
+      "name": "Reference",
       "description": "Operations related to statistic and return data"
     },
     {
-      "name": "Reference",
+      "name": "Returns & Statistics",
       "description": "Operations related to statistic and return data"
+    }
+  ],
+  "security": [
+    {
+      "Authorization": []
     }
   ]
 }
