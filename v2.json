@@ -149,7 +149,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Authentication"
+        ]
       }
     },
     "/stats": {
@@ -3484,9 +3487,9 @@
   ],
   "tags": [
     {
-  "name": "Authentication",
-  "description": "Token-based authentication using username/password login and refresh tokens"
-},
+      "name": "Authentication",
+      "description": "Login with credentials to obtain access tokens, refresh as needed"
+    },
     {
       "name": "Market Data",
       "description": "Operations related to market data"
