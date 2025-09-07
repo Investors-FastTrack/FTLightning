@@ -14,7 +14,7 @@
   "paths": {
     "/auth": {
       "post": {
-        "summary": "Exchange username/password for tokens",
+        "summary": "Login",
         "description": "Accepts credentials and returns an access_token, id_token, refresh_token, and metadata. Send the id_token (or access_token) as `Authorization: Bearer <token>` when calling protected APIs.",
         "operationId": "auth_login",
         "security": [],
@@ -78,12 +78,15 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Authentication"
+        ]
       }
     },
     "/auth/refresh": {
       "post": {
-        "summary": "Exchange refresh_token for new tokens",
+        "summary": "Refresh tokens",
         "description": "Accepts a refresh_token and returns a new access_token and id_token. A new refresh_token may also be returned depending on server policy.",
         "operationId": "auth_refresh",
         "security": [],
@@ -151,7 +154,7 @@
     },
     "/stats": {
       "post": {
-        "summary": "Calculate financial statistics (snapshot)",
+        "summary": "Calculate stats",
         "description": "Calculate comprehensive financial statistics for multiple assets as of a specific date with lookback periods. Returns statistics organized by time period (e.g., '1y', '3m') with shared current pricing data. See [Response Structure Guide](/docs/ftlightning/q1qm3qbjxdfhx-data-api-reference-guide#response-structure-differences) for details.",
         "operationId": "calculateStatsSnapshot",
         "requestBody": {
@@ -441,7 +444,7 @@
     },
     "/stats/historical": {
       "post": {
-        "summary": "Calculate historical financial statistics",
+        "summary": "Historical stats",
         "description": "Calculate financial statistics for discrete time periods (yearly, quarterly, monthly)",
         "operationId": "calculateStatsHistorical",
         "requestBody": {
@@ -586,7 +589,7 @@
     },
     "/data": {
       "post": {
-        "summary": "Get raw financial data",
+        "summary": "Get data",
         "description": "Extract raw financial data (prices, volumes, OHLV, dividends) for multiple assets with date range support",
         "operationId": "getFinancialData",
         "requestBody": {
@@ -764,7 +767,7 @@
     },
     "/data/{ticker}": {
       "get": {
-        "summary": "Get data for single ticker",
+        "summary": "Get single ticker",
         "description": "Extract financial data for a single ticker with query parameter options. If start and end dates are not provided, defaults to 1 year of data ending on the current date.",
         "operationId": "getSingleTickerData",
         "parameters": [
@@ -910,7 +913,7 @@
     },
     "/reference": {
       "post": {
-        "summary": "Get security information for multiple assets",
+        "summary": "Get security info",
         "description": "Retrieve detailed security information, portfolio breakdowns, and attribution analysis for multiple assets including individual securities and static portfolio models.",
         "operationId": "getSecurityInfo",
         "requestBody": {
@@ -1017,7 +1020,7 @@
     },
     "/reference/{ticker}": {
       "get": {
-        "summary": "Get security information for single ticker",
+        "summary": "Get single security",
         "description": "Retrieve detailed security information for a single ticker using query parameters for options.",
         "operationId": "getSingleSecurityInfo",
         "parameters": [
@@ -3480,6 +3483,10 @@
     }
   ],
   "tags": [
+    {
+  "name": "Authentication",
+  "description": "Token-based authentication using username/password login and refresh tokens"
+},
     {
       "name": "Market Data",
       "description": "Operations related to market data"
