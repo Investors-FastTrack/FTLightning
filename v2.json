@@ -466,7 +466,7 @@
                       "MSFT"
                     ],
                     "rollups": [
-                      "year"
+                      "yearly"
                     ],
                     "years": [
                       "2022",
@@ -482,7 +482,7 @@
                       "SPY"
                     ],
                     "rollups": [
-                      "quarter"
+                      "quarterly"
                     ],
                     "years": [
                       "2023",
@@ -516,8 +516,8 @@
                       }
                     ],
                     "rollups": [
-                      "year",
-                      "quarter"
+                      "yearly",
+                      "quarterly"
                     ],
                     "years": [
                       "2022",
@@ -534,7 +534,7 @@
                       "AAPL"
                     ],
                     "rollups": [
-                      "month"
+                      "monthly"
                     ],
                     "years": [
                       "2024"
@@ -2489,14 +2489,14 @@
             "items": {
               "type": "string",
               "enum": [
-                "year",
-                "quarter",
-                "month"
+                "yearly",
+                "quarterly",
+                "monthly"
               ]
             },
             "description": "Time period rollups to calculate",
             "default": [
-              "year"
+              "yearly"
             ]
           },
           "years": {
