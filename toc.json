@@ -95,11 +95,6 @@
       "type": "item",
       "title": "Funds, ETFs, Stocks, & Indexes",
       "uri": "/openapi.json"
-    },
-    {
-      "type": "item",
-      "title": "Coming Soon - v2",
-      "uri": "/v2.json"
     }
   ]
 }
