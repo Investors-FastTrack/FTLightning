@@ -10,8 +10,8 @@ Different data types are available depending on the asset type you're requesting
 | Data Type | Individual Stocks | ETFs | Mutual Funds | Portfolio Models | Custom Data |
 |-----------|-------------------|------|--------------|------------------|-------------|
 | `prices`    | ✅ Available | ✅ Available | ✅ Available | ✅ Available | ✅ Available |
-| `volumes`   | ✅ Available | ❌ Not Available | ❌ Not Available | ❌ Not Available | ❌ Not Available |
-| `ohlv`      | ✅ Available | ❌ Not Available | ❌ Not Available | ❌ Not Available | ❌ Not Available |
+| `volumes`   | ✅ Available | ✅ Available | ❌ Not Available | ❌ Not Available | ❌ Not Available |
+| `ohlv`      | ✅ Available | ✅ Available | ❌ Not Available | ❌ Not Available | ❌ Not Available |
 | `dividends` | ✅ Available | ✅ Available | ✅ Available | ❌ Not Available | ❌ Not Available |
 | `yield`     | ✅ Available | ✅ Available | ✅ Available | ❌ Not Available | ❌ Not Available |
 | `info`      | ✅ Available | ✅ Available | ✅ Available | ✅ Available | ✅ Available |
