@@ -16,13 +16,13 @@ Different data types are available depending on the asset type you're requesting
 | `yield`     | ✅ Available | ✅ Available | ✅ Available | ❌ Not Available | ❌ Not Available |
 | `info`      | ✅ Available | ✅ Available | ✅ Available | ✅ Available | ✅ Available |
 
-### Notes:
+#### Notes:
 - **Individual Stocks**: All data types available
 - **ETFs/Mutual Funds**: No intraday OHLV or volume data, but prices, dividends, yield, and info are available
 - **Portfolio Models** (Static/Dynamic/Momentum): Only calculated prices and basic info available - no underlying security data like dividends or yields
 - **Custom Data**: Only user-provided prices and basic metadata available
 
-### Asset Type Detection:
+#### Asset Type Detection:
 - Individual tickers (e.g., "AAPL", "MSFT") are automatically classified
 - Portfolio models are specified with `type` property ("static", "dynamic", "momentum")
 - Custom data uses `type: "fnu"`
@@ -33,7 +33,7 @@ If you request incompatible data types, those fields will be `null` or omitted f
 
 The `frequency` parameter controls which trading days are included in your data response:
 
-### Frequency Types
+#### Frequency Types
 
 | Frequency | Description | Performance |
 |-----------|-------------|-------------|
@@ -42,7 +42,7 @@ The `frequency` parameter controls which trading days are included in your data 
 | `monthly` | Last trading day of each month only | Cached - faster |
 | `quarterly` | Last trading day of each quarter (March, June, September, December) | Cached - faster |
 
-### Examples
+#### Examples
 
 For a request from `2024-01-01` to `2024-03-31`:
 
@@ -66,7 +66,7 @@ For a request from `2024-01-01` to `2024-03-31`:
 ["2024-03-28"]
 ```
 
-### Important Notes
+#### Important Notes
 
 - **Time Series Alignment**: All data arrays (prices, volumes, etc.) will have the same length as the `metadata.dates` array
 - **Holiday Handling**: If the target day (Friday, month-end, quarter-end) falls on a market holiday, the last trading day before that date is used
@@ -77,7 +77,7 @@ For a request from `2024-01-01` to `2024-03-31`:
 
 Time series arrays may contain `null` values in specific situations:
 
-### When Nulls Occur
+#### When Nulls Occur
 
 | Scenario | Behavior | Example |
 |----------|----------|---------|
@@ -87,13 +87,13 @@ Time series arrays may contain `null` values in specific situations:
 | **Data Unavailable** | `null` for that specific data point | Volume data missing for a particular day |
 | **Incompatible Asset Type** | Entire array is `null` or omitted | Requesting OHLV data for a mutual fund |
 
-### Array Consistency
+#### Array Consistency
 
 - **All time series arrays** (prices, volumes, OHLV) will have the same length as `metadata.dates`
 - **Null positions align** across all arrays for the same date
 - **Array indices correspond** to the same date position across all data types
 
-### Example Response with Nulls
+#### Example Response with Nulls
 
 ```json
 {
@@ -115,7 +115,7 @@ In this example, the first date has no data available, so all arrays have `null`
 
 Dividend data includes both a human-readable type and a single-character code for each dividend payment:
 
-### Dividend Type Mapping
+#### Dividend Type Mapping
 
 | Type Code | Type Name | Description | Tax Treatment |
 |-----------|-----------|-------------|---------------|
@@ -125,7 +125,7 @@ Dividend data includes both a human-readable type and a single-character code fo
 | `Z` | Split | Stock splits (not actual cash payments) | No immediate tax implications |
 | (Other) | Other | Any dividend type not covered above | Varies by specific type |
 
-### Example Dividend Data
+#### Example Dividend Data
 
 ```json
 {
@@ -152,7 +152,7 @@ Dividend data includes both a human-readable type and a single-character code fo
 }
 ```
 
-### Important Notes
+#### Important Notes
 
 - **Ex-dividend dates**: The `date` field represents the ex-dividend date (when the stock begins trading without the dividend)
 - **Stock splits**: When `type_code` is "Z", the `amount` represents the split ratio (e.g., 2.0 = 2-for-1 split)
@@ -164,7 +164,7 @@ Dividend data includes both a human-readable type and a single-character code fo
 
 The API provides three types of price data, each with different adjustment methodologies:
 
-### Price Type Comparison
+#### Price Type Comparison
 
 | Price Type | Stock Splits | Dividends | Use Cases |
 |------------|--------------|-----------|-----------|
@@ -172,7 +172,7 @@ The API provides three types of price data, each with different adjustment metho
 | **Semi-Adjusted** | ✅ Adjusted | ❌ Not Adjusted | Technical analysis, chart patterns, volume analysis |
 | **Unadjusted** | ❌ Not Adjusted | ❌ Not Adjusted | Historical trading prices, order book analysis |
 
-### When to Use Each Type
+#### When to Use Each Type
 
 #### Adjusted Prices (Default)
 - **Best for**: Performance calculations, portfolio analysis, returns comparison
@@ -189,7 +189,7 @@ The API provides three types of price data, each with different adjustment metho
 - **Why**: Shows exactly what prices were quoted and traded at each date
 - **Example**: Shows the actual $100 → $98 price movement without any adjustments
 
-### Stock Split Example
+#### Stock Split Example
 
 For a 2-for-1 stock split on a stock trading at $200:
 
@@ -207,7 +207,7 @@ For a 2-for-1 stock split on a stock trading at $200:
 - **Adjusted & Semi-Adjusted**: Both show split-adjusted prices for continuity
 - **Unadjusted**: Shows actual trading prices ($200 before split, $101 after)
 
-### Performance Notes
+#### Performance Notes
 
 - **Default behavior**: Only adjusted prices are returned unless specifically requested
 - **Additional cost**: Requesting unadjusted/semi-adjusted prices requires additional data retrieval
@@ -217,7 +217,7 @@ For a 2-for-1 stock split on a stock trading at $200:
 
 The Data API supports the same asset types as the Stats API, allowing you to extract raw data from complex portfolio models:
 
-### Simple Tickers
+#### Simple Tickers
 
 The most common asset type - individual securities:
 
@@ -229,7 +229,7 @@ The most common asset type - individual securities:
 
 **Available data**: All data types (prices, volumes, OHLV, dividends, yield, info)
 
-### Static Portfolio Models
+#### Static Portfolio Models
 
 Fixed allocation portfolios that rebalance to target weights:
 
@@ -252,7 +252,7 @@ Fixed allocation portfolios that rebalance to target weights:
 
 **Available data**: prices, info (no volumes, OHLV, dividends, or yield)
 
-### Dynamic Portfolio Models  
+#### Dynamic Portfolio Models  
 
 Portfolios that change allocation over time:
 
@@ -287,7 +287,7 @@ Portfolios that change allocation over time:
 
 **Available data**: prices, info (no volumes, OHLV, dividends, or yield)
 
-### Momentum Models
+#### Momentum Models
 
 Strategies that rank securities and hold top performers:
 
@@ -316,7 +316,7 @@ Strategies that rank securities and hold top performers:
 
 **Available data**: prices, info (no volumes, OHLV, dividends, or yield)
 
-### Custom Data
+#### Custom Data
 
 User-provided price series:
 
@@ -335,7 +335,7 @@ User-provided price series:
 
 **Available data**: prices, info (no other data types)
 
-### Data Extraction Considerations
+#### Data Extraction Considerations
 
 #### Portfolio Model Pricing
 - Portfolio models return **calculated portfolio values** over time
@@ -371,7 +371,7 @@ You can mix different asset types in a single request:
 
 Understanding API performance characteristics helps you optimize request patterns and set appropriate expectations for response times.
 
-### Response Time Expectations
+#### Response Time Expectations
 
 | Request Type | Typical Response Time | Factors Affecting Speed |
 |--------------|----------------------|------------------------|
@@ -381,7 +381,7 @@ Understanding API performance characteristics helps you optimize request pattern
 | **Dynamic portfolio model** | 500-2000ms | Number of model changes, underlying securities |
 | **Momentum model** | 1000-5000ms | Universe size, ranking calculations, rebalancing frequency |
 
-### Performance Optimization Tips
+#### Performance Optimization Tips
 
 #### Choose Appropriate Frequency
 ```json
@@ -427,7 +427,7 @@ Understanding API performance characteristics helps you optimize request pattern
 
 **Batch requests share processing overhead and reduce total response time.**
 
-### Portfolio Model Performance
+#### Portfolio Model Performance
 
 #### Static Models
 - **Fast**: Simple allocations with few holdings
@@ -443,7 +443,7 @@ Understanding API performance characteristics helps you optimize request pattern
 - **Major factors**: Universe size, rebalancing frequency, ranking complexity
 - **Tip**: Use quarterly rebalancing vs. daily for 10x speed improvement
 
-### Caching and Data Freshness
+#### Caching and Data Freshness
 
 #### Frequency Caches
 - **Weekly/Monthly/Quarterly**: Pre-calculated date arrays cached for years 2000-present
@@ -455,7 +455,7 @@ Understanding API performance characteristics helps you optimize request pattern
 - **End-of-day**: Final data available ~1 hour after market close
 - **Historical**: Data older than 1 year is heavily cached
 
-### Request Size Limits
+#### Request Size Limits
 
 #### Practical Limits
 - **Assets per request**: 50+ assets supported, but response time increases linearly
@@ -467,7 +467,7 @@ Understanding API performance characteristics helps you optimize request pattern
 - **Historical analysis**: Use appropriate frequency (monthly vs daily) for the analysis timeframe
 - **Real-time needs**: Use minimal include options for fastest response
 
-### Error Handling and Timeouts
+#### Error Handling and Timeouts
 
 #### Timeout Behavior
 - **Typical timeout**: 30 seconds for complex portfolio calculations
@@ -483,7 +483,7 @@ Understanding API performance characteristics helps you optimize request pattern
 
 Different statistical calculations are available depending on the time period length. This ensures statistical validity and prevents misleading metrics for very short time frames.
 
-### Calculation Matrix by Period Length
+#### Calculation Matrix by Period Length
 
 | Period | Returns | Risk Metrics | Drawdown Analysis | Notes |
 |--------|---------|--------------|-------------------|--------|
@@ -492,14 +492,14 @@ Different statistical calculations are available depending on the time period le
 | **Custom Periods** | ✅ Available | ✅ Available* | ✅ Available* | *Depends on actual date range length |
 | **Historical Periods** | ✅ Available | ✅ Available | ✅ Available | Full analysis for all rollup periods |
 
-### What's Always Calculated
+#### What's Always Calculated
 
 **Returns Data** (available for all periods):
 - `total`: Cumulative return over the period
 - `annualized_market`: Return annualized using market days (252.25/year)
 - `annualized_calendar`: Return annualized using calendar days (365.25/year)
 
-### What Requires Longer Periods
+#### What Requires Longer Periods
 
 **Risk Metrics** (excluded for 1d, 5d periods):
 - **Volatility**: Standard deviation, downside deviation, ulcer index
@@ -511,7 +511,7 @@ Different statistical calculations are available depending on the time period le
 - Peak-to-valley analysis
 - Recovery time calculations
 
-### Why Short Periods Are Limited
+#### Why Short Periods Are Limited
 
 **Statistical Validity**: 
 - Risk metrics require sufficient data points for meaningful calculation
@@ -525,7 +525,7 @@ Different statistical calculations are available depending on the time period le
 - Meaningful drawdown analysis requires time for market cycles
 - Very short periods may not capture significant price movements
 
-### Custom Period Behavior
+#### Custom Period Behavior
 
 Custom periods are evaluated based on their actual date range:
 
@@ -550,7 +550,7 @@ Custom periods are evaluated based on their actual date range:
 }
 ```
 
-### Response Structure Differences
+#### Response Structure Differences
 
 **Limited Calculations** (1d, 5d periods):
 ```json
@@ -577,7 +577,7 @@ Custom periods are evaluated based on their actual date range:
 }
 ```
 
-### Recommendations
+#### Recommendations
 
 - **Use 1m or longer periods** for comprehensive statistical analysis
 - **Short periods (1d, 5d)** are useful for recent performance checking only
@@ -588,7 +588,7 @@ Custom periods are evaluated based on their actual date range:
 
 The Stats API has two endpoints that return fundamentally different response structures. Understanding these differences is crucial for proper integration.
 
-### Snapshot Mode (`/stats/stats2`)
+#### Snapshot Mode (`/stats/stats2`)
 
 **Data Organization**: Statistics organized by **lookback periods** from a single as-of date
 **Use Case**: Current analysis with various lookback periods
@@ -618,7 +618,7 @@ The Stats API has two endpoints that return fundamentally different response str
 - **Single point-in-time**: All calculations are as of the specified `as_of` date
 - **Lookback logic**: Each period looks back from the as-of date
 
-### Historical Mode (`/stats/stats2/historical`)
+#### Historical Mode (`/stats/stats2/historical`)
 
 **Data Organization**: Statistics organized by **calendar periods** across multiple time ranges
 **Use Case**: Time-series analysis and historical trend analysis
@@ -655,7 +655,7 @@ The Stats API has two endpoints that return fundamentally different response str
 - **Multiple time points**: Each period represents a complete discrete time range
 - **No shared data**: All data is specific to each calendar period
 
-### Comparison Examples
+#### Comparison Examples
 
 #### Same Asset, Different Structures
 
@@ -714,7 +714,7 @@ The Stats API has two endpoints that return fundamentally different response str
 }
 ```
 
-### When to Use Each Mode
+#### When to Use Each Mode
 
 #### Snapshot Mode Best For:
 - **Current performance analysis**: "How has this stock performed over various recent periods?"
@@ -729,7 +729,7 @@ The Stats API has two endpoints that return fundamentally different response str
 - **Time-series charting**: Building historical performance charts
 - **Backtesting**: Analyzing how strategies would have performed in specific periods
 
-### Data Availability Differences
+#### Data Availability Differences
 
 | Feature | Snapshot Mode | Historical Mode |
 |---------|---------------|-----------------|
@@ -739,7 +739,7 @@ The Stats API has two endpoints that return fundamentally different response str
 | **Custom Periods** | ✅ Supported | ❌ Not supported |
 | **Multiple Rollups** | ❌ Single as-of date | ✅ Multiple rollup types |
 
-### Integration Tips
+#### Integration Tips
 
 #### For Snapshot Mode:
 - Access period data via `result.periods["1y"]`
@@ -758,7 +758,7 @@ Both modes use the same error structure in `result.error` when issues occur.
 
 The `include` parameter controls which optional data is calculated and returned. Each option has specific requirements and behaviors depending on asset type and request settings.
 
-### Include Options Matrix
+#### Include Options Matrix
 
 | Option | Individual Stocks | ETFs/Mutual Funds | Portfolio Models | Period Requirements | Notes |
 |--------|-------------------|-------------------|------------------|---------------------|--------|
@@ -768,7 +768,7 @@ The `include` parameter controls which optional data is calculated and returned.
 | `position_details` | ❌ Not Applicable | ❌ Not Applicable | ✅ Available | Any period | Portfolio models only |
 | `security_info` | ✅ Available | ✅ Available | ✅ Available | Any period | Always recommended |
 
-### Detailed Option Behavior
+#### Detailed Option Behavior
 
 #### `drawdown_analysis`
 **What it does**: Calculates maximum drawdown analysis for each time period
@@ -896,7 +896,7 @@ The `include` parameter controls which optional data is calculated and returned.
 
 **Always recommended**: Provides essential context for understanding the security
 
-### Default Behavior
+#### Default Behavior
 
 **When no includes specified**: Only basic period statistics are calculated (returns, risk, no optional data)
 
@@ -905,7 +905,7 @@ The `include` parameter controls which optional data is calculated and returned.
 - Return calculations are always included
 - Error information is always included when applicable
 
-### Performance Considerations
+#### Performance Considerations
 
 | Option | Performance Impact | Calculation Complexity |
 |--------|-------------------|------------------------|
@@ -915,7 +915,7 @@ The `include` parameter controls which optional data is calculated and returned.
 | `drawdown_analysis` | Moderate | Peak/valley analysis |
 | `position_details` | None | Generated during model calculation |
 
-### Common Combinations
+#### Common Combinations
  
 #### **Basic Analysis**
 ```json
@@ -949,7 +949,7 @@ The `include` parameter controls which optional data is calculated and returned.
 ```
 **Use case**: Individual stock deep dive with volume analysis
 
-### Error Handling
+#### Error Handling
 
 **Incompatible options**: If you request `volume_data` for a mutual fund, the field will be omitted from the response without generating an error
 
@@ -961,7 +961,7 @@ The `include` parameter controls which optional data is calculated and returned.
 
 Advanced settings control the underlying calculation parameters for statistical computations. These settings can significantly impact the accuracy and relevance of risk metrics.
 
-### Correlation Period 
+#### Correlation Period 
 
 **Parameter**: `advanced.correlation_period`  
 **Default**: 21 days  
@@ -1005,7 +1005,7 @@ The correlation period determines the rolling window of daily returns used to ca
 - **Stable markets**: Longer periods provide more reliable estimates
 - **Strategy analysis**: Match period to your rebalancing frequency
 
-### Moving Average Periods
+#### Moving Average Periods
 
 **Parameter**: `advanced.moving_average_periods`  
 **Default**: [50, 200]  
@@ -1046,7 +1046,7 @@ Specifies which moving average periods to calculate when `moving_averages` is in
 - **Longer periods**: Require more historical data
 - **Recommended**: Limit to 5 or fewer periods for optimal performance
 
-### Month-End Returns
+#### Month-End Returns
 
 **Parameter**: `advanced.use_month_end_returns`  
 **Default**: false  
@@ -1090,7 +1090,7 @@ Changes how period start and end dates are calculated, using month-end boundarie
 - **Custom date ranges**: For specific event analysis
 - **Technical analysis**: When trading day precision is important
 
-### Interaction Effects
+#### Interaction Effects
 
 Advanced settings can interact with each other and with other request parameters:
 
@@ -1123,7 +1123,7 @@ Month-end setting affects custom period calculations:
 ```
 May adjust the custom period boundaries to align with month-ends.
 
-### Best Practices
+#### Best Practices
 
 #### For Short-Term Analysis (< 6 months)
 ```json
@@ -1167,7 +1167,7 @@ May adjust the custom period boundaries to align with month-ends.
 }
 ```
 
-### Performance Impact 
+#### Performance Impact 
 
 | Setting | Performance Impact | Calculation Complexity |
 |---------|-------------------|------------------------|
@@ -1176,7 +1176,7 @@ May adjust the custom period boundaries to align with month-ends.
 | **Many MA periods** | Slower | Multiple calculations |
 | **Month-end returns** | Minimal | Slight date calculation overhead |
 
-### Validation and Limits 
+#### Validation and Limits 
 
 #### Correlation Period Validation
 - **Minimum**: 5 days (statistical minimum for meaningful correlation)  
