@@ -916,7 +916,7 @@ The `include` parameter controls which optional data is calculated and returned.
 | `position_details` | None | Generated during model calculation |
 
 ### Common Combinations
-
+ 
 #### **Basic Analysis**
 ```json
 {
