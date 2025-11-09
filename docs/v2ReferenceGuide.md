@@ -3,7 +3,7 @@ stoplight-id: q1qm3qbjxdfhx
 ---
 # Data API Reference Guide
 
-## Asset Type Compatibility {#asset-type-compatibility}
+## Asset Type Compatibility 
 
 Different data types are available depending on the asset type you're requesting data for:
 
@@ -29,7 +29,7 @@ Different data types are available depending on the asset type you're requesting
 
 If you request incompatible data types, those fields will be `null` or omitted from the response without generating an error.
 
-## Data Frequency {#data-frequency}
+## Data Frequency 
 
 The `frequency` parameter controls which trading days are included in your data response:
 
@@ -73,7 +73,7 @@ For a request from `2024-01-01` to `2024-03-31`:
 - **Performance**: Weekly, monthly, and quarterly frequencies use pre-calculated caches for faster response times
 - **Date Range**: The frequency setting affects which dates are included, but the overall date range is still controlled by `start_date` and `end_date`
 
-## Null Value Handling {#null-values}
+## Null Value Handling 
 
 Time series arrays may contain `null` values in specific situations:
 
@@ -111,7 +111,7 @@ Time series arrays may contain `null` values in specific situations:
 
 In this example, the first date has no data available, so all arrays have `null` in position 0.
 
-## Dividend Types {#dividend-types}
+## Dividend Types
 
 Dividend data includes both a human-readable type and a single-character code for each dividend payment:
 
@@ -160,7 +160,7 @@ Dividend data includes both a human-readable type and a single-character code fo
 - **Historical data**: Dividend history is available for individual stocks and ETFs, but not for portfolio models
 - **Currency**: All dividend amounts are in USD regardless of the underlying security's home currency
 
-## Price Adjustments {#price-adjustments}
+## Price Adjustments 
 
 The API provides three types of price data, each with different adjustment methodologies:
 
@@ -213,7 +213,7 @@ For a 2-for-1 stock split on a stock trading at $200:
 - **Additional cost**: Requesting unadjusted/semi-adjusted prices requires additional data retrieval
 - **Asset limitations**: Only available for individual securities (not portfolio models or custom data)
 
-## Supported Asset Types {#supported-asset-types}
+## Supported Asset Types 
 
 The Data API supports the same asset types as the Stats API, allowing you to extract raw data from complex portfolio models:
 
@@ -367,7 +367,7 @@ You can mix different asset types in a single request:
 - **Portfolio models**: Require calculation, slower response times
 - **Large universes**: Momentum models with many securities take longer to process
 
-## Performance Considerations {#performance-considerations}
+## Performance Considerations 
 
 Understanding API performance characteristics helps you optimize request patterns and set appropriate expectations for response times.
 
@@ -479,7 +479,7 @@ Understanding API performance characteristics helps you optimize request pattern
 - **Error monitoring**: Check metadata.calculation_time_ms to track performance trends
 - **Retry logic**: Implement exponential backoff for failed requests
 
-## Period Calculation Behavior {#period-calculation-behavior}
+## Period Calculation Behavior 
 
 Different statistical calculations are available depending on the time period length. This ensures statistical validity and prevents misleading metrics for very short time frames.
 
@@ -584,7 +584,7 @@ Custom periods are evaluated based on their actual date range:
 - **Custom periods should span at least 30 days** for meaningful risk metrics
 - **Historical analysis** automatically uses appropriate period lengths
 
-## Response Structure Differences {#response-structure-differences}
+## Response Structure Differences 
 
 The Stats API has two endpoints that return fundamentally different response structures. Understanding these differences is crucial for proper integration.
 
@@ -754,7 +754,7 @@ The Stats API has two endpoints that return fundamentally different response str
 #### Error Handling:
 Both modes use the same error structure in `result.error` when issues occur.
 
-## Include Options Behavior {#include-options-behavior}
+## Include Options Behavior
 
 The `include` parameter controls which optional data is calculated and returned. Each option has specific requirements and behaviors depending on asset type and request settings.
 
@@ -957,11 +957,11 @@ The `include` parameter controls which optional data is calculated and returned.
 
 **Partial success**: Some include options may succeed while others fail - check each section of the response independently
 
-## Advanced Settings Behavior {#advanced-settings-behavior}
+## Advanced Settings Behavior 
 
 Advanced settings control the underlying calculation parameters for statistical computations. These settings can significantly impact the accuracy and relevance of risk metrics.
 
-### Correlation Period {#correlation-period}
+### Correlation Period 
 
 **Parameter**: `advanced.correlation_period`  
 **Default**: 21 days  
@@ -1005,7 +1005,7 @@ The correlation period determines the rolling window of daily returns used to ca
 - **Stable markets**: Longer periods provide more reliable estimates
 - **Strategy analysis**: Match period to your rebalancing frequency
 
-### Moving Average Periods {#moving-average-periods}
+### Moving Average Periods
 
 **Parameter**: `advanced.moving_average_periods`  
 **Default**: [50, 200]  
@@ -1046,7 +1046,7 @@ Specifies which moving average periods to calculate when `moving_averages` is in
 - **Longer periods**: Require more historical data
 - **Recommended**: Limit to 5 or fewer periods for optimal performance
 
-### Month-End Returns {#month-end-returns}
+### Month-End Returns
 
 **Parameter**: `advanced.use_month_end_returns`  
 **Default**: false  
@@ -1090,7 +1090,7 @@ Changes how period start and end dates are calculated, using month-end boundarie
 - **Custom date ranges**: For specific event analysis
 - **Technical analysis**: When trading day precision is important
 
-### Interaction Effects {#interaction-effects}
+### Interaction Effects
 
 Advanced settings can interact with each other and with other request parameters:
 
@@ -1123,7 +1123,7 @@ Month-end setting affects custom period calculations:
 ```
 May adjust the custom period boundaries to align with month-ends.
 
-### Best Practices {#best-practices}
+### Best Practices
 
 #### For Short-Term Analysis (< 6 months)
 ```json
@@ -1167,7 +1167,7 @@ May adjust the custom period boundaries to align with month-ends.
 }
 ```
 
-### Performance Impact {#performance-impact}
+### Performance Impact 
 
 | Setting | Performance Impact | Calculation Complexity |
 |---------|-------------------|------------------------|
@@ -1176,7 +1176,7 @@ May adjust the custom period boundaries to align with month-ends.
 | **Many MA periods** | Slower | Multiple calculations |
 | **Month-end returns** | Minimal | Slight date calculation overhead |
 
-### Validation and Limits {#validation-limits}
+### Validation and Limits 
 
 #### Correlation Period Validation
 - **Minimum**: 5 days (statistical minimum for meaningful correlation)  
