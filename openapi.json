@@ -6252,6 +6252,13 @@
           },
           "name": {
             "type": "string"
+          },
+          "waitForAllSecurities": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "lrbso1ukxur74"
+            },
+            "description": "Delays portfolio start until all holdings have available data. Overrides 'start' date with the latest security inception date."
           }
         }
       },
