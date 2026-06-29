@@ -4520,7 +4520,7 @@
         }
       ],
       "get": {
-        "summary": "ETF Description",
+        "summary": "ETF & Fund Description",
         "tags": [
           "Reference Data"
         ],
@@ -4568,7 +4568,7 @@
             "$ref": "#/components/parameters/token"
           }
         ],
-        "description": "\r\nThis API endpoint offers a concise summary of an ETF's investment strategy as outlined in its prospectus, providing key insights into its investment approach and objectives in a clear, accessible format."
+        "description": "\r\nThis API endpoint offers a concise summary of an ETF or Mutual Fund investment strategy as outlined in its prospectus, providing key insights into its investment approach and objectives in a clear, accessible format."
       }
     },
     "/v1/usage/api": {
