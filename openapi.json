@@ -6,7 +6,7 @@
       "url": "https://fasttrack.net"
     },
     "title": "Funds, ETFs, Stocks, and Index API",
-    "description": "Use this API to retrieve raw OHLCV data, calculated returns, and calculated statistics.\n\nAdditionally, retrieve security categories, sectors, portfolio holdings, share classes information, indexes and more.",
+    "description": "Use this API to retrieve data, calculated returns, and calculated statistics.\n\nAdditionally, retrieve security categories, sectors, portfolio holdings, share classes information, indexes and more.",
     "contact": {
       "email": "api@fasttrack.net",
       "name": "FT Market Data API Support",
